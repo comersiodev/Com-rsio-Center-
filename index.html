@@ -3,44 +3,35 @@
 
 <head>
 
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
 
-    <meta name="viewport"
-    content="width=device-width, initial-scale=1.0">
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
-    <title>
-        Comérsio Center
-    </title>
+<title>
+Com�rsio Center
+</title>
 
-    <link rel="stylesheet"
-    href="style.css">
+<link rel="stylesheet"
+href="style.css">
 
 </head>
 
 <body>
 
-	<script>
-
-if(
-!localStorage.getItem("username")
-){
-
-    location.href =
-    "login.html";
-
-}
-
-	</script>
-
-<!-- NAVBAR -->
+<!-- =========================
+     NAVBAR
+========================= -->
 
 <div id="navbar"
 class="navbar">
 
+    <!-- CLOSE -->
+
     <div class="closeNavbar"
     onclick="toggleNavbar()">
 
-        ×
+        
 
     </div>
 
@@ -53,11 +44,25 @@ class="navbar">
 
         <div class="navText">
 
-    <p id="navUsername"></p>
-    <p id="navEmail"></p>
-    <p id="navTitle"></p>
+            <p id="navUsername">
 
-</div>
+                Username
+
+            </p>
+
+            <p id="navEmail">
+
+                Email
+
+            </p>
+
+            <p id="navTitle">
+
+                Title
+
+            </p>
+
+        </div>
 
     </div>
 
@@ -71,7 +76,9 @@ class="navbar">
             <img src="nama.png">
 
             <span>
+
                 Nama & ID Customer
+
             </span>
 
         </a>
@@ -82,7 +89,9 @@ class="navbar">
             <img src="voucher.png">
 
             <span>
+
                 Produk
+
             </span>
 
         </a>
@@ -93,19 +102,23 @@ class="navbar">
             <img src="debt.png">
 
             <span>
+
                 Rekap Utang
                 (Per Customer)
+
             </span>
 
         </a>
 
-        <a href="monthly.html"
+        <a href="pembukuan.html"
         class="navMenuBox">
 
             <img src="pembukuan.png">
 
             <span>
+
                 Pembukuan Bulanan
+
             </span>
 
         </a>
@@ -116,75 +129,47 @@ class="navbar">
             <img src="rekap.png">
 
             <span>
+
                 Rekap Utang Total
+
             </span>
 
         </a>
 
-        <!-- SAVE LOAD -->
+        <!-- SAVE -->
 
         <div class="navMenuBox"
-        style="
+        onclick="saveComersioData()"
 
-        flex-direction:column;
-        align-items:stretch;
-        gap:10px;
+        style="cursor:pointer;">
 
-        ">
+            <img src="Icon.png">
 
-            <button
-            onclick="saveComersioData()"
+            <span>
 
-            style="
+                Save Data
 
-            width:100%;
-            height:48px;
+            </span>
 
-            border:none;
+        </div>
 
-            border-radius:14px;
+        <!-- LOAD -->
 
-            background:#ffe600;
+        <div class="navMenuBox"
 
-            color:black;
+        onclick="document
+        .getElementById('loadFile')
+        .click()"
 
-            font-weight:bold;
+        style="cursor:pointer;">
 
-            cursor:pointer;
+            <img src="Icon.png">
 
-            ">
+            <span>
 
-                •• SAVE DATA
+                Load Data
 
-            </button>
-
-            <button
-            onclick="document
-            .getElementById('loadFile')
-            .click()"
-
-            style="
-
-            width:100%;
-            height:48px;
-
-            border:none;
-
-            border-radius:14px;
-
-            background:#2a2a2a;
-
-            color:white;
-
-            font-weight:bold;
-
-            cursor:pointer;
-
-            ">
-
-                ••• LOAD DATA
-
-            </button>
+            </span>
 
             <input
             type="file"
@@ -194,11 +179,40 @@ class="navbar">
 
         </div>
 
+        <!-- LOGOUT -->
+
+        <div class="navMenuBox"
+        onclick="logoutComersio()"
+
+        style="cursor:pointer;">
+
+            <img src="Icon.png">
+
+            <span>
+
+                Logout
+
+            </span>
+
+        </div>
+
     </div>
 
 </div>
 
-<!-- NAV BUTTON -->
+<!-- =========================
+     OVERLAY
+========================= -->
+
+<div id="overlay"
+class="overlay"
+onclick="toggleNavbar()">
+
+</div>
+
+<!-- =========================
+     NAV BUTTON
+========================= -->
 
 <div class="navTrigger"
 onclick="toggleNavbar()">
@@ -207,7 +221,9 @@ onclick="toggleNavbar()">
 
 </div>
 
-<!-- HEADER -->
+<!-- =========================
+     HEADER
+========================= -->
 
 <div class="headerBox">
 
@@ -221,20 +237,25 @@ onclick="toggleNavbar()">
     <div class="headerRight">
 
         <h1>
-            COMERSIO CENTER
+
+            COM�RSIO CENTER
+
         </h1>
 
         <p>
+
             Pusat Hitungan termasuk hutang
-            <br>
             customer dihitung.
+
         </p>
 
     </div>
 
 </div>
 
-<!-- OPSI -->
+<!-- =========================
+     OPSI
+========================= -->
 
 <h2 class="opsiTrack">
 
@@ -242,7 +263,9 @@ onclick="toggleNavbar()">
 
 </h2>
 
-<!-- MENU -->
+<!-- =========================
+     MENU
+========================= -->
 
 <a href="customer.html"
 class="menuBox">
@@ -250,7 +273,9 @@ class="menuBox">
     <img src="nama.png">
 
     <h3>
+
         NAMA DAN ID CUSTOMER
+
     </h3>
 
 </a>
@@ -261,7 +286,9 @@ class="menuBox">
     <img src="voucher.png">
 
     <h3>
+
         PRODUK
+
     </h3>
 
 </a>
@@ -272,19 +299,23 @@ class="menuBox">
     <img src="debt.png">
 
     <h3>
+
         REKAP UTANG
         (PER CUSTOMER)
+
     </h3>
 
 </a>
 
-<a href="monthly.html"
+<a href="pembukuan.html"
 class="menuBox">
 
     <img src="pembukuan.png">
 
     <h3>
+
         PEMBUKUAN BULANAN
+
     </h3>
 
 </a>
@@ -295,40 +326,55 @@ class="menuBox">
     <img src="rekap.png">
 
     <h3>
+
         REKAP UTANG
         (TOTAL)
+
     </h3>
 
 </a>
 
-<!-- FOOTER -->
+<!-- =========================
+     FOOTER
+========================= -->
 
 <div class="footerBox">
 
     <p>
-        ©Comérsio LTD 2024
+
+        � Com�rsio LTD 2024
+
     </p>
 
     <p>
+
         083874854586
         (Call me)
+
     </p>
 
     <br>
 
     <p>
+
         Jalau Taman Nyiur no 7
         RT 001/RW15,
         Sunter Agung,
         Tanjung Priok,
         Jakarta Utara,
         DKI Jakarta
+
     </p>
 
 </div>
 
+<!-- =========================
+     SCRIPT
+========================= -->
+
 <script>
-	/* =========================
+
+/* =========================
    LOAD USER DATA
 ========================= */
 
@@ -357,15 +403,57 @@ localStorage.getItem(
 ) || "No Title";
 
 /* =========================
+   LOGIN CHECK
+========================= */
+
+const username =
+localStorage.getItem(
+    "username"
+);
+
+if(!username){
+
+    window.location.href =
+    "login.html";
+
+}
+
+/* =========================
    NAVBAR
 ========================= */
 
 function toggleNavbar(){
 
-    const navbar =
-    document.getElementById("navbar");
+    document
+    .getElementById("navbar")
+    .classList.toggle("active");
 
-    navbar.classList.toggle("active");
+    document
+    .getElementById("overlay")
+    .classList.toggle("active");
+
+}
+
+/* =========================
+   LOGOUT
+========================= */
+
+function logoutComersio(){
+
+    localStorage.removeItem(
+        "username"
+    );
+
+    localStorage.removeItem(
+        "email"
+    );
+
+    localStorage.removeItem(
+        "title"
+    );
+
+    window.location.href =
+    "login.html";
 
 }
 
@@ -379,22 +467,30 @@ function saveComersioData(){
 
         customers:
         JSON.parse(
-        localStorage.getItem("customers")
+        localStorage.getItem(
+            "customers"
+        )
         ) || [],
 
         debts:
         JSON.parse(
-        localStorage.getItem("debts")
+        localStorage.getItem(
+            "debts"
+        )
         ) || {},
 
         products:
         JSON.parse(
-        localStorage.getItem("products")
+        localStorage.getItem(
+            "products"
+        )
         ) || [],
 
         monthly:
         JSON.parse(
-        localStorage.getItem("monthly")
+        localStorage.getItem(
+            "monthly"
+        )
         ) || []
 
     };
@@ -414,17 +510,22 @@ function saveComersioData(){
 
         {
 
-            type:"application/json"
+            type:
+            "application/json"
 
         }
 
     );
 
     const link =
-    document.createElement("a");
+    document.createElement(
+        "a"
+    );
 
     link.href =
-    URL.createObjectURL(blob);
+    URL.createObjectURL(
+        blob
+    );
 
     link.download =
     "Comersio.ayj";
@@ -439,7 +540,11 @@ function saveComersioData(){
 
 document
 .getElementById("loadFile")
-.addEventListener("change",function(e){
+.addEventListener(
+
+"change",
+
+function(e){
 
     const file =
     e.target.files[0];
@@ -509,7 +614,9 @@ document
 
             location.reload();
 
-        }catch{
+        }
+
+        catch{
 
             alert(
             "File bukan Comersio.ayj"
