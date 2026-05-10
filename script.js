@@ -1,3 +1,6 @@
+location.href =
+"login.html";
+
 function loginComersio(event){
 
     event.preventDefault();
