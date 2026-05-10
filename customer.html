@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+    content="width=device-width, initial-scale=1.0">
+
+    <title>Customer Comérsio</title>
+
+    <link rel="stylesheet"
+    href="style.css">
+
+</head>
+
+<body>
+
+<!-- =========================
+     NAVBAR
+========================= -->
+
+<div id="navbar"
+class="navbar">
+
+    <!-- CLOSE -->
+
+    <div class="closeNavbar"
+    onclick="toggleNavbar()">
+
+        ✕
+
+    </div>
+
+    <!-- PROFILE -->
+
+    <div class="navbarHeader">
+
+        <img src="icon.png"
+        class="navLogo">
+
+        <div class="navText">
+
+    <p id="navUsername"></p>
+    <p id="navEmail"></p>
+    <p id="navTitle"></p>
+
+</div>
+
+    </div>
+
+    <!-- MENU -->
+
+    <div class="navbarMenu">
+
+        <a href="customer.html"
+        class="navMenuBox">
+
+            <img src="nama.png">
+
+            <span>
+                Nama & ID Customer
+            </span>
+
+        </a>
+
+        <a href="produk.html"
+        class="navMenuBox">
+
+            <img src="voucher.png">
+
+            <span>
+                Produk
+            </span>
+
+        </a>
+
+        <a href="debt.html"
+        class="navMenuBox">
+
+            <img src="debt.png">
+
+            <span>
+                Rekap Utang
+                (Per Customer)
+            </span>
+
+        </a>
+
+        <a href="monthly.html"
+        class="navMenuBox">
+
+            <img src="pembukuan.png">
+
+            <span>
+                Pembukuan Bulanan
+            </span>
+
+        </a>
+
+        <a href="recap.html"
+        class="navMenuBox">
+
+            <img src="rekap.png">
+
+            <span>
+                Rekap Utang Total
+            </span>
+
+        </a>
+
+    </div>
+
+</div>
+
+<!-- =========================
+     OVERLAY
+========================= -->
+
+<div id="overlay"
+class="overlay"
+onclick="toggleNavbar()">
+
+</div>
+
+<!-- =========================
+     NAV BUTTON
+========================= -->
+
+<div class="navTrigger"
+onclick="toggleNavbar()">
+
+    <img src="icon.png">
+
+</div>
+
+<!-- =========================
+     HEADER
+========================= -->
+
+<div class="headerBox">
+
+    <div class="headerLeft">
+
+        <img src="icon.png"
+        class="mainLogo">
+
+    </div>
+
+    <div class="headerRight">
+
+        <h1>
+            COMÉRSIO CENTER
+        </h1>
+
+        <p>
+            Pusat Hitungan termasuk hutang
+            <br>
+            customer dihitung.
+        </p>
+
+    </div>
+
+</div>
+
+<!-- =========================
+     CUSTOMER LIST
+========================= -->
+
+<div class="customerListBox">
+
+    <h2>
+        DAFTAR CUSTOMER DAN ID NYA
+    </h2>
+
+    <div id="customerList">
+
+    </div>
+
+</div>
+
+<!-- =========================
+     BUTTON TAMBAH
+========================= -->
+
+<div class="addCustomerButton"
+onclick="openPopup()">
+
+    TAMBAHKAN CUSTOMER DAN ID NYA
+
+</div>
+
+<!-- =========================
+     POPUP
+========================= -->
+
+<div id="popupBox"
+class="popupBox">
+
+    <div class="popupContent">
+
+        <h2>
+            ID CUSTOMER
+        </h2>
+
+        <input type="text"
+        id="customerId"
+        placeholder="Masukkan ID Customer mu disini...">
+
+        <h2>
+            NAMA CUSTOMER
+        </h2>
+
+        <input type="text"
+        id="customerName"
+        placeholder="Masukkan nama customer disini...">
+
+        <!-- BUTTON GROUP -->
+
+        <div class="popupButtonGroup">
+
+            <button class="cancelButton"
+            onclick="closePopup()">
+
+                Cancel
+
+            </button>
+
+            <button class="addButton"
+            onclick="addCustomer()">
+
+                Tambahkan
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- =========================
+     FOOTER
+========================= -->
+
+<div class="footerBox">
+
+    <p>
+        © Comérsio LTD 2024
+    </p>
+
+    <p>
+        083874854586 (Call me)
+    </p>
+
+    <br>
+
+    <p>
+        Jalau Taman Nyiur no 7
+        RT 001/RW15,
+        Sunter Agung,
+        Tanjung Priok,
+        Jakarta Utara,
+        DKI Jakarta
+    </p>
+
+</div>
+
+<!-- =========================
+     SCRIPT
+========================= -->
+
+<script>
+	
+	/* =========================
+   LOAD USER DATA
+========================= */
+
+document
+.getElementById("navUsername")
+.innerText =
+
+localStorage.getItem(
+    "username"
+) || "Unknown User";
+
+document
+.getElementById("navEmail")
+.innerText =
+
+localStorage.getItem(
+    "email"
+) || "No Email";
+
+document
+.getElementById("navTitle")
+.innerText =
+
+localStorage.getItem(
+    "title"
+) || "No Title";
+
+function toggleNavbar(){
+
+    const navbar =
+    document.getElementById("navbar");
+
+    const overlay =
+    document.getElementById("overlay");
+
+    navbar.classList.toggle("active");
+
+    overlay.classList.toggle("active");
+
+    document.body.classList.toggle("navActive");
+
+}
+
+/* OPEN POPUP */
+
+function openPopup(){
+
+    document
+    .getElementById("popupBox")
+    .classList.add("active");
+
+}
+
+/* CLOSE POPUP */
+
+function closePopup(){
+
+    document
+    .getElementById("popupBox")
+    .classList.remove("active");
+
+}
+
+/* LOAD CUSTOMER */
+
+window.onload = function(){
+
+    const customers =
+    JSON.parse(localStorage.getItem("customers")) || [];
+
+    const list =
+    document.getElementById("customerList");
+
+    customers.forEach(data => {
+
+        const item =
+        document.createElement("div");
+
+        item.classList.add("customerItem");
+
+        item.innerHTML = `
+
+            <h3>ID : ${data.id}</h3>
+
+            <p>${data.name}</p>
+
+        `;
+
+        list.appendChild(item);
+
+    });
+
+}
+
+/* ADD CUSTOMER */
+
+function addCustomer(){
+
+    const id =
+    document.getElementById("customerId").value;
+
+    const name =
+    document.getElementById("customerName").value;
+
+    if(id === "" || name === ""){
+
+        return;
+
+    }
+
+    const customerData = {
+
+        id:id,
+        name:name
+
+    };
+
+    const customers =
+    JSON.parse(localStorage.getItem("customers")) || [];
+
+    customers.push(customerData);
+
+    localStorage.setItem(
+        "customers",
+        JSON.stringify(customers)
+    );
+
+    const list =
+    document.getElementById("customerList");
+
+    const item =
+    document.createElement("div");
+
+    item.classList.add("customerItem");
+
+    item.innerHTML = `
+
+        <h3>ID : ${id}</h3>
+
+        <p>${name}</p>
+
+    `;
+
+    list.appendChild(item);
+
+    document.getElementById("customerId").value = "";
+
+    document.getElementById("customerName").value = "";
+
+    closePopup();
+
+}
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1354 @@
+@font-face {
+    font-family:"Bernier";
+    src:url("BERNIERRegular-Regular.otf");
+}
+
+@font-face {
+    font-family:"TimesCustom";
+    src:url("times new roman.ttf");
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    background:#050505;
+    overflow-x:hidden;
+    padding:20px;
+    transition:0.3s;
+}
+
+/* =========================
+   LOGIN
+========================= */
+
+.loginBody{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+}
+
+.loginContainer{
+    width:340px;
+    background:#1f1f1f;
+    border:4px solid #ffe600;
+    border-radius:28px;
+    padding:25px;
+
+    display:flex;
+    flex-direction:column;
+
+    gap:15px;
+
+    box-shadow:
+    0 0 25px rgba(255,230,0,0.18);
+}
+
+.loginLogo{
+    width:90px;
+    margin:auto;
+}
+
+.loginTitle{
+    text-align:center;
+    color:#ffe600;
+    font-family:"Bernier";
+    font-size:30px;
+    letter-spacing:1px;
+}
+
+.loginContainer input{
+    padding:14px;
+    border-radius:14px;
+    border:none;
+    outline:none;
+
+    background:#0e0e0e;
+    color:white;
+
+    font-size:15px;
+
+    font-family:"TimesCustom";
+}
+
+.loginContainer button{
+    padding:14px;
+    border:none;
+    border-radius:14px;
+
+    background:#ffe600;
+    color:black;
+
+    font-size:16px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+}
+
+/* ALERT */
+
+.bubbleAlert{
+    position:fixed;
+
+    bottom:-100px;
+    left:50%;
+
+    transform:translateX(-50%);
+
+    background:#ff2e2e;
+    color:white;
+
+    padding:14px 28px;
+
+    border-radius:50px;
+
+    transition:0.4s;
+
+    font-weight:bold;
+
+    z-index:999999;
+}
+
+.bubbleAlert.show{
+    bottom:30px;
+}
+
+/* =========================
+   NAV TRIGGER
+========================= */
+
+.navTrigger{
+    position:fixed;
+
+    left:-35px;
+    top:50%;
+
+    transform:translateY(-50%);
+
+    width:75px;
+    height:75px;
+
+    background:#1f1f1f;
+
+    border:4px solid #1e90ff;
+
+    border-radius:50%;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    z-index:10002;
+
+    cursor:pointer;
+
+    transition:0.2s;
+}
+
+.navTrigger img{
+    width:50px;
+    height:50px;
+    object-fit:contain;
+}
+
+body.navActive .navTrigger{
+    opacity:0;
+    pointer-events:none;
+}
+
+/* =========================
+   OVERLAY
+========================= */
+
+.overlay{
+    position:fixed;
+
+    inset:0;
+
+    background:rgba(0,0,0,0.18);
+
+    opacity:0;
+    visibility:hidden;
+
+    transition:0.3s;
+
+    z-index:9998;
+}
+
+.overlay.active{
+    opacity:1;
+    visibility:visible;
+}
+
+/* =========================
+   NAVBAR
+========================= */
+
+.navbar{
+    position:fixed;
+
+    top:0;
+    left:-320px;
+
+    width:280px;
+    height:100vh;
+
+    background:#1f1f1f;
+
+    border-right:4px solid #ffe600;
+
+    border-radius:0 25px 25px 0;
+
+    z-index:10001;
+
+    transition:0.3s;
+
+    overflow-y:auto;
+
+    padding-bottom:20px;
+}
+
+.navbar.active{
+    left:0;
+}
+
+/* CLOSE */
+
+.closeNavbar{
+    position:absolute;
+
+    right:18px;
+    top:12px;
+
+    color:#ffe600;
+
+    font-size:30px;
+
+    cursor:pointer;
+
+    font-weight:bold;
+}
+
+/* PROFILE */
+
+.navbarHeader{
+    display:flex;
+
+    gap:12px;
+
+    padding:25px 18px;
+
+    align-items:center;
+}
+
+.navLogo{
+    width:65px;
+    height:65px;
+
+    object-fit:contain;
+}
+
+.navText{
+    color:white;
+
+    font-family:"TimesCustom";
+
+    font-size:13px;
+
+    line-height:22px;
+}
+
+/* NAV MENU */
+
+.navbarMenu{
+    padding:10px;
+}
+
+.navMenuBox{
+    width:100%;
+
+    min-height:65px;
+
+    background:#2a2a2a;
+
+    border:3px solid #ffe600;
+
+    border-radius:18px;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    padding:10px 12px;
+
+    margin-bottom:12px;
+
+    cursor:pointer;
+
+    text-decoration:none;
+
+    transition:0.2s;
+}
+
+.navMenuBox img{
+    width:45px;
+    height:45px;
+
+    border-radius:50%;
+
+    object-fit:cover;
+}
+
+.navMenuBox span{
+    color:#dce8ff;
+
+    font-family:"Bernier";
+
+    font-size:15px;
+
+    line-height:17px;
+}
+
+.navbar.active ~ .navTrigger{
+
+    opacity:0;
+
+    pointer-events:none;
+
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.headerBox{
+    width:100%;
+
+    min-height:120px;
+
+    background:#202020;
+
+    border:4px solid #ffe600;
+
+    border-radius:30px;
+
+    display:flex;
+
+    align-items:center;
+
+    padding:15px 20px;
+
+    margin-bottom:30px;
+
+    transition:0.3s;
+}
+
+.mainLogo{
+    width:75px;
+}
+
+.headerRight{
+    margin-left:15px;
+}
+
+.headerRight h1{
+    color:#ffe600;
+
+    font-family:"Bernier";
+
+    font-size:30px;
+
+    line-height:32px;
+}
+
+.headerRight p{
+    color:white;
+
+    font-family:"TimesCustom";
+
+    font-size:14px;
+
+    line-height:18px;
+
+    margin-top:6px;
+}
+
+/* OPSI */
+
+.opsiTrack{
+    text-align:center;
+
+    color:#ffe600;
+
+    font-family:"Bernier";
+
+    font-size:28px;
+
+    margin-bottom:25px;
+}
+
+/* MENU */
+
+.menuBox{
+    width:100%;
+
+    background:#202020;
+
+    border:4px solid #ffe600;
+
+    border-radius:28px;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+
+    padding:14px;
+
+    margin-bottom:18px;
+
+    cursor:pointer;
+
+    transition:0.2s;
+}
+
+.menuBox img{
+    width:60px;
+    height:60px;
+
+    object-fit:cover;
+
+    border-radius:50%;
+}
+
+.menuBox h3{
+    color:#dce8ff;
+
+    font-family:"Bernier";
+
+    font-size:18px;
+
+    line-height:22px;
+}
+
+/* BUTTON EFFECT */
+
+.menuBox:hover,
+.navMenuBox:hover,
+.navTrigger:hover,
+.loginContainer button:hover{
+    transform:translateY(-3px);
+}
+
+.menuBox:active,
+.navMenuBox:active,
+.navTrigger:active,
+.loginContainer button:active{
+    transform:scale(0.97);
+}
+
+/* =========================
+   CUSTOMER PAGE
+========================= */
+
+.customerListBox{
+    width:100%;
+
+    min-height:250px;
+
+    background:#202020;
+
+    border:4px solid #ffe600;
+
+    border-radius:30px;
+
+    padding:18px;
+}
+
+.customerListBox h2{
+    text-align:center;
+
+    color:#dce8ff;
+
+    font-family:"Bernier";
+
+    font-size:22px;
+
+    margin-bottom:20px;
+}
+
+/* CUSTOMER DATA */
+
+#customerList{
+    width:100%;
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:15px;
+}
+
+.customerItem{
+    width:100%;
+
+    min-height:65px;
+
+    background:#2a2a2a;
+
+    border:3px solid #ffe600;
+
+    border-radius:18px;
+
+    padding:12px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+}
+
+.customerItem h3{
+    color:#dce8ff;
+
+    font-family:"Bernier";
+
+    font-size:16px;
+
+    margin-bottom:3px;
+}
+
+.customerItem p{
+    color:white;
+
+    font-family:"TimesCustom";
+
+     font-size:15px;
+}
+
+.menuBox{
+
+    text-decoration:none;
+
+    color:white;
+
+}
+
+/* BUTTON TAMBAH */
+
+.addCustomerButton{
+    width:100%;
+
+    background:#202020;
+
+    border:4px solid #ffe600;
+
+    border-radius:24px;
+
+    margin-top:25px;
+
+    padding:16px;
+
+    text-align:center;
+
+    color:#dce8ff;
+
+    font-family:"Bernier";
+
+    font-size:18px;
+
+    cursor:pointer;
+
+    transition:0.2s;
+}
+
+/* POPUP */
+
+.popupBox{
+    position:fixed;
+
+    inset:0;
+
+    background:rgba(0,0,0,0.45);
+
+    display:none;
+
+    justify-content:center;
+
+    align-items:center;
+
+    z-index:99999;
+}
+
+.popupBox.active{
+    display:flex;
+}
+
+.popupContent{
+    width:90%;
+    max-width:380px;
+
+    background:#1f1f1f;
+
+    border:4px solid #ffe600;
+
+    border-radius:28px;
+
+    padding:22px;
+}
+
+.popupContent h2{
+    text-align:center;
+
+    color:#dce8ff;
+
+    font-family:"Bernier";
+
+    font-size:20px;
+
+    margin-bottom:12px;
+}
+
+.popupContent input{
+    width:100%;
+
+    height:55px;
+
+    border:none;
+    outline:none;
+
+    border-radius:18px;
+
+    padding:15px;
+
+    margin-bottom:15px;
+
+    font-size:14px;
+
+    border:4px solid #0057d8;
+
+    font-family:"TimesCustom";
+}
+
+/* =========================
+   BUTTON GROUP
+========================= */
+
+.popupButtonGroup{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:12px;
+
+    margin-top:10px;
+
+}
+
+.cancelButton{
+
+    width:100%;
+
+    height:50px;
+
+    border:none;
+
+    border-radius:16px;
+
+    background:#ff3b3b;
+
+    color:white;
+
+    font-size:16px;
+
+    font-family:"TimesCustom";
+
+    cursor:pointer;
+
+    transition:0.2s;
+
+}
+
+.addButton{
+
+    width:100%;
+
+    height:50px;
+
+    border:none;
+
+    border-radius:16px;
+
+    background:#4caf50;
+
+    color:white;
+
+    font-size:16px;
+
+    font-family:"TimesCustom";
+
+    cursor:pointer;
+
+    transition:0.2s;
+
+}
+
+.cancelButton:hover,
+.addButton:hover{
+
+    transform:translateY(-2px);
+
+}
+
+.cancelButton:active,
+.addButton:active{
+
+    transform:scale(0.97);
+
+}
+
+/* FOOTER */
+
+.footerBox{
+    width:100%;
+
+    background:#202020;
+
+    border:4px solid #ffe600;
+
+    border-radius:25px;
+
+    padding:25px 15px;
+
+    color:white;
+
+    text-align:center;
+
+    font-family:"TimesCustom";
+
+    margin-top:35px;
+}
+
+.footerBox p{
+    font-size:14px;
+
+    line-height:20px;
+
+    margin-bottom:8px;
+}
+
+/* BLUR */
+
+body.navActive .headerBox,
+body.navActive .opsiTrack,
+body.navActive .menuBox,
+body.navActive .footerBox,
+body.navActive .customerListBox,
+body.navActive .addCustomerButton{
+    filter:blur(4px);
+    opacity:0.6;
+    pointer-events:none;
+}
+
+/* =========================
+   POPUP FIX TOTAL
+========================= */
+
+.popupBox{
+
+    position:fixed;
+
+    inset:0;
+
+    background:rgba(0,0,0,0.45);
+
+    display:none;
+
+    justify-content:center;
+
+    align-items:center;
+
+    padding:20px;
+
+    z-index:99999;
+
+}
+
+.popupBox.active{
+
+    display:flex;
+
+}
+
+.popupContent{
+
+    width:100%;
+
+    max-width:320px;
+
+    background:#1f1f1f;
+
+    border:4px solid #ffe600;
+
+    border-radius:28px;
+
+    padding:22px;
+
+    margin:auto;
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:12px;
+
+}
+
+.popupContent h2{
+
+    text-align:center;
+
+    color:#dce8ff;
+
+    font-family:"Bernier";
+
+    font-size:20px;
+
+    margin:0;
+
+}
+
+.popupContent input{
+
+    width:100%;
+
+    height:50px;
+
+    border:none;
+
+    outline:none;
+
+    border-radius:16px;
+
+    padding:12px 15px;
+
+    font-size:14px;
+
+    border:4px solid #5d74d6;
+
+    background:#3b3b3b;
+
+    color:white;
+
+    font-family:"TimesCustom";
+
+}
+
+.popupContent input::placeholder{
+
+    color:rgba(255,255,255,0.45);
+
+}
+
+.cancelButton{
+
+    width:100%;
+
+    height:50px;
+
+    border:none;
+
+    border-radius:16px;
+
+    background:#ff3b3b;
+
+    color:white;
+
+    font-size:16px;
+
+    font-family:"TimesCustom";
+
+    cursor:pointer;
+
+    margin-top:5px;
+
+}
+
+.addButton{
+
+    width:100%;
+
+    height:50px;
+
+    border:none;
+
+    border-radius:16px;
+
+    background:#4caf50;
+
+    color:white;
+
+    font-size:16px;
+
+    font-family:"TimesCustom";
+
+    cursor:pointer;
+
+}
+
+/* =========================
+   DEBT PAGE
+========================= */
+
+.billTop{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:20px;
+
+}
+
+.billTop h2{
+
+    margin:0;
+
+}
+
+.billTop span{
+
+    color:white;
+
+    font-family:"TimesCustom";
+
+    font-size:13px;
+
+}
+
+.sheetBox{
+
+    width:100%;
+
+    min-height:500px;
+
+    background:white;
+
+    border:3px solid #000;
+
+    padding:10px;
+
+    overflow:auto;
+
+}
+
+.sheetBox table{
+
+    width:100%;
+
+    border-collapse:collapse;
+
+}
+
+.sheetBox th{
+
+    font-family:"TimesCustom";
+
+    font-size:18px;
+
+    color:black;
+
+    padding:8px;
+
+    text-align:left;
+
+}
+
+.sheetBox td{
+
+    font-family:"TimesCustom";
+
+    font-size:16px;
+
+    color:black;
+
+    padding:6px;
+
+}
+
+/* SELECT */
+
+.popupContent select{
+
+    width:100%;
+
+    height:55px;
+
+    border:none;
+
+    outline:none;
+
+    border-radius:16px;
+
+    padding:12px;
+
+    font-size:14px;
+
+    border:4px solid #5d74d6;
+
+    background:#3b3b3b;
+
+    color:white;
+
+    font-family:"TimesCustom";
+
+    margin-bottom:15px;
+
+}
+
+.billTop{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:15px;
+
+}
+
+.billTop span{
+
+    color:white;
+
+    font-size:13px;
+
+    font-family:"TimesCustom";
+
+}
+
+.sheetBox{
+
+    background:white;
+
+    border-radius:10px;
+
+    padding:10px;
+
+    overflow-x:auto;
+
+}
+
+.sheetBox table{
+
+    width:100%;
+
+    border-collapse:collapse;
+
+    color:black;
+
+    font-family:"TimesCustom";
+
+}
+
+.sheetBox th{
+
+    padding:10px;
+
+    font-size:16px;
+
+    border-bottom:2px solid black;
+
+    text-align:center;
+
+}
+
+.sheetBox td{
+
+    padding:10px;
+
+    font-size:14px;
+
+    border-bottom:1px solid #999;
+
+    text-align:center;
+
+}
+
+.totalDebtBox{
+
+    margin-top:15px;
+
+    text-align:right;
+
+    color:black;
+
+    font-size:18px;
+
+    font-family:"Bernier";
+
+}
+
+.popupContent select{
+
+    width:100%;
+
+    height:50px;
+
+    border:none;
+
+    outline:none;
+
+    border-radius:16px;
+
+    padding:10px;
+
+    margin-bottom:15px;
+
+    border:4px solid #5d74d6;
+
+    background:#3b3b3b;
+
+    color:white;
+
+    font-family:"TimesCustom";
+
+    font-size:14px;
+
+}
+
+/* =========================
+   SELECT CUSTOMER
+========================= */
+
+.activeCustomerSelect{
+
+    width:100%;
+
+    margin-top:10px;
+
+    height:45px;
+
+    border:none;
+
+    outline:none;
+
+    border-radius:14px;
+
+    padding:10px;
+
+    background:#2a2a2a;
+
+    color:white;
+
+    border:3px solid #ffe600;
+
+    font-family:"TimesCustom";
+
+    font-size:13px;
+
+}
+
+/* =========================
+   TABLE
+========================= */
+
+.sheetBox{
+
+    width:100%;
+
+    overflow-x:auto;
+
+    margin-top:15px;
+
+}
+
+.sheetBox table{
+
+    width:100%;
+
+    border-collapse:collapse;
+
+    font-size:9px;
+
+}
+
+.sheetBox th{
+
+    background:#ffe600;
+
+    color:black;
+
+    padding:6px 3px;
+
+    font-family:"Bernier";
+
+    font-size:9px;
+
+}
+
+.sheetBox td{
+
+    background:#2a2a2a;
+
+    color:white;
+
+    padding:6px 3px;
+
+    text-align:center;
+
+    border-bottom:2px solid #111;
+
+    word-break:break-word;
+
+    font-family:"TimesCustom";
+
+    font-size:9px;
+
+    line-height:11px;
+
+}
+
+.editableBayar{
+
+    color:#ffe600;
+
+    cursor:pointer;
+
+    font-weight:bold;
+
+}
+
+/* =========================
+   TOTAL
+========================= */
+
+.totalDebtBox{
+
+    margin-top:18px;
+
+    background:#2a2a2a;
+
+    border:3px solid #ffe600;
+
+    border-radius:18px;
+
+    padding:15px;
+
+    color:white;
+
+    font-family:"Bernier";
+
+    text-align:center;
+
+    font-size:17px;
+
+}
+
+.paymentMethod{
+
+    width:100%;
+
+    min-height:60px;
+
+    background:#2a2a2a;
+
+    border:3px solid #ffe600;
+
+    border-radius:18px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    gap:10px;
+
+    margin-bottom:12px;
+
+    cursor:pointer;
+
+    color:white;
+
+    font-family:"Bernier";
+
+    font-size:16px;
+
+}
+
+.paymentMethod img{
+
+    width:40px;
+    height:40px;
+
+    object-fit:contain;
+
+}
+
+.qrisImage{
+
+    width:100%;
+
+    border-radius:20px;
+
+    margin-top:20px;
+
+}
+
+.paymentList{
+
+    margin-top:20px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:15px;
+
+}
+
+.paymentList p{
+
+    background:#2a2a2a;
+
+    padding:15px;
+
+    border-radius:18px;
+
+    color:white;
+
+    line-height:24px;
+
+    font-size:14px;
+
+}
+
+.editableBayar{
+
+    transition:0.2s;
+
+}
+
+.editableBayar:hover{
+
+    background:#1a1a1a;
+
+}

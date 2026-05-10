@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+    content="width=device-width, initial-scale=1.0">
+
+    <title>
+        Rekap Total Comérsio
+    </title>
+
+    <link rel="stylesheet"
+    href="style.css">
+
+</head>
+
+<body>
+
+<!-- =========================
+     NAVBAR
+========================= -->
+
+<div id="navbar"
+class="navbar">
+
+    <div class="closeNavbar"
+    onclick="toggleNavbar()">
+
+        ✕
+
+    </div>
+
+    <div class="navbarHeader">
+
+        <img src="icon.png"
+        class="navLogo">
+
+        <div class="navText">
+
+    <p id="navUsername"></p>
+    <p id="navEmail"></p>
+    <p id="navTitle"></p>
+
+</div>
+
+    </div>
+
+    <!-- NAV MENU -->
+
+    <div class="navbarMenu">
+
+        <a href="index.html"
+        class="navMenuBox">
+
+            <img src="icon.png">
+
+            <span>
+                Menu
+            </span>
+
+        </a>
+
+        <a href="customer.html"
+        class="navMenuBox">
+
+            <img src="nama.png">
+
+            <span>
+                Nama & ID Customer
+            </span>
+
+        </a>
+
+        <a href="produk.html"
+        class="navMenuBox">
+
+            <img src="voucher.png">
+
+            <span>
+                Produk
+            </span>
+
+        </a>
+
+        <a href="debt.html"
+        class="navMenuBox">
+
+            <img src="debt.png">
+
+            <span>
+                Rekap Utang
+            </span>
+
+        </a>
+
+        <a href="monthly.html"
+        class="navMenuBox">
+
+            <img src="pembukuan.png">
+
+            <span>
+                Monthly Report
+            </span>
+
+        </a>
+        
+        <a href="recap.html"
+        class="navMenuBox">
+
+            <img src="rekap.png">
+
+            <span>
+                Rekap Utang Total
+            </span>
+
+        </a>
+
+    </div>
+
+</div>
+
+<!-- =========================
+     OVERLAY
+========================= -->
+
+<div id="overlay"
+class="overlay"
+onclick="toggleNavbar()">
+
+</div>
+
+<!-- =========================
+     NAV BUTTON
+========================= -->
+
+<div class="navTrigger"
+onclick="toggleNavbar()">
+
+    <img src="icon.png">
+
+</div>
+
+<!-- =========================
+     HEADER
+========================= -->
+
+<div class="headerBox">
+
+    <div class="headerLeft">
+
+        <img src="icon.png"
+        class="mainLogo">
+
+    </div>
+
+    <div class="headerRight">
+
+        <h1>
+            COMÉRSIO CENTER
+        </h1>
+
+        <p>
+            Rekap Total Utang Customer
+        </p>
+
+    </div>
+
+</div>
+
+<!-- =========================
+     REKAP
+========================= -->
+
+<div class="customerListBox">
+
+    <div class="billTop">
+    	<div class="monthlyInfo">
+
+    BULAN :
+    <span id="bulanNow">
+
+    </span>
+
+</div>
+
+        <div>
+
+            <h2 id="rekapTitle">
+
+                REKAP TOTAL
+
+            </h2>
+
+        </div>
+
+        <span id="dateNow"></span>
+
+    </div>
+
+    <div class="sheetBox">
+
+        <table>
+
+            <thead>
+
+    <tr>
+
+        <th>Tanggal</th>
+        <th>ID Cust</th>
+        <th>Produk</th>
+        <th>Utang</th>
+        <th>Dibayar</th>
+        <th>Tip</th>
+
+    </tr>
+
+</thead>
+
+            <tbody id="rekapTable">
+
+            </tbody>
+
+        </table>
+
+        <!-- TOTAL -->
+
+        <div class="totalDebtBox">
+
+            <p>
+
+                TOTAL UTANG :
+                Rp <span id="totalUtang">
+
+                    0
+
+                </span>
+
+            </p>
+
+            <p>
+
+                TOTAL DIBAYAR :
+                Rp <span id="totalBayar">
+
+                    0
+
+                </span>
+
+            </p>
+
+            <p>
+
+                TOTAL TIP :
+                Rp <span id="totalTip">
+
+                    0
+
+                </span>
+
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- =========================
+     FOOTER
+========================= -->
+
+<div class="footerBox">
+
+    <p>
+        © Comérsio LTD 2024
+    </p>
+
+    <p>
+        083874854586
+        (Call me)
+    </p>
+
+</div>
+
+<script>
+	
+	/* =========================
+   LOAD USER DATA
+========================= */
+
+document
+.getElementById("navUsername")
+.innerText =
+
+localStorage.getItem(
+    "username"
+) || "Unknown User";
+
+document
+.getElementById("navEmail")
+.innerText =
+
+localStorage.getItem(
+    "email"
+) || "No Email";
+
+document
+.getElementById("navTitle")
+.innerText =
+
+localStorage.getItem(
+    "title"
+) || "No Title";
+
+/* =========================
+   NAVBAR
+========================= */
+
+function toggleNavbar(){
+
+    const navbar =
+    document.getElementById("navbar");
+
+    const overlay =
+    document.getElementById("overlay");
+
+    navbar.classList.toggle("active");
+
+    overlay.classList.toggle("active");
+
+    document.body.classList.toggle("navActive");
+
+}
+
+/* =========================
+   DATE & TITLE
+========================= */
+
+function updateDateTime(){
+
+    const now = new Date();
+
+    const day =
+    String(now.getDate()).padStart(2,"0");
+
+    const month =
+    String(now.getMonth()+1).padStart(2,"0");
+
+    const yearShort =
+    String(now.getFullYear()).slice(-2);
+
+    const fullYear =
+    now.getFullYear();
+
+    const hours =
+    String(now.getHours()).padStart(2,"0");
+
+    const minutes =
+    String(now.getMinutes()).padStart(2,"0");
+
+    const seconds =
+    String(now.getSeconds()).padStart(2,"0");
+
+    const namaBulan = [
+
+        "JANUARI",
+        "FEBRUARI",
+        "MARET",
+        "APRIL",
+        "MEI",
+        "JUNI",
+        "JULI",
+        "AGUSTUS",
+        "SEPTEMBER",
+        "OKTOBER",
+        "NOVEMBER",
+        "DESEMBER"
+
+    ];
+
+    document
+    .getElementById("dateNow")
+    .innerText =
+
+    `${day}/${month}/${yearShort}
+    ${hours}:${minutes}:${seconds}`;
+
+    document
+    .getElementById("rekapTitle")
+    .innerText =
+
+    `REKAP TOTAL ${fullYear}`;
+
+    document
+    .getElementById("bulanNow")
+    .innerText =
+
+    namaBulan[now.getMonth()];
+
+}
+
+updateDateTime();
+
+setInterval(updateDateTime,1000);
+
+/* =========================
+   LOAD DATA
+========================= */
+
+const debts =
+JSON.parse(
+    localStorage.getItem("debts")
+) || {};
+
+const table =
+document.getElementById("rekapTable");
+
+let totalUtang = 0;
+
+let totalBayar = 0;
+
+let totalTip = 0;
+
+/* =========================
+   LOOP DATA
+========================= */
+
+for(const customerId in debts){
+
+    debts[customerId].forEach(item => {
+
+        const utang =
+        item.harga - item.dibayar;
+
+        const row =
+        document.createElement("tr");
+
+        row.innerHTML = `
+
+            <td>
+                ${item.tanggal || "-"}
+            </td>
+
+            <td>
+                ${customerId}
+            </td>
+
+            <td>
+                ${item.produk}
+            </td>
+
+            <td>
+                Rp ${utang.toLocaleString("id-ID")}
+            </td>
+
+            <td>
+                Rp ${item.dibayar.toLocaleString("id-ID")}
+            </td>
+
+            <td>
+                Rp ${(item.tip || 0)
+                .toLocaleString("id-ID")}
+            </td>
+
+        `;
+
+        table.appendChild(row);
+
+        totalUtang += utang;
+
+        totalBayar += item.dibayar;
+
+        totalTip += item.tip || 0;
+
+    });
+
+}
+
+/* =========================
+   RENDER TOTAL
+========================= */
+
+document
+.getElementById("totalUtang")
+.innerText =
+
+totalUtang.toLocaleString("id-ID");
+
+document
+.getElementById("totalBayar")
+.innerText =
+
+totalBayar.toLocaleString("id-ID");
+
+document
+.getElementById("totalTip")
+.innerText =
+
+totalTip.toLocaleString("id-ID");
+
+</script>
+
+</body>
+
+</html>

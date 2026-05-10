@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>
+Payment Comérsio
+</title>
+
+<link rel="stylesheet"
+href="style.css">
+
+<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js">
+</script>
+
+<style>
+
+/* =========================
+   BODY
+========================= */
+
+body{
+
+    padding-top:80px;
+
+}
+
+/* =========================
+   TABLE
+========================= */
+
+table{
+
+    width:100%;
+    border-collapse:collapse;
+    margin-top:20px;
+    font-size:12px;
+
+}
+
+th,td{
+
+    padding:10px;
+    text-align:center;
+    border-bottom:1px solid #333;
+
+}
+
+thead{
+
+    background:#4a3b00;
+
+}
+
+/* =========================
+   SHEET
+========================= */
+
+.sheetBox{
+
+    min-height:auto !important;
+    height:auto !important;
+    padding-bottom:10px;
+
+}
+
+/* =========================
+   PAYMENT INFO
+========================= */
+
+.paymentInfo{
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-top:18px;
+    margin-bottom:18px;
+    font-size:13px;
+    color:white;
+    gap:20px;
+
+}
+
+.paymentInfoRight{
+
+    text-align:right;
+
+}
+
+.paymentInfo p{
+
+    margin:0;
+    line-height:22px;
+
+}
+
+/* =========================
+   QRIS
+========================= */
+
+.qrisWrap{
+
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    margin-top:20px;
+
+}
+
+.qrisTitle{
+
+    font-size:18px;
+    font-weight:bold;
+    margin-bottom:14px;
+    color:#ffe600;
+
+}
+
+.qrisImage{
+
+    width:180px;
+    border-radius:18px;
+    border:2px solid #ffe600;
+
+}
+
+/* =========================
+   PAYMENT LIST
+========================= */
+
+.paymentList{
+
+    margin-top:20px;
+
+}
+
+.paymentTitle{
+
+    font-size:18px;
+    font-weight:bold;
+    color:#ffe600;
+    margin-bottom:14px;
+    text-align:center;
+
+}
+
+.paymentCard{
+
+    background:#2a2a2a;
+    padding:14px;
+    border-radius:18px;
+    line-height:24px;
+    font-size:14px;
+    border:2px solid #ffe600;
+    text-align:center;
+
+}
+
+/* =========================
+   SAVE BUTTON
+========================= */
+
+.saveButton{
+
+    width:100%;
+    height:55px;
+    border:none;
+    border-radius:18px;
+    margin-top:24px;
+    margin-bottom:40px;
+    background:#ffe600;
+    color:black;
+    font-size:15px;
+    font-weight:bold;
+    cursor:pointer;
+    position:relative;
+
+}
+
+/* =========================
+   NO CAPTURE
+========================= */
+
+.noCapture{
+
+    z-index:9999;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+
+<div id="navbar"
+class="navbar">
+
+    <div class="closeNavbar"
+    onclick="toggleNavbar()">
+
+        ✕
+
+    </div>
+
+    <!-- PROFILE -->
+
+    <div class="navbarHeader">
+
+        <img src="icon.png"
+        class="navLogo">
+
+        <div class="navText">
+
+    <p id="navUsername"></p>
+    <p id="navEmail"></p>
+    <p id="navTitle"></p>
+
+</div>
+
+    </div>
+
+    <!-- NAV MENU -->
+
+    <div class="navbarMenu">
+
+        <a href="index.html"
+        class="navMenuBox">
+
+            <img src="icon.png">
+
+            <span>
+                Menu
+            </span>
+
+        </a>
+
+        <a href="customer.html"
+        class="navMenuBox">
+
+            <img src="nama.png">
+
+            <span>
+                Nama & ID Customer
+            </span>
+
+        </a>
+
+        <a href="produk.html"
+        class="navMenuBox">
+
+            <img src="voucher.png">
+
+            <span>
+                Produk
+            </span>
+
+        </a>
+
+        <a href="debt.html"
+        class="navMenuBox">
+
+            <img src="debt.png">
+
+            <span>
+                Rekap Utang
+            </span>
+
+        </a>
+
+        <a href="monthly.html"
+        class="navMenuBox">
+
+            <img src="pembukuan.png">
+
+            <span>
+                Monthly Report
+            </span>
+
+        </a>
+        
+        <a href="recap.html"
+        class="navMenuBox">
+
+            <img src="rekap.png">
+
+            <span>
+                Rekap Utang Total
+            </span>
+
+        </a>
+
+    </div>
+
+</div>
+
+<!-- =========================
+     OVERLAY
+========================= -->
+
+<div id="overlay"
+class="overlay"
+onclick="toggleNavbar()">
+
+</div>
+
+<!-- =========================
+     NAV TRIGGER
+========================= -->
+
+<div class="navTrigger noCapture"
+onclick="toggleNavbar()">
+
+    <img src="icon.png">
+
+</div>
+
+<!-- =========================
+     CAPTURE AREA
+========================= -->
+
+<div id="captureArea">
+
+<!-- HEADER -->
+
+<div class="headerBox">
+
+    <div class="headerLeft">
+
+        <img src="icon.png"
+        class="mainLogo">
+
+    </div>
+
+    <div class="headerRight">
+
+        <h1>
+            COMÉRSIO CENTER 
+        </h1>
+
+    </div>
+
+</div>
+
+<!-- BOX -->
+
+<div class="customerListBox">
+
+    <h2>
+
+        DETAIL PEMBAYARAN
+
+    </h2>
+
+    <!-- INFO -->
+
+    <div class="paymentInfo">
+
+        <div>
+
+            <p id="paymentCustomerId">
+
+            </p>
+
+        </div>
+
+        <div class="paymentInfoRight">
+
+            <p id="livePaymentTime">
+
+            </p>
+
+        </div>
+
+    </div>
+
+    <!-- TABLE -->
+
+    <div class="sheetBox">
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>Produk</th>
+                    <th>Harga</th>
+                    <th>Diskon</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody id="paymentTable">
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+    <!-- TOTAL -->
+
+    <div class="totalDebtBox">
+
+        TOTAL :
+        Rp <span id="paymentTotal">
+
+        </span>
+
+    </div>
+
+    <!-- PAYMENT -->
+
+    <div id="paymentContent">
+
+    </div>
+
+</div>
+
+</div>
+
+<!-- BUTTON -->
+
+<button class="saveButton noCapture"
+onclick="saveAsImage()">
+
+    SIMPAN BILL
+
+</button>
+
+<script>
+	
+	/* =========================
+   LOAD USER DATA
+========================= */
+
+document
+.getElementById("navUsername")
+.innerText =
+
+localStorage.getItem(
+    "username"
+) || "Unknown User";
+
+document
+.getElementById("navEmail")
+.innerText =
+
+localStorage.getItem(
+    "email"
+) || "No Email";
+
+document
+.getElementById("navTitle")
+.innerText =
+
+localStorage.getItem(
+    "title"
+) || "No Title";
+
+/* =========================
+   NAVBAR
+========================= */
+
+function toggleNavbar(){
+
+    const navbar =
+    document.getElementById("navbar");
+
+    const overlay =
+    document.getElementById("overlay");
+
+    navbar.classList.toggle("active");
+
+    overlay.classList.toggle("active");
+
+}
+
+/* =========================
+   STORAGE
+========================= */
+
+const customer =
+localStorage.getItem(
+    "paymentCustomer"
+);
+
+const total =
+localStorage.getItem(
+    "paymentTotal"
+);
+
+const method =
+localStorage.getItem(
+    "paymentMethod"
+);
+
+const debts =
+JSON.parse(
+    localStorage.getItem("debts")
+) || {};
+
+/* =========================
+   CUSTOMER
+========================= */
+
+document
+.getElementById("paymentCustomerId")
+.innerText =
+
+`ID : ${customer}`;
+
+/* =========================
+   LIVE TIME
+========================= */
+
+function updateLivePaymentTime(){
+
+    const now = new Date();
+
+    const day =
+    String(now.getDate())
+    .padStart(2,"0");
+
+    const month =
+    String(now.getMonth()+1)
+    .padStart(2,"0");
+
+    const year =
+    now.getFullYear();
+
+    const hours =
+    String(now.getHours())
+    .padStart(2,"0");
+
+    const minutes =
+    String(now.getMinutes())
+    .padStart(2,"0");
+
+    const seconds =
+    String(now.getSeconds())
+    .padStart(2,"0");
+
+    document
+    .getElementById("livePaymentTime")
+    .innerText =
+
+    `${day}/${month}/${year}
+    •
+    ${hours}:${minutes}:${seconds}`;
+
+}
+
+updateLivePaymentTime();
+
+setInterval(
+    updateLivePaymentTime,
+    1000
+);
+
+/* =========================
+   TOTAL
+========================= */
+
+document
+.getElementById("paymentTotal")
+.innerText =
+
+parseInt(total)
+.toLocaleString("id-ID");
+
+/* =========================
+   TABLE
+========================= */
+
+const table =
+document.getElementById(
+    "paymentTable"
+);
+
+const customerDebt =
+debts[customer] || [];
+
+customerDebt.forEach(item => {
+
+    const row =
+    document.createElement("tr");
+
+    row.innerHTML = `
+
+        <td>
+            ${item.produk}
+        </td>
+
+        <td>
+            Rp ${item.harga
+            .toLocaleString("id-ID")}
+        </td>
+
+        <td>
+
+            Rp ${(item.diskon || 0)
+            .toLocaleString("id-ID")}
+
+        </td>
+
+    `;
+
+    table.appendChild(row);
+
+});
+
+/* =========================
+   PAYMENT CONTENT
+========================= */
+
+const content =
+document.getElementById(
+    "paymentContent"
+);
+
+/* =========================
+   PAYMENT DATA
+========================= */
+
+const paymentData = {
+
+    qris:{
+
+        logo:"QRIS Logo.png",
+        name:"QRIS",
+        type:"qris",
+        number:"",
+        owner:""
+
+    },
+
+    gopay:{
+
+        logo:"GoPay.png",
+        name:"GoPay",
+        type:"ewallet",
+        number:"083874854586",
+        owner:"An E•• P••••••"
+
+    },
+
+    dana:{
+
+        logo:"DANA.png",
+        name:"DANA",
+        type:"ewallet",
+        number:"081226672073",
+        owner:"An E•• P••••••"
+
+    },
+
+    shopeepay:{
+
+        logo:"ShopeePay.png",
+        name:"ShopeePay",
+        type:"ewallet",
+        number:"083874854586",
+        owner:"An E•• P••••••"
+
+    },
+
+    seabank:{
+
+        logo:"SeaBank.png",
+        name:"SeaBank",
+        type:"bank",
+        number:"901677273030",
+        owner:"An E•• P••••••"
+
+    },
+
+    bri:{
+
+        logo:"Bank BRI.png",
+        name:"BRI",
+        type:"bank",
+        number:"696101033719531",
+        owner:"An E•• P••••••"
+
+    },
+
+    bankjago:{
+
+        logo:"Bank Jago.png",
+        name:"Bank Jago",
+        type:"bank",
+        number:"100626307457",
+        owner:"An E•• P••••••"
+
+    },
+
+    krom:{
+
+        logo:"Krom.png",
+        name:"Krom",
+        type:"bank",
+        number:"770015012050",
+        owner:"An E•• P••••••"
+
+    }
+
+};
+
+const pay =
+paymentData[method];
+
+/* =========================
+   PAYMENT TEXT
+========================= */
+
+let infoText = "";
+
+if(pay.type === "qris"){
+
+    infoText =
+    "Scan QR Code dibawah";
+
+}
+
+if(pay.type === "ewallet"){
+
+    infoText =
+    "Salin nomor dibawah";
+
+}
+
+if(pay.type === "bank"){
+
+    infoText =
+    "Salin nomor rekening dibawah";
+
+}
+
+/* =========================
+   HEADER PAYMENT
+========================= */
+
+content.innerHTML = `
+
+    <div style="
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-top:24px;
+    margin-bottom:10px;
+    gap:16px;
+
+    ">
+
+        <div style="
+
+        font-size:15px;
+        font-weight:bold;
+        color:white;
+
+        ">
+
+            Payment Method :
+
+        </div>
+
+        <div style="
+
+        display:flex;
+        align-items:center;
+        gap:10px;
+
+        ">
+
+            <img src="${pay.logo}"
+
+            style="
+
+            width:90px;
+            object-fit:contain;
+
+            ">
+
+            <span style="
+
+            color:#ffe600;
+            font-size:15px;
+            font-weight:bold;
+
+            ">
+
+                ${pay.name}
+
+            </span>
+
+        </div>
+
+    </div>
+
+    <div style="
+
+    color:#bdbdbd;
+    font-size:13px;
+    margin-bottom:20px;
+
+    ">
+
+        ${infoText}
+
+    </div>
+
+`;
+
+/* =========================
+   QRIS
+========================= */
+
+if(pay.type === "qris"){
+
+    content.innerHTML += `
+
+        <div class="qrisWrap">
+
+            <img src="qris.png"
+            class="qrisImage">
+
+        </div>
+
+    `;
+
+}else{
+
+/* =========================
+   EWALLET / BANK
+========================= */
+
+    content.innerHTML += `
+
+        <div class="paymentList">
+
+            <div class="paymentCard">
+
+                ${pay.number}
+
+                <br>
+
+                ${pay.owner}
+
+            </div>
+
+        </div>
+
+    `;
+
+}
+
+/* =========================
+   SAVE IMAGE
+========================= */
+
+function saveAsImage(){
+
+    const hiddenItems =
+    document.querySelectorAll(
+        ".noCapture"
+    );
+
+    hiddenItems.forEach(item => {
+
+        item.style.display =
+        "none";
+
+    });
+
+    html2canvas(
+
+        document.getElementById(
+            "captureArea"
+        ),
+
+        {
+
+            scale:3
+
+        }
+
+    ).then(canvas => {
+
+        const link =
+        document.createElement("a");
+
+        link.download =
+        "Bill-Comersio.png";
+
+        link.href =
+        canvas.toDataURL();
+
+        link.click();
+
+        hiddenItems.forEach(item => {
+
+            item.style.display =
+            "block";
+
+        });
+
+    });
+
+}
+
+</script>
+
+</body>
+
+</html>
