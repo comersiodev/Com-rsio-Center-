@@ -9,7 +9,7 @@
     content="width=device-width, initial-scale=1.0">
 
     <title>
-        Comérsio Center
+        ComÃ©rsio Center
     </title>
 
     <link rel="stylesheet"
@@ -27,7 +27,7 @@ class="navbar">
     <div class="closeNavbar"
     onclick="toggleNavbar()">
 
-        
+        Ã—
 
     </div>
 
@@ -141,7 +141,7 @@ class="navbar">
 
             ">
 
-                •• SAVE DATA
+                â€¢â€¢ SAVE DATA
 
             </button>
 
@@ -169,7 +169,7 @@ class="navbar">
 
             ">
 
-                ••• LOAD DATA
+                â€¢â€¢â€¢ LOAD DATA
 
             </button>
 
@@ -293,7 +293,7 @@ class="menuBox">
 <div class="footerBox">
 
     <p>
-        Â© ComÃ©rsio LTD 2024
+        Â©ComÃ©rsio LTD 2024
     </p>
 
     <p>
@@ -315,7 +315,15 @@ class="menuBox">
 </div>
 
 <script>
-	
+
+if(
+!localStorage.getItem("username")
+){
+
+    location.href =
+    "login.html";
+
+}
 	/* =========================
    LOAD USER DATA
 ========================= */
