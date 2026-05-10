@@ -3,19 +3,21 @@ function loginComersio(event){
     event.preventDefault();
 
     const nama =
-    document.getElementById("nama").value;
+    document.getElementById(
+        "nama"
+    ).value.trim();
 
     const email =
-    document.getElementById("email").value;
+    document.getElementById(
+        "email"
+    ).value.trim();
 
     const password =
-    document.getElementById("password").value;
+    document.getElementById(
+        "password"
+    ).value.trim();
 
     let title = "";
-
-    /* =========================
-       PASSWORD ROLE
-    ========================= */
 
     if(password === "66788482821"){
 
@@ -43,7 +45,7 @@ function loginComersio(event){
 
     else{
 
-        showBubble(
+        alert(
         "Password Salah"
         );
 
@@ -51,32 +53,23 @@ function loginComersio(event){
 
     }
 
-    /* =========================
-       SAVE DATA
-    ========================= */
-
     localStorage.setItem(
-    "username",
-    nama
+        "username",
+        nama
     );
 
     localStorage.setItem(
-    "email",
-    email
+        "email",
+        email
     );
 
     localStorage.setItem(
-    "title",
-    title
+        "title",
+        title
     );
 
-    localStorage.setItem(
-    "password",
-    password
-    );
-
-    location.href =
-    "index.html";
+    window.location.href =
+    "./index.html";
 
 }
 
