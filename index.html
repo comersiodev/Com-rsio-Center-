@@ -19,6 +19,19 @@
 
 <body>
 
+	<script>
+
+if(
+!localStorage.getItem("username")
+){
+
+    location.href =
+    "login.html";
+
+}
+
+	</script>
+
 <!-- NAVBAR -->
 
 <div id="navbar"
@@ -315,15 +328,6 @@ class="menuBox">
 </div>
 
 <script>
-
-if(
-!localStorage.getItem("username")
-){
-
-    location.href =
-    "login.html";
-
-}
 	/* =========================
    LOAD USER DATA
 ========================= */
