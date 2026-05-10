@@ -69,7 +69,7 @@ function loginComersio(event){
     );
 
     window.location.href =
-    "./index.html";
+    "index.html";
 
 }
 
