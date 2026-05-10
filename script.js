@@ -16,10 +16,6 @@ function loginComersio(event){
 
     let title = "";
 
-    /* =========================
-       PASSWORD ROLE
-    ========================= */
-
     if(password === "66788482821"){
 
         title = "Employee";
@@ -54,10 +50,6 @@ function loginComersio(event){
 
     }
 
-    /* =========================
-       SAVE DATA
-    ========================= */
-
     localStorage.setItem(
     "username",
     nama
@@ -73,19 +65,12 @@ function loginComersio(event){
     title
     );
 
-    localStorage.setItem(
-    "password",
-    password
-    );
+    /* MASUK KE INDEX */
 
     location.href =
     "index.html";
 
 }
-
-/* =========================
-   BUBBLE ALERT
-========================= */
 
 function showBubble(text){
 
@@ -98,14 +83,10 @@ function showBubble(text){
 
     bubble.style.opacity = "1";
 
-    bubble.style.bottom = "30px";
-
     setTimeout(()=>{
 
         bubble.style.opacity = "0";
 
-        bubble.style.bottom = "-100px";
-
     },2000);
 
-}
+        }
