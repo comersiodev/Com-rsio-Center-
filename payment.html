@@ -31,45 +31,6 @@ body{
 }
 
 /* =========================
-   TABLE
-========================= */
-
-table{
-
-    width:100%;
-    border-collapse:collapse;
-    margin-top:20px;
-    font-size:12px;
-
-}
-
-th,td{
-
-    padding:10px;
-    text-align:center;
-    border-bottom:1px solid #333;
-
-}
-
-thead{
-
-    background:#4a3b00;
-
-}
-
-/* =========================
-   SHEET
-========================= */
-
-.sheetBox{
-
-    min-height:auto !important;
-    height:auto !important;
-    padding-bottom:10px;
-
-}
-
-/* =========================
    PAYMENT INFO
 ========================= */
 
@@ -77,7 +38,7 @@ thead{
 
     display:flex;
     justify-content:space-between;
-    align-items:center;
+    align-items:flex-start;
     margin-top:18px;
     margin-bottom:18px;
     font-size:13px;
@@ -100,64 +61,154 @@ thead{
 }
 
 /* =========================
-   QRIS
+   SIMPLE LIST
 ========================= */
 
-.qrisWrap{
+.simpleItem{
+
+    background:#1a1a1a;
+
+    border:2px solid #ffe600;
+
+    border-radius:18px;
+
+    padding:14px;
+
+    margin-top:14px;
+
+}
+
+.simpleRow{
 
     display:flex;
-    flex-direction:column;
+
+    justify-content:space-between;
+
     align-items:center;
-    margin-top:20px;
+
+    gap:16px;
+
+    margin-bottom:10px;
+
+    color:white;
+
+    font-size:14px;
 
 }
 
-.qrisTitle{
+.simpleRow:last-child{
 
-    font-size:18px;
-    font-weight:bold;
-    margin-bottom:14px;
-    color:#ffe600;
-
-}
-
-.qrisImage{
-
-    width:180px;
-    border-radius:18px;
-    border:2px solid #ffe600;
+    margin-bottom:0;
 
 }
 
 /* =========================
-   PAYMENT LIST
+   PAYMENT BOX
 ========================= */
 
 .paymentList{
 
     margin-top:20px;
 
+    background:#1a1a1a;
+
+    border:2px solid #ffe600;
+
+    border-radius:20px;
+
+    padding:18px;
+
 }
 
-.paymentTitle{
+.paymentHeader{
 
-    font-size:18px;
-    font-weight:bold;
-    color:#ffe600;
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    gap:12px;
+
     margin-bottom:14px;
-    text-align:center;
+
+}
+
+.paymentHeaderLeft{
+
+    color:white;
+
+    font-size:15px;
+
+    font-weight:bold;
+
+}
+
+.paymentHeaderRight{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+}
+
+.paymentHeaderRight img{
+
+    width:80px;
+
+    object-fit:contain;
+
+}
+
+.paymentHeaderRight span{
+
+    color:#ffe600;
+
+    font-size:15px;
+
+    font-weight:bold;
+
+}
+
+.paymentInfoText{
+
+    color:#bdbdbd;
+
+    font-size:13px;
+
+    margin-bottom:16px;
 
 }
 
 .paymentCard{
 
     background:#2a2a2a;
+
     padding:14px;
+
     border-radius:18px;
+
     line-height:24px;
+
     font-size:14px;
+
     border:2px solid #ffe600;
+
     text-align:center;
+
+    color:white;
+
+}
+
+.qrisImage{
+
+    width:180px;
+
+    border-radius:18px;
+
+    border:2px solid #ffe600;
 
 }
 
@@ -168,17 +219,26 @@ thead{
 .saveButton{
 
     width:100%;
+
     height:55px;
+
     border:none;
+
     border-radius:18px;
+
     margin-top:24px;
+
     margin-bottom:40px;
+
     background:#ffe600;
+
     color:black;
+
     font-size:15px;
+
     font-weight:bold;
+
     cursor:pointer;
-    position:relative;
 
 }
 
@@ -210,8 +270,6 @@ class="navbar">
 
     </div>
 
-    <!-- PROFILE -->
-
     <div class="navbarHeader">
 
         <img src="icon.png"
@@ -219,15 +277,21 @@ class="navbar">
 
         <div class="navText">
 
-    <p id="navUsername"></p>
-    <p id="navEmail"></p>
-    <p id="navTitle"></p>
+            <p id="navUsername">
 
-</div>
+            </p>
+
+            <p id="navEmail">
+
+            </p>
+
+            <p id="navTitle">
+
+            </p>
+
+        </div>
 
     </div>
-
-    <!-- NAV MENU -->
 
     <div class="navbarMenu">
 
@@ -267,7 +331,7 @@ class="navbar">
         <a href="debt.html"
         class="navMenuBox">
 
-            <img src="Debt.png">
+            <img src="debt.png">
 
             <span>
                 Rekap Utang
@@ -285,7 +349,7 @@ class="navbar">
             </span>
 
         </a>
-        
+
         <a href="recap.html"
         class="navMenuBox">
 
@@ -301,9 +365,7 @@ class="navbar">
 
 </div>
 
-<!-- =========================
-     OVERLAY
-========================= -->
+<!-- OVERLAY -->
 
 <div id="overlay"
 class="overlay"
@@ -311,9 +373,7 @@ onclick="toggleNavbar()">
 
 </div>
 
-<!-- =========================
-     NAV TRIGGER
-========================= -->
+<!-- NAV -->
 
 <div class="navTrigger noCapture"
 onclick="toggleNavbar()">
@@ -322,9 +382,7 @@ onclick="toggleNavbar()">
 
 </div>
 
-<!-- =========================
-     CAPTURE AREA
-========================= -->
+<!-- CAPTURE -->
 
 <div id="captureArea">
 
@@ -342,14 +400,14 @@ onclick="toggleNavbar()">
     <div class="headerRight">
 
         <h1>
-            COMÉRSIO CENTER 
+            COMÉRSIO CENTER
         </h1>
 
     </div>
 
 </div>
 
-<!-- BOX -->
+<!-- CONTENT -->
 
 <div class="customerListBox">
 
@@ -381,29 +439,9 @@ onclick="toggleNavbar()">
 
     </div>
 
-    <!-- TABLE -->
+    <!-- SIMPLE LIST -->
 
-    <div class="sheetBox">
-
-        <table>
-
-            <thead>
-
-                <tr>
-
-                    <th>Produk</th>
-                    <th>Harga</th>
-                    <th>Diskon</th>
-
-                </tr>
-
-            </thead>
-
-            <tbody id="paymentTable">
-
-            </tbody>
-
-        </table>
+    <div id="paymentListSimple">
 
     </div>
 
@@ -438,9 +476,9 @@ onclick="saveAsImage()">
 </button>
 
 <script>
-	
-	/* =========================
-   LOAD USER DATA
+
+/* =========================
+   LOAD USER
 ========================= */
 
 document
@@ -473,15 +511,13 @@ localStorage.getItem(
 
 function toggleNavbar(){
 
-    const navbar =
-    document.getElementById("navbar");
+    document
+    .getElementById("navbar")
+    .classList.toggle("active");
 
-    const overlay =
-    document.getElementById("overlay");
-
-    navbar.classList.toggle("active");
-
-    overlay.classList.toggle("active");
+    document
+    .getElementById("overlay")
+    .classList.toggle("active");
 
 }
 
@@ -506,7 +542,7 @@ localStorage.getItem(
 
 const debts =
 JSON.parse(
-    localStorage.getItem("debts")
+localStorage.getItem("debts")
 ) || {};
 
 /* =========================
@@ -520,12 +556,13 @@ document
 `ID : ${customer}`;
 
 /* =========================
-   LIVE TIME
+   TIME
 ========================= */
 
 function updateLivePaymentTime(){
 
-    const now = new Date();
+    const now =
+    new Date();
 
     const day =
     String(now.getDate())
@@ -563,8 +600,8 @@ function updateLivePaymentTime(){
 updateLivePaymentTime();
 
 setInterval(
-    updateLivePaymentTime,
-    1000
+updateLivePaymentTime,
+1000
 );
 
 /* =========================
@@ -575,16 +612,16 @@ document
 .getElementById("paymentTotal")
 .innerText =
 
-parseInt(total)
+parseInt(total || 0)
 .toLocaleString("id-ID");
 
 /* =========================
-   TABLE
+   SIMPLE LIST
 ========================= */
 
-const table =
+const list =
 document.getElementById(
-    "paymentTable"
+    "paymentListSimple"
 );
 
 const customerDebt =
@@ -592,41 +629,55 @@ debts[customer] || [];
 
 customerDebt.forEach(item => {
 
-    const row =
-    document.createElement("tr");
+    list.innerHTML += `
 
-    row.innerHTML = `
+    <div class="simpleItem">
 
-        <td>
-            ${item.produk}
-        </td>
+        <div class="simpleRow">
 
-        <td>
-            Rp ${item.harga
-            .toLocaleString("id-ID")}
-        </td>
+            <span>
+                Produk
+            </span>
 
-        <td>
+            <span>
+                ${item.produk}
+            </span>
 
-            Rp ${(item.diskon || 0)
-            .toLocaleString("id-ID")}
+        </div>
 
-        </td>
+        <div class="simpleRow">
+
+            <span>
+                Harga
+            </span>
+
+            <span>
+                Rp ${item.harga
+                .toLocaleString("id-ID")}
+            </span>
+
+        </div>
+
+        <div class="simpleRow">
+
+            <span>
+                Diskon
+            </span>
+
+            <span>
+
+                Rp ${(item.diskon || 0)
+                .toLocaleString("id-ID")}
+
+            </span>
+
+        </div>
+
+    </div>
 
     `;
 
-    table.appendChild(row);
-
 });
-
-/* =========================
-   PAYMENT CONTENT
-========================= */
-
-const content =
-document.getElementById(
-    "paymentContent"
-);
 
 /* =========================
    PAYMENT DATA
@@ -732,14 +783,14 @@ if(pay.type === "qris"){
 
 }
 
-if(pay.type === "ewallet"){
+else if(pay.type === "ewallet"){
 
     infoText =
     "Salin nomor dibawah";
 
 }
 
-if(pay.type === "bank"){
+else{
 
     infoText =
     "Salin nomor rekening dibawah";
@@ -747,58 +798,31 @@ if(pay.type === "bank"){
 }
 
 /* =========================
-   HEADER PAYMENT
+   PAYMENT CONTENT
 ========================= */
+
+const content =
+document.getElementById(
+    "paymentContent"
+);
 
 content.innerHTML = `
 
-    <div style="
+<div class="paymentList">
 
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-top:24px;
-    margin-bottom:10px;
-    gap:16px;
+    <div class="paymentHeader">
 
-    ">
-
-        <div style="
-
-        font-size:15px;
-        font-weight:bold;
-        color:white;
-
-        ">
+        <div class="paymentHeaderLeft">
 
             Payment Method :
 
         </div>
 
-        <div style="
+        <div class="paymentHeaderRight">
 
-        display:flex;
-        align-items:center;
-        gap:10px;
+            <img src="${pay.logo}">
 
-        ">
-
-            <img src="${pay.logo}"
-
-            style="
-
-            width:90px;
-            object-fit:contain;
-
-            ">
-
-            <span style="
-
-            color:#ffe600;
-            font-size:15px;
-            font-weight:bold;
-
-            ">
+            <span>
 
                 ${pay.name}
 
@@ -808,62 +832,46 @@ content.innerHTML = `
 
     </div>
 
-    <div style="
-
-    color:#bdbdbd;
-    font-size:13px;
-    margin-bottom:20px;
-
-    ">
+    <div class="paymentInfoText">
 
         ${infoText}
 
     </div>
 
+    ${pay.type === "qris"
+
+    ?
+
+    `
+
+    <div class="paymentCard">
+
+        <img src="qris.png"
+        class="qrisImage">
+
+    </div>
+
+    `
+
+    :
+
+    `
+
+    <div class="paymentCard">
+
+        ${pay.number}
+
+        <br>
+
+        ${pay.owner}
+
+    </div>
+
+    `}
+
+</div>
+
 `;
-
-/* =========================
-   QRIS
-========================= */
-
-if(pay.type === "qris"){
-
-    content.innerHTML += `
-
-        <div class="qrisWrap">
-
-            <img src="QRIS.png"
-            class="qrisImage">
-
-        </div>
-
-    `;
-
-}else{
-
-/* =========================
-   EWALLET / BANK
-========================= */
-
-    content.innerHTML += `
-
-        <div class="paymentList">
-
-            <div class="paymentCard">
-
-                ${pay.number}
-
-                <br>
-
-                ${pay.owner}
-
-            </div>
-
-        </div>
-
-    `;
-
-}
 
 /* =========================
    SAVE IMAGE
@@ -873,7 +881,7 @@ function saveAsImage(){
 
     const hiddenItems =
     document.querySelectorAll(
-        ".noCapture"
+    ".noCapture"
     );
 
     hiddenItems.forEach(item => {
@@ -886,7 +894,7 @@ function saveAsImage(){
     html2canvas(
 
         document.getElementById(
-            "captureArea"
+        "captureArea"
         ),
 
         {
