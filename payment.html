@@ -1,934 +1,619 @@
 <!DOCTYPE html>
 <html lang="id">
-
 <head>
-
 <meta charset="UTF-8">
-
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
-
-<title>
-Payment Comérsio
-</title>
-
-<link rel="stylesheet"
-href="style.css">
-
-<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js">
-</script>
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Payment Comérsio</title>
+<link rel="stylesheet" href="style.css">
+<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 <style>
-
-/* =========================
-   BODY
-========================= */
-
-body{
-
-    padding-top:80px;
-
-}
-
-/* =========================
-   PAYMENT INFO
-========================= */
-
-.paymentInfo{
-
-    display:flex;
-    justify-content:space-between;
-    align-items:flex-start;
-    margin-top:18px;
-    margin-bottom:18px;
-    font-size:13px;
-    color:white;
-    gap:20px;
-
-}
-
-.paymentInfoRight{
-
-    text-align:right;
-
-}
-
-.paymentInfo p{
-
-    margin:0;
-    line-height:22px;
-
-}
-
-/* =========================
-   SIMPLE LIST
-========================= */
-
-.simpleItem{
-
-    background:#1a1a1a;
-
-    border:2px solid #ffe600;
-
-    border-radius:18px;
-
-    padding:14px;
-
-    margin-top:14px;
-
-}
-
-.simpleRow{
-
-    display:flex;
-
-    justify-content:space-between;
-
-    align-items:center;
-
-    gap:16px;
-
-    margin-bottom:10px;
-
-    color:white;
-
-    font-size:14px;
-
-}
-
-.simpleRow:last-child{
-
-    margin-bottom:0;
-
-}
-
-/* =========================
-   PAYMENT BOX
-========================= */
-
-.paymentList{
-
-    margin-top:20px;
-
-    background:#1a1a1a;
-
-    border:2px solid #ffe600;
-
-    border-radius:20px;
-
-    padding:18px;
-
-}
-
-.paymentHeader{
-
-    display:flex;
-
-    justify-content:space-between;
-
-    align-items:center;
-
-    gap:12px;
-
-    margin-bottom:14px;
-
-}
-
-.paymentHeaderLeft{
-
-    color:white;
-
-    font-size:15px;
-
-    font-weight:bold;
-
-}
-
-.paymentHeaderRight{
-
-    display:flex;
-
-    align-items:center;
-
-    gap:10px;
-
-}
-
-.paymentHeaderRight img{
-
-    width:80px;
-
-    object-fit:contain;
-
-}
-
-.paymentHeaderRight span{
-
-    color:#ffe600;
-
-    font-size:15px;
-
-    font-weight:bold;
-
-}
-
-.paymentInfoText{
-
-    color:#bdbdbd;
-
-    font-size:13px;
-
-    margin-bottom:16px;
-
-}
-
-.paymentCard{
-
-    background:#2a2a2a;
-
-    padding:14px;
-
-    border-radius:18px;
-
-    line-height:24px;
-
-    font-size:14px;
-
-    border:2px solid #ffe600;
-
-    text-align:center;
-
-    color:white;
-
-}
-
-.qrisImage{
-
-    width:180px;
-
-    border-radius:18px;
-
-    border:2px solid #ffe600;
-
-}
-
-/* =========================
-   SAVE BUTTON
-========================= */
-
-.saveButton{
-
-    width:100%;
-
-    height:55px;
-
-    border:none;
-
-    border-radius:18px;
-
-    margin-top:24px;
-
-    margin-bottom:40px;
-
-    background:#ffe600;
-
-    color:black;
-
-    font-size:15px;
-
-    font-weight:bold;
-
-    cursor:pointer;
-
-}
-
-/* =========================
-   NO CAPTURE
-========================= */
-
-.noCapture{
-
-    z-index:9999;
-
-}
-
+  @font-face{
+    font-family: 'OswaldBold';
+    src: url('oswald-bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+  }
+  @font-face{
+    font-family: 'FiraCondBold';
+    src: url('firasanscondensed-bold.otf') format('opentype');
+    font-weight: 700;
+    font-style: normal;
+  }
+  @font-face{
+    font-family: 'FiraCondBook';
+    src: url('firasanscondensed-book.otf') format('opentype');
+    font-weight: 400;
+    font-style: normal;
+  }
+
+  :root{
+    --emas: #e8b13c;
+    --emas-terang: #ffd166;
+    --gelap: #000000;
+  }
+
+  *{
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  html, body{
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    min-height: 100vh;
+    font-family: 'FiraCondBook', sans-serif;
+    background: #000000 !important;
+    color: #ffffff;
+    overflow-x: hidden;
+  }
+
+  /* =========================
+     UI NAVBAR DRAWER & STYLING
+  ========================= */
+  .navbar {
+    position: fixed;
+    top: 0;
+    left: -300px;
+    width: 280px;
+    height: 100%;
+    background: #000000;
+    border-right: 2px solid var(--emas-terang);
+    z-index: 999999;
+    transition: left 0.3s ease;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .navbar.active {
+    left: 0;
+  }
+
+  .closeNavbar {
+    align-self: flex-end;
+    font-size: 1.3rem;
+    color: var(--emas-terang);
+    cursor: pointer;
+    margin-bottom: 10px;
+    font-family: 'FiraCondBold', sans-serif;
+  }
+
+  .navbarHeader {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid rgba(255, 209, 102, 0.2);
+    margin-bottom: 15px;
+  }
+
+  .navLogo {
+    width: 45px;
+    height: 45px;
+    object-fit: contain;
+    border-radius: 50%;
+    border: 1px solid var(--emas-terang);
+  }
+
+  .navText p {
+    margin: 0;
+    font-size: 0.85rem;
+  }
+
+  #navUsername {
+    font-family: 'FiraCondBold', sans-serif;
+    color: var(--emas-terang);
+    font-size: 1rem;
+  }
+
+  #navEmail, #navTitle {
+    color: #aaa;
+    font-size: 0.75rem;
+  }
+
+  .navbarMenu {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    overflow-y: auto;
+  }
+
+  .navMenuBox {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: #0b0f0c;
+    border: 1px solid rgba(255, 209, 102, 0.3);
+    padding: 12px 14px;
+    border-radius: 12px;
+    text-decoration: none;
+    color: #ffffff;
+    font-family: 'FiraCondBold', sans-serif;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+  }
+
+  .navMenuBox:hover {
+    background: #151d16;
+    border-color: var(--emas-terang);
+  }
+
+  .navMenuBox img {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+  }
+
+  /* OVERLAY */
+  .overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.7);
+    display: none;
+    z-index: 99999;
+  }
+
+  .overlay.active {
+    display: block;
+  }
+
+  .content-wrap {
+    position: relative;
+    z-index: 5;
+    padding: 30px 16px 60px 16px;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+
+  /* KOTAK BILL UTAMA */
+  #captureArea {
+    background: #000000;
+    border: 2px solid var(--emas-terang);
+    border-radius: 16px;
+    padding: 20px;
+  }
+
+  div.headerBox {
+    all: unset !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 12px !important;
+    width: 100% !important;
+    border-bottom: 1px solid rgba(255, 209, 102, 0.2) !important;
+    padding-bottom: 12px !important;
+    margin-bottom: 15px !important;
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+
+  /* LOGO UTAMA SEKALIGUS TRIGGER NAVBAR DENGAN EFEK ROTASI */
+  .mainLogo {
+    width: 40px !important;
+    height: 40px !important;
+    object-fit: contain !important;
+    border-radius: 50% !important;
+    border: 1px solid var(--emas-terang) !important;
+    margin: 0 !important;
+    cursor: pointer;
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .headerRight h1 {
+    font-family: 'OswaldBold', sans-serif !important;
+    font-size: 1.3rem !important;
+    color: #ffffff !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .paymentInfo {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 15px;
+    font-size: 0.85rem;
+    color: var(--emas-terang);
+    font-family: 'FiraCondBold', sans-serif;
+  }
+
+  .paymentInfoRight {
+    text-align: right;
+    color: #bbb;
+    font-size: 0.78rem;
+  }
+
+  .paymentInfo p {
+    margin: 0;
+  }
+
+  /* KOTAK LIST ITEM */
+  .simpleItem {
+    background: #0b0f0c;
+    border: 1px solid var(--emas-terang);
+    border-radius: 12px;
+    padding: 12px;
+    margin-top: 10px;
+  }
+
+  .simpleRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 6px;
+    font-size: 0.85rem;
+  }
+
+  .simpleRow:last-child {
+    margin-bottom: 0;
+  }
+
+  /* TOTAL AKHIR BOX */
+  .totalDebtBox {
+    background: #0b0f0c;
+    border: 2px solid var(--emas-terang);
+    padding: 12px 14px;
+    border-radius: 12px;
+    font-family: 'FiraCondBold', sans-serif;
+    margin-top: 15px;
+    display: flex;
+    justify-content: space-between;
+    color: var(--emas-terang);
+    font-size: 0.95rem;
+  }
+
+  /* PAYMENT METHOD BOX */
+  .paymentList {
+    margin-top: 15px;
+    background: #0b0f0c;
+    border: 1px solid var(--emas-terang);
+    border-radius: 14px;
+    padding: 15px;
+  }
+
+  .paymentHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+
+  .paymentHeaderLeft {
+    color: #fff;
+    font-size: 0.9rem;
+    font-family: 'FiraCondBold', sans-serif;
+  }
+
+  .paymentHeaderRight {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .paymentHeaderRight img {
+    width: 50px;
+    object-fit: contain;
+  }
+
+  .paymentHeaderRight span {
+    color: var(--emas-terang);
+    font-size: 0.9rem;
+    font-family: 'FiraCondBold', sans-serif;
+  }
+
+  .paymentInfoText {
+    color: #aaa;
+    font-size: 0.8rem;
+    margin-bottom: 12px;
+    text-align: center;
+  }
+
+  .paymentCard {
+    background: #111111;
+    padding: 14px;
+    border-radius: 10px;
+    border: 1px solid var(--emas-terang);
+    text-align: center;
+    color: white;
+    font-family: 'FiraCondBold', sans-serif;
+  }
+
+  .qrisContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #ffffff;
+    padding: 10px;
+    border-radius: 8px;
+    max-width: 180px;
+    margin: 0 auto;
+  }
+
+  .qrisImage {
+    width: 160px;
+    height: 160px;
+    object-fit: contain;
+  }
+
+  /* TOMBOL SIMPAN */
+  .saveButton {
+    width: 100%;
+    height: 48px;
+    border: none;
+    border-radius: 12px;
+    margin-top: 20px;
+    background: var(--emas-terang);
+    color: black;
+    font-size: 0.95rem;
+    font-family: 'FiraCondBold', sans-serif;
+    cursor: pointer;
+  }
+
+  .noCapture {
+    z-index: 99;
+  }
 </style>
-
 </head>
 
 <body>
 
-<!-- NAVBAR -->
+  <!-- =========================
+       NAVBAR (MENU DRAWER UTAMA)
+  ========================= -->
+  <div id="navbar" class="navbar">
+      <div class="closeNavbar" onclick="toggleNavbar()">✕</div>
+      <div class="navbarHeader">
+          <img src="icon.png" class="navLogo">
+          <div class="navText">
+              <p id="navUsername"></p>
+              <p id="navEmail"></p>
+              <p id="navTitle"></p>
+          </div>
+      </div>
+      <div class="navbarMenu">
+          <a href="index.html" class="navMenuBox"><img src="icon.png"><span>Home</span></a>
+          <a href="product.html" class="navMenuBox"><img src="voucher.png"><span>Produk</span></a>
+          <a href="debt.html" class="navMenuBox"><img src="debt.png"><span>Utang</span></a>
+          <a href="customer.html" class="navMenuBox"><img src="nama.png"><span>Customer</span></a>
+          <a href="recap.html" class="navMenuBox"><img src="rekap.png"><span>Rekap Utang</span></a>
+          <a href="monthly.html" class="navMenuBox"><img src="pembukuan.png"><span>Laporan Bulanan</span></a>
+      </div>
+  </div>
 
-<div id="navbar"
-class="navbar">
+  <div id="overlay" class="overlay" onclick="toggleNavbar()"></div>
 
-    <div class="closeNavbar"
-    onclick="toggleNavbar()">
+  <div class="content-wrap">
+    <!-- AREA BILL -->
+    <div id="captureArea">
+      <div class="headerBox">
+        <div class="headerLeft">
+          <!-- LOGO SEBAGAI TRIGGER NAVBAR DENGAN EFEK ROTASI BERTINGKAT -->
+          <img src="icon.png" class="mainLogo" id="rotatingLogo" onclick="handleNavbarTrigger()" title="Buka Menu Navbar">
+        </div>
+        <div class="headerRight">
+          <h1>COMÉRSIO CENTER</h1>
+        </div>
+      </div>
 
-        ✕
+      <div class="customerListBox">
+        <h2 style="font-family: 'FiraCondBold', sans-serif; color: var(--emas-terang); font-size: 1.1rem; margin-bottom: 8px;">
+          DETAIL PEMBAYARAN
+        </h2>
 
-    </div>
-
-    <div class="navbarHeader">
-
-        <img src="icon.png"
-        class="navLogo">
-
-        <div class="navText">
-
-            <p id="navUsername">
-
-            </p>
-
-            <p id="navEmail">
-
-            </p>
-
-            <p id="navTitle">
-
-            </p>
-
+        <div class="paymentInfo">
+          <div>
+            <p id="paymentCustomerId"></p>
+          </div>
+          <div class="paymentInfoRight">
+            <p id="livePaymentTime"></p>
+          </div>
         </div>
 
-    </div>
+        <div id="paymentListSimple"></div>
 
-    <div class="navbarMenu">
-
-        <a href="index.html"
-        class="navMenuBox">
-
-            <img src="icon.png">
-
-            <span>
-                Menu
-            </span>
-
-        </a>
-
-        <a href="customer.html"
-        class="navMenuBox">
-
-            <img src="nama.png">
-
-            <span>
-                Nama & ID Customer
-            </span>
-
-        </a>
-
-        <a href="produk.html"
-        class="navMenuBox">
-
-            <img src="voucher.png">
-
-            <span>
-                Produk
-            </span>
-
-        </a>
-
-        <a href="debt.html"
-        class="navMenuBox">
-
-            <img src="debt.png">
-
-            <span>
-                Rekap Utang
-            </span>
-
-        </a>
-
-        <a href="monthly.html"
-        class="navMenuBox">
-
-            <img src="pembukuan.png">
-
-            <span>
-                Monthly Report
-            </span>
-
-        </a>
-
-        <a href="recap.html"
-        class="navMenuBox">
-
-            <img src="rekap.png">
-
-            <span>
-                Rekap Utang Total
-            </span>
-
-        </a>
-
-    </div>
-
-</div>
-
-<!-- OVERLAY -->
-
-<div id="overlay"
-class="overlay"
-onclick="toggleNavbar()">
-
-</div>
-
-<!-- NAV -->
-
-<div class="navTrigger noCapture"
-onclick="toggleNavbar()">
-
-    <img src="icon.png">
-
-</div>
-
-<!-- CAPTURE -->
-
-<div id="captureArea">
-
-<!-- HEADER -->
-
-<div class="headerBox">
-
-    <div class="headerLeft">
-
-        <img src="icon.png"
-        class="mainLogo">
-
-    </div>
-
-    <div class="headerRight">
-
-        <h1>
-            COMÉRSIO CENTER
-        </h1>
-
-    </div>
-
-</div>
-
-<!-- CONTENT -->
-
-<div class="customerListBox">
-
-    <h2>
-
-        DETAIL PEMBAYARAN
-
-    </h2>
-
-    <!-- INFO -->
-
-    <div class="paymentInfo">
-
-        <div>
-
-            <p id="paymentCustomerId">
-
-            </p>
-
+        <div class="totalDebtBox">
+          <span>TOTAL AKHIR :</span>
+          <span>Rp <span id="paymentTotal">0</span></span>
         </div>
 
-        <div class="paymentInfoRight">
-
-            <p id="livePaymentTime">
-
-            </p>
-
-        </div>
-
+        <div id="paymentContent"></div>
+      </div>
     </div>
 
-    <!-- SIMPLE LIST -->
-
-    <div id="paymentListSimple">
-
-    </div>
-
-    <!-- TOTAL -->
-
-    <div class="totalDebtBox">
-
-        TOTAL :
-        Rp <span id="paymentTotal">
-
-        </span>
-
-    </div>
-
-    <!-- PAYMENT -->
-
-    <div id="paymentContent">
-
-    </div>
-
-</div>
-
-</div>
-
-<!-- BUTTON -->
-
-<button class="saveButton noCapture"
-onclick="saveAsImage()">
-
-    SIMPAN BILL
-
-</button>
+    <!-- TOMBOL SIMPAN -->
+    <button class="saveButton noCapture" onclick="saveAsImage()">
+      SIMPAN BILL PEMBAYARAN
+    </button>
+  </div>
 
 <script>
-
 /* =========================
-   LOAD USER
+   LOAD USER DATA & NAVBAR
 ========================= */
-
-document
-.getElementById("navUsername")
-.innerText =
-
-localStorage.getItem(
-    "username"
-) || "Unknown User";
-
-document
-.getElementById("navEmail")
-.innerText =
-
-localStorage.getItem(
-    "email"
-) || "No Email";
-
-document
-.getElementById("navTitle")
-.innerText =
-
-localStorage.getItem(
-    "title"
-) || "No Title";
-
-/* =========================
-   NAVBAR
-========================= */
+document.getElementById("navUsername").innerText = localStorage.getItem("username") || "Unknown User";
+document.getElementById("navEmail").innerText = localStorage.getItem("email") || "No Email";
+document.getElementById("navTitle").innerText = localStorage.getItem("title") || "No Title";
 
 function toggleNavbar(){
-
-    document
-    .getElementById("navbar")
-    .classList.toggle("active");
-
-    document
-    .getElementById("overlay")
-    .classList.toggle("active");
-
+    document.getElementById("navbar").classList.toggle("active");
+    document.getElementById("overlay").classList.toggle("active");
 }
 
 /* =========================
-   STORAGE
+   LOGIKA ROTASI LOGO & BUKA NAVBAR
 ========================= */
+let clickState = 0; // 0: Normal, 1: 180 deg (Setengah Lingkaran), 2: 360 deg (Satu Lingkaran Penuh)
 
-const customer =
-localStorage.getItem(
-    "paymentCustomer"
-);
+function handleNavbarTrigger(){
+    const logo = document.getElementById("rotatingLogo");
+    
+    if(clickState === 0){
+        clickState = 1;
+        logo.style.transform = "rotate(180deg)";
+    } else if(clickState === 1){
+        clickState = 2;
+        logo.style.transform = "rotate(360deg)";
+        
+        // Reset rotasi sebentar setelah animasi penuh selesai agar bisa diputar lagi ke depannya
+        setTimeout(() => {
+            logo.style.transition = "none";
+            logo.style.transform = "rotate(0deg)";
+            clickState = 0;
+            setTimeout(() => { logo.style.transition = "transform 0.4s cubic-bezier(0.4, 0, 0.2, 1)"; }, 50);
+        }, 400);
+    }
 
-const total =
-localStorage.getItem(
-    "paymentTotal"
-);
-
-const method =
-localStorage.getItem(
-    "paymentMethod"
-);
-
-const debts =
-JSON.parse(
-localStorage.getItem("debts")
-) || {};
+    // Eksekusi buka/tutup navbar utama
+    toggleNavbar();
+}
 
 /* =========================
-   CUSTOMER
+   STORAGE & RENDER BILL
 ========================= */
+const customer = localStorage.getItem("paymentCustomer") || "-";
+const total = localStorage.getItem("paymentTotal") || "0";
+const method = localStorage.getItem("paymentMethod") || "qris";
+const paymentMode = localStorage.getItem("paymentMode") || "full";
 
-document
-.getElementById("paymentCustomerId")
-.innerText =
+const debts = JSON.parse(localStorage.getItem("debts")) || {};
 
-`ID : ${customer}`;
-
-/* =========================
-   TIME
-========================= */
+document.getElementById("paymentCustomerId").innerText = `ID : ${customer}`;
 
 function updateLivePaymentTime(){
+    const now = new Date();
+    const day = String(now.getDate()).padStart(2,"0");
+    const month = String(now.getMonth()+1).padStart(2,"0");
+    const year = now.getFullYear();
+    const hours = String(now.getHours()).padStart(2,"0");
+    const minutes = String(now.getMinutes()).padStart(2,"0");
+    const seconds = String(now.getSeconds()).padStart(2,"0");
 
-    const now =
-    new Date();
-
-    const day =
-    String(now.getDate())
-    .padStart(2,"0");
-
-    const month =
-    String(now.getMonth()+1)
-    .padStart(2,"0");
-
-    const year =
-    now.getFullYear();
-
-    const hours =
-    String(now.getHours())
-    .padStart(2,"0");
-
-    const minutes =
-    String(now.getMinutes())
-    .padStart(2,"0");
-
-    const seconds =
-    String(now.getSeconds())
-    .padStart(2,"0");
-
-    document
-    .getElementById("livePaymentTime")
-    .innerText =
-
-    `${day}/${month}/${year}
-    •
-    ${hours}:${minutes}:${seconds}`;
-
+    document.getElementById("livePaymentTime").innerText = `${day}/${month}/${year} • ${hours}:${minutes}:${seconds}`;
 }
 
 updateLivePaymentTime();
+setInterval(updateLivePaymentTime, 1000);
 
-setInterval(
-updateLivePaymentTime,
-1000
-);
+document.getElementById("paymentTotal").innerText = parseInt(total || 0).toLocaleString("id-ID");
 
-/* =========================
-   TOTAL
-========================= */
+const list = document.getElementById("paymentListSimple");
+const customerDebt = debts[customer] || [];
 
-document
-.getElementById("paymentTotal")
-.innerText =
-
-parseInt(total || 0)
-.toLocaleString("id-ID");
-
-/* =========================
-   SIMPLE LIST
-========================= */
-
-const list =
-document.getElementById(
-    "paymentListSimple"
-);
-
-const customerDebt =
-debts[customer] || [];
-
+let htmlList = "";
 customerDebt.forEach(item => {
+    const harga = item.harga || 0;
+    const dibayar = item.dibayar || 0;
+    const sisa = harga - dibayar;
 
-    list.innerHTML += `
+    if(sisa > 0){
+        let statusPembayaran = (paymentMode === 'amort') ? "Amortisasi" : "Full";
+        let statusColor = (paymentMode === 'amort') ? "#ffb703" : "#4caf5e";
 
-    <div class="simpleItem">
-
-        <div class="simpleRow">
-
-            <span>
-                Produk
-            </span>
-
-            <span>
-                ${item.produk}
-            </span>
-
+        htmlList += `
+        <div class="simpleItem">
+            <div class="simpleRow">
+                <span style="color:#aaa;">Produk</span>
+                <span style="font-family: 'FiraCondBold', sans-serif;">${item.produk}</span>
+            </div>
+            <div class="simpleRow">
+                <span style="color:#aaa;">Total Hutang</span>
+                <span>Rp ${harga.toLocaleString("id-ID")}</span>
+            </div>
+            <div class="simpleRow" style="align-items: flex-start;">
+                <span style="color:#aaa;">Sudah Dibayar</span>
+                <div style="text-align: right;">
+                    <span style="color: var(--emas-terang);">Rp ${parseInt(total).toLocaleString("id-ID")}</span>
+                    <div style="margin-top: 3px;">
+                        <span style="background: ${statusColor}; color: #000; padding: 1px 6px; border-radius: 4px; font-size: 0.7rem; font-weight: bold; display: inline-block;">Status: ${statusPembayaran}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="simpleRow" style="border-top: 1px solid rgba(255,209,102,0.2); margin-top: 6px; padding-top: 6px;">
+                <span style="font-family: 'FiraCondBold', sans-serif;">Sisa Tagihan</span>
+                <span style="font-family: 'FiraCondBold', sans-serif; color: #ff5555;">Rp ${sisa.toLocaleString("id-ID")}</span>
+            </div>
         </div>
-
-        <div class="simpleRow">
-
-            <span>
-                Harga
-            </span>
-
-            <span>
-                Rp ${item.harga
-                .toLocaleString("id-ID")}
-            </span>
-
-        </div>
-
-        <div class="simpleRow">
-
-            <span>
-                Diskon
-            </span>
-
-            <span>
-
-                Rp ${(item.diskon || 0)
-                .toLocaleString("id-ID")}
-
-            </span>
-
-        </div>
-
-    </div>
-
-    `;
-
+        `;
+    }
 });
 
-/* =========================
-   PAYMENT DATA
-========================= */
+list.innerHTML = htmlList || `<p style="text-align:center; color:#777; padding: 10px;">Tidak ada rincian utang aktif.</p>`;
 
 const paymentData = {
-
-    qris:{
-
-        logo:"QRIS Logo.png",
-        name:"QRIS",
-        type:"qris",
-        number:"",
-        owner:""
-
-    },
-
-    gopay:{
-
-        logo:"GoPay.png",
-        name:"GoPay",
-        type:"ewallet",
-        number:"083874854586",
-        owner:"An E•• P••••••"
-
-    },
-
-    dana:{
-
-        logo:"DANA.png",
-        name:"DANA",
-        type:"ewallet",
-        number:"081226672073",
-        owner:"An E•• P••••••"
-
-    },
-
-    shopeepay:{
-
-        logo:"ShopeePay.png",
-        name:"ShopeePay",
-        type:"ewallet",
-        number:"083874854586",
-        owner:"An E•• P••••••"
-
-    },
-
-    seabank:{
-
-        logo:"SeaBank.png",
-        name:"SeaBank",
-        type:"bank",
-        number:"901677273030",
-        owner:"An E•• P••••••"
-
-    },
-
-    bri:{
-
-        logo:"Bank BRI.png",
-        name:"BRI",
-        type:"bank",
-        number:"696101033719531",
-        owner:"An E•• P••••••"
-
-    },
-
-    bankjago:{
-
-        logo:"Bank Jago.png",
-        name:"Bank Jago",
-        type:"bank",
-        number:"100626307457",
-        owner:"An E•• P••••••"
-
-    },
-
-    krom:{
-
-        logo:"Krom.png",
-        name:"Krom",
-        type:"bank",
-        number:"770015012050",
-        owner:"An E•• P••••••"
-
-    }
-
+    qris:{ logo:"QRIS Logo.png", name:"QRIS", type:"qris" },
+    gopay:{ logo:"GoPay.png", name:"GoPay", type:"ewallet", number:"083874854586", owner:"An E•• P••••••" },
+    dana:{ logo:"DANA.png", name:"DANA", type:"ewallet", number:"081226672073", owner:"An E•• P••••••" },
+    shopeepay:{ logo:"ShopeePay.png", name:"ShopeePay", type:"ewallet", number:"083874854586", owner:"An E•• P••••••" },
+    seabank:{ logo:"SeaBank.png", name:"SeaBank", type:"bank", number:"901677273030", owner:"An E•• P••••••" },
+    bri:{ logo:"Bank BRI.png", name:"BRI", type:"bank", number:"696101033719531", owner:"An E•• P••••••" },
+    bankjago:{ logo:"Bank Jago.png", name:"Bank Jago", type:"bank", number:"100626307457", owner:"An E•• P••••••" },
+    krom:{ logo:"Krom.png", name:"Krom", type:"bank", number:"770015012050", owner:"An E•• P••••••" }
 };
 
-const pay =
-paymentData[method];
+const pay = paymentData[method] || paymentData["qris"];
+let infoText = pay.type === "qris" ? "Scan QR Code di bawah ini untuk melakukan pembayaran" : "Salin nomor di bawah ini untuk melakukan pembayaran";
 
-/* =========================
-   PAYMENT TEXT
-========================= */
-
-let infoText = "";
+const content = document.getElementById("paymentContent");
 
 if(pay.type === "qris"){
-
-    infoText =
-    "Scan QR Code dibawah";
-
-}
-
-else if(pay.type === "ewallet"){
-
-    infoText =
-    "Salin nomor dibawah";
-
-}
-
-else{
-
-    infoText =
-    "Salin nomor rekening dibawah";
-
-}
-
-/* =========================
-   PAYMENT CONTENT
-========================= */
-
-const content =
-document.getElementById(
-    "paymentContent"
-);
-
-content.innerHTML = `
-
-<div class="paymentList">
-
-    <div class="paymentHeader">
-
-        <div class="paymentHeaderLeft">
-
-            Payment Method :
-
+    content.innerHTML = `
+    <div class="paymentList">
+        <div class="paymentHeader">
+            <div class="paymentHeaderLeft">Metode Pembayaran</div>
+            <div class="paymentHeaderRight">
+                <img src="${pay.logo}" alt="QRIS">
+                <span>${pay.name}</span>
+            </div>
         </div>
-
-        <div class="paymentHeaderRight">
-
-            <img src="${pay.logo}">
-
-            <span>
-
-                ${pay.name}
-
-            </span>
-
+        <div class="paymentInfoText">${infoText}</div>
+        <div class="paymentCard">
+            <div class="qrisContainer">
+                <img src="qris.png" class="qrisImage" alt="QR Code">
+            </div>
+            <p style="margin: 10px 0 0 0; font-size: 0.8rem; color: #ccc;">Scan Menggunakan QRIS (All Banking & E-Wallet)</p>
         </div>
-
     </div>
-
-    <div class="paymentInfoText">
-
-        ${infoText}
-
+    `;
+} else {
+    content.innerHTML = `
+    <div class="paymentList">
+        <div class="paymentHeader">
+            <div class="paymentHeaderLeft">Metode Pembayaran</div>
+            <div class="paymentHeaderRight">
+                <img src="${pay.logo}" alt="${pay.name}">
+                <span>${pay.name}</span>
+            </div>
+        </div>
+        <div class="paymentInfoText">${infoText}</div>
+        <div class="paymentCard">
+            <span style="font-size: 1.1rem; color: var(--emas-terang);">${pay.number}</span>
+            <br>
+            <span style="font-size: 0.8rem; color: #aaa;">a.n. ${pay.owner}</span>
+        </div>
     </div>
-
-    ${pay.type === "qris"
-
-    ?
-
-    `
-
-    <div class="paymentCard">
-
-        <img src="QRIS.png"
-        class="qrisImage">
-
-    </div>
-
-    `
-
-    :
-
-    `
-
-    <div class="paymentCard">
-
-        ${pay.number}
-
-        <br>
-
-        ${pay.owner}
-
-    </div>
-
-    `}
-
-</div>
-
-`;
-
-/* =========================
-   SAVE IMAGE
-========================= */
+    `;
+}
 
 function saveAsImage(){
+    const button = document.querySelector(".saveButton");
+    button.innerText = "Memproses Gambar...";
 
-    const hiddenItems =
-    document.querySelectorAll(
-    ".noCapture"
-    );
-
-    hiddenItems.forEach(item => {
-
-        item.style.display =
-        "none";
-
-    });
-
-    html2canvas(
-
-        document.getElementById(
-        "captureArea"
-        ),
-
-        {
-
-            scale:3
-
-        }
-
-    ).then(canvas => {
-
-        const link =
-        document.createElement("a");
-
-        link.download =
-        "Bill-Comersio.png";
-
-        link.href =
-        canvas.toDataURL();
-
+    html2canvas(document.getElementById("captureArea"), {
+        scale: 3,
+        useCORS: true,
+        backgroundColor: "#000000"
+    }).then(canvas => {
+        const link = document.createElement("a");
+        link.download = `Bill-Comersio-${customer}.png`;
+        link.href = canvas.toDataURL("image/png");
         link.click();
-
-        hiddenItems.forEach(item => {
-
-            item.style.display =
-            "block";
-
-        });
-
+        button.innerText = "SIMPAN BILL PEMBAYARAN";
+    }).catch(err => {
+        alert("Gagal menyimpan gambar.");
+        button.innerText = "SIMPAN BILL PEMBAYARAN";
     });
-
 }
-
 </script>
-
 </body>
-
 </html>

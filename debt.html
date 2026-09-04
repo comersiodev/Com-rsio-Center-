@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 
 <meta name="viewport"
-content="width=device-width, initial-scale=1.0">
+content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
 <title>
 Debt Comérsio
@@ -17,1224 +17,1016 @@ href="style.css">
 
 <style>
 
-/* =========================
-   TABLE
-========================= */
-
-table{
-
-    width:100%;
-    border-collapse:collapse;
-    font-size:11px;
-
-}
-
-th,td{
-
-    padding:8px;
-    text-align:center;
-    word-break:break-word;
-
-}
-
-.sheetBox{
-
-    min-height:auto !important;
-
-    height:auto !important;
-
-    padding-bottom:10px;
-
-    display:inline-block;
-
-    width:100%;
-
-}
-
-/* =========================
-   CUSTOM SELECT
-========================= */
-
-.customSelect{
-
-    position:relative;
-    width:100%;
-    margin-top:10px;
-
-}
-
-.selectTrigger{
-
-    width:100%;
-    height:55px;
-
-    background:#111;
-
-    border:2px solid #ffe600;
-
-    border-radius:18px;
-
-    display:flex;
-
-    justify-content:space-between;
-
-    align-items:center;
-
-    padding:0 18px;
-
-    color:white;
-
-    font-size:14px;
-
-    box-sizing:border-box;
-
-    cursor:pointer;
-
-}
-
-.selectMenu{
-
-    position:absolute;
-
-    top:65px;
-
-    left:0;
-
-    width:100%;
-
-    background:#111;
-
-    border:2px solid #ffe600;
-
-    border-radius:18px;
-
-    overflow:hidden;
-
-    display:none;
-
-    z-index:9999;
-
-}
-
-.selectMenu.active{
-
-    display:block;
-
-}
-
-.selectItem{
-
-    padding:16px;
-
-    border-bottom:1px solid #222;
-
-    color:white;
-
-    cursor:pointer;
-
-    transition:0.2s;
-
-}
-
-.selectItem:hover{
-
-    background:#1f1f1f;
-
-}
-
-/* =========================
-   PAYMENT
-========================= */
-
-.paymentTrigger{
-
-    cursor:pointer;
-
-    transition:0.3s;
-
-}
-
-.paymentTrigger:hover{
-
-    transform:scale(1.02);
-
-}
-
-.paymentMethod{
-
-    display:inline-flex;
-
-    align-items:center;
-
-    gap:12px;
-
+  @font-face{
+    font-family: 'OswaldBold';
+    src: url('oswald-bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+  }
+
+  @font-face{
+    font-family: 'FiraCondBold';
+    src: url('firasanscondensed-bold.otf') format('opentype');
+    font-weight: 700;
+    font-style: normal;
+  }
+
+  @font-face{
+    font-family: 'FiraCondBook';
+    src: url('firasanscondensed-book.otf') format('opentype');
+    font-weight: 400;
+    font-style: normal;
+  }
+
+  :root{
+    --emas: #e8b13c;
+    --emas-terang: #ffd166;
+    --gelap: #000000;
+  }
+
+  *{
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  html, body{
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    min-height: 100vh;
+    font-family: 'FiraCondBook', sans-serif;
+    background: var(--gelap) !important;
+    color: #ffffff;
+    overflow-x: hidden;
+  }
+
+  body{
+    background-color: var(--gelap) !important;
+  }
+
+  /* =========================
+     UI NAVBAR DRAWER & STYLING
+  ========================= */
+  .navbar {
+    position: fixed;
+    top: 0;
+    left: -300px;
+    width: 280px;
+    height: 100%;
+    background: #000000;
+    border-right: 2px solid var(--emas-terang);
+    z-index: 999999;
+    transition: left 0.3s ease;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .navbar.active {
+    left: 0;
+  }
+
+  .closeNavbar {
+    align-self: flex-end;
+    font-size: 1.3rem;
+    color: var(--emas-terang);
+    cursor: pointer;
+    margin-bottom: 10px;
+    font-family: 'FiraCondBold', sans-serif;
+  }
+
+  .navbarHeader {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid rgba(255, 209, 102, 0.2);
+    margin-bottom: 15px;
+  }
+
+  .navLogo {
+    width: 45px;
+    height: 45px;
+    object-fit: contain;
+    border-radius: 50%;
+    border: 1px solid var(--emas-terang);
+  }
+
+  .navText p {
+    margin: 0;
+    font-size: 0.85rem;
+  }
+
+  #navUsername {
+    font-family: 'FiraCondBold', sans-serif;
+    color: var(--emas-terang);
+    font-size: 1rem;
+  }
+
+  #navEmail, #navTitle {
+    color: #aaa;
+    font-size: 0.75rem;
+  }
+
+  .navbarMenu {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    overflow-y: auto;
+  }
+
+  .navMenuBox {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: #0b0f0c;
+    border: 1px solid rgba(255, 209, 102, 0.3);
+    padding: 12px 14px;
+    border-radius: 12px;
+    text-decoration: none;
+    color: #ffffff;
+    font-family: 'FiraCondBold', sans-serif;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+  }
+
+  .navMenuBox:hover {
+    background: #151d16;
+    border-color: var(--emas-terang);
+  }
+
+  .navMenuBox img {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+  }
+
+  /* OVERLAY */
+  .overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.7);
+    display: none;
+    z-index: 99999;
+  }
+
+  .overlay.active {
+    display: block;
+  }
+
+  /* =========================
+     CONTENT WRAP & HEADER BOX
+  ========================= */
+  .content-wrap {
+    position: relative;
+    z-index: 5;
+    padding: 20px 16px 60px 16px;
+    max-width: 650px;
+    margin: 0 auto;
+  }
+
+  div.headerBox {
+    all: unset !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 12px !important;
+    width: 100% !important;
+    border-bottom: 1px solid rgba(255, 209, 102, 0.2) !important;
+    padding-bottom: 12px !important;
+    margin-bottom: 15px !important;
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+
+  .mainLogo {
+    width: 40px !important;
+    height: 40px !important;
+    object-fit: contain !important;
+    border-radius: 50% !important;
+    border: 1px solid var(--emas-terang) !important;
+    margin: 0 !important;
+    cursor: pointer;
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .headerRight h1 {
+    font-family: 'OswaldBold', sans-serif !important;
+    font-size: 1.3rem !important;
+    color: #ffffff !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .headerRight h1 span {
+    color: var(--emas-terang);
+  }
+
+  .headerRight p {
+    color: #aaa;
+    font-size: 0.8rem;
+    margin: 2px 0 0 0;
+  }
+
+  /* =========================
+     CUSTOMER ACCORDION CARDS
+  ========================= */
+  .customer-list-container {
+    max-width: 650px;
+    margin: 0 auto;
+  }
+
+  .customer-card {
+    background: #000000;
+    border: 2px solid var(--emas-terang);
+    border-radius: 16px;
+    margin-bottom: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(255, 209, 102, 0.1);
+    transition: all 0.3s ease;
+  }
+
+  .customer-header {
+    padding: 18px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    background: #000000;
+  }
+
+  .customer-info h3 {
+    margin: 0 0 4px 0;
+    font-family: 'FiraCondBold', sans-serif;
+    font-size: 1.1rem;
+    color: var(--emas-terang);
+  }
+
+  .customer-info p {
+    margin: 0;
+    font-size: 0.85rem;
+    color: #bbb;
+  }
+
+  .arrow-icon {
+    font-size: 1.2rem;
+    color: var(--emas-terang);
+    transition: transform 0.3s ease;
+  }
+
+  .customer-card.active .arrow-icon {
+    transform: rotate(180deg);
+  }
+
+  /* ACCORDION CONTENT (DETAIL UTANG) */
+  .customer-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s ease-out;
+    background: #050505;
+  }
+
+  .customer-card.active .customer-body {
+    max-height: 1500px;
+    border-top: 1px solid rgba(255, 209, 102, 0.2);
+    padding: 16px 20px;
+  }
+
+  /* TABLE UTANG CUSTOMER */
+  .table-responsive {
+    width: 100%;
+    overflow-x: auto;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+    margin-bottom: 14px;
+    white-space: nowrap;
+  }
+
+  th, td {
+    padding: 10px 8px;
+    text-align: center;
+    border-bottom: 1px solid #1a1a1a;
+    vertical-align: middle;
+  }
+
+  th {
+    font-family: 'FiraCondBold', sans-serif;
+    color: var(--emas-terang);
+    background: #0b0f0c;
+    border-bottom: 2px solid var(--emas-terang);
+  }
+
+  /* CHECKBOX STYLING AMAN DIKLIK */
+  .custom-checkbox {
+    width: 24px;
+    height: 24px;
+    border: 2px solid var(--emas-terang);
+    border-radius: 6px;
+    background: #111;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.2s ease;
+  }
+
+  .custom-checkbox svg {
+    width: 14px;
+    height: 14px;
+    fill: none;
+    stroke: #000;
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    display: none;
+  }
+
+  .custom-checkbox.checked {
+    background: var(--emas-terang);
+  }
+
+  .custom-checkbox.checked svg {
+    display: block;
+  }
+
+  /* ACTION BUTTONS */
+  .action-group {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+  }
+
+  .btn-action {
+    flex: 1;
+    height: 44px;
+    border-radius: 12px;
+    font-family: 'FiraCondBold', sans-serif;
+    font-size: 0.9rem;
+    cursor: pointer;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    transition: transform 0.2s ease;
+  }
+
+  .btn-action:active {
+    transform: scale(0.97);
+  }
+
+  .btn-add-debt {
+    background: #111111;
+    color: var(--emas-terang);
+    border: 2px solid var(--emas-terang);
+  }
+
+  .btn-pay-debt {
+    background: var(--emas-terang);
+    color: #000000;
+  }
+
+  /* TOTAL UTANG DALAM CARD */
+  .card-total-box {
+    font-family: 'FiraCondBold', sans-serif;
+    font-size: 0.95rem;
+    color: #fff;
+    margin-bottom: 12px;
+    background: #111;
+    padding: 10px 14px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    border: 1px solid rgba(255, 209, 102, 0.2);
+  }
+
+  /* =========================
+     POPUP & INPUT STYLE
+  ========================= */
+  .popupBox{
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 999999;
+    padding: 20px;
+  }
+
+  .popupBox.active{
+    display: flex;
+  }
+
+  .popupContent{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 400px;
+    background: #000;
+    border: 2px solid var(--emas-terang);
+    border-radius: 20px;
+    padding: 24px;
+  }
+
+  .popupContent h2 {
+    margin-top: 0;
+    font-family: 'FiraCondBold', sans-serif;
+    color: var(--emas-terang);
+    text-align: center;
+    font-size: 1.3rem;
+  }
+
+  input, select{
+    width: 100%;
+    height: 50px;
+    background: #111;
+    border: 2px solid var(--emas-terang);
+    border-radius: 14px;
+    color: white;
+    padding: 0 16px;
+    box-sizing: border-box;
+    margin-top: 12px;
+    font-family: 'FiraCondBook', sans-serif;
+  }
+
+  select option {
+    background: #111;
+    color: white;
+  }
+
+  .popupButtonGroup{
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+  }
+
+  .cancelButton,
+  .addButton{
+    flex: 1;
+    height: 48px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    font-family: 'FiraCondBold', sans-serif;
+  }
+
+  .cancelButton{
+    background: #2a2a2a;
+    color: white;
+  }
+
+  .addButton{
+    background: var(--emas-terang);
+    color: black;
+  }
+
+  /* PAYMENT METHOD POPUP */
+  .paymentMethod{
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
     background:#1a1a1a;
-
-    border:2px solid #ffe600;
-
-    border-radius:18px;
-
-    padding:12px 16px;
-
-    margin-bottom:14px;
-
-    color:white;
-
-    cursor:pointer;
-
-    font-size:14px;
-
-    width:auto;
-
-    min-width:unset;
-
-    max-width:max-content;
-
-}
-
-/* =========================
-   POPUP
-========================= */
-
-.popupBox{
-
-    position:fixed;
-
-    inset:0;
-
-    background:rgba(0,0,0,0.7);
-
-    display:none;
-
-    justify-content:center;
-
-    align-items:center;
-
-    z-index:99999;
-
-    padding:20px;
-
-}
-
-.popupBox.active{
-
-    display:flex;
-
-}
-
-.popupContent{
-
-    display:flex;
-
-    flex-direction:column;
-
-    align-items:center;
-
-}
-
-/* =========================
-   INPUT
-========================= */
-
-input,
-select{
-
-    width:100%;
-
-    height:55px;
-
-    background:#111;
-
-    border:2px solid #ffe600;
-
-    border-radius:18px;
-
-    color:white;
-
-    padding:0 16px;
-
-    box-sizing:border-box;
-
-    margin-top:10px;
-
-}
-
-/* =========================
-   BUTTON
-========================= */
-
-.popupButtonGroup{
-
-    display:flex;
-
-    gap:10px;
-
-    margin-top:20px;
-
-}
-
-.cancelButton,
-.addButton{
-
-    flex:1;
-
-    height:50px;
-
-    border:none;
-
+    border:2px solid var(--emas-terang);
     border-radius:14px;
-
-    cursor:pointer;
-
-}
-
-.cancelButton{
-
-    background:#2a2a2a;
-
+    padding:10px 14px;
+    margin-bottom:10px;
     color:white;
+    cursor:pointer;
+    font-size:13px;
+    width: 100%;
+  }
 
-}
-
-.addButton{
-
-    background:#ffe600;
-
-    color:black;
-
-    font-weight:bold;
-
-}
-
+  .paymentMethod:hover{
+    background: #252525;
+  }
 </style>
 
 </head>
 
 <body>
 
-<!-- =========================
-     NAVBAR
-========================= -->
-
-<div id="navbar"
-class="navbar">
-
-    <div class="closeNavbar"
-    onclick="toggleNavbar()">
-
-        
-
-    </div>
-
+<div id="navbar" class="navbar">
+    <div class="closeNavbar" onclick="toggleNavbar()"></div>
     <div class="navbarHeader">
-
-        <img src="icon.png"
-        class="navLogo">
-
+        <img src="icon.png" class="navLogo">
         <div class="navText">
-
-    <p id="navUsername"></p>
-    <p id="navEmail"></p>
-    <p id="navTitle"></p>
-
-</div>
-
+            <p id="navUsername"></p>
+            <p id="navEmail"></p>
+            <p id="navTitle"></p>
+        </div>
     </div>
-
     <div class="navbarMenu">
-
-        <a href="index.html"
-        class="navMenuBox">
-
-            <img src="icon.png">
-
-            <span>
-                Menu
-            </span>
-
-        </a>
-
-        <a href="customer.html"
-        class="navMenuBox">
-
-            <img src="nama.png">
-
-            <span>
-                Nama & ID Customer
-            </span>
-
-        </a>
-
-        <a href="produk.html"
-        class="navMenuBox">
-
-            <img src="voucher.png">
-
-            <span>
-                Produk
-            </span>
-
-        </a>
-
-        <a href="debt.html"
-        class="navMenuBox">
-
-            <img src="debt.png">
-
-            <span>
-                Rekap Utang
-            </span>
-
-        </a>
-
-        <a href="monthly.html"
-        class="navMenuBox">
-
-            <img src="pembukuan.png">
-
-            <span>
-                Pembukuan Bulanan
-            </span>
-
-        </a>
-
-        <a href="recap.html"
-        class="navMenuBox">
-
-            <img src="rekap.png">
-
-            <span>
-                Rekap Utang Total
-            </span>
-
-        </a>
-
+        <a href="index.html" class="navMenuBox"><img src="icon.png"><span>Home</span></a>
+        <a href="product.html" class="navMenuBox"><img src="voucher.png"><span>Produk</span></a>
+        <a href="debt.html" class="navMenuBox"><img src="debt.png"><span>Utang</span></a>
+        <a href="customer.html" class="navMenuBox"><img src="nama.png"><span>Customer</span></a>
+        <a href="recap.html" class="navMenuBox"><img src="rekap.png"><span>Rekap Utang</span></a>
+        <a href="monthly.html" class="navMenuBox"><img src="pembukuan.png"><span>Laporan Bulanan</span></a>
     </div>
-
 </div>
 
-<!-- OVERLAY -->
+<div id="overlay" class="overlay" onclick="toggleNavbar()"></div>
 
-<div id="overlay"
-class="overlay"
-onclick="toggleNavbar()">
-
-</div>
-
-<!-- NAV -->
-
-<div class="navTrigger"
-onclick="toggleNavbar()">
-
-    <img src="icon.png">
-
-</div>
-
-<!-- HEADER -->
-
-<div class="headerBox">
-
-    <div class="headerLeft">
-
-        <img src="icon.png"
-        class="mainLogo">
-
-    </div>
-
-    <div class="headerRight">
-
-        <h1>
-            COMÉRSIO CENTER
-        </h1>
-
-        <p>
-            Pusat Hitungan termasuk hutang
-            customer dihitung.
-        </p>
-
-    </div>
-
-</div>
-
-<!-- CONTENT -->
-
-<div class="customerListBox">
-
-    <div class="billTop">
-
-        <div>
-
-            <h2>
-                PEMBUKUAN SEDERHANA
-            </h2>
-
-            <!-- CUSTOM SELECT -->
-
-            <div class="customSelect">
-
-                <div class="selectTrigger"
-                onclick="toggleSelect()">
-
-                    <span id="selectedCustomer">
-
-                        Pilih ID Customer
-
-                    </span>
-
-                    <span>
-                        •
-                    </span>
-
-                </div>
-
-                <div class="selectMenu"
-                id="selectMenu">
-
-                </div>
-
-            </div>
-
+<div class="content-wrap">
+    <div class="headerBox">
+        <div class="headerLeft">
+            <img src="icon.png" class="mainLogo" id="rotatingLogo" onclick="handleNavbarTrigger()" title="Buka Menu Navbar">
         </div>
-
-        <span id="dateNow"></span>
-
-    </div>
-
-    <div class="sheetBox">
-
-        <table>
-
-            <thead>
-
-                <tr>
-
-                    <th>Produk</th>
-                    <th>Harga</th>
-                    <th>Dibayar</th>
-                    <th>Tip</th>
-                    <th>Waktu</th>
-
-                </tr>
-
-            </thead>
-
-            <tbody id="debtTable">
-
-            </tbody>
-
-        </table>
-
-        <!-- TOTAL -->
-
-        <div class="totalDebtBox paymentTrigger"
-        onclick="openPaymentPopup()">
-
-            TOTAL HUTANG :
-            Rp <span id="totalDebt">
-
-                0
-
-            </span>
-
+        <div class="headerRight">
+            <h1>REKAP UTANG <span>PER CUSTOMER</span></h1>
+            <p>Pilih customer untuk melihat detail & transaksi utang.</p>
+            <p id="dateNow" style="font-size: 0.78rem; color: var(--emas-terang); margin-top: 2px;"></p>
         </div>
-
     </div>
 
+    <div style="margin-bottom: 20px;">
+        <button type="button" class="btn-action btn-add-debt" style="width: 100%; height: 50px; font-size: 1rem;" onclick="openGlobalAddPopup()">
+            + Tambah Utang ke Customer Lain / Mana Saja
+        </button>
+    </div>
+
+    <div class="customer-list-container" id="customerAccordionList">
+        </div>
 </div>
 
-<!-- BUTTON -->
-
-<div class="addCustomerButton"
-onclick="openPopup()">
-
-    TAMBAHKAN HUTANG
-
-</div>
-
-<!-- INPUT POPUP -->
-
-<div id="popupBox"
-class="popupBox">
-
+<div id="popupBox" class="popupBox">
     <div class="popupContent">
-
-        <h2>
-            INPUT HUTANG
-        </h2>
-
-        <select id="customerSelect">
-
-            <option value="">
-                Pilih Customer
-            </option>
-
-        </select>
-
-        <input type="text"
-        id="produkInput"
-        placeholder="Nama Produk">
-
-        <input type="number"
-        id="hargaInput"
-        placeholder="Harga">
-
+        <h2>TAMBAH UTANG</h2>
+        <label style="font-size:0.85rem; color:var(--emas-terang); font-family:'FiraCondBold', sans-serif; margin-top:5px; display:block;">Pilih Customer:</label>
+        <select id="customerSelectTarget">
+            </select>
+        
+        <input type="text" id="produkInput" placeholder="Nama Produk">
+        <input type="number" id="hargaInput" placeholder="Harga">
         <div class="popupButtonGroup">
+            <button class="cancelButton" onclick="closePopup()">Cancel</button>
+            <button class="addButton" onclick="addDebt()">Tambahkan</button>
+        </div>
+    </div>
+</div>
 
-            <button class="cancelButton"
-            onclick="closePopup()">
+<div id="editPopupBox" class="popupBox">
+    <div class="popupContent">
+        <h2>INPUT PEMBAYARAN & TIP</h2>
+        <p id="editProductInfo" style="text-align:center; color:#aaa; font-size:0.85rem; margin-top:-5px; margin-bottom:10px;"></p>
+        
+        <label style="font-size:0.85rem; color:var(--emas-terang); font-family:'FiraCondBold', sans-serif;">Jumlah Dibayar:</label>
+        <input type="number" id="nominalBayarInput" placeholder="Masukkan nominal dibayar...">
 
-                Cancel
+        <label style="font-size:0.85rem; color:var(--emas-terang); font-family:'FiraCondBold', sans-serif; margin-top: 10px; display:block;">Nominal Tip:</label>
+        <input type="number" id="nominalTipInput" placeholder="Masukkan nominal tip...">
+        
+        <div class="popupButtonGroup">
+            <button class="cancelButton" onclick="closeEditPopup()">Cancel</button>
+            <button class="addButton" onclick="saveEditDebt()">Simpan</button>
+        </div>
+    </div>
+</div>
 
-            </button>
-
-            <button class="addButton"
-            onclick="addDebt()">
-
-                Tambahkan
-
-            </button>
-
+<div id="paymentPopup" class="popupBox">
+    <div class="popupContent" style="max-height: 85vh; overflow-y: auto;">
+        <h2>METODE PEMBAYARAN</h2>
+        <p style="text-align: center; font-size: 0.85rem; color: #aaa; margin-top: -5px; margin-bottom: 15px;">Pilih jenis pembayaran tagihan:</p>
+        
+        <div style="display: flex; gap: 8px; margin-bottom: 15px;">
+            <button type="button" id="btnTypeFull" onclick="setPaymentType('full')" style="flex:1; padding: 10px; border-radius: 10px; border: 2px solid var(--emas-terang); background: var(--emas-terang); color: #000; font-family: 'FiraCondBold', sans-serif; cursor: pointer; font-size: 0.85rem;">Penuh (Full)</button>
+            <button type="button" id="btnTypeAmort" onclick="setPaymentType('amort')" style="flex:1; padding: 10px; border-radius: 10px; border: 2px solid var(--emas-terang); background: #111; color: var(--emas-terang); font-family: 'FiraCondBold', sans-serif; cursor: pointer; font-size: 0.85rem;">Amortisasi (Cicilan)</button>
         </div>
 
+        <p style="font-size: 0.85rem; color: var(--emas-terang); font-family: 'FiraCondBold', sans-serif; margin-bottom: 8px;">Pilih Channel Pembayaran:</p>
+        
+        <div class="paymentMethod" onclick="openPaymentPage('qris')"><img src="QRIS Logo.png" style="width:50px;object-fit:contain;"><span>QRIS</span></div>
+        <div class="paymentMethod" onclick="openPaymentPage('gopay')"><img src="GoPay.png" style="width:50px;object-fit:contain;"><span>GoPay</span></div>
+        <div class="paymentMethod" onclick="openPaymentPage('dana')"><img src="DANA.png" style="width:50px;object-fit:contain;"><span>DANA</span></div>
+        <div class="paymentMethod" onclick="openPaymentPage('shopeepay')"><img src="ShopeePay.png" style="width:60px;object-fit:contain;"><span>ShopeePay</span></div>
+        <div class="paymentMethod" onclick="openPaymentPage('seabank')"><img src="SeaBank.png" style="width:60px;object-fit:contain;"><span>SeaBank</span></div>
+        <div class="paymentMethod" onclick="openPaymentPage('bri')"><img src="Bank BRI.png" style="width:45px;object-fit:contain;"><span>BRI</span></div>
+        <div class="paymentMethod" onclick="openPaymentPage('bankjago')"><img src="Bank Jago.png" style="width:60px;object-fit:contain;"><span>Bank Jago</span></div>
+        <div class="paymentMethod" onclick="openPaymentPage('krom')"><img src="Krom.png" style="width:45px;object-fit:contain;"><span>Krom</span></div>
+        
+        <div class="popupButtonGroup" style="margin-top: 15px;">
+            <button class="cancelButton" onclick="closePaymentPopup()">Tutup</button>
+        </div>
     </div>
-
-</div>
-
-<!-- PAYMENT POPUP -->
-
-<div id="paymentPopup"
-class="popupBox">
-
-    <div class="popupContent">
-
-        <h2>
-            PAYMENT METHOD
-        </h2>
-
-        <div class="paymentMethod"
-onclick="openPaymentPage('qris')">
-
-    <img src="QRIS Logo.png"
-
-    style="
-
-    width:80px;
-    object-fit:contain;
-
-    ">
-
-    <span>
-        QRIS
-    </span>
-
-</div>
-
-<div class="paymentMethod"
-onclick="openPaymentPage('gopay')">
-
-    <img src="GoPay.png"
-
-    style="
-
-    width:80px;
-    object-fit:contain;
-
-    ">
-
-    <span>
-        GoPay
-    </span>
-
-</div>
-
-<div class="paymentMethod"
-onclick="openPaymentPage('dana')">
-
-    <img src="DANA.png"
-
-    style="
-
-    width:80px;
-    object-fit:contain;
-
-    ">
-
-    <span>
-        DANA
-    </span>
-
-</div>
-
-<div class="paymentMethod"
-onclick="openPaymentPage('shopeepay')">
-
-    <img src="ShopeePay.png"
-
-    style="
-
-    width:95px;
-    object-fit:contain;
-
-    ">
-
-    <span>
-        ShopeePay
-    </span>
-
-</div>
-
-<div class="paymentMethod"
-onclick="openPaymentPage('seabank')">
-
-    <img src="SeaBank.png"
-
-    style="
-
-    width:95px;
-    object-fit:contain;
-
-    ">
-
-    <span>
-        SeaBank
-    </span>
-
-</div>
-
-<div class="paymentMethod"
-onclick="openPaymentPage('bri')">
-
-    <img src="Bank BRI.png"
-
-    style="
-
-    width:75px;
-    object-fit:contain;
-
-    ">
-
-    <span>
-        BRI
-    </span>
-
-</div>
-
-<div class="paymentMethod"
-onclick="openPaymentPage('bankjago')">
-
-    <img src="Bank Jago.png"
-
-    style="
-
-    width:95px;
-    object-fit:contain;
-
-    ">
-
-    <span>
-        Bank Jago
-    </span>
-
-</div>
-
-<div class="paymentMethod"
-onclick="openPaymentPage('krom')">
-
-    <img src="Krom.png"
-
-    style="
-
-    width:70px;
-    object-fit:contain;
-
-    ">
-
-    <span>
-        Krom
-    </span>
-
-</div>
-
 </div>
 
 <script>
-
 /* =========================
-   LOAD USER DATA
+   LOAD USER DATA & LOGIN CHECK
 ========================= */
-
-document
-.getElementById("navUsername")
-.innerText =
-
-localStorage.getItem(
-    "username"
-) || "Unknown User";
-
-document
-.getElementById("navEmail")
-.innerText =
-
-localStorage.getItem(
-    "email"
-) || "No Email";
-
-document
-.getElementById("navTitle")
-.innerText =
-
-localStorage.getItem(
-    "title"
-) || "No Title";
-
-/* =========================
-   NAVBAR
-========================= */
-
-function toggleNavbar(){
-
-    document
-    .getElementById("navbar")
-    .classList.toggle("active");
-
-    document
-    .getElementById("overlay")
-    .classList.toggle("active");
-
+const username = localStorage.getItem("username");
+if(!username){
+    window.location.href = "login.html";
 }
 
-/* =========================
-   GLOBAL
-========================= */
-
-let totalHutang = 0;
-
-let activeCustomerId = "";
-
-let debts =
-JSON.parse(
-localStorage.getItem("debts")
-) || {};
+document.getElementById("navUsername").innerText = username || "Unknown User";
+document.getElementById("navEmail").innerText = localStorage.getItem("email") || "No Email";
+document.getElementById("navTitle").innerText = localStorage.getItem("title") || "No Title";
 
 /* =========================
-   LOAD
+   GLOBAL DATA
 ========================= */
+let debts = JSON.parse(localStorage.getItem("debts")) || {};
+let monthlyLogs = JSON.parse(localStorage.getItem("monthlyLogs")) || [];
+let targetCustomerTotal = 0;
+let selectedPaymentMode = "full";
+
+let activeEditCustId = "";
+let activeEditIndex = -1;
+
+let openCustomerCards = {};
 
 window.onload = function(){
-
     updateDateTime();
-
-    setInterval(updateDateTime,1000);
-
-    loadCustomers();
-
+    setInterval(updateDateTime, 1000);
+    renderCustomerList();
 }
-
-/* =========================
-   DATE
-========================= */
 
 function updateDateTime(){
+    document.getElementById("dateNow").innerText = new Date().toLocaleString("id-ID");
+}
 
-    document
-    .getElementById("dateNow")
-    .innerText =
+function toggleNavbar(){
+    document.getElementById("navbar").classList.toggle("active");
+    document.getElementById("overlay").classList.toggle("active");
+}
 
-    new Date()
-    .toLocaleString("id-ID");
+let clickState = 0;
 
+function handleNavbarTrigger(){
+    const logo = document.getElementById("rotatingLogo");
+    
+    if(clickState === 0){
+        clickState = 1;
+        logo.style.transform = "rotate(180deg)";
+    } else if(clickState === 1){
+        clickState = 2;
+        logo.style.transform = "rotate(360deg)";
+        
+        setTimeout(() => {
+            logo.style.transition = "none";
+            logo.style.transform = "rotate(0deg)";
+            clickState = 0;
+            setTimeout(() => { logo.style.transition = "transform 0.4s cubic-bezier(0.4, 0, 0.2, 1)"; }, 50);
+        }, 400);
+    }
+
+    toggleNavbar();
 }
 
 /* =========================
-   CUSTOM SELECT
+   RENDER CUSTOMER ACCORDION LIST
 ========================= */
+function renderCustomerList(){
+    const customers = JSON.parse(localStorage.getItem("customers")) || [];
+    const container = document.getElementById("customerAccordionList");
+    container.innerHTML = "";
 
-function toggleSelect(){
+    if(customers.length === 0){
+        container.innerHTML = `<p style="text-align:center; color:#777; padding: 20px;">Belum ada customer terdaftar. Tambahkan di menu Customer.</p>`;
+        return;
+    }
 
-    document
-    .getElementById("selectMenu")
-    .classList.toggle("active");
+    customers.forEach(cust => {
+        const custId = cust.id;
+        const custName = cust.name;
+        const customerDebtList = debts[custId] || [];
 
-}
+        let currentTotal = 0;
+        customerDebtList.forEach(item => {
+            const harga = item.harga || 0;
+            const dibayar = item.dibayar || 0;
+            const sisa = harga - dibayar;
+            if(sisa > 0 && !item.excluded) {
+                currentTotal += sisa;
+            }
+        });
 
-/* =========================
-   LOAD CUSTOMER
-========================= */
+        const card = document.createElement("div");
+        card.className = "customer-card";
+        card.id = `card-${custId}`;
 
-function loadCustomers(){
-
-    const customers =
-    JSON.parse(
-    localStorage.getItem("customers")
-    ) || [];
-
-    const popupSelect =
-    document.getElementById("customerSelect");
-
-    const selectMenu =
-    document.getElementById("selectMenu");
-
-    customers.forEach(data=>{
-
-        const option =
-        document.createElement("option");
-
-        option.value = data.id;
-
-        option.textContent =
-        `${data.id} - ${data.name}`;
-
-        popupSelect.appendChild(option);
-
-        const item =
-        document.createElement("div");
-
-        item.className =
-        "selectItem";
-
-        item.innerText =
-        `${data.id} - ${data.name}`;
-
-        item.onclick = function(){
-
-            activeCustomerId =
-            data.id;
-
-            document
-            .getElementById("selectedCustomer")
-            .innerText =
-
-            `${data.id} - ${data.name}`;
-
-            document
-            .getElementById("selectMenu")
-            .classList.remove("active");
-
-            renderDebt(activeCustomerId);
-
+        if(openCustomerCards[custId]){
+            card.classList.add("active");
         }
 
-        selectMenu.appendChild(item);
+        card.innerHTML = `
+            <div class="customer-header" onclick="toggleAccordion('${custId}')">
+                <div class="customer-info">
+                    <h3>${custId} - ${custName}</h3>
+                    <p>Total Utang Aktif: Rp ${currentTotal.toLocaleString("id-ID")}</p>
+                </div>
+                <div class="arrow-icon"></div>
+            </div>
+            <div class="customer-body" id="body-${custId}">
+                <div class="card-total-box">
+                    <span>TOTAL TAGIHAN (DITAGIH) :</span>
+                    <span>Rp ${currentTotal.toLocaleString("id-ID")}</span>
+                </div>
 
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Log</th>
+                                <th>Produk</th>
+                                <th>Harga</th>
+                                <th>Dibayar</th>
+                                <th>Tip</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="table-body-${custId}">
+                            ${renderDebtRows(customerDebtList, custId)}
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="action-group">
+                    <button type="button" class="btn-action btn-add-debt" onclick="openPopupForCustomer('${custId}')">
+                        + Tambah Utang
+                    </button>
+                    <button type="button" class="btn-action btn-pay-debt" onclick="openPaymentPopup('${custId}', ${currentTotal})">
+                        Tagih Utang
+                    </button>
+                </div>
+            </div>
+        `;
+
+        container.appendChild(card);
     });
+}
 
+function renderDebtRows(debtList, custId){
+    if(debtList.length === 0){
+        return `<tr><td colspan="6" style="color:#777; padding: 15px;">Belum ada catatan utang</td></tr>`;
+    }
+
+    let html = "";
+    debtList.forEach((item, index) => {
+        const harga = item.harga || 0;
+        const dibayar = item.dibayar || 0;
+        const sisaItem = harga - dibayar;
+        const tipItem = item.tip || 0;
+        const isChecked = item.excluded ? "checked" : "";
+
+        html += `
+            <tr>
+                <td>
+                    <div class="custom-checkbox ${isChecked}" onclick="toggleExcludeItem('${custId}', ${index})" title="Centang untuk exclude dari tagihan dan masuk monthly log">
+                        <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    </div>
+                </td>
+                <td>${item.produk}<br><small style="color:#888;">${item.waktu}</small></td>
+                <td>Rp ${harga.toLocaleString("id-ID")}</td>
+                <td onclick="openEditDebt('${custId}', ${index})" style="cursor:pointer; color: var(--emas-terang);" title="Klik untuk isi/ubah pembayaran">
+                    Rp ${dibayar.toLocaleString("id-ID")}
+                    <br><small style="color:${sisaItem <= 0 ? '#4caf5e' : '#ff3b3b'}">Sisa: Rp ${sisaItem.toLocaleString("id-ID")}</small>
+                </td>
+                <td onclick="openEditDebt('${custId}', ${index})" style="cursor:pointer; color: var(--emas-terang); font-family: 'FiraCondBold', sans-serif;" title="Klik untuk isi/ubah tip">
+                    Rp ${tipItem.toLocaleString("id-ID")}
+                </td>
+                <td>
+                    <button type="button" onclick="cancelDebt('${custId}', ${index})" style="background:#ff3b3b; color:white; border:none; border-radius:8px; padding:6px 10px; cursor:pointer; font-size:11px; font-family:'FiraCondBold', sans-serif;">
+                        Hapus
+                    </button>
+                </td>
+            </tr>
+        `;
+    });
+    return html;
+}
+
+function toggleAccordion(custId){
+    const card = document.getElementById(`card-${custId}`);
+    card.classList.toggle("active");
+    openCustomerCards[custId] = card.classList.contains("active");
 }
 
 /* =========================
-   POPUP
+   LOGIKA CHECKLIST (EXCLUDE & MONTHLY LOG)
 ========================= */
+function toggleExcludeItem(custId, index){
+    const item = debts[custId][index];
+    item.excluded = !item.excluded;
 
-function openPopup(){
+    if(item.excluded && !item.isLogged){
+        item.isLogged = true;
+        
+        monthlyLogs.push({
+            customer: custId,
+            produk: item.produk,
+            harga: item.harga,
+            waktuLog: new Date().toLocaleString("id-ID"),
+            keterangan: "Log Tagihan (Excluded dari Tagihan Aktif)"
+        });
+        localStorage.setItem("monthlyLogs", JSON.stringify(monthlyLogs));
+    }
 
-    document
-    .getElementById("popupBox")
-    .classList.add("active");
+    localStorage.setItem("debts", JSON.stringify(debts));
+    openCustomerCards[custId] = true;
+    renderCustomerList();
+}
 
+/* =========================
+   POPUP TAMBAH UTANG (DENGAN DROPDOWN SELECT CUSTOMER)
+========================= */
+function populateCustomerDropdown(selectedId = ""){
+    const customers = JSON.parse(localStorage.getItem("customers")) || [];
+    const select = document.getElementById("customerSelectTarget");
+    select.innerHTML = "";
+
+    if(customers.length === 0){
+        select.innerHTML = `<option value="">Tidak ada customer tersedia</option>`;
+        return;
+    }
+
+    customers.forEach(cust => {
+        const opt = document.createElement("option");
+        opt.value = cust.id;
+        opt.text = `${cust.id} - ${cust.name}`;
+        if(cust.id === selectedId){
+            opt.selected = true;
+        }
+        select.appendChild(opt);
+    });
+}
+
+function openGlobalAddPopup(){
+    populateCustomerDropdown();
+    document.getElementById("produkInput").value = "";
+    document.getElementById("hargaInput").value = "";
+    document.getElementById("popupBox").classList.add("active");
+}
+
+function openPopupForCustomer(custId){
+    populateCustomerDropdown(custId);
+    document.getElementById("produkInput").value = "";
+    document.getElementById("hargaInput").value = "";
+    document.getElementById("popupBox").classList.add("active");
 }
 
 function closePopup(){
+    document.getElementById("popupBox").classList.remove("active");
+}
 
-    document
-    .getElementById("popupBox")
-    .classList.remove("active");
+function addDebt(){
+    const select = document.getElementById("customerSelectTarget");
+    const chosenCustId = select.value;
+    const produk = document.getElementById("produkInput").value.trim();
+    const harga = parseInt(document.getElementById("hargaInput").value);
 
+    if(!chosenCustId || produk === "" || isNaN(harga)){
+        alert("Pilih customer dan lengkapi data dengan benar!");
+        return;
+    }
+
+    if(!debts[chosenCustId]){
+        debts[chosenCustId] = [];
+    }
+
+    debts[chosenCustId].push({
+        produk: produk,
+        harga: harga,
+        dibayar: 0,
+        tip: 0,
+        excluded: false,
+        isLogged: false,
+        waktu: new Date().toLocaleString("id-ID")
+    });
+
+    localStorage.setItem("debts", JSON.stringify(debts));
+    
+    openCustomerCards[chosenCustId] = true;
+
+    renderCustomerList();
+    closePopup();
 }
 
 /* =========================
-   PAYMENT POPUP
+   EDIT & INPUT PEMBAYARAN DAN TIP
 ========================= */
+function openEditDebt(custId, index){
+    activeEditCustId = custId;
+    activeEditIndex = index;
+    const item = debts[custId][index];
 
-function openPaymentPopup(){
+    document.getElementById("editProductInfo").innerText = `Produk: ${item.produk} (Harga: Rp ${(item.harga || 0).toLocaleString("id-ID")})`;
+    document.getElementById("nominalBayarInput").value = item.dibayar || "";
+    document.getElementById("nominalTipInput").value = item.tip || "";
+    document.getElementById("editPopupBox").classList.add("active");
+}
 
-    if(activeCustomerId === ""){
+function closeEditPopup(){
+    document.getElementById("editPopupBox").classList.remove("active");
+}
 
+function saveEditDebt(){
+    if(activeEditCustId === "" || activeEditIndex === -1) return;
+
+    const bayarVal = document.getElementById("nominalBayarInput").value;
+    const tipVal = document.getElementById("nominalTipInput").value;
+
+    const bayar = parseInt(bayarVal);
+    const tip = parseInt(tipVal);
+
+    if(isNaN(bayar) || bayar < 0){
+        alert("Masukkan nominal pembayaran yang valid!");
         return;
-
     }
 
-    document
-    .getElementById("paymentPopup")
-    .classList.add("active");
+    const item = debts[activeEditCustId][activeEditIndex];
+    item.dibayar = bayar;
+    item.tip = isNaN(tip) ? 0 : tip;
+    item.waktu = new Date().toLocaleString("id-ID");
 
+    localStorage.setItem("debts", JSON.stringify(debts));
+    
+    openCustomerCards[activeEditCustId] = true;
+    renderCustomerList();
+    closeEditPopup();
+}
+
+function cancelDebt(custId, index){
+    if(!confirm("Batalkan/hapus transaksi ini?")) return;
+
+    debts[custId].splice(index, 1);
+    localStorage.setItem("debts", JSON.stringify(debts));
+    
+    openCustomerCards[custId] = true;
+    renderCustomerList();
+}
+
+/* =========================
+   PAYMENT POPUP & MODE SELECTION
+========================= */
+function setPaymentType(type){
+    selectedPaymentMode = type;
+    const btnFull = document.getElementById("btnTypeFull");
+    const btnAmort = document.getElementById("btnTypeAmort");
+
+    if(type === 'full'){
+        btnFull.style.background = "var(--emas-terang)";
+        btnFull.style.color = "#000";
+        btnAmort.style.background = "#111";
+        btnAmort.style.color = "var(--emas-terang)";
+    } else {
+        btnAmort.style.background = "var(--emas-terang)";
+        btnAmort.style.color = "#000";
+        btnFull.style.background = "#111";
+        btnFull.style.color = "var(--emas-terang)";
+    }
+}
+
+let paymentTargetCustId = "";
+
+function openPaymentPopup(custId, total){
+    if(total <= 0){
+        alert("Tidak ada tagihan aktif yang bisa ditagih (mungkin sudah lunas atau semua item di-checklist).");
+        return;
+    }
+    paymentTargetCustId = custId;
+    targetCustomerTotal = total;
+    selectedPaymentMode = "full";
+    setPaymentType("full");
+    document.getElementById("paymentPopup").classList.add("active");
 }
 
 function closePaymentPopup(){
-
-    document
-    .getElementById("paymentPopup")
-    .classList.remove("active");
-
+    document.getElementById("paymentPopup").classList.remove("active");
 }
-
-/* =========================
-   ADD DEBT
-========================= */
-
-function addDebt(){
-
-    const customerId =
-    document.getElementById("customerSelect").value;
-
-    const produk =
-    document.getElementById("produkInput").value;
-
-    const harga =
-    parseInt(
-    document.getElementById("hargaInput").value
-    );
-
-    if(
-    customerId === "" ||
-    produk === "" ||
-    isNaN(harga)
-    ){
-
-        return;
-
-    }
-
-    if(!debts[customerId]){
-
-        debts[customerId] = [];
-
-    }
-
-    debts[customerId].push({
-
-        produk:produk,
-
-        harga:harga,
-
-        dibayar:0,
-
-        waktu:new Date()
-        .toLocaleString("id-ID"),
-
-        tip:0
-
-    });
-
-    localStorage.setItem(
-    "debts",
-    JSON.stringify(debts)
-    );
-
-    activeCustomerId =
-    customerId;
-
-    renderDebt(customerId);
-
-    closePopup();
-
-}
-
-/* =========================
-   EDIT DEBT
-========================= */
-
-function editDebt(index){
-
-    const item =
-    debts[activeCustomerId][index];
-
-    const input =
-    prompt(
-    "Masukkan nominal pembayaran:"
-    );
-
-    if(input === null){
-
-        return;
-
-    }
-
-    const bayar =
-    parseInt(input);
-
-    if(isNaN(bayar)){
-
-        return;
-
-    }
-
-    item.dibayar = bayar;
-
-    if(bayar > item.harga){
-
-        item.tip =
-        bayar - item.harga;
-
-    }else{
-
-        item.tip = 0;
-
-    }
-
-    item.waktu =
-    new Date()
-    .toLocaleString("id-ID");
-
-    localStorage.setItem(
-    "debts",
-    JSON.stringify(debts)
-    );
-
-    renderDebt(activeCustomerId);
-
-}
-
-/* =========================
-   CANCEL TRANSACTION
-========================= */
-
-function cancelDebt(index){
-
-    const confirmDelete =
-    confirm(
-    "Batalkan transaksi ini?"
-    );
-
-    if(!confirmDelete){
-
-        return;
-
-    }
-
-    debts[activeCustomerId]
-    .splice(index,1);
-
-    localStorage.setItem(
-    "debts",
-    JSON.stringify(debts)
-    );
-
-    renderDebt(activeCustomerId);
-
-}
-
-/* =========================
-   RENDER
-========================= */
-
-function renderDebt(customerId){
-
-    const table =
-    document.getElementById("debtTable");
-
-    table.innerHTML = "";
-
-    totalHutang = 0;
-
-    const customerDebt =
-    debts[customerId] || [];
-
-    customerDebt.forEach((item,index)=>{
-
-        const sisa =
-        item.harga - item.dibayar;
-
-        totalHutang += sisa;
-
-        const row =
-        document.createElement("tr");
-
-        row.innerHTML = `
-
-            <td>
-                ${item.produk}
-            </td>
-
-            <td>
-                Rp ${item.harga.toLocaleString("id-ID")}
-            </td>
-
-            <td onclick="editDebt(${index})"
-            style="cursor:pointer;">
-
-                Rp ${item.dibayar.toLocaleString("id-ID")}
-
-                <br>
-
-                <small>
-                    Klik Edit
-                </small>
-
-            </td>
-
-            <td>
-                Rp ${(item.tip || 0)
-                .toLocaleString("id-ID")}
-            </td>
-
-            <td>
-
-                ${item.waktu}
-
-                <br><br>
-
-                <button
-                onclick="cancelDebt(${index})"
-
-                style="
-
-                background:#ff3b3b;
-                color:white;
-                border:none;
-                border-radius:10px;
-                padding:6px 12px;
-                cursor:pointer;
-                font-size:10px;
-
-                ">
-
-                    Batalkan
-
-                </button>
-
-            </td>
-
-        `;
-
-        table.appendChild(row);
-
-    });
-
-    document
-    .getElementById("totalDebt")
-    .innerText =
-
-    totalHutang.toLocaleString("id-ID");
-
-}
-
-/* =========================
-   PAYMENT
-========================= */
 
 function openPaymentPage(method){
+    let finalAmountToPay = targetCustomerTotal;
 
-    localStorage.setItem(
-    "paymentCustomer",
-    activeCustomerId
-    );
+    if(selectedPaymentMode === 'amort'){
+        const inputCicilan = prompt(`Total sisa tagihan aktif: Rp ${targetCustomerTotal.toLocaleString("id-ID")}\nMasukkan nominal cicilan (Amortisasi) yang dibayar:`, targetCustomerTotal);
+        if(inputCicilan === null) return;
 
-    localStorage.setItem(
-    "paymentTotal",
-    totalHutang
-    );
+        const parsedCicilan = parseInt(inputCicilan);
+        if(isNaN(parsedCicilan) || parsedCicilan <= 0){
+            alert("Nominal pembayaran tidak valid!");
+            return;
+        }
+        if(parsedCicilan > targetCustomerTotal){
+            alert("Nominal cicilan tidak boleh melebihi sisa total tagihan aktif!");
+            return;
+        }
+        finalAmountToPay = parsedCicilan;
+    }
 
-    localStorage.setItem(
-    "paymentMethod",
-    method
-    );
-
-    window.location.href =
-    "payment.html";
-
+    localStorage.setItem("paymentCustomer", paymentTargetCustId);
+    localStorage.setItem("paymentTotal", finalAmountToPay);
+    localStorage.setItem("paymentMethod", method);
+    localStorage.setItem("paymentMode", selectedPaymentMode);
+    
+    window.location.href = "payment.html";
 }
-
 </script>
 
 </body>
-
 </html>

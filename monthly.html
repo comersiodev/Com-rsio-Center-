@@ -1,487 +1,517 @@
 <!DOCTYPE html>
 <html lang="id">
-
 <head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Monthly Report Comérsio</title>
+<link rel="stylesheet" href="style.css">
+<style>
+  @font-face{
+    font-family: 'OswaldBold';
+    src: url('oswald-bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+  }
+  @font-face{
+    font-family: 'FiraCondBold';
+    src: url('firasanscondensed-bold.otf') format('opentype');
+    font-weight: 700;
+    font-style: normal;
+  }
+  @font-face{
+    font-family: 'FiraCondBook';
+    src: url('firasanscondensed-book.otf') format('opentype');
+    font-weight: 400;
+    font-style: normal;
+  }
 
-    <meta charset="UTF-8">
+  :root{
+    --emas: #e8b13c;
+    --emas-terang: #ffd166;
+    --gelap: #000000;
+  }
 
-    <meta name="viewport"
-    content="width=device-width, initial-scale=1.0">
+  *{
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+  }
 
-    <title>
-        Monthly Report Comérsio
-    </title>
+  html, body{
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    min-height: 100vh;
+    font-family: 'FiraCondBook', sans-serif;
+    background: var(--gelap) !important;
+    color: #ffffff;
+    overflow-x: hidden;
+  }
 
-    <link rel="stylesheet"
-    href="style.css">
+  body{
+    background-color: var(--gelap) !important;
+  }
 
+  /* =========================
+     UI NAVBAR DRAWER & STYLING
+  ========================= */
+  .navbar {
+    position: fixed;
+    top: 0;
+    left: -300px;
+    width: 280px;
+    height: 100%;
+    background: #000000;
+    border-right: 2px solid var(--emas-terang);
+    z-index: 999999;
+    transition: left 0.3s ease;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .navbar.active {
+    left: 0;
+  }
+
+  .closeNavbar {
+    align-self: flex-end;
+    font-size: 1.3rem;
+    color: var(--emas-terang);
+    cursor: pointer;
+    margin-bottom: 10px;
+    font-family: 'FiraCondBold', sans-serif;
+  }
+
+  .navbarHeader {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid rgba(255, 209, 102, 0.2);
+    margin-bottom: 15px;
+  }
+
+  .navLogo {
+    width: 45px;
+    height: 45px;
+    object-fit: contain;
+    border-radius: 50%;
+    border: 1px solid var(--emas-terang);
+  }
+
+  .navText p {
+    margin: 0;
+    font-size: 0.85rem;
+  }
+
+  #navUsername {
+    font-family: 'FiraCondBold', sans-serif;
+    color: var(--emas-terang);
+    font-size: 1rem;
+  }
+
+  #navEmail, #navTitle {
+    color: #aaa;
+    font-size: 0.75rem;
+  }
+
+  .navbarMenu {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    overflow-y: auto;
+  }
+
+  .navMenuBox {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: #0b0f0c;
+    border: 1px solid rgba(255, 209, 102, 0.3);
+    padding: 12px 14px;
+    border-radius: 12px;
+    text-decoration: none;
+    color: #ffffff;
+    font-family: 'FiraCondBold', sans-serif;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+  }
+
+  .navMenuBox:hover {
+    background: #151d16;
+    border-color: var(--emas-terang);
+  }
+
+  .navMenuBox img {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+  }
+
+  /* OVERLAY */
+  .overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.7);
+    display: none;
+    z-index: 99999;
+  }
+
+  .overlay.active {
+    display: block;
+  }
+
+  /* =========================
+     CONTENT WRAP & HEADER BOX (PRESISI PERSIS CUSTOMER & PAYMENT)
+  ========================= */
+  .content-wrap {
+    position: relative;
+    z-index: 5;
+    padding: 20px 16px 60px 16px;
+    max-width: 650px;
+    margin: 0 auto;
+  }
+
+  div.headerBox {
+    all: unset !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 12px !important;
+    width: 100% !important;
+    border-bottom: 1px solid rgba(255, 209, 102, 0.2) !important;
+    padding-bottom: 12px !important;
+    margin-bottom: 15px !important;
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+
+  .mainLogo {
+    width: 40px !important;
+    height: 40px !important;
+    object-fit: contain !important;
+    border-radius: 50% !important;
+    border: 1px solid var(--emas-terang) !important;
+    margin: 0 !important;
+    cursor: pointer;
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .headerRight h1 {
+    font-family: 'OswaldBold', sans-serif !important;
+    font-size: 1.3rem !important;
+    color: #ffffff !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .headerRight h1 span {
+    color: var(--emas-terang);
+  }
+
+  .headerRight p {
+    color: #aaa;
+    font-size: 0.8rem;
+    margin: 2px 0 0 0;
+  }
+
+  /* CONTAINER UTAMA */
+  .report-container {
+    padding: 0;
+    max-width: 100%;
+    margin: 0 auto;
+  }
+
+  /* SHEET FINANCIAL BOX */
+  .sheet-card {
+    background: #000000;
+    border: 2px solid var(--emas-terang);
+    border-radius: 18px;
+    padding: 20px;
+    box-shadow: 0 6px 20px rgba(255, 209, 102, 0.1);
+    margin-bottom: 20px;
+  }
+
+  .sheet-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(255, 209, 102, 0.3);
+    padding-bottom: 12px;
+    margin-bottom: 16px;
+  }
+
+  .sheet-header h2 {
+    margin: 0;
+    font-family: 'FiraCondBold', sans-serif;
+    color: var(--emas-terang);
+    font-size: 1.1rem;
+    letter-spacing: 0.5px;
+  }
+
+  .sheet-header span {
+    font-size: 0.78rem;
+    color: #aaa;
+  }
+
+  /* FINANCIAL TABLE STYLE */
+  .table-responsive {
+    width: 100%;
+    overflow-x: auto;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+    white-space: nowrap;
+  }
+
+  th, td {
+    padding: 10px 8px;
+    text-align: center;
+    border-bottom: 1px solid #1a1a1a;
+  }
+
+  th {
+    font-family: 'FiraCondBold', sans-serif;
+    color: var(--emas-terang);
+    background: #0b0f0c;
+    border-bottom: 2px solid var(--emas-terang);
+  }
+
+  /* FINANCIAL SUMMARY / TOTAL BOX */
+  .financial-summary {
+    background: #0b0f0c;
+    border: 1px solid var(--emas-terang);
+    border-radius: 14px;
+    padding: 16px;
+    margin-top: 16px;
+  }
+
+  .summary-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.95rem;
+    margin-bottom: 8px;
+    font-family: 'FiraCondBold', sans-serif;
+  }
+
+  .summary-row:last-child {
+    margin-bottom: 0;
+  }
+
+  .summary-row.total-final {
+    border-top: 1px solid rgba(255, 209, 102, 0.3);
+    padding-top: 8px;
+    margin-top: 8px;
+    font-size: 1.05rem;
+    color: var(--emas-terang);
+  }
+</style>
 </head>
 
 <body>
 
-<!-- NAVBAR -->
-
-<div id="navbar"
-class="navbar">
-
-    <div class="closeNavbar"
-    onclick="toggleNavbar()">
-
-        ✕
-
-    </div>
-
+<!-- =========================
+     NAVBAR DRAWER
+========================= -->
+<div id="navbar" class="navbar">
+    <div class="closeNavbar" onclick="toggleNavbar()">✕</div>
     <div class="navbarHeader">
-
-        <img src="icon.png"
-        class="navLogo">
-
+        <img src="icon.png" class="navLogo">
         <div class="navText">
-
-    <p id="navUsername"></p>
-    <p id="navEmail"></p>
-    <p id="navTitle"></p>
-
-</div>
-
+            <p id="navUsername"></p>
+            <p id="navEmail"></p>
+            <p id="navTitle"></p>
+        </div>
     </div>
-
-    <!-- NAV MENU -->
-
     <div class="navbarMenu">
-
-        <a href="index.html"
-        class="navMenuBox">
-
-            <img src="icon.png">
-
-            <span>
-                Menu
-            </span>
-
-        </a>
-
-        <a href="customer.html"
-        class="navMenuBox">
-
-            <img src="nama.png">
-
-            <span>
-                Nama & ID Customer
-            </span>
-
-        </a>
-
-        <a href="produk.html"
-        class="navMenuBox">
-
-            <img src="voucher.png">
-
-            <span>
-                Produk
-            </span>
-
-        </a>
-
-        <a href="debt.html"
-        class="navMenuBox">
-
-            <img src="debt.png">
-
-            <span>
-                Rekap Utang
-            </span>
-
-        </a>
-
-        <a href="monthly.html"
-        class="navMenuBox">
-
-            <img src="pembukuan.png">
-
-            <span>
-                Monthly Report
-            </span>
-
-        </a>
-        
-        <a href="recap.html"
-        class="navMenuBox">
-
-            <img src="rekap.png">
-
-            <span>
-                Rekap Utang Total
-            </span>
-
-        </a>
-
+        <a href="index.html" class="navMenuBox"><img src="icon.png"><span>Home</span></a>
+        <a href="product.html" class="navMenuBox"><img src="voucher.png"><span>Produk</span></a>
+        <a href="debt.html" class="navMenuBox"><img src="debt.png"><span>Utang</span></a>
+        <a href="customer.html" class="navMenuBox"><img src="nama.png"><span>Customer</span></a>
+        <a href="recap.html" class="navMenuBox"><img src="rekap.png"><span>Rekap Utang</span></a>
+        <a href="monthly.html" class="navMenuBox"><img src="pembukuan.png"><span>Laporan Bulanan</span></a>
     </div>
-
 </div>
 
-<!-- OVERLAY -->
+<div id="overlay" class="overlay" onclick="toggleNavbar()"></div>
 
-<div id="overlay"
-class="overlay"
-onclick="toggleNavbar()">
-
-</div>
-
-<!-- NAV BUTTON -->
-
-<div class="navTrigger"
-onclick="toggleNavbar()">
-
-    <img src="icon.png">
-
-</div>
-
-<!-- HEADER -->
-
-<div class="headerBox">
-
-    <div class="headerLeft">
-
-        <img src="icon.png"
-        class="mainLogo">
-
-    </div>
-
-    <div class="headerRight">
-
-        <h1>
-            COMÉRSIO CENTER
-        </h1>
-
-        <p>
-            Monthly Report Semua Customer
-        </p>
-
-    </div>
-
-</div>
-
-<!-- MONTHLY REPORT -->
-
-<div class="customerListBox">
-
-    <div class="billTop">
-
-        <div>
-
-            <h2 id="monthlyTitle">
-                MONTHLY REPORT
-            </h2>
-
+<!-- CONTENT WRAP (HEADER DENGAN LOGO ROTASI PRESISI) -->
+<div class="content-wrap">
+    <div class="headerBox">
+        <div class="headerLeft">
+            <img src="icon.png" class="mainLogo" id="rotatingLogo" onclick="handleNavbarTrigger()" title="Buka Menu Navbar">
         </div>
-
-        <span id="dateNow"></span>
-
-    </div>
-
-    <div class="sheetBox">
-
-        <table>
-
-            <thead>
-
-                <tr>
-
-                    <th>ID Customer</th>
-                    <th>Produk</th>
-                    <th>Harga</th>
-                    <th>Dibayar</th>
-                    <th>Utang</th>
-
-                </tr>
-
-            </thead>
-
-            <tbody id="monthlyTable">
-
-            </tbody>
-
-        </table>
-
-        <!-- TOTAL -->
-
-        <div class="totalDebtBox">
-
-            <p>
-
-                TOTAL HARGA :
-                Rp <span id="totalHarga">
-
-                    0
-
-                </span>
-
-            </p>
-
-            <p>
-
-                TOTAL DIBAYAR :
-                Rp <span id="totalBayar">
-
-                    0
-
-                </span>
-
-            </p>
-
-            <p>
-
-                TOTAL UTANG :
-                Rp <span id="totalUtang">
-
-                    0
-
-                </span>
-
-            </p>
-            <p>
-
-    TOTAL TIP :
-    Rp <span id="totalTip">
-
-        0
-
-    </span>
-
-</p>
-
+        <div class="headerRight">
+            <h1>MONTHLY REPORT <span>COMÉRSIO</span></h1>
+            <p>Laporan keuangan dan rekam jejak transaksi bulanan.</p>
         </div>
-
     </div>
 
-</div>
+    <!-- REPORT CONTENT -->
+    <div class="report-container">
+        <div class="sheet-card">
+            <div class="sheet-header">
+                <h2 id="monthlyTitle">MONTHLY REPORT</h2>
+                <span id="dateNow"></span>
+            </div>
 
-<!-- FOOTER -->
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID Customer</th>
+                            <th>Produk</th>
+                            <th>Harga</th>
+                            <th>Dibayar</th>
+                            <th>Sisa Utang</th>
+                            <th>Tip</th>
+                        </tr>
+                    </thead>
+                    <tbody id="monthlyTable">
+                        <!-- Dinamis dari script -->
+                    </tbody>
+                </table>
+            </div>
 
-<div class="footerBox">
-
-    <p>
-        © Comérsio LTD 2024
-    </p>
-
-    <p>
-        083874854586
-        (Call me)
-    </p>
-
+            <!-- FINANCIAL SUMMARY BOX -->
+            <div class="financial-summary">
+                <div class="summary-row">
+                    <span style="color:#aaa;">Total Harga Produk:</span>
+                    <span>Rp <span id="totalHarga">0</span></span>
+                </div>
+                <div class="summary-row">
+                    <span style="color:#aaa;">Total Dibayar:</span>
+                    <span style="color: #4caf5e;">Rp <span id="totalBayar">0</span></span>
+                </div>
+                <div class="summary-row">
+                    <span style="color:#aaa;">Total Sisa Utang:</span>
+                    <span style="color: #ff5555;">Rp <span id="totalUtang">0</span></span>
+                </div>
+                <div class="summary-row">
+                    <span style="color:#aaa;">Total Tip:</span>
+                    <span style="color: var(--emas-terang);">Rp <span id="totalTip">0</span></span>
+                </div>
+                <div class="summary-row total-final">
+                    <span>BALANCE AKHIR :</span>
+                    <span>Rp <span id="totalBalance">0</span></span>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script>
-	
-	/* =========================
-   LOAD USER DATA
+/* =========================
+   LOAD USER DATA & LOGIN CHECK
 ========================= */
-
-document
-.getElementById("navUsername")
-.innerText =
-
-localStorage.getItem(
-    "username"
-) || "Unknown User";
-
-document
-.getElementById("navEmail")
-.innerText =
-
-localStorage.getItem(
-    "email"
-) || "No Email";
-
-document
-.getElementById("navTitle")
-.innerText =
-
-localStorage.getItem(
-    "title"
-) || "No Title";
-
-/* NAVBAR */
-
-function toggleNavbar(){
-
-    const navbar =
-    document.getElementById("navbar");
-
-    const overlay =
-    document.getElementById("overlay");
-
-    navbar.classList.toggle("active");
-
-    overlay.classList.toggle("active");
-
-    document.body.classList.toggle("navActive");
-
+const username = localStorage.getItem("username");
+if(!username){
+    window.location.href = "login.html";
 }
 
-/* DATE */
+document.getElementById("navUsername").innerText = username || "Unknown User";
+document.getElementById("navEmail").innerText = localStorage.getItem("email") || "No Email";
+document.getElementById("navTitle").innerText = localStorage.getItem("title") || "No Title";
 
+function toggleNavbar(){
+    document.getElementById("navbar").classList.toggle("active");
+    document.getElementById("overlay").classList.toggle("active");
+}
+
+let clickState = 0;
+
+function handleNavbarTrigger(){
+    const logo = document.getElementById("rotatingLogo");
+    
+    if(clickState === 0){
+        clickState = 1;
+        logo.style.transform = "rotate(180deg)";
+    } else if(clickState === 1){
+        clickState = 2;
+        logo.style.transform = "rotate(360deg)";
+        
+        setTimeout(() => {
+            logo.style.transition = "none";
+            logo.style.transform = "rotate(0deg)";
+            clickState = 0;
+            setTimeout(() => { logo.style.transition = "transform 0.4s cubic-bezier(0.4, 0, 0.2, 1)"; }, 50);
+        }, 400);
+    }
+
+    toggleNavbar();
+}
+
+/* =========================
+   DATE & TIME
+========================= */
 function updateDateTime(){
-
     const now = new Date();
+    const day = String(now.getDate()).padStart(2,"0");
+    const month = String(now.getMonth()+1).padStart(2,"0");
+    const year = String(now.getFullYear()).slice(-2);
+    const hours = String(now.getHours()).padStart(2,"0");
+    const minutes = String(now.getMinutes()).padStart(2,"0");
+    const seconds = String(now.getSeconds()).padStart(2,"0");
 
-    const day =
-    String(now.getDate()).padStart(2,"0");
-
-    const month =
-    String(now.getMonth()+1).padStart(2,"0");
-
-    const year =
-    String(now.getFullYear()).slice(-2);
-
-    const hours =
-    String(now.getHours()).padStart(2,"0");
-
-    const minutes =
-    String(now.getMinutes()).padStart(2,"0");
-
-    const seconds =
-    String(now.getSeconds()).padStart(2,"0");
-
-    document
-    .getElementById("dateNow")
-    .innerText =
-
-    `${day}/${month}/${year}
-    ${hours}:${minutes}:${seconds}`;
+    document.getElementById("dateNow").innerText = `${day}/${month}/${year} • ${hours}:${minutes}:${seconds}`;
 
     const namaBulan = [
-
-        "JANUARI",
-        "FEBRUARI",
-        "MARET",
-        "APRIL",
-        "MEI",
-        "JUNI",
-        "JULI",
-        "AGUSTUS",
-        "SEPTEMBER",
-        "OKTOBER",
-        "NOVEMBER",
-        "DESEMBER"
-
+        "JANUARI", "FEBRUARI", "MARET", "APRIL", "MEI", "JUNI", 
+        "JULI", "AGUSTUS", "SEPTEMBER", "OKTOBER", "NOVEMBER", "DESEMBER"
     ];
 
-    document
-    .getElementById("monthlyTitle")
-    .innerText =
-
-    `MONTHLY REPORT - ${namaBulan[now.getMonth()]}`;
-
+    document.getElementById("monthlyTitle").innerText = `REPORT - ${namaBulan[now.getMonth()]}`;
 }
 
 updateDateTime();
-
-setInterval(updateDateTime,1000);
+setInterval(updateDateTime, 1000);
 
 /* =========================
-   LOAD DATA
+   LOAD & LOOP DATA DEBTS
 ========================= */
-
-const debts =
-JSON.parse(
-    localStorage.getItem("debts")
-) || {};
-
-const table =
-document.getElementById("monthlyTable");
+const debts = JSON.parse(localStorage.getItem("debts")) || {};
+const table = document.getElementById("monthlyTable");
 
 let totalHarga = 0;
-
 let totalBayar = 0;
-
 let totalUtang = 0;
-
 let totalTip = 0;
 
-/* =========================
-   LOOP DATA
-========================= */
-
 for(const customerId in debts){
-
     debts[customerId].forEach(item => {
+        const harga = item.harga || 0;
+        const dibayar = item.dibayar || 0;
+        const utang = harga - dibayar;
+        const tip = item.tip || 0;
 
-        const utang =
-        item.harga - item.dibayar;
-
-        const row =
-        document.createElement("tr");
-
+        const row = document.createElement("tr");
         row.innerHTML = `
-
-            <td>
-                ${customerId}
-            </td>
-
-            <td>
-                ${item.produk}
-            </td>
-
-            <td>
-                Rp ${item.harga.toLocaleString("id-ID")}
-            </td>
-
-            <td>
-                Rp ${item.dibayar.toLocaleString("id-ID")}
-            </td>
-
-            <td>
-                Rp ${utang.toLocaleString("id-ID")}
-            </td>
-
+            <td style="font-family: 'FiraCondBold', sans-serif; color: var(--emas-terang);">${customerId}</td>
+            <td>${item.produk}</td>
+            <td>Rp ${harga.toLocaleString("id-ID")}</td>
+            <td style="color: #4caf5e;">Rp ${dibayar.toLocaleString("id-ID")}</td>
+            <td style="color: #ff5555;">Rp ${utang.toLocaleString("id-ID")}</td>
+            <td style="color: var(--emas-terang);">Rp ${tip.toLocaleString("id-ID")}</td>
         `;
-
         table.appendChild(row);
 
-        totalHarga += item.harga;
-
-        totalBayar += item.dibayar;
-
+        totalHarga += harga;
+        totalBayar += dibayar;
         totalUtang += utang;
-
-        totalTip += item.tip || 0;
-
+        totalTip += tip;
     });
-
 }
 
-/* =========================
-   RENDER TOTAL
-========================= */
-
-document
-.getElementById("totalHarga")
-.innerText =
-
-totalHarga.toLocaleString("id-ID");
-
-document
-.getElementById("totalBayar")
-.innerText =
-
-totalBayar.toLocaleString("id-ID");
-
-document
-.getElementById("totalUtang")
-.innerText =
-
-totalUtang.toLocaleString("id-ID");
-
-document
-.getElementById("totalTip")
-.innerText =
-
-totalTip.toLocaleString("id-ID");
-
+// Render Total ke Summary Box
+document.getElementById("totalHarga").innerText = totalHarga.toLocaleString("id-ID");
+document.getElementById("totalBayar").innerText = totalBayar.toLocaleString("id-ID");
+document.getElementById("totalUtang").innerText = totalUtang.toLocaleString("id-ID");
+document.getElementById("totalTip").innerText = totalTip.toLocaleString("id-ID");
+document.getElementById("totalBalance").innerText = (totalBayar + totalTip).toLocaleString("id-ID");
 </script>
 
 </body>
-
 </html>

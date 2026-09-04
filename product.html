@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<title>
+Debt Comérsio - Produk
+</title>
+
+<link rel="stylesheet"
+href="style.css">
+
+<style>
+
+  @font-face{
+    font-family: 'OswaldBold';
+    src: url('oswald-bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+  }
+
+  @font-face{
+    font-family: 'FiraCondBold';
+    src: url('firasanscondensed-bold.otf') format('opentype');
+    font-weight: 700;
+    font-style: normal;
+  }
+
+  @font-face{
+    font-family: 'FiraCondBook';
+    src: url('firasanscondensed-book.otf') format('opentype');
+    font-weight: 400;
+    font-style: normal;
+  }
+
+  :root{
+    --emas: #e8b13c;
+    --emas-terang: #ffd166;
+    --gelap: #000000;
+  }
+
+  *{
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  html, body{
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    min-height: 100vh;
+    font-family: 'FiraCondBook', sans-serif;
+    background: var(--gelap) !important;
+    color: #ffffff;
+    overflow-x: hidden;
+  }
+
+  body{
+    background-color: var(--gelap) !important;
+  }
+
+  /* =========================
+     UI NAVBAR DRAWER & STYLING
+  ========================= */
+  .navbar {
+    position: fixed;
+    top: 0;
+    left: -300px;
+    width: 280px;
+    height: 100%;
+    background: #000000;
+    border-right: 2px solid var(--emas-terang);
+    z-index: 999999;
+    transition: left 0.3s ease;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .navbar.active {
+    left: 0;
+  }
+
+  .closeNavbar {
+    align-self: flex-end;
+    font-size: 1.3rem;
+    color: var(--emas-terang);
+    cursor: pointer;
+    margin-bottom: 10px;
+    font-family: 'FiraCondBold', sans-serif;
+  }
+
+  .navbarHeader {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid rgba(255, 209, 102, 0.2);
+    margin-bottom: 15px;
+  }
+
+  .navLogo {
+    width: 45px;
+    height: 45px;
+    object-fit: contain;
+    border-radius: 50%;
+    border: 1px solid var(--emas-terang);
+  }
+
+  .navText p {
+    margin: 0;
+    font-size: 0.85rem;
+  }
+
+  #navUsername {
+    font-family: 'FiraCondBold', sans-serif;
+    color: var(--emas-terang);
+    font-size: 1rem;
+  }
+
+  #navEmail, #navTitle {
+    color: #aaa;
+    font-size: 0.75rem;
+  }
+
+  .navbarMenu {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    overflow-y: auto;
+  }
+
+  .navMenuBox {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: #0b0f0c;
+    border: 1px solid rgba(255, 209, 102, 0.3);
+    padding: 12px 14px;
+    border-radius: 12px;
+    text-decoration: none;
+    color: #ffffff;
+    font-family: 'FiraCondBold', sans-serif;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+  }
+
+  .navMenuBox:hover {
+    background: #151d16;
+    border-color: var(--emas-terang);
+  }
+
+  .navMenuBox img {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+  }
+
+  /* OVERLAY */
+  .overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.7);
+    display: none;
+    z-index: 99999;
+  }
+
+  .overlay.active {
+    display: block;
+  }
+
+  /* =========================
+     CONTENT WRAP & HEADER BOX
+  ========================= */
+  .content-wrap {
+    position: relative;
+    z-index: 5;
+    padding: 20px 16px 60px 16px;
+    max-width: 650px;
+    margin: 0 auto;
+  }
+
+  div.headerBox {
+    all: unset !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 12px !important;
+    width: 100% !important;
+    border-bottom: 1px solid rgba(255, 209, 102, 0.2) !important;
+    padding-bottom: 12px !important;
+    margin-bottom: 15px !important;
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+
+  .mainLogo {
+    width: 40px !important;
+    height: 40px !important;
+    object-fit: contain !important;
+    border-radius: 50% !important;
+    border: 1px solid var(--emas-terang) !important;
+    margin: 0 !important;
+    cursor: pointer;
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .headerRight h1 {
+    font-family: 'OswaldBold', sans-serif !important;
+    font-size: 1.3rem !important;
+    color: #ffffff !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .headerRight h1 span {
+    color: var(--emas-terang);
+  }
+
+  .headerRight p {
+    color: #aaa;
+    font-size: 0.8rem;
+    margin: 2px 0 0 0;
+  }
+
+  /* =========================
+     PRODUCT CARDS CONTAINER
+  ========================= */
+  .product-container {
+    max-width: 650px;
+    margin: 0 auto;
+  }
+
+  .product-card {
+    background: #000000;
+    border: 2px solid var(--emas-terang);
+    border-radius: 16px;
+    margin-bottom: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(255, 209, 102, 0.1);
+  }
+
+  .product-header {
+    padding: 16px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #0b0f0c;
+    border-bottom: 1px solid rgba(255, 209, 102, 0.2);
+  }
+
+  .product-title-wrap {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .product-logo-img {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+  }
+
+  .product-title {
+    margin: 0;
+    font-family: 'FiraCondBold', sans-serif;
+    font-size: 1.1rem;
+    color: var(--emas-terang);
+  }
+
+  .product-body {
+    padding: 16px 20px;
+    background: #050505;
+  }
+
+  /* NOMINAL BADGES GRID */
+  .nominal-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+    gap: 8px;
+    margin-top: 10px;
+  }
+
+  .nominal-badge {
+    background: #111;
+    border: 1px solid var(--emas-terang);
+    border-radius: 10px;
+    padding: 8px 6px;
+    text-align: center;
+    font-size: 0.85rem;
+    color: #fff;
+    font-family: 'FiraCondBold', sans-serif;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  .nominal-badge:hover {
+    background: var(--emas-terang);
+    color: #000;
+  }
+
+  /* TABLE LISTING PRODUK CUSTOM */
+  .table-responsive {
+    width: 100%;
+    overflow-x: auto;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+    margin-top: 5px;
+    white-space: nowrap;
+  }
+
+  th, td {
+    padding: 10px 8px;
+    text-align: center;
+    border-bottom: 1px solid #1a1a1a;
+    vertical-align: middle;
+  }
+
+  th {
+    font-family: 'FiraCondBold', sans-serif;
+    color: var(--emas-terang);
+    background: #0b0f0c;
+    border-bottom: 2px solid var(--emas-terang);
+  }
+
+  /* ACTION BUTTONS */
+  .btn-action {
+    width: 100%;
+    height: 44px;
+    border-radius: 12px;
+    font-family: 'FiraCondBold', sans-serif;
+    font-size: 0.9rem;
+    cursor: pointer;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    transition: transform 0.2s ease;
+    margin-top: 12px;
+  }
+
+  .btn-action:active {
+    transform: scale(0.97);
+  }
+
+  .btn-add-product {
+    background: var(--emas-terang);
+    color: #000000;
+  }
+
+  /* =========================
+     POPUP STYLE
+  ========================= */
+  .popupBox{
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 999999;
+    padding: 20px;
+  }
+
+  .popupBox.active{
+    display: flex;
+  }
+
+  .popupContent{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 400px;
+    background: #000;
+    border: 2px solid var(--emas-terang);
+    border-radius: 20px;
+    padding: 24px;
+  }
+
+  .popupContent h2 {
+    margin-top: 0;
+    font-family: 'FiraCondBold', sans-serif;
+    color: var(--emas-terang);
+    text-align: center;
+    font-size: 1.3rem;
+  }
+
+  input, select{
+    width: 100%;
+    height: 50px;
+    background: #111;
+    border: 2px solid var(--emas-terang);
+    border-radius: 14px;
+    color: white;
+    padding: 0 16px;
+    box-sizing: border-box;
+    margin-top: 12px;
+    font-family: 'FiraCondBook', sans-serif;
+  }
+
+  select option {
+    background: #111;
+    color: white;
+  }
+
+  .popupButtonGroup{
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+  }
+
+  .cancelButton,
+  .addButton{
+    flex: 1;
+    height: 48px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    font-family: 'FiraCondBold', sans-serif;
+  }
+
+  .cancelButton{
+    background: #2a2a2a;
+    color: white;
+  }
+
+  .addButton{
+    background: var(--emas-terang);
+    color: black;
+  }
+</style>
+
+</head>
+
+<body>
+
+<!-- =========================
+     NAVBAR
+========================= -->
+<div id="navbar" class="navbar">
+    <div class="closeNavbar" onclick="toggleNavbar()">✕</div>
+    <div class="navbarHeader">
+        <img src="icon.png" class="navLogo">
+        <div class="navText">
+            <p id="navUsername"></p>
+            <p id="navEmail"></p>
+            <p id="navTitle"></p>
+        </div>
+    </div>
+    <div class="navbarMenu">
+        <a href="index.html" class="navMenuBox"><img src="icon.png"><span>Home</span></a>
+        <a href="debt.html" class="navMenuBox"><img src="debt.png"><span>Utang</span></a>
+        <a href="customer.html" class="navMenuBox"><img src="nama.png"><span>Customer</span></a>
+        <a href="product.html" class="navMenuBox"><img src="debt.png"><span>Produk & Harga</span></a>
+        <a href="recap.html" class="navMenuBox"><img src="rekap.png"><span>Rekap Utang</span></a>
+        <a href="monthly.html" class="navMenuBox"><img src="pembukuan.png"><span>Laporan Bulanan</span></a>
+    </div>
+</div>
+
+<div id="overlay" class="overlay" onclick="toggleNavbar()"></div>
+
+<div class="content-wrap">
+    <div class="headerBox">
+        <div class="headerLeft">
+            <img src="icon.png" class="mainLogo" id="rotatingLogo" onclick="handleNavbarTrigger()" title="Buka Menu Navbar">
+        </div>
+        <div class="headerRight">
+            <h1>DAFTAR <span>PRODUK</span></h1>
+            <p>Kelola master produk & nominal untuk input transaksi utang.</p>
+            <p id="dateNow" style="font-size: 0.78rem; color: var(--emas-terang); margin-top: 2px;"></p>
+        </div>
+    </div>
+
+    <!-- PRODUCT LIST CONTAINER -->
+    <div class="product-container">
+        
+        <!-- 1. PULSA -->
+        <div class="product-card">
+            <div class="product-header">
+                <div class="product-title-wrap">
+                    <img src="icon.png" class="product-logo-img" alt="Pulsa">
+                    <h3 class="product-title">Pulsa</h3>
+                </div>
+            </div>
+            <div class="product-body">
+                <p style="font-size: 0.8rem; color: #aaa; margin: 0 0 8px 0;">Klik nominal untuk langsung masukkan ke utang:</p>
+                <div class="nominal-grid" id="grid-Pulsa"></div>
+            </div>
+        </div>
+
+        <!-- 2. DANA -->
+        <div class="product-card">
+            <div class="product-header">
+                <div class="product-title-wrap">
+                    <img src="DANA.png" class="product-logo-img" alt="DANA">
+                    <h3 class="product-title">DANA</h3>
+                </div>
+            </div>
+            <div class="product-body">
+                <p style="font-size: 0.8rem; color: #aaa; margin: 0 0 8px 0;">Klik nominal untuk langsung masukkan ke utang:</p>
+                <div class="nominal-grid" id="grid-DANA"></div>
+            </div>
+        </div>
+
+        <!-- 3. GOPAY -->
+        <div class="product-card">
+            <div class="product-header">
+                <div class="product-title-wrap">
+                    <img src="GoPay.png" class="product-logo-img" alt="GoPay">
+                    <h3 class="product-title">GoPay</h3>
+                </div>
+            </div>
+            <div class="product-body">
+                <p style="font-size: 0.8rem; color: #aaa; margin: 0 0 8px 0;">Klik nominal untuk langsung masukkan ke utang:</p>
+                <div class="nominal-grid" id="grid-GoPay"></div>
+            </div>
+        </div>
+
+        <!-- 4. OVO -->
+        <div class="product-card">
+            <div class="product-header">
+                <div class="product-title-wrap">
+                    <img src="ShopeePay.png" class="product-logo-img" alt="OVO">
+                    <h3 class="product-title">OVO</h3>
+                </div>
+            </div>
+            <div class="product-body">
+                <p style="font-size: 0.8rem; color: #aaa; margin: 0 0 8px 0;">Klik nominal untuk langsung masukkan ke utang:</p>
+                <div class="nominal-grid" id="grid-OVO"></div>
+            </div>
+        </div>
+
+        <!-- 5. SEABANK -->
+        <div class="product-card">
+            <div class="product-header">
+                <div class="product-title-wrap">
+                    <img src="SeaBank.png" class="product-logo-img" alt="SeaBank">
+                    <h3 class="product-title">SeaBank</h3>
+                </div>
+            </div>
+            <div class="product-body">
+                <p style="font-size: 0.8rem; color: #aaa; margin: 0 0 8px 0;">Klik nominal untuk langsung masukkan ke utang:</p>
+                <div class="nominal-grid" id="grid-SeaBank"></div>
+            </div>
+        </div>
+
+        <!-- 6. KELOMPOK CUSTOM -->
+        <div class="product-card">
+            <div class="product-header">
+                <div class="product-title-wrap">
+                    <img src="nama.png" class="product-logo-img" alt="Lainnya">
+                    <h3 class="product-title">Produk / Layanan Lainnya</h3>
+                </div>
+            </div>
+            <div class="product-body">
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Nama Produk</th>
+                                <th>Harga / Nominal</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="customProductTableBody">
+                            <!-- Diisi via script -->
+                        </tbody>
+                    </table>
+                </div>
+                <button type="button" class="btn-action btn-add-product" onclick="openPopup()">
+                    + Tambah Produk Lain
+                </button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- POPUP TAMBAH PRODUK CUSTOM -->
+<div id="popupBox" class="popupBox">
+    <div class="popupContent">
+        <h2>TAMBAH PRODUK</h2>
+        <input type="text" id="customNamaProduk" placeholder="Nama Produk / Layanan">
+        <input type="number" id="customHargaProduk" placeholder="Harga / Nominal (Rp)">
+        <div class="popupButtonGroup">
+            <button class="cancelButton" onclick="closePopup()">Cancel</button>
+            <button class="addButton" onclick="saveCustomProduct()">Simpan</button>
+        </div>
+    </div>
+</div>
+
+<!-- POPUP PILIH CUSTOMER SAAT KLIK PRODUK (TERHUBUNG KE DEBT.HTML) -->
+<div id="selectCustomerPopup" class="popupBox">
+    <div class="popupContent">
+        <h2>PILIH CUSTOMER</h2>
+        <p id="selectedProductInfo" style="text-align:center; color:#aaa; font-size:0.85rem; margin-top:-5px; margin-bottom:10px;"></p>
+        
+        <label style="font-size:0.85rem; color:var(--emas-terang); font-family:'FiraCondBold', sans-serif;">Masukkan ke Customer:</label>
+        <select id="targetCustomerDropdown">
+            <!-- Diisi via JS -->
+        </select>
+
+        <div class="popupButtonGroup">
+            <button class="cancelButton" onclick="closeSelectCustomerPopup()">Cancel</button>
+            <button class="addButton" onclick="confirmAddProductToDebt()">Tambahkan ke Utang</button>
+        </div>
+    </div>
+</div>
+
+<script>
+/* =========================
+   LOAD USER DATA & LOGIN CHECK
+========================= */
+const username = localStorage.getItem("username");
+if(!username){
+    window.location.href = "login.html";
+}
+
+document.getElementById("navUsername").innerText = username || "Unknown User";
+document.getElementById("navEmail").innerText = localStorage.getItem("email") || "No Email";
+document.getElementById("navTitle").innerText = localStorage.getItem("title") || "No Title";
+
+window.onload = function(){
+    updateDateTime();
+    setInterval(updateDateTime, 1000);
+    renderDefaultNominals();
+    renderCustomProducts();
+}
+
+function updateDateTime(){
+    document.getElementById("dateNow").innerText = new Date().toLocaleString("id-ID");
+}
+
+function toggleNavbar(){
+    document.getElementById("navbar").classList.toggle("active");
+    document.getElementById("overlay").classList.toggle("active");
+}
+
+let clickState = 0;
+function handleNavbarTrigger(){
+    const logo = document.getElementById("rotatingLogo");
+    if(clickState === 0){
+        clickState = 1;
+        logo.style.transform = "rotate(180deg)";
+    } else if(clickState === 1){
+        clickState = 2;
+        logo.style.transform = "rotate(360deg)";
+        setTimeout(() => {
+            logo.style.transition = "none";
+            logo.style.transform = "rotate(0deg)";
+            clickState = 0;
+            setTimeout(() => { logo.style.transition = "transform 0.4s cubic-bezier(0.4, 0, 0.2, 1)"; }, 50);
+        }, 400);
+    }
+    toggleNavbar();
+}
+
+/* =========================
+   RENDER DEFAULT NOMINALS (20rb s.d 300rb) & INTERAKSI KE DEBT.HTML
+========================= */
+let selectedProductTemp = { nama: "", harga: 0 };
+
+function renderDefaultNominals(){
+    const categories = [
+        { key: "Pulsa", label: "Pulsa" },
+        { key: "DANA", label: "DANA" },
+        { key: "GoPay", label: "GoPay" },
+        { key: "OVO", label: "OVO" },
+        { key: "SeaBank", label: "SeaBank" }
+    ];
+    
+    const nominals = [
+        20000, 25000, 30000, 35000, 40000, 45000, 50000, 
+        60000, 70000, 75000, 80000, 90000, 100000, 
+        125000, 150000, 175000, 200000, 225000, 250000, 275000, 300000
+    ];
+
+    categories.forEach(cat => {
+        const gridContainer = document.getElementById(`grid-${cat.key}`);
+        if(!gridContainer) return;
+        
+        let html = "";
+        nominals.forEach(nom => {
+            const productName = `${cat.label} Rp ${nom.toLocaleString("id-ID")}`;
+            html += `<div class="nominal-badge" onclick="prepareAddProductToDebt('${productName}', ${nom})">Rp ${nom.toLocaleString("id-ID")}</div>`;
+        });
+        gridContainer.innerHTML = html;
+    });
+}
+
+/* =========================
+   CUSTOM PRODUCTS MANAGEMENT (LOCALSTORAGE)
+========================= */
+let customProducts = JSON.parse(localStorage.getItem("customProducts")) || [];
+
+function renderCustomProducts(){
+    const tbody = document.getElementById("customProductTableBody");
+    tbody.innerHTML = "";
+
+    if(customProducts.length === 0){
+        tbody.innerHTML = `<tr><td colspan="3" style="color:#777; padding: 15px;">Belum ada produk kustom terdaftar.</td></tr>`;
+        return;
+    }
+
+    customProducts.forEach((prod, index) => {
+        tbody.innerHTML += `
+            <tr>
+                <td style="cursor:pointer; color:var(--emas-terang);" onclick="prepareAddProductToDebt('${prod.nama}', ${prod.harga})" title="Klik untuk masukkan ke utang customer">${prod.nama}</td>
+                <td style="color: var(--emas-terang); font-family: 'FiraCondBold', sans-serif;">Rp ${prod.harga.toLocaleString("id-ID")}</td>
+                <td>
+                    <button type="button" onclick="deleteCustomProduct(${index})" style="background:#ff3b3b; color:white; border:none; border-radius:8px; padding:5px 10px; cursor:pointer; font-size:11px; font-family:'FiraCondBold', sans-serif;">
+                        Hapus
+                    </button>
+                </td>
+            </tr>
+        `;
+    });
+}
+
+function openPopup(){
+    document.getElementById("customNamaProduk").value = "";
+    document.getElementById("customHargaProduk").value = "";
+    document.getElementById("popupBox").classList.add("active");
+}
+
+function closePopup(){
+    document.getElementById("popupBox").classList.remove("active");
+}
+
+function saveCustomProduct(){
+    const nama = document.getElementById("customNamaProduk").value.trim();
+    const harga = parseInt(document.getElementById("customHargaProduk").value);
+
+    if(nama === "" || isNaN(harga) || harga <= 0){
+        alert("Masukkan nama produk dan harga yang valid!");
+        return;
+    }
+
+    customProducts.push({
+        nama: nama,
+        harga: harga
+    });
+
+    localStorage.setItem("customProducts", JSON.stringify(customProducts));
+    renderCustomProducts();
+    closePopup();
+}
+
+function deleteCustomProduct(index){
+    if(!confirm("Hapus produk ini dari daftar?")) return;
+
+    customProducts.splice(index, 1);
+    localStorage.setItem("customProducts", JSON.stringify(customProducts));
+    renderCustomProducts();
+}
+
+/* =========================
+   INTEGRASI KE DEBT.HTML (PILIH PRODUK LANGSUNG MASUK KE UTANG)
+========================= */
+function prepareAddProductToDebt(nama, harga){
+    selectedProductTemp = { nama: nama, harga: harga };
+    
+    const customers = JSON.parse(localStorage.getItem("customers")) || [];
+    const select = document.getElementById("targetCustomerDropdown");
+    select.innerHTML = "";
+
+    if(customers.length === 0){
+        alert("Belum ada customer terdaftar! Tambahkan customer terlebih dahulu di menu Customer.");
+        return;
+    }
+
+    customers.forEach(cust => {
+        const opt = document.createElement("option");
+        opt.value = cust.id;
+        opt.text = `${cust.id} - ${cust.name}`;
+        select.appendChild(opt);
+    });
+
+    document.getElementById("selectedProductInfo").innerText = `Produk: ${nama} (Rp ${harga.toLocaleString("id-ID")})`;
+    document.getElementById("selectCustomerPopup").classList.add("active");
+}
+
+function closeSelectCustomerPopup(){
+    document.getElementById("selectCustomerPopup").classList.remove("active");
+}
+
+function confirmAddProductToDebt(){
+    const select = document.getElementById("targetCustomerDropdown");
+    const chosenCustId = select.value;
+
+    if(!chosenCustId) {
+        alert("Pilih customer terlebih dahulu!");
+        return;
+    }
+
+    let debts = JSON.parse(localStorage.getItem("debts")) || {};
+    if(!debts[chosenCustId]){
+        debts[chosenCustId] = [];
+    }
+
+    debts[chosenCustId].push({
+        produk: selectedProductTemp.nama,
+        harga: selectedProductTemp.harga,
+        dibayar: 0,
+        tip: 0,
+        excluded: false,
+        isLogged: false,
+        waktu: new Date().toLocaleString("id-ID")
+    });
+
+    localStorage.setItem("debts", JSON.stringify(debts));
+    closeSelectCustomerPopup();
+    
+    alert(`Berhasil menambahkan "${selectedProductTemp.nama}" ke Utang Customer (${chosenCustId})!`);
+}
+</script>
+
+</body>
+</html>
