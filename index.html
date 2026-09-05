@@ -3,8 +3,20 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>ComÃ©rsio Center</title>
+<title>Comérsio Center</title>
 <link rel="stylesheet" href="style.css">
+<!-- Panggil Manifest -->
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#000000">
+
+<!-- Daftarkan Service Worker -->
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js')
+      .then(() => console.log("Comérsio Center siap offline!"))
+      .catch(err => console.log("Gagal daftar sw:", err));
+  }
+</script>
 <style>
   @font-face{
     font-family: 'OswaldBold';
@@ -254,7 +266,7 @@
 
   <!-- SCREEN 1: WELCOME (DASHBOARD) -->
   <div id="screen-welcome">
-    <h1 class="title">Comersio - <span class="emas">Center</span></h1>
+    <h1 class="title">Comérsio - <span class="emas">Center</span></h1>
 
     <div class="welcome-text">
       Pusat Hitungan termasuk hutang customer dihitung.
@@ -269,7 +281,7 @@
 
   <!-- SCREEN 2: MENU (SIDEBAR) -->
   <div id="screen-menu">
-    <h1 class="title">Comersio - <span class="emas">Center</span></h1>
+    <h1 class="title">Comérsio - <span class="emas">Center</span></h1>
 
     <div class="menu-wrap">
       <a href="customer.html" class="menu-btn" data-name="Nama & ID Customer">
@@ -295,20 +307,20 @@
 
       <!-- SAVE DATA -->
       <div class="menu-btn" onclick="saveComersioData()" style="cursor:pointer;">
-        <img src="icon.png" alt="">
+        <img src="Icon.png" alt="">
         <span>Save Data</span>
       </div>
 
       <!-- LOAD DATA -->
       <div class="menu-btn" onclick="document.getElementById('loadFile').click()" style="cursor:pointer;">
-        <img src="icon.png" alt="">
+        <img src="Icon.png" alt="">
         <span>Load Data</span>
       </div>
       <input type="file" id="loadFile" accept=".ayj" hidden>
 
       <!-- LOGOUT -->
       <div class="menu-btn" onclick="logoutComersio()" style="cursor:pointer; border-color: var(--emas);">
-        <img src="icon.png" alt="">
+        <img src="Icon.png" alt="">
         <span>Logout</span>
       </div>
     </div>
