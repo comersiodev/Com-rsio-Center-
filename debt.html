@@ -268,8 +268,13 @@ href="style.css">
   }
 
   .arrow-icon {
-    font-size: 1.2rem;
-    color: var(--emas-terang);
+    width: 20px;
+    height: 20px;
+    stroke: var(--emas-terang);
+    fill: none;
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
     transition: transform 0.3s ease;
   }
 
@@ -510,7 +515,9 @@ href="style.css">
 <body>
 
 <div id="navbar" class="navbar">
-    <div class="closeNavbar" onclick="toggleNavbar()"></div>
+    <div class="closeNavbar" onclick="toggleNavbar()">
+        <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+    </div>
     <div class="navbarHeader">
         <img src="icon.png" class="navLogo">
         <div class="navText">
@@ -720,7 +727,7 @@ function renderCustomerList(){
                     <h3>${custId} - ${custName}</h3>
                     <p>Total Utang Aktif: Rp ${currentTotal.toLocaleString("id-ID")}</p>
                 </div>
-                <div class="arrow-icon"></div>
+                <svg class="arrow-icon" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
             </div>
             <div class="customer-body" id="body-${custId}">
                 <div class="card-total-box">

@@ -227,26 +227,26 @@
     margin: 0;
   }
 
-  /* KOTAK LIST ITEM */
-  .simpleItem {
+  /* KOTAK STRUK GABUNGAN (SINGLE RECEIPT BOX) */
+  .receiptBox {
     background: #0b0f0c;
     border: 1px solid var(--emas-terang);
     border-radius: 12px;
-    padding: 12px;
+    padding: 14px;
     margin-top: 10px;
   }
 
-  .simpleRow {
+  .receiptRow {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 12px;
-    margin-bottom: 6px;
     font-size: 0.85rem;
+    padding: 6px 0;
+    border-bottom: 1px dashed rgba(255, 209, 102, 0.15);
   }
 
-  .simpleRow:last-child {
-    margin-bottom: 0;
+  .receiptRow:last-child {
+    border-bottom: none;
   }
 
   /* TOTAL AKHIR BOX */
@@ -410,7 +410,8 @@
           </div>
         </div>
 
-        <div id="paymentListSimple"></div>
+        <!-- STRUK GABUNGAN (SINGLE RECEIPT BOX) -->
+        <div class="receiptBox" id="paymentListSimple"></div>
 
         <div class="totalDebtBox">
           <span>TOTAL AKHIR :</span>
@@ -500,45 +501,55 @@ document.getElementById("paymentTotal").innerText = parseInt(total || 0).toLocal
 const list = document.getElementById("paymentListSimple");
 const customerDebt = debts[customer] || [];
 
-let htmlList = "";
+let productNames = [];
+let totalHutangGabungan = 0;
+let totalDibayarGabungan = 0;
+
 customerDebt.forEach(item => {
     const harga = item.harga || 0;
     const dibayar = item.dibayar || 0;
     const sisa = harga - dibayar;
 
     if(sisa > 0){
-        let statusPembayaran = (paymentMode === 'amort') ? "Amortisasi" : "Full";
-        let statusColor = (paymentMode === 'amort') ? "#ffb703" : "#4caf5e";
-
-        htmlList += `
-        <div class="simpleItem">
-            <div class="simpleRow">
-                <span style="color:#aaa;">Produk</span>
-                <span style="font-family: 'FiraCondBold', sans-serif;">${item.produk}</span>
-            </div>
-            <div class="simpleRow">
-                <span style="color:#aaa;">Total Hutang</span>
-                <span>Rp ${harga.toLocaleString("id-ID")}</span>
-            </div>
-            <div class="simpleRow" style="align-items: flex-start;">
-                <span style="color:#aaa;">Sudah Dibayar</span>
-                <div style="text-align: right;">
-                    <span style="color: var(--emas-terang);">Rp ${parseInt(total).toLocaleString("id-ID")}</span>
-                    <div style="margin-top: 3px;">
-                        <span style="background: ${statusColor}; color: #000; padding: 1px 6px; border-radius: 4px; font-size: 0.7rem; font-weight: bold; display: inline-block;">Status: ${statusPembayaran}</span>
-                    </div>
-                </div>
-            </div>
-            <div class="simpleRow" style="border-top: 1px solid rgba(255,209,102,0.2); margin-top: 6px; padding-top: 6px;">
-                <span style="font-family: 'FiraCondBold', sans-serif;">Sisa Tagihan</span>
-                <span style="font-family: 'FiraCondBold', sans-serif; color: #ff5555;">Rp ${sisa.toLocaleString("id-ID")}</span>
-            </div>
-        </div>
-        `;
+        productNames.push(item.produk);
+        totalHutangGabungan += harga;
+        totalDibayarGabungan += dibayar;
     }
 });
 
-list.innerHTML = htmlList || `<p style="text-align:center; color:#777; padding: 10px;">Tidak ada rincian utang aktif.</p>`;
+const gabunganProdukStr = productNames.length > 0 ? productNames.join(", ") : "-";
+const sisaTagihanGabungan = totalHutangGabungan - totalDibayarGabungan;
+
+let statusPembayaran = (paymentMode === 'amort') ? "Amortisasi" : "Full";
+let statusColor = (paymentMode === 'amort') ? "#ffb703" : "#4caf5e";
+
+if(productNames.length > 0){
+    list.innerHTML = `
+        <div class="receiptRow">
+            <span style="color:#aaa;">Produk</span>
+            <span style="font-family: 'FiraCondBold', sans-serif; text-align: right; max-width: 60%;">${gabunganProdukStr}</span>
+        </div>
+        <div class="receiptRow">
+            <span style="color:#aaa;">Total Hutang</span>
+            <span>Rp ${totalHutangGabungan.toLocaleString("id-ID")}</span>
+        </div>
+        <div class="receiptRow">
+            <span style="color:#aaa;">Sudah Dibayar</span>
+            <div style="text-align: right;">
+                <span style="color: var(--emas-terang);">Rp ${totalDibayarGabungan.toLocaleString("id-ID")}</span>
+                <div style="margin-top: 2px;">
+                    <span style="background: ${statusColor}; color: #000; padding: 1px 6px; border-radius: 4px; font-size: 0.7rem; font-weight: bold; display: inline-block;">Status: ${statusPembayaran}</span>
+                </div>
+            </div>
+        </div>
+        <div class="receiptRow" style="border-top: 1px solid rgba(255,209,102,0.2); margin-top: 4px; padding-top: 8px;">
+            <span style="font-family: 'FiraCondBold', sans-serif;">Sisa Tagihan</span>
+            <span style="font-family: 'FiraCondBold', sans-serif; color: #ff5555;">Rp ${sisaTagihanGabungan.toLocaleString("id-ID")}</span>
+        </div>
+    `;
+} else {
+    list.innerHTML = `<p style="text-align:center; color:#777; padding: 10px; margin:0;">Tidak ada rincian utang aktif.</p>`;
+}
 
 const paymentData = {
     qris:{ logo:"QRIS Logo.png", name:"QRIS", type:"qris" },
@@ -569,7 +580,7 @@ if(pay.type === "qris"){
         <div class="paymentInfoText">${infoText}</div>
         <div class="paymentCard">
             <div class="qrisContainer">
-                <img src="QRIS.png" class="qrisImage" alt="QR Code">
+                <img src="qris.png" class="qrisImage" alt="QR Code">
             </div>
             <p style="margin: 10px 0 0 0; font-size: 0.8rem; color: #ccc;">Scan Menggunakan QRIS (All Banking & E-Wallet)</p>
         </div>
