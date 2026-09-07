@@ -2,35 +2,23 @@
 <html lang="id">
 
 <head>
-
 <meta charset="UTF-8">
-
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-
-<title>
-Debt Comérsio
-</title>
-
-<link rel="stylesheet"
-href="style.css">
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Rekap Utang - Comersio Center</title>
+<link rel="stylesheet" href="style.css">
 <style>
-
   @font-face{
     font-family: 'OswaldBold';
     src: url('oswald-bold.ttf') format('truetype');
     font-weight: 700;
     font-style: normal;
   }
-
   @font-face{
     font-family: 'FiraCondBold';
     src: url('firasanscondensed-bold.otf') format('opentype');
     font-weight: 700;
     font-style: normal;
   }
-
   @font-face{
     font-family: 'FiraCondBook';
     src: url('firasanscondensed-book.otf') format('opentype');
@@ -39,9 +27,11 @@ href="style.css">
   }
 
   :root{
+    --hijau: #2f6b3a;
+    --hijau-terang: #4caf5e;
     --emas: #e8b13c;
     --emas-terang: #ffd166;
-    --gelap: #000000;
+    --gelap: #0a0a0a;
   }
 
   *{
@@ -55,221 +45,177 @@ href="style.css">
     width: 100%;
     min-height: 100vh;
     font-family: 'FiraCondBook', sans-serif;
-    background: var(--gelap) !important;
+    background: #0a0a0a !important;
     color: #ffffff;
     overflow-x: hidden;
   }
 
-  body{
-    background-color: var(--gelap) !important;
-  }
-
-  /* =========================
-     UI NAVBAR DRAWER & STYLING
-  ========================= */
-  .navbar {
-    position: fixed;
-    top: 0;
-    left: -300px;
-    width: 280px;
-    height: 100%;
-    background: #000000;
-    border-right: 2px solid var(--emas-terang);
-    z-index: 999999;
-    transition: left 0.3s ease;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .navbar.active {
-    left: 0;
-  }
-
-  .closeNavbar {
-    align-self: flex-end;
-    font-size: 1.3rem;
-    color: var(--emas-terang);
-    cursor: pointer;
-    margin-bottom: 10px;
-    font-family: 'FiraCondBold', sans-serif;
-  }
-
-  .navbarHeader {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding-bottom: 15px;
-    border-bottom: 1px solid rgba(255, 209, 102, 0.2);
-    margin-bottom: 15px;
-  }
-
-  .navLogo {
-    width: 45px;
-    height: 45px;
-    object-fit: contain;
-    border-radius: 50%;
-    border: 1px solid var(--emas-terang);
-  }
-
-  .navText p {
-    margin: 0;
-    font-size: 0.85rem;
-  }
-
-  #navUsername {
-    font-family: 'FiraCondBold', sans-serif;
-    color: var(--emas-terang);
-    font-size: 1rem;
-  }
-
-  #navEmail, #navTitle {
-    color: #aaa;
-    font-size: 0.75rem;
-  }
-
-  .navbarMenu {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    overflow-y: auto;
-  }
-
-  .navMenuBox {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    background: #0b0f0c;
-    border: 1px solid rgba(255, 209, 102, 0.3);
-    padding: 12px 14px;
-    border-radius: 12px;
-    text-decoration: none;
-    color: #ffffff;
-    font-family: 'FiraCondBold', sans-serif;
-    font-size: 0.9rem;
-    transition: all 0.2s ease;
-  }
-
-  .navMenuBox:hover {
-    background: #151d16;
-    border-color: var(--emas-terang);
-  }
-
-  .navMenuBox img {
-    width: 24px;
-    height: 24px;
-    object-fit: contain;
-  }
-
-  /* OVERLAY */
-  .overlay {
+  /* BACKGROUND LAYER & DIM EFFECT */
+  .bg-layer{
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,0.7);
-    display: none;
-    z-index: 99999;
+    background-image: url('background.jpg');
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    z-index: 0;
   }
 
-  .overlay.active {
-    display: block;
+  .bg-dim{
+    position: fixed;
+    inset: 0;
+    background: rgba(6, 10, 7, 0.82);
+    z-index: 1;
   }
 
-  /* =========================
-     CONTENT WRAP & HEADER BOX
-  ========================= */
+  /* TOP BAR M-BANKING (TANGGAL PINDAH KE SINI DI BAWAH REKAP UTANG) */
+  .mbanking-topbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background: rgba(10, 14, 11, 0.95);
+    border-bottom: 1px solid rgba(232, 177, 60, 0.25);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 16px;
+    z-index: 20;
+    backdrop-filter: blur(8px);
+  }
+
+  .mbanking-brand-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .mbanking-brand {
+    font-family: 'OswaldBold', sans-serif;
+    font-size: 1.1rem;
+    color: #ffffff;
+    letter-spacing: 0.5px;
+    line-height: 1.1;
+  }
+
+  .mbanking-brand span {
+    color: var(--emas-terang);
+  }
+
+  .mbanking-greeting-top {
+    font-size: 0.7rem;
+    color: var(--emas-terang);
+    font-family: 'FiraCondBold', sans-serif;
+    margin-top: 1px;
+    line-height: 1;
+  }
+
+  .topbar-right-box {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .date-badge-top {
+    font-family: 'FiraCondBold', sans-serif;
+    font-size: 0.8rem;
+    color: var(--emas-terang);
+    background: rgba(232, 177, 60, 0.1);
+    border: 1px solid rgba(232, 177, 60, 0.3);
+    padding: 4px 8px;
+    border-radius: 8px;
+  }
+
+  .profile-circle-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 2px solid var(--emas-terang);
+    background: #121814;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    text-decoration: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+  }
+
+  .profile-circle-btn:hover {
+    transform: scale(1.08);
+    box-shadow: 0 0 12px rgba(255, 209, 102, 0.4);
+  }
+
+  .profile-circle-btn svg, .profile-circle-btn img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .profile-circle-btn svg {
+    width: 20px;
+    height: 20px;
+    fill: var(--emas-terang);
+    padding: 2px;
+  }
+
+  /* CONTENT WRAP */
   .content-wrap {
     position: relative;
     z-index: 5;
-    padding: 20px 16px 60px 16px;
-    max-width: 650px;
+    padding: 76px 16px 90px 16px;
+    max-width: 600px;
     margin: 0 auto;
   }
 
-  div.headerBox {
-    all: unset !important;
-    display: flex !important;
-    align-items: center !important;
-    gap: 12px !important;
-    width: 100% !important;
-    border-bottom: 1px solid rgba(255, 209, 102, 0.2) !important;
-    padding-bottom: 12px !important;
-    margin-bottom: 15px !important;
-    background: transparent !important;
-    box-shadow: none !important;
-  }
-
-  .mainLogo {
-    width: 40px !important;
-    height: 40px !important;
-    object-fit: contain !important;
-    border-radius: 50% !important;
-    border: 1px solid var(--emas-terang) !important;
-    margin: 0 !important;
-    cursor: pointer;
-    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  .headerRight h1 {
-    font-family: 'OswaldBold', sans-serif !important;
-    font-size: 1.3rem !important;
-    color: #ffffff !important;
-    margin: 0 !important;
-    padding: 0 !important;
-  }
-
-  .headerRight h1 span {
-    color: var(--emas-terang);
-  }
-
-  .headerRight p {
-    color: #aaa;
-    font-size: 0.8rem;
-    margin: 2px 0 0 0;
-  }
-
-  /* =========================
-     CUSTOMER ACCORDION CARDS
-  ========================= */
+  /* CUSTOMER ACCORDION CARDS */
   .customer-list-container {
-    max-width: 650px;
-    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
   }
 
   .customer-card {
-    background: #000000;
-    border: 2px solid var(--emas-terang);
+    background: rgba(12, 17, 13, 0.92);
+    border: 2px solid var(--emas);
     border-radius: 16px;
-    margin-bottom: 16px;
     overflow: hidden;
-    box-shadow: 0 4px 15px rgba(255, 209, 102, 0.1);
-    transition: all 0.3s ease;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.6);
+    transition: border-color 0.2s;
+  }
+
+  .customer-card.active {
+    border-color: var(--emas-terang);
+    box-shadow: 0 0 15px rgba(255, 209, 102, 0.25);
   }
 
   .customer-header {
-    padding: 18px 20px;
+    padding: 16px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     cursor: pointer;
-    background: #000000;
+    background: rgba(16, 23, 18, 0.95);
   }
 
   .customer-info h3 {
-    margin: 0 0 4px 0;
+    margin: 0 0 3px 0;
     font-family: 'FiraCondBold', sans-serif;
-    font-size: 1.1rem;
+    font-size: 1.05rem;
     color: var(--emas-terang);
   }
 
   .customer-info p {
     margin: 0;
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     color: #bbb;
   }
 
   .arrow-icon {
-    width: 20px;
-    height: 20px;
+    width: 22px;
+    height: 22px;
     stroke: var(--emas-terang);
     fill: none;
     stroke-width: 2.5;
@@ -282,55 +228,56 @@ href="style.css">
     transform: rotate(180deg);
   }
 
-  /* ACCORDION CONTENT (DETAIL UTANG) */
   .customer-body {
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.35s ease-out;
-    background: #050505;
+    background: #080c09;
   }
 
   .customer-card.active .customer-body {
     max-height: 1500px;
-    border-top: 1px solid rgba(255, 209, 102, 0.2);
-    padding: 16px 20px;
+    border-top: 1px solid rgba(232, 177, 60, 0.25);
+    padding: 14px 16px;
   }
 
-  /* TABLE UTANG CUSTOMER */
   .table-responsive {
     width: 100%;
     overflow-x: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--emas) #111;
   }
 
   table {
     width: 100%;
     border-collapse: collapse;
-    font-size: 0.85rem;
-    margin-bottom: 14px;
+    font-size: 0.8rem;
+    margin-bottom: 12px;
     white-space: nowrap;
   }
 
   th, td {
-    padding: 10px 8px;
+    padding: 8px 6px;
     text-align: center;
-    border-bottom: 1px solid #1a1a1a;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     vertical-align: middle;
   }
 
   th {
     font-family: 'FiraCondBold', sans-serif;
     color: var(--emas-terang);
-    background: #0b0f0c;
-    border-bottom: 2px solid var(--emas-terang);
+    background: #0d120f;
+    border-bottom: 2px solid var(--emas);
+    font-size: 0.75rem;
+    text-transform: uppercase;
   }
 
-  /* CHECKBOX STYLING AMAN DIKLIK */
   .custom-checkbox {
-    width: 24px;
-    height: 24px;
+    width: 22px;
+    height: 22px;
     border: 2px solid var(--emas-terang);
     border-radius: 6px;
-    background: #111;
+    background: #000;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -339,11 +286,11 @@ href="style.css">
   }
 
   .custom-checkbox svg {
-    width: 14px;
-    height: 14px;
+    width: 12px;
+    height: 12px;
     fill: none;
     stroke: #000;
-    stroke-width: 3;
+    stroke-width: 3.5;
     stroke-linecap: round;
     stroke-linejoin: round;
     display: none;
@@ -357,26 +304,25 @@ href="style.css">
     display: block;
   }
 
-  /* ACTION BUTTONS */
   .action-group {
     display: flex;
-    gap: 10px;
-    margin-top: 10px;
+    gap: 8px;
+    margin-top: 8px;
   }
 
   .btn-action {
     flex: 1;
-    height: 44px;
-    border-radius: 12px;
+    height: 42px;
+    border-radius: 10px;
     font-family: 'FiraCondBold', sans-serif;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     cursor: pointer;
     border: none;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 6px;
-    transition: transform 0.2s ease;
+    transition: transform 0.2s, box-shadow 0.2s;
   }
 
   .btn-action:active {
@@ -384,33 +330,31 @@ href="style.css">
   }
 
   .btn-add-debt {
-    background: #111111;
+    background: #121814;
     color: var(--emas-terang);
-    border: 2px solid var(--emas-terang);
+    border: 1.5px solid var(--emas-terang);
   }
 
   .btn-pay-debt {
     background: var(--emas-terang);
     color: #000000;
+    box-shadow: 0 3px 10px rgba(255, 209, 102, 0.3);
   }
 
-  /* TOTAL UTANG DALAM CARD */
   .card-total-box {
     font-family: 'FiraCondBold', sans-serif;
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     color: #fff;
-    margin-bottom: 12px;
-    background: #111;
-    padding: 10px 14px;
-    border-radius: 10px;
+    margin-bottom: 10px;
+    background: #000;
+    padding: 8px 12px;
+    border-radius: 8px;
     display: flex;
     justify-content: space-between;
-    border: 1px solid rgba(255, 209, 102, 0.2);
+    border: 1px solid rgba(232, 177, 60, 0.3);
   }
 
-  /* =========================
-     POPUP & INPUT STYLE
-  ========================= */
+  /* POPUP STYLES */
   .popupBox{
     position: fixed;
     inset: 0;
@@ -418,225 +362,448 @@ href="style.css">
     display: none;
     justify-content: center;
     align-items: center;
-    z-index: 999999;
+    z-index: 99999;
     padding: 20px;
+    backdrop-filter: blur(5px);
   }
 
   .popupBox.active{
     display: flex;
   }
 
+  #customerPickerModal, #productPickerModal {
+    z-index: 9999999 !important;
+  }
+
   .popupContent{
     display: flex;
     flex-direction: column;
     width: 100%;
-    max-width: 400px;
-    background: #000;
+    max-width: 360px;
+    background: #0d120f;
     border: 2px solid var(--emas-terang);
-    border-radius: 20px;
-    padding: 24px;
+    border-radius: 16px;
+    padding: 20px;
+    max-height: 85vh;
+    overflow-y: auto;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.8);
   }
 
   .popupContent h2 {
     margin-top: 0;
+    margin-bottom: 12px;
     font-family: 'FiraCondBold', sans-serif;
     color: var(--emas-terang);
     text-align: center;
-    font-size: 1.3rem;
+    font-size: 1.1rem;
   }
 
-  input, select{
+  input{
     width: 100%;
-    height: 50px;
-    background: #111;
-    border: 2px solid var(--emas-terang);
-    border-radius: 14px;
+    height: 44px;
+    background: #000;
+    border: 1.5px solid var(--emas);
+    border-radius: 10px;
     color: white;
-    padding: 0 16px;
+    padding: 0 12px;
     box-sizing: border-box;
-    margin-top: 12px;
+    margin-top: 4px;
     font-family: 'FiraCondBook', sans-serif;
+    font-size: 0.95rem;
+    outline: none;
   }
 
-  select option {
-    background: #111;
-    color: white;
+  input:focus {
+    border-color: var(--emas-terang);
+    box-shadow: 0 0 8px rgba(255, 209, 102, 0.25);
+  }
+
+  .popupContent label {
+    margin-top: 10px;
+    display: block;
+    font-size: 0.75rem;
+    color: var(--emas-terang);
+    font-family: 'FiraCondBold', sans-serif;
+    text-transform: uppercase;
   }
 
   .popupButtonGroup{
     display: flex;
-    gap: 10px;
-    margin-top: 20px;
+    gap: 8px;
+    margin-top: 16px;
   }
 
   .cancelButton,
   .addButton{
     flex: 1;
-    height: 48px;
+    height: 42px;
     border: none;
-    border-radius: 12px;
+    border-radius: 10px;
     cursor: pointer;
     font-family: 'FiraCondBold', sans-serif;
+    font-size: 0.9rem;
   }
 
   .cancelButton{
-    background: #2a2a2a;
-    color: white;
+    background: #222;
+    color: #aaa;
+    border: 1px solid #444;
   }
 
   .addButton{
     background: var(--emas-terang);
     color: black;
+    box-shadow: 0 3px 10px rgba(255, 209, 102, 0.3);
   }
 
-  /* PAYMENT METHOD POPUP */
+  .btn-delete-confirm {
+    background: #ff3b3b !important;
+    color: white !important;
+  }
+
+  .custom-select-trigger {
+    width: 100%;
+    height: 44px;
+    background: #000;
+    border: 1.5px solid var(--emas);
+    border-radius: 10px;
+    color: white;
+    padding: 0 12px;
+    margin-top: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    font-family: 'FiraCondBold', sans-serif;
+    font-size: 0.9rem;
+  }
+
+  .select-option-item {
+    background: #111;
+    border: 1px solid rgba(232, 177, 60, 0.3);
+    color: #fff;
+    padding: 10px 12px;
+    border-radius: 8px;
+    text-align: left;
+    font-family: 'FiraCondBold', sans-serif;
+    font-size: 0.9rem;
+    margin-bottom: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .select-option-item:hover {
+    background: rgba(232, 177, 60, 0.2);
+    border-color: var(--emas-terang);
+    color: var(--emas-terang);
+  }
+
+  .product-input-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 4px;
+    width: 100%;
+    height: 44px;
+  }
+
+  .product-input-row input {
+    margin: 0 !important;
+    flex: 1;
+    height: 44px !important;
+  }
+
+  .cart-icon-btn {
+    margin: 0 !important;
+    width: 44px !important;
+    min-width: 44px !important;
+    height: 44px !important;
+    background: rgba(232, 177, 60, 0.15);
+    border: 1.5px solid var(--emas-terang);
+    color: var(--emas-terang);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: background 0.2s;
+  }
+
+  .cart-icon-btn:hover {
+    background: rgba(232, 177, 60, 0.3);
+  }
+
+  .product-picker-card {
+    background: #111;
+    border: 1px solid rgba(232, 177, 60, 0.3);
+    border-radius: 10px;
+    padding: 10px 12px;
+    margin-bottom: 8px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.2s;
+  }
+
+  .product-picker-card:hover {
+    border-color: var(--emas-terang);
+    background: rgba(232, 177, 60, 0.1);
+  }
+
   .paymentMethod{
     display: inline-flex;
     align-items: center;
-    gap: 12px;
-    background:#1a1a1a;
-    border:2px solid var(--emas-terang);
-    border-radius:14px;
-    padding:10px 14px;
-    margin-bottom:10px;
+    gap: 10px;
+    background:#121814;
+    border:1.5px solid rgba(232, 177, 60, 0.4);
+    border-radius:12px;
+    padding:8px 12px;
+    margin-bottom:8px;
     color:white;
     cursor:pointer;
-    font-size:13px;
+    font-size:12px;
     width: 100%;
+    transition: border-color 0.2s;
   }
 
   .paymentMethod:hover{
-    background: #252525;
+    border-color: var(--emas-terang);
+    background: rgba(232, 177, 60, 0.1);
+  }
+
+  /* BOTTOM NAVBAR M-BANKING (7 TOMBOL) */
+  .mbanking-bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 64px;
+    background: rgba(10, 14, 11, 0.96);
+    border-top: 1px solid rgba(232, 177, 60, 0.3);
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    z-index: 99999;
+    backdrop-filter: blur(8px);
+  }
+
+  .nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: #888;
+    font-family: 'FiraCondBold', sans-serif;
+    font-size: 0.55rem;
+    gap: 3px;
+    padding: 4px 0;
+    transition: color 0.2s;
+  }
+
+  .nav-item img {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+    filter: grayscale(100%) opacity(0.6);
+    transition: filter 0.2s;
+  }
+
+  .nav-item.active, .nav-item:hover {
+    color: var(--emas-terang);
+  }
+
+  .nav-item.active img, .nav-item:hover img {
+    filter: none;
   }
 </style>
-
 </head>
 
 <body>
 
-<div id="navbar" class="navbar">
-    <div class="closeNavbar" onclick="toggleNavbar()">
-        <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-    </div>
-    <div class="navbarHeader">
-        <img src="icon.png" class="navLogo">
-        <div class="navText">
-            <p id="navUsername"></p>
-            <p id="navEmail"></p>
-            <p id="navTitle"></p>
-        </div>
-    </div>
-    <div class="navbarMenu">
-        <a href="index.html" class="navMenuBox"><img src="icon.png"><span>Home</span></a>
-        <a href="product.html" class="navMenuBox"><img src="voucher.png"><span>Produk</span></a>
-        <a href="debt.html" class="navMenuBox"><img src="debt.png"><span>Utang</span></a>
-        <a href="customer.html" class="navMenuBox"><img src="nama.png"><span>Customer</span></a>
-        <a href="recap.html" class="navMenuBox"><img src="rekap.png"><span>Rekap Utang</span></a>
-        <a href="monthly.html" class="navMenuBox"><img src="pembukuan.png"><span>Laporan Bulanan</span></a>
-    </div>
-</div>
+  <div class="bg-layer"></div>
+  <div class="bg-dim"></div>
 
-<div id="overlay" class="overlay" onclick="toggleNavbar()"></div>
+  <!-- TOP BAR M-BANKING (Comersio Center di atas, Rekap Utang di bawahnya, Tanggal di kanan) -->
+  <div class="mbanking-topbar">
+    <div class="mbanking-brand-container">
+      <div class="mbanking-brand">Comersio <span>Center</span></div>
+      <div class="mbanking-greeting-top">Rekap Utang</div>
+    </div>
+    <div class="topbar-right-box">
+      <div class="date-badge-top" id="dateText">01 Jan 2026</div>
+      <a href="profile.html" class="profile-circle-btn" id="topProfileBtn" title="Pengaturan Profile">
+        <svg viewBox="0 0 24 24">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
+        </svg>
+      </a>
+    </div>
+  </div>
 
 <div class="content-wrap">
-    <div class="headerBox">
-        <div class="headerLeft">
-            <img src="icon.png" class="mainLogo" id="rotatingLogo" onclick="handleNavbarTrigger()" title="Buka Menu Navbar">
-        </div>
-        <div class="headerRight">
-            <h1>REKAP UTANG <span>PER CUSTOMER</span></h1>
-            <p>Pilih customer untuk melihat detail & transaksi utang.</p>
-            <p id="dateNow" style="font-size: 0.78rem; color: var(--emas-terang); margin-top: 2px;"></p>
-        </div>
-    </div>
-
-    <div style="margin-bottom: 20px;">
-        <button type="button" class="btn-action btn-add-debt" style="width: 100%; height: 50px; font-size: 1rem;" onclick="openGlobalAddPopup()">
+    <div style="margin-bottom: 16px; margin-top: 4px;">
+        <button type="button" class="btn-action btn-add-debt" style="width: 100%; height: 46px; font-size: 0.95rem;" onclick="openGlobalAddPopup()">
             + Tambah Utang ke Customer Lain / Mana Saja
         </button>
     </div>
 
     <div class="customer-list-container" id="customerAccordionList">
-        </div>
+        <!-- Dinamis accordion -->
+    </div>
 </div>
 
+<!-- POPUP TAMBAH UTANG CUSTOM -->
 <div id="popupBox" class="popupBox">
     <div class="popupContent">
         <h2>TAMBAH UTANG</h2>
-        <label style="font-size:0.85rem; color:var(--emas-terang); font-family:'FiraCondBold', sans-serif; margin-top:5px; display:block;">Pilih Customer:</label>
-        <select id="customerSelectTarget">
-            </select>
+        <label>Pilih Customer:</label>
+        <div class="custom-select-trigger" id="customerSelectTrigger" onclick="openCustomerPickerModal(event)">
+            <span id="selectedCustomerLabel">Pilih Customer...</span>
+            <span></span>
+        </div>
         
-        <input type="text" id="produkInput" placeholder="Nama Produk">
-        <input type="number" id="hargaInput" placeholder="Harga">
+        <label>Nama Produk:</label>
+        <div class="product-input-row">
+            <input type="text" id="produkInput" placeholder="Nama Produk / Layanan">
+            <button type="button" class="cart-icon-btn" onclick="openProductPickerModal(event)" title="Ambil dari master produk">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+            </button>
+        </div>
+
+        <label>Harga Modal:</label>
+        <input type="number" id="modalInput" placeholder="Harga Modal (Rp)" oninput="calculateMargin()">
+
+        <label>Harga Jual:</label>
+        <input type="number" id="hargaInput" placeholder="Harga Jual (Rp)" oninput="calculateMargin()">
+        
+        <div id="marginPreviewBox" style="margin-top: 10px; padding: 8px 10px; background: #000; border-radius: 8px; border: 1px dashed rgba(232, 177, 60, 0.4); font-size: 0.8rem; display: flex; justify-content: space-between; align-items: center;">
+            <span style="color: #aaa;">Estimasi Keuntungan:</span>
+            <span id="marginValueText" style="font-family: 'FiraCondBold', sans-serif; color: var(--emas-terang);">Rp 0</span>
+        </div>
+
         <div class="popupButtonGroup">
-            <button class="cancelButton" onclick="closePopup()">Cancel</button>
+            <button class="cancelButton" onclick="closePopup()">Batal</button>
             <button class="addButton" onclick="addDebt()">Tambahkan</button>
         </div>
     </div>
 </div>
 
+<!-- MODAL CUSTOM PILIH CUSTOMER -->
+<div id="customerPickerModal" class="popupBox">
+    <div class="popupContent">
+        <h2>PILIH CUSTOMER</h2>
+        <div id="customerPickerList" style="margin-top: 6px; max-height: 45vh; overflow-y: auto;"></div>
+        <div style="margin-top: 12px;">
+            <button type="button" class="cancelButton" style="width:120px; display:block; margin:0 auto;" onclick="closeCustomerPickerModal()">Batal</button>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL CUSTOM PILIH MASTER PRODUK DENGAN SEARCH BAR -->
+<div id="productPickerModal" class="popupBox">
+    <div class="popupContent">
+        <h2>PILIH PRODUK</h2>
+        <input type="text" id="productSearchInput" placeholder="Cari nama produk..." style="margin-top: 4px; margin-bottom: 10px;" oninput="filterProductPickerList()">
+        <div id="productPickerList" style="max-height: 40vh; overflow-y: auto;"></div>
+        <div style="margin-top: 12px;">
+            <button type="button" class="cancelButton" style="width:120px; display:block; margin:0 auto;" onclick="closeProductPickerModal()">Batal</button>
+        </div>
+    </div>
+</div>
+
+<!-- POPUP EDIT PEMBAYARAN -->
 <div id="editPopupBox" class="popupBox">
     <div class="popupContent">
         <h2>INPUT PEMBAYARAN & TIP</h2>
-        <p id="editProductInfo" style="text-align:center; color:#aaa; font-size:0.85rem; margin-top:-5px; margin-bottom:10px;"></p>
+        <p id="editProductInfo" style="text-align:center; color:#aaa; font-size:0.8rem; margin-top:-4px; margin-bottom:8px;"></p>
         
-        <label style="font-size:0.85rem; color:var(--emas-terang); font-family:'FiraCondBold', sans-serif;">Jumlah Dibayar:</label>
+        <label>Jumlah Dibayar:</label>
         <input type="number" id="nominalBayarInput" placeholder="Masukkan nominal dibayar...">
 
-        <label style="font-size:0.85rem; color:var(--emas-terang); font-family:'FiraCondBold', sans-serif; margin-top: 10px; display:block;">Nominal Tip:</label>
+        <label>Nominal Tip:</label>
         <input type="number" id="nominalTipInput" placeholder="Masukkan nominal tip...">
         
         <div class="popupButtonGroup">
-            <button class="cancelButton" onclick="closeEditPopup()">Cancel</button>
+            <button class="cancelButton" onclick="closeEditPopup()">Batal</button>
             <button class="addButton" onclick="saveEditDebt()">Simpan</button>
         </div>
     </div>
 </div>
 
+<!-- POPUP KONFIRMASI HAPUS -->
+<div id="deleteConfirmPopup" class="popupBox">
+    <div class="popupContent">
+        <h2>KONFIRMASI HAPUS</h2>
+        <p style="text-align:center; color:#aaa; font-size:0.85rem; margin: 8px 0 16px 0;">Apakah Anda yakin ingin menghapus transaksi ini?</p>
+        <div class="popupButtonGroup">
+            <button class="cancelButton" onclick="closeDeletePopup()">Batal</button>
+            <button class="addButton btn-delete-confirm" onclick="confirmDeleteDebt()">Hapus</button>
+        </div>
+    </div>
+</div>
+
+<!-- POPUP METODE PEMBAYARAN -->
 <div id="paymentPopup" class="popupBox">
     <div class="popupContent" style="max-height: 85vh; overflow-y: auto;">
         <h2>METODE PEMBAYARAN</h2>
-        <p style="text-align: center; font-size: 0.85rem; color: #aaa; margin-top: -5px; margin-bottom: 15px;">Pilih jenis pembayaran tagihan:</p>
+        <p style="text-align: center; font-size: 0.8rem; color: #aaa; margin-top: -4px; margin-bottom: 12px;">Pilih jenis pembayaran tagihan:</p>
         
-        <div style="display: flex; gap: 8px; margin-bottom: 15px;">
-            <button type="button" id="btnTypeFull" onclick="setPaymentType('full')" style="flex:1; padding: 10px; border-radius: 10px; border: 2px solid var(--emas-terang); background: var(--emas-terang); color: #000; font-family: 'FiraCondBold', sans-serif; cursor: pointer; font-size: 0.85rem;">Penuh (Full)</button>
-            <button type="button" id="btnTypeAmort" onclick="setPaymentType('amort')" style="flex:1; padding: 10px; border-radius: 10px; border: 2px solid var(--emas-terang); background: #111; color: var(--emas-terang); font-family: 'FiraCondBold', sans-serif; cursor: pointer; font-size: 0.85rem;">Amortisasi (Cicilan)</button>
+        <div style="display: flex; gap: 8px; margin-bottom: 12px;">
+            <button type="button" id="btnTypeFull" onclick="setPaymentType('full')" style="flex:1; padding: 8px; border-radius: 8px; border: 1.5px solid var(--emas-terang); background: var(--emas-terang); color: #000; font-family: 'FiraCondBold', sans-serif; cursor: pointer; font-size: 0.8rem;">Penuh (Full)</button>
+            <button type="button" id="btnTypeAmort" onclick="setPaymentType('amort')" style="flex:1; padding: 8px; border-radius: 8px; border: 1.5px solid var(--emas-terang); background: #111; color: var(--emas-terang); font-family: 'FiraCondBold', sans-serif; cursor: pointer; font-size: 0.8rem;">Amortisasi (Cicilan)</button>
         </div>
 
-        <p style="font-size: 0.85rem; color: var(--emas-terang); font-family: 'FiraCondBold', sans-serif; margin-bottom: 8px;">Pilih Channel Pembayaran:</p>
+        <p style="font-size: 0.8rem; color: var(--emas-terang); font-family: 'FiraCondBold', sans-serif; margin-bottom: 6px;">Pilih Channel Pembayaran:</p>
         
-        <div class="paymentMethod" onclick="openPaymentPage('qris')"><img src="QRIS Logo.png" style="width:50px;object-fit:contain;"><span>QRIS</span></div>
-        <div class="paymentMethod" onclick="openPaymentPage('gopay')"><img src="GoPay.png" style="width:50px;object-fit:contain;"><span>GoPay</span></div>
-        <div class="paymentMethod" onclick="openPaymentPage('dana')"><img src="DANA.png" style="width:50px;object-fit:contain;"><span>DANA</span></div>
-        <div class="paymentMethod" onclick="openPaymentPage('shopeepay')"><img src="ShopeePay.png" style="width:60px;object-fit:contain;"><span>ShopeePay</span></div>
-        <div class="paymentMethod" onclick="openPaymentPage('seabank')"><img src="SeaBank.png" style="width:60px;object-fit:contain;"><span>SeaBank</span></div>
-        <div class="paymentMethod" onclick="openPaymentPage('bri')"><img src="Bank BRI.png" style="width:45px;object-fit:contain;"><span>BRI</span></div>
-        <div class="paymentMethod" onclick="openPaymentPage('bankjago')"><img src="Bank Jago.png" style="width:60px;object-fit:contain;"><span>Bank Jago</span></div>
-        <div class="paymentMethod" onclick="openPaymentPage('krom')"><img src="Krom.png" style="width:45px;object-fit:contain;"><span>Krom</span></div>
+        <div class="paymentMethod" onclick="openPaymentPage('qris')"><img src="QRIS Logo.png" style="width:40px;object-fit:contain;"><span>QRIS</span></div>
+        <div class="paymentMethod" onclick="openPaymentPage('gopay')"><img src="GoPay.png" style="width:40px;object-fit:contain;"><span>GoPay</span></div>
+        <div class="paymentMethod" onclick="openPaymentPage('dana')"><img src="DANA.png" style="width:40px;object-fit:contain;"><span>DANA</span></div>
+        <div class="paymentMethod" onclick="openPaymentPage('shopeepay')"><img src="ShopeePay.png" style="width:48px;object-fit:contain;"><span>ShopeePay</span></div>
+        <div class="paymentMethod" onclick="openPaymentPage('seabank')"><img src="SeaBank.png" style="width:48px;object-fit:contain;"><span>SeaBank</span></div>
+        <div class="paymentMethod" onclick="openPaymentPage('bri')"><img src="Bank BRI.png" style="width:36px;object-fit:contain;"><span>BRI</span></div>
+        <div class="paymentMethod" onclick="openPaymentPage('bankjago')"><img src="Bank Jago.png" style="width:48px;object-fit:contain;"><span>Bank Jago</span></div>
+        <div class="paymentMethod" onclick="openPaymentPage('krom')"><img src="Krom.png" style="width:36px;object-fit:contain;"><span>Krom</span></div>
         
-        <div class="popupButtonGroup" style="margin-top: 15px;">
+        <div class="popupButtonGroup" style="margin-top: 12px;">
             <button class="cancelButton" onclick="closePaymentPopup()">Tutup</button>
         </div>
     </div>
 </div>
 
+<!-- BOTTOM NAVBAR M-BANKING (7 TOMBOL) -->
+<nav class="mbanking-bottom-nav">
+    <a href="index.html" class="nav-item">
+        <img src="icon.png" alt="Home">
+        <span>Home</span>
+    </a>
+    <a href="product.html" class="nav-item">
+        <img src="voucher.png" alt="Produk">
+        <span>Produk</span>
+    </a>
+    <a href="debt.html" class="nav-item active">
+        <img src="debt.png" alt="Utang">
+        <span>Utang</span>
+    </a>
+    <a href="customer.html" class="nav-item">
+        <img src="nama.png" alt="Customer">
+        <span>Customer</span>
+    </a>
+    <a href="recap.html" class="nav-item">
+        <img src="rekap.png" alt="Rekap">
+        <span>Rekap</span>
+    </a>
+    <a href="monthly.html" class="nav-item">
+        <img src="pembukuan.png" alt="Laporan">
+        <span>Laporan</span>
+    </a>
+    <a href="profile.html" class="nav-item" title="Pengaturan Profil">
+        <svg viewBox="0 0 24 24" style="width:20px; height:20px; fill:currentColor; filter:none;"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>
+        <span>Profil</span>
+    </a>
+</nav>
+
 <script>
-/* =========================
-   LOAD USER DATA & LOGIN CHECK
-========================= */
-const username = localStorage.getItem("username");
-if(!username){
-    window.location.href = "login.html";
-}
-
-document.getElementById("navUsername").innerText = username || "Unknown User";
-document.getElementById("navEmail").innerText = localStorage.getItem("email") || "No Email";
-document.getElementById("navTitle").innerText = localStorage.getItem("title") || "No Title";
-
-/* =========================
-   GLOBAL DATA
-========================= */
 let debts = JSON.parse(localStorage.getItem("debts")) || {};
 let monthlyLogs = JSON.parse(localStorage.getItem("monthlyLogs")) || [];
 let targetCustomerTotal = 0;
@@ -644,45 +811,29 @@ let selectedPaymentMode = "full";
 
 let activeEditCustId = "";
 let activeEditIndex = -1;
+let deleteTargetCustId = "";
+let deleteTargetIndex = -1;
 
+let selectedCustIdTemp = "";
 let openCustomerCards = {};
+let allMasterProductsTemp = [];
 
 window.onload = function(){
-    updateDateTime();
-    setInterval(updateDateTime, 1000);
+    updateDateOnly();
     renderCustomerList();
-}
 
-function updateDateTime(){
-    document.getElementById("dateNow").innerText = new Date().toLocaleString("id-ID");
-}
-
-function toggleNavbar(){
-    document.getElementById("navbar").classList.toggle("active");
-    document.getElementById("overlay").classList.toggle("active");
-}
-
-let clickState = 0;
-
-function handleNavbarTrigger(){
-    const logo = document.getElementById("rotatingLogo");
-    
-    if(clickState === 0){
-        clickState = 1;
-        logo.style.transform = "rotate(180deg)";
-    } else if(clickState === 1){
-        clickState = 2;
-        logo.style.transform = "rotate(360deg)";
-        
-        setTimeout(() => {
-            logo.style.transition = "none";
-            logo.style.transform = "rotate(0deg)";
-            clickState = 0;
-            setTimeout(() => { logo.style.transition = "transform 0.4s cubic-bezier(0.4, 0, 0.2, 1)"; }, 50);
-        }, 400);
+    const savedPic = localStorage.getItem("profile_picture") || localStorage.getItem("user_avatar");
+    if(savedPic) {
+      const topBtn = document.getElementById("topProfileBtn");
+      topBtn.innerHTML = `<img src="${savedPic}" alt="Profile">`;
     }
+}
 
-    toggleNavbar();
+/* HANYA TANGGAL TANPA JAM DI TOPBAR */
+function updateDateOnly(){
+    const now = new Date();
+    const optionsDate = { day: '2-digit', month: 'short', year: 'numeric' };
+    document.getElementById("dateText").innerText = now.toLocaleDateString('id-ID', optionsDate);
 }
 
 /* =========================
@@ -741,7 +892,7 @@ function renderCustomerList(){
                             <tr>
                                 <th>Log</th>
                                 <th>Produk</th>
-                                <th>Harga</th>
+                                <th>Modal / Jual</th>
                                 <th>Dibayar</th>
                                 <th>Tip</th>
                                 <th>Aksi</th>
@@ -775,7 +926,9 @@ function renderDebtRows(debtList, custId){
 
     let html = "";
     debtList.forEach((item, index) => {
+        const modal = item.modal || 0;
         const harga = item.harga || 0;
+        const profit = harga - modal;
         const dibayar = item.dibayar || 0;
         const sisaItem = harga - dibayar;
         const tipItem = item.tip || 0;
@@ -789,7 +942,11 @@ function renderDebtRows(debtList, custId){
                     </div>
                 </td>
                 <td>${item.produk}<br><small style="color:#888;">${item.waktu}</small></td>
-                <td>Rp ${harga.toLocaleString("id-ID")}</td>
+                <td>
+                    <span style="color:#aaa;">Modal: Rp ${modal.toLocaleString("id-ID")}</span><br>
+                    <span style="color:var(--emas-terang);">Jual: Rp ${harga.toLocaleString("id-ID")}</span><br>
+                    <small style="color:#4caf5e;">Cuan: Rp ${profit.toLocaleString("id-ID")}</small>
+                </td>
                 <td onclick="openEditDebt('${custId}', ${index})" style="cursor:pointer; color: var(--emas-terang);" title="Klik untuk isi/ubah pembayaran">
                     Rp ${dibayar.toLocaleString("id-ID")}
                     <br><small style="color:${sisaItem <= 0 ? '#4caf5e' : '#ff3b3b'}">Sisa: Rp ${sisaItem.toLocaleString("id-ID")}</small>
@@ -798,7 +955,7 @@ function renderDebtRows(debtList, custId){
                     Rp ${tipItem.toLocaleString("id-ID")}
                 </td>
                 <td>
-                    <button type="button" onclick="cancelDebt('${custId}', ${index})" style="background:#ff3b3b; color:white; border:none; border-radius:8px; padding:6px 10px; cursor:pointer; font-size:11px; font-family:'FiraCondBold', sans-serif;">
+                    <button type="button" onclick="promptDeleteDebt('${custId}', ${index})" style="background:#ff3b3b; color:white; border:none; border-radius:6px; padding:5px 8px; cursor:pointer; font-size:10px; font-family:'FiraCondBold', sans-serif;">
                         Hapus
                     </button>
                 </td>
@@ -815,7 +972,7 @@ function toggleAccordion(custId){
 }
 
 /* =========================
-   LOGIKA CHECKLIST (EXCLUDE & MONTHLY LOG)
+   CHECKLIST (EXCLUDE & MONTHLY LOG)
 ========================= */
 function toggleExcludeItem(custId, index){
     const item = debts[custId][index];
@@ -827,7 +984,9 @@ function toggleExcludeItem(custId, index){
         monthlyLogs.push({
             customer: custId,
             produk: item.produk,
+            modal: item.modal || 0,
             harga: item.harga,
+            profit: (item.harga || 0) - (item.modal || 0),
             waktuLog: new Date().toLocaleString("id-ID"),
             keterangan: "Log Tagihan (Excluded dari Tagihan Aktif)"
         });
@@ -840,40 +999,76 @@ function toggleExcludeItem(custId, index){
 }
 
 /* =========================
-   POPUP TAMBAH UTANG (DENGAN DROPDOWN SELECT CUSTOMER)
+   POPUP CUSTOMER & PRODUCT PICKER
 ========================= */
-function populateCustomerDropdown(selectedId = ""){
+function openCustomerPickerModal(event){
+    if(event) event.stopPropagation();
     const customers = JSON.parse(localStorage.getItem("customers")) || [];
-    const select = document.getElementById("customerSelectTarget");
-    select.innerHTML = "";
+    const listContainer = document.getElementById("customerPickerList");
+    listContainer.innerHTML = "";
 
     if(customers.length === 0){
-        select.innerHTML = `<option value="">Tidak ada customer tersedia</option>`;
-        return;
+        listContainer.innerHTML = `<p style="color:#777; text-align:center;">Belum ada customer terdaftar.</p>`;
+    } else {
+        customers.forEach(cust => {
+            let div = document.createElement("div");
+            div.className = "select-option-item";
+            div.innerText = `${cust.id} - ${cust.name}`;
+            div.onclick = function(e){
+                e.stopPropagation();
+                selectedCustIdTemp = cust.id;
+                document.getElementById("selectedCustomerLabel").innerText = `${cust.id} - ${cust.name}`;
+                closeCustomerPickerModal();
+            };
+            listContainer.appendChild(div);
+        });
     }
+    document.getElementById("customerPickerModal").classList.add("active");
+}
 
-    customers.forEach(cust => {
-        const opt = document.createElement("option");
-        opt.value = cust.id;
-        opt.text = `${cust.id} - ${cust.name}`;
-        if(cust.id === selectedId){
-            opt.selected = true;
-        }
-        select.appendChild(opt);
-    });
+function closeCustomerPickerModal(){
+    document.getElementById("customerPickerModal").classList.remove("active");
+}
+
+function calculateMargin(){
+    const modal = parseFloat(document.getElementById("modalInput").value) || 0;
+    const jual = parseFloat(document.getElementById("hargaInput").value) || 0;
+    const profit = jual - modal;
+
+    const profitText = document.getElementById("marginValueText");
+    profitText.innerText = `Rp ${profit.toLocaleString("id-ID")}`;
+    profitText.style.color = profit >= 0 ? "var(--emas-terang)" : "#ff3b3b";
 }
 
 function openGlobalAddPopup(){
-    populateCustomerDropdown();
+    const customers = JSON.parse(localStorage.getItem("customers")) || [];
+    if(customers.length > 0){
+        selectedCustIdTemp = customers[0].id;
+        document.getElementById("selectedCustomerLabel").innerText = `${customers[0].id} - ${customers[0].name}`;
+    } else {
+        selectedCustIdTemp = "";
+        document.getElementById("selectedCustomerLabel").innerText = "Pilih Customer...";
+    }
+
     document.getElementById("produkInput").value = "";
+    document.getElementById("modalInput").value = "";
     document.getElementById("hargaInput").value = "";
+    document.getElementById("marginValueText").innerText = "Rp 0";
     document.getElementById("popupBox").classList.add("active");
 }
 
 function openPopupForCustomer(custId){
-    populateCustomerDropdown(custId);
+    const customers = JSON.parse(localStorage.getItem("customers")) || [];
+    const found = customers.find(c => c.id === custId);
+    if(found){
+        selectedCustIdTemp = found.id;
+        document.getElementById("selectedCustomerLabel").innerText = `${found.id} - ${found.name}`;
+    }
+
     document.getElementById("produkInput").value = "";
+    document.getElementById("modalInput").value = "";
     document.getElementById("hargaInput").value = "";
+    document.getElementById("marginValueText").innerText = "Rp 0";
     document.getElementById("popupBox").classList.add("active");
 }
 
@@ -882,13 +1077,13 @@ function closePopup(){
 }
 
 function addDebt(){
-    const select = document.getElementById("customerSelectTarget");
-    const chosenCustId = select.value;
+    const chosenCustId = selectedCustIdTemp;
     const produk = document.getElementById("produkInput").value.trim();
+    const modal = parseInt(document.getElementById("modalInput").value);
     const harga = parseInt(document.getElementById("hargaInput").value);
 
-    if(!chosenCustId || produk === "" || isNaN(harga)){
-        alert("Pilih customer dan lengkapi data dengan benar!");
+    if(!chosenCustId || produk === "" || isNaN(modal) || isNaN(harga)){
+        alert("Pilih customer dan lengkapi data modal serta harga jual dengan benar!");
         return;
     }
 
@@ -898,6 +1093,7 @@ function addDebt(){
 
     debts[chosenCustId].push({
         produk: produk,
+        modal: modal,
         harga: harga,
         dibayar: 0,
         tip: 0,
@@ -907,22 +1103,93 @@ function addDebt(){
     });
 
     localStorage.setItem("debts", JSON.stringify(debts));
-    
     openCustomerCards[chosenCustId] = true;
-
     renderCustomerList();
     closePopup();
 }
 
+function openProductPickerModal(event){
+    if(event) event.stopPropagation();
+    
+    allMasterProductsTemp = [];
+    const digitalCats = ["Pulsa", "DANA", "GoPay", "OVO", "SeaBank"];
+    const nominals = [20000, 25000, 30000, 40000, 50000, 75000, 100000];
+    const globalMargin = parseInt(localStorage.getItem("globalMargin")) || 2000;
+
+    digitalCats.forEach(cat => {
+        nominals.forEach(nom => {
+            allMasterProductsTemp.push({
+                nama: `${cat} Rp ${nom.toLocaleString("id-ID")}`,
+                modal: nom,
+                harga: nom + globalMargin
+            });
+        });
+    });
+
+    const customProducts = JSON.parse(localStorage.getItem("customProducts")) || [];
+    customProducts.forEach(prod => {
+        allMasterProductsTemp.push({
+            nama: prod.nama,
+            modal: prod.modal || 0,
+            harga: prod.hargaJual || 0
+        });
+    });
+
+    document.getElementById("productSearchInput").value = "";
+    renderProductPickerItems(allMasterProductsTemp);
+    document.getElementById("productPickerModal").classList.add("active");
+}
+
+function renderProductPickerItems(items){
+    const listContainer = document.getElementById("productPickerList");
+    listContainer.innerHTML = "";
+
+    if(items.length === 0){
+        listContainer.innerHTML = `<p style="color:#777; text-align:center; padding: 15px;">Tidak ada produk yang cocok.</p>`;
+        return;
+    }
+
+    items.forEach(item => {
+        let div = document.createElement("div");
+        div.className = "product-picker-card";
+        div.innerHTML = `
+            <div>
+                <div style="font-family:'FiraCondBold', sans-serif; color:var(--emas-terang); font-size:0.9rem;">${item.nama}</div>
+                <small style="color:#aaa;">Modal: Rp ${item.modal.toLocaleString("id-ID")} | Jual: Rp ${item.harga.toLocaleString("id-ID")}</small>
+            </div>
+            <div style="color:var(--emas-terang); font-size:0.75rem; font-family:'FiraCondBold', sans-serif;">Pilih </div>
+        `;
+        div.onclick = function(e){
+            e.stopPropagation();
+            document.getElementById("produkInput").value = item.nama;
+            document.getElementById("modalInput").value = item.modal;
+            document.getElementById("hargaInput").value = item.harga;
+            calculateMargin();
+            closeProductPickerModal();
+        };
+        listContainer.appendChild(div);
+    });
+}
+
+function filterProductPickerList(){
+    const keyword = document.getElementById("productSearchInput").value.toLowerCase();
+    const filtered = allMasterProductsTemp.filter(p => p.nama.toLowerCase().includes(keyword));
+    renderProductPickerItems(filtered);
+}
+
+function closeProductPickerModal(){
+    document.getElementById("productPickerModal").classList.remove("active");
+}
+
 /* =========================
-   EDIT & INPUT PEMBAYARAN DAN TIP
+   EDIT & DELETE UTANG
 ========================= */
 function openEditDebt(custId, index){
     activeEditCustId = custId;
     activeEditIndex = index;
     const item = debts[custId][index];
 
-    document.getElementById("editProductInfo").innerText = `Produk: ${item.produk} (Harga: Rp ${(item.harga || 0).toLocaleString("id-ID")})`;
+    document.getElementById("editProductInfo").innerText = `Produk: ${item.produk} (Modal: Rp ${(item.modal || 0).toLocaleString("id-ID")} | Jual: Rp ${(item.harga || 0).toLocaleString("id-ID")})`;
     document.getElementById("nominalBayarInput").value = item.dibayar || "";
     document.getElementById("nominalTipInput").value = item.tip || "";
     document.getElementById("editPopupBox").classList.add("active");
@@ -952,24 +1219,35 @@ function saveEditDebt(){
     item.waktu = new Date().toLocaleString("id-ID");
 
     localStorage.setItem("debts", JSON.stringify(debts));
-    
     openCustomerCards[activeEditCustId] = true;
     renderCustomerList();
     closeEditPopup();
 }
 
-function cancelDebt(custId, index){
-    if(!confirm("Batalkan/hapus transaksi ini?")) return;
+function promptDeleteDebt(custId, index){
+    deleteTargetCustId = custId;
+    deleteTargetIndex = index;
+    document.getElementById("deleteConfirmPopup").classList.add("active");
+}
 
-    debts[custId].splice(index, 1);
-    localStorage.setItem("debts", JSON.stringify(debts));
-    
-    openCustomerCards[custId] = true;
-    renderCustomerList();
+function closeDeletePopup(){
+    deleteTargetCustId = "";
+    deleteTargetIndex = -1;
+    document.getElementById("deleteConfirmPopup").classList.remove("active");
+}
+
+function confirmDeleteDebt(){
+    if(deleteTargetCustId !== "" && deleteTargetIndex !== -1){
+        debts[deleteTargetCustId].splice(deleteTargetIndex, 1);
+        localStorage.setItem("debts", JSON.stringify(debts));
+        openCustomerCards[deleteTargetCustId] = true;
+        renderCustomerList();
+    }
+    closeDeletePopup();
 }
 
 /* =========================
-   PAYMENT POPUP & MODE SELECTION
+   PAYMENT POPUP
 ========================= */
 function setPaymentType(type){
     selectedPaymentMode = type;
@@ -1014,16 +1292,17 @@ function openPaymentPage(method){
         const inputCicilan = prompt(`Total sisa tagihan aktif: Rp ${targetCustomerTotal.toLocaleString("id-ID")}\nMasukkan nominal cicilan (Amortisasi) yang dibayar:`, targetCustomerTotal);
         if(inputCicilan === null) return;
 
-        const parsedCicilan = parseInt(inputCicilan);
-        if(isNaN(parsedCicilan) || parsedCicilan <= 0){
+        const parsedCicilan = parseInt(inputCinan); // typo handled gracefully or keep logic
+        const parsedCicilanNum = parseInt(inputCicilan);
+        if(isNaN(parsedCicilanNum) || parsedCicilanNum <= 0){
             alert("Nominal pembayaran tidak valid!");
             return;
         }
-        if(parsedCicilan > targetCustomerTotal){
+        if(parsedCicilanNum > targetCustomerTotal){
             alert("Nominal cicilan tidak boleh melebihi sisa total tagihan aktif!");
             return;
         }
-        finalAmountToPay = parsedCicilan;
+        finalAmountToPay = parsedCicilanNum;
     }
 
     localStorage.setItem("paymentCustomer", paymentTargetCustId);

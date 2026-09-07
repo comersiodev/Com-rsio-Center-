@@ -29,7 +29,7 @@
   :root{
     --emas: #e8b13c;
     --emas-terang: #ffd166;
-    --gelap: #000000;
+    --gelap: #0a0a0a;
   }
 
   *{
@@ -43,151 +43,111 @@
     width: 100%;
     min-height: 100vh;
     font-family: 'FiraCondBook', sans-serif;
-    background: #000000 !important;
+    background: #0a0a0a !important;
     color: #ffffff;
     overflow-x: hidden;
   }
 
-  /* =========================
-     UI NAVBAR DRAWER & STYLING
-  ========================= */
-  .navbar {
-    position: fixed;
-    top: 0;
-    left: -300px;
-    width: 280px;
-    height: 100%;
-    background: #000000;
-    border-right: 2px solid var(--emas-terang);
-    z-index: 999999;
-    transition: left 0.3s ease;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .navbar.active {
-    left: 0;
-  }
-
-  .closeNavbar {
-    align-self: flex-end;
-    font-size: 1.3rem;
-    color: var(--emas-terang);
-    cursor: pointer;
-    margin-bottom: 10px;
-    font-family: 'FiraCondBold', sans-serif;
-  }
-
-  .navbarHeader {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding-bottom: 15px;
-    border-bottom: 1px solid rgba(255, 209, 102, 0.2);
-    margin-bottom: 15px;
-  }
-
-  .navLogo {
-    width: 45px;
-    height: 45px;
-    object-fit: contain;
-    border-radius: 50%;
-    border: 1px solid var(--emas-terang);
-  }
-
-  .navText p {
-    margin: 0;
-    font-size: 0.85rem;
-  }
-
-  #navUsername {
-    font-family: 'FiraCondBold', sans-serif;
-    color: var(--emas-terang);
-    font-size: 1rem;
-  }
-
-  #navEmail, #navTitle {
-    color: #aaa;
-    font-size: 0.75rem;
-  }
-
-  .navbarMenu {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    overflow-y: auto;
-  }
-
-  .navMenuBox {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    background: #0b0f0c;
-    border: 1px solid rgba(255, 209, 102, 0.3);
-    padding: 12px 14px;
-    border-radius: 12px;
-    text-decoration: none;
-    color: #ffffff;
-    font-family: 'FiraCondBold', sans-serif;
-    font-size: 0.9rem;
-    transition: all 0.2s ease;
-  }
-
-  .navMenuBox:hover {
-    background: #151d16;
-    border-color: var(--emas-terang);
-  }
-
-  .navMenuBox img {
-    width: 24px;
-    height: 24px;
-    object-fit: contain;
-  }
-
-  /* OVERLAY */
-  .overlay {
+  /* BACKGROUND LAYER & DIM EFFECT */
+  .bg-layer{
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,0.7);
-    display: none;
-    z-index: 99999;
+    background-image: url('background.jpg');
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    z-index: 0;
   }
 
-  .overlay.active {
-    display: block;
+  .bg-dim{
+    position: fixed;
+    inset: 0;
+    background: rgba(6, 10, 7, 0.82);
+    z-index: 1;
+  }
+
+  /* TOP BAR M-BANKING */
+  .mbanking-topbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background: rgba(10, 14, 11, 0.95);
+    border-bottom: 1px solid rgba(232, 177, 60, 0.25);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 16px;
+    z-index: 20;
+    backdrop-filter: blur(8px);
+  }
+
+  .mbanking-brand-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .mbanking-brand {
+    font-family: 'OswaldBold', sans-serif;
+    font-size: 1.1rem;
+    color: #ffffff;
+    letter-spacing: 0.5px;
+    line-height: 1.1;
+  }
+
+  .mbanking-brand span {
+    color: var(--emas-terang);
+  }
+
+  .mbanking-greeting-top {
+    font-size: 0.7rem;
+    color: var(--emas-terang);
+    font-family: 'FiraCondBold', sans-serif;
+    margin-top: 1px;
+    line-height: 1;
   }
 
   .content-wrap {
     position: relative;
     z-index: 5;
-    padding: 30px 16px 60px 16px;
+    padding: 76px 16px 60px 16px;
     max-width: 480px;
     margin: 0 auto;
   }
 
   /* KOTAK BILL UTAMA */
   #captureArea {
-    background: #000000;
-    border: 2px solid var(--emas-terang);
+    background: rgba(12, 17, 13, 0.95);
+    border: 2px solid var(--emas);
     border-radius: 16px;
     padding: 20px;
+    box-shadow: 0 6px 25px rgba(0,0,0,0.7);
   }
 
+  /* HEADER BOX: LOGO + TEKS SEJAJAR DI TENGAH, DILANJUT BILLING DI BAWAHNYA */
   div.headerBox {
     all: unset !important;
     display: flex !important;
+    flex-direction: column !important;
     align-items: center !important;
-    gap: 12px !important;
+    text-align: center !important;
     width: 100% !important;
     border-bottom: 1px solid rgba(255, 209, 102, 0.2) !important;
-    padding-bottom: 12px !important;
+    padding-bottom: 15px !important;
     margin-bottom: 15px !important;
     background: transparent !important;
     box-shadow: none !important;
   }
 
-  /* LOGO UTAMA SEKALIGUS TRIGGER NAVBAR DENGAN EFEK ROTASI */
+  .headerTopRow {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    justify-content: center;
+  }
+
   .mainLogo {
     width: 40px !important;
     height: 40px !important;
@@ -195,16 +155,38 @@
     border-radius: 50% !important;
     border: 1px solid var(--emas-terang) !important;
     margin: 0 !important;
-    cursor: pointer;
-    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    background: transparent !important;
+    cursor: default;
+  }
+
+  .headerRight {
+    all: unset !important;
+    display: flex !important;
+    flex-direction: column !important;
+    text-align: left !important;
   }
 
   .headerRight h1 {
     font-family: 'OswaldBold', sans-serif !important;
-    font-size: 1.3rem !important;
+    font-size: 1.25rem !important;
     color: #ffffff !important;
     margin: 0 !important;
     padding: 0 !important;
+    letter-spacing: 0.5px;
+    background: transparent !important;
+  }
+
+  .headerRight h1 span {
+    color: var(--emas-terang);
+  }
+
+  .headerBillingSub {
+    font-family: 'FiraCondBold', sans-serif;
+    font-size: 0.78rem;
+    color: var(--emas-terang);
+    margin-top: 4px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
   }
 
   .paymentInfo {
@@ -229,8 +211,8 @@
 
   /* KOTAK STRUK GABUNGAN (SINGLE RECEIPT BOX) */
   .receiptBox {
-    background: #0b0f0c;
-    border: 1px solid var(--emas-terang);
+    background: #0d120f;
+    border: 1px solid rgba(232, 177, 60, 0.3);
     border-radius: 12px;
     padding: 14px;
     margin-top: 10px;
@@ -251,7 +233,7 @@
 
   /* TOTAL AKHIR BOX */
   .totalDebtBox {
-    background: #0b0f0c;
+    background: #000000;
     border: 2px solid var(--emas-terang);
     padding: 12px 14px;
     border-radius: 12px;
@@ -266,8 +248,8 @@
   /* PAYMENT METHOD BOX */
   .paymentList {
     margin-top: 15px;
-    background: #0b0f0c;
-    border: 1px solid var(--emas-terang);
+    background: #0d120f;
+    border: 1px solid rgba(232, 177, 60, 0.3);
     border-radius: 14px;
     padding: 15px;
   }
@@ -310,23 +292,25 @@
   }
 
   .paymentCard {
-    background: #111111;
+    background: #000000;
     padding: 14px;
     border-radius: 10px;
-    border: 1px solid var(--emas-terang);
+    border: 1px solid var(--emas);
     text-align: center;
     color: white;
     font-family: 'FiraCondBold', sans-serif;
   }
 
+  /* KOTAK QRIS KOTAK KAKU TANPA LENGKUNGAN */
   .qrisContainer {
     display: flex;
     flex-direction: column;
     align-items: center;
     background: #ffffff;
-    padding: 10px;
-    border-radius: 8px;
-    max-width: 180px;
+    padding: 8px;
+    border-radius: 0px !important;
+    border: none !important;
+    max-width: 176px;
     margin: 0 auto;
   }
 
@@ -334,6 +318,8 @@
     width: 160px;
     height: 160px;
     object-fit: contain;
+    border-radius: 0px !important;
+    display: block;
   }
 
   /* TOMBOL SIMPAN */
@@ -348,6 +334,12 @@
     font-size: 0.95rem;
     font-family: 'FiraCondBold', sans-serif;
     cursor: pointer;
+    box-shadow: 0 4px 15px rgba(255, 209, 102, 0.3);
+    transition: transform 0.2s;
+  }
+
+  .saveButton:active {
+    transform: scale(0.98);
   }
 
   .noCapture {
@@ -358,47 +350,33 @@
 
 <body>
 
-  <!-- =========================
-       NAVBAR (MENU DRAWER UTAMA)
-  ========================= -->
-  <div id="navbar" class="navbar">
-      <div class="closeNavbar" onclick="toggleNavbar()">✕</div>
-      <div class="navbarHeader">
-          <img src="icon.png" class="navLogo">
-          <div class="navText">
-              <p id="navUsername"></p>
-              <p id="navEmail"></p>
-              <p id="navTitle"></p>
-          </div>
-      </div>
-      <div class="navbarMenu">
-          <a href="index.html" class="navMenuBox"><img src="icon.png"><span>Home</span></a>
-          <a href="product.html" class="navMenuBox"><img src="voucher.png"><span>Produk</span></a>
-          <a href="debt.html" class="navMenuBox"><img src="debt.png"><span>Utang</span></a>
-          <a href="customer.html" class="navMenuBox"><img src="nama.png"><span>Customer</span></a>
-          <a href="recap.html" class="navMenuBox"><img src="rekap.png"><span>Rekap Utang</span></a>
-          <a href="monthly.html" class="navMenuBox"><img src="pembukuan.png"><span>Laporan Bulanan</span></a>
-      </div>
+  <div class="bg-layer"></div>
+  <div class="bg-dim"></div>
+
+  <!-- TOP BAR M-BANKING -->
+  <div class="mbanking-topbar">
+    <div class="mbanking-brand-container">
+      <div class="mbanking-brand">Comersio <span>Center</span></div>
+      <div class="mbanking-greeting-top">Detail Pembayaran</div>
+    </div>
   </div>
 
-  <div id="overlay" class="overlay" onclick="toggleNavbar()"></div>
-
-  <div class="content-wrap">
+  <div class="content-wrap" style="padding-top: 70px;">
     <!-- AREA BILL -->
     <div id="captureArea">
       <div class="headerBox">
-        <div class="headerLeft">
-          <!-- LOGO SEBAGAI TRIGGER NAVBAR DENGAN EFEK ROTASI BERTINGKAT -->
-          <img src="icon.png" class="mainLogo" id="rotatingLogo" onclick="handleNavbarTrigger()" title="Buka Menu Navbar">
+        <div class="headerTopRow">
+          <img src="icon.png" class="mainLogo" alt="Logo">
+          <div class="headerRight">
+            <h1>COMÉRSIO <span>CENTER</span></h1>
+          </div>
         </div>
-        <div class="headerRight">
-          <h1>COMÉRSIO CENTER</h1>
-        </div>
+        <div class="headerBillingSub">Billing</div>
       </div>
 
       <div class="customerListBox">
         <h2 style="font-family: 'FiraCondBold', sans-serif; color: var(--emas-terang); font-size: 1.1rem; margin-bottom: 8px;">
-          DETAIL PEMBAYARAN
+          STRUK PEMBAYARAN
         </h2>
 
         <div class="paymentInfo">
@@ -429,46 +407,6 @@
   </div>
 
 <script>
-/* =========================
-   LOAD USER DATA & NAVBAR
-========================= */
-document.getElementById("navUsername").innerText = localStorage.getItem("username") || "Unknown User";
-document.getElementById("navEmail").innerText = localStorage.getItem("email") || "No Email";
-document.getElementById("navTitle").innerText = localStorage.getItem("title") || "No Title";
-
-function toggleNavbar(){
-    document.getElementById("navbar").classList.toggle("active");
-    document.getElementById("overlay").classList.toggle("active");
-}
-
-/* =========================
-   LOGIKA ROTASI LOGO & BUKA NAVBAR
-========================= */
-let clickState = 0; // 0: Normal, 1: 180 deg (Setengah Lingkaran), 2: 360 deg (Satu Lingkaran Penuh)
-
-function handleNavbarTrigger(){
-    const logo = document.getElementById("rotatingLogo");
-    
-    if(clickState === 0){
-        clickState = 1;
-        logo.style.transform = "rotate(180deg)";
-    } else if(clickState === 1){
-        clickState = 2;
-        logo.style.transform = "rotate(360deg)";
-        
-        // Reset rotasi sebentar setelah animasi penuh selesai agar bisa diputar lagi ke depannya
-        setTimeout(() => {
-            logo.style.transition = "none";
-            logo.style.transform = "rotate(0deg)";
-            clickState = 0;
-            setTimeout(() => { logo.style.transition = "transform 0.4s cubic-bezier(0.4, 0, 0.2, 1)"; }, 50);
-        }, 400);
-    }
-
-    // Eksekusi buka/tutup navbar utama
-    toggleNavbar();
-}
-
 /* =========================
    STORAGE & RENDER BILL
 ========================= */

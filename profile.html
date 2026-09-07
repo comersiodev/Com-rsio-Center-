@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Pengaturan Profile - Comersio Center</title>
+<link rel="stylesheet" href="style.css">
+<meta name="theme-color" content="#000000">
+<style>
+  @font-face{
+    font-family: 'OswaldBold';
+    src: url('oswald-bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+  }
+
+  @font-face{
+    font-family: 'FiraCondBold';
+    src: url('firasanscondensed-bold.otf') format('opentype');
+    font-weight: 700;
+    font-style: normal;
+  }
+
+  @font-face{
+    font-family: 'FiraCondBook';
+    src: url('firasanscondensed-book.otf') format('opentype');
+    font-weight: 400;
+    font-style: normal;
+  }
+
+  :root{
+    --hijau: #2f6b3a;
+    --hijau-terang: #4caf5e;
+    --emas: #e8b13c;
+    --emas-terang: #ffd166;
+    --gelap: #0b0f0c;
+  }
+
+  *{
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  html, body{
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden;
+    font-family: 'FiraCondBook', sans-serif;
+  }
+
+  body{
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    background: #0a0a0a;
+  }
+
+  .bg-layer{
+    position: fixed;
+    inset: 0;
+    background-image: url('background.jpg');
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    z-index: 0;
+  }
+
+  .bg-dim{
+    position: fixed;
+    inset: 0;
+    background: rgba(6, 10, 7, 0.78);
+    z-index: 1;
+  }
+
+  /* TOP BAR M-BANKING */
+  .mbanking-topbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 56px;
+    background: rgba(10, 14, 11, 0.95);
+    border-bottom: 1px solid rgba(232, 177, 60, 0.25);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 16px;
+    z-index: 20;
+    backdrop-filter: blur(8px);
+  }
+
+  .mbanking-brand-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .mbanking-brand {
+    font-family: 'OswaldBold', sans-serif;
+    font-size: 1.1rem;
+    color: #ffffff;
+    letter-spacing: 0.5px;
+    line-height: 1.1;
+  }
+
+  .mbanking-brand span {
+    color: var(--emas-terang);
+  }
+
+  .mbanking-greeting-top {
+    font-size: 0.7rem;
+    color: var(--emas-terang);
+    font-family: 'FiraCondBold', sans-serif;
+    margin-top: 1px;
+    line-height: 1;
+  }
+
+  /* KEMBALI KE HOME BUTTON DI KANAN ATAS */
+  .back-home-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 2px solid var(--emas-terang);
+    background: #121814;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    text-decoration: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+  }
+
+  .back-home-btn:hover {
+    transform: scale(1.08);
+    box-shadow: 0 0 12px rgba(255, 209, 102, 0.4);
+  }
+
+  .back-home-btn svg {
+    width: 18px;
+    height: 18px;
+    fill: var(--emas-terang);
+  }
+
+  /* LAYAR UTAMA PROFILE */
+  #screen-profile {
+    position: fixed;
+    inset: 0;
+    z-index: 5;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 68px;
+    padding-bottom: 76px;
+    overflow-y: auto;
+  }
+
+  /* KARTU KONTainer PROFILE */
+  .profile-card-container {
+    width: 92%;
+    max-width: 360px;
+    background: rgba(12, 17, 13, 0.95);
+    border: 2px solid var(--emas);
+    border-radius: 16px;
+    padding: 16px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.6);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  .profile-avatar-wrapper {
+    position: relative;
+    cursor: pointer;
+    margin-bottom: 12px;
+  }
+
+  .profile-avatar-large {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: 2.5px solid var(--emas-terang);
+    background: #1e2620;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+  }
+
+  .profile-avatar-large img, .profile-avatar-large svg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .profile-avatar-large svg {
+    width: 40px;
+    height: 40px;
+    fill: var(--emas-terang);
+  }
+
+  .avatar-badge-edit {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background: var(--emas-terang);
+    color: #000;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    border: 2px solid #000;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+  }
+
+  .profile-form-group {
+    width: 100%;
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .profile-label {
+    font-family: 'FiraCondBold', sans-serif;
+    font-size: 0.75rem;
+    color: var(--emas-terang);
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  .profile-input {
+    width: 100%;
+    height: 40px;
+    background: #000;
+    border: 1px solid rgba(232, 177, 60, 0.4);
+    border-radius: 10px;
+    color: #fff;
+    padding: 0 12px;
+    font-family: 'FiraCondBook', sans-serif;
+    font-size: 0.95rem;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .profile-input:focus {
+    border-color: var(--emas-terang);
+    box-shadow: 0 0 8px rgba(255, 209, 102, 0.25);
+  }
+
+  .profile-save-btn {
+    width: 100%;
+    background: var(--emas-terang);
+    color: #000;
+    border: none;
+    border-radius: 10px;
+    padding: 12px;
+    font-family: 'FiraCondBold', sans-serif;
+    font-size: 0.95rem;
+    cursor: pointer;
+    margin-top: 6px;
+    box-shadow: 0 4px 12px rgba(255, 209, 102, 0.3);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .profile-save-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 15px rgba(255, 209, 102, 0.5);
+  }
+
+  /* BOTTOM NAVBAR M-BANKING (7 TOMBOL) */
+  .mbanking-bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 64px;
+    background: rgba(10, 14, 11, 0.96);
+    border-top: 1px solid rgba(232, 177, 60, 0.3);
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    z-index: 99999;
+    backdrop-filter: blur(8px);
+  }
+
+  .nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: #888;
+    font-family: 'FiraCondBold', sans-serif;
+    font-size: 0.55rem;
+    gap: 3px;
+    padding: 4px 0;
+    transition: color 0.2s;
+    cursor: pointer;
+    background: none;
+    border: none;
+  }
+
+  .nav-item img {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+    filter: grayscale(100%) opacity(0.6);
+    transition: filter 0.2s;
+  }
+
+  .nav-item.active, .nav-item:hover {
+    color: var(--emas-terang);
+  }
+
+  .nav-item.active img, .nav-item:hover img {
+    filter: none;
+  }
+
+  /* MODAL CROP & ALERT */
+  .popupBox {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 999999;
+    padding: 20px;
+  }
+
+  .popupBox.active {
+    display: flex;
+  }
+
+  .popupContent {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 320px;
+    background: #000;
+    border: 2px solid var(--emas-terang);
+    border-radius: 20px;
+    padding: 16px;
+    text-align: center;
+  }
+
+  .popupContent h2 {
+    margin-top: 0;
+    margin-bottom: 8px;
+    font-family: 'FiraCondBold', sans-serif;
+    color: var(--emas-terang);
+    font-size: 1rem;
+  }
+
+  .crop-preview-box {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    border: 3px solid var(--emas-terang);
+    overflow: hidden;
+    margin: 0 auto 12px auto;
+    background: #111;
+    position: relative;
+    box-shadow: 0 0 20px rgba(0,0,0,0.8);
+  }
+
+  .crop-preview-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .custom-modal-box {
+    background: #0d120f;
+    border: 2px solid var(--emas-terang);
+    border-radius: 16px;
+    padding: 20px;
+    width: 100%;
+    max-width: 320px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+  }
+
+  .custom-modal-title {
+    font-family: 'FiraCondBold', sans-serif;
+    font-size: 1.1rem;
+    color: var(--emas-terang);
+    margin-bottom: 8px;
+  }
+
+  .custom-modal-msg {
+    font-size: 0.9rem;
+    color: #ddd;
+    margin-bottom: 16px;
+    line-height: 1.4;
+    white-space: pre-wrap;
+  }
+
+  .custom-modal-btn {
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    font-family: 'FiraCondBold', sans-serif;
+    font-size: 0.9rem;
+    cursor: pointer;
+    border: none;
+    background: var(--emas-terang);
+    color: #000;
+  }
+</style>
+</head>
+<body>
+
+  <div class="bg-layer"></div>
+  <div class="bg-dim"></div>
+
+  <!-- TOP BAR M-BANKING -->
+  <div class="mbanking-topbar">
+    <div class="mbanking-brand-container">
+      <div class="mbanking-brand">Comersio <span>Center</span></div>
+      <div class="mbanking-greeting-top">Pengaturan Akun</div>
+    </div>
+    <div style="display:flex; align-items:center; gap:8px;">
+      <a href="index.html" class="back-home-btn" title="Kembali ke Beranda">
+        <svg viewBox="0 0 24 24">
+          <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+
+  <!-- LAYAR UTAMA PROFILE -->
+  <div id="screen-profile">
+    <div class="profile-card-container">
+      
+      <!-- FOTO PROFIL DENGAN KLIK UPLOAD -->
+      <div class="profile-avatar-wrapper" onclick="document.getElementById('avatarFileInput').click()" title="Ganti Foto Profil">
+        <div class="profile-avatar-large" id="profileAvatarContainer">
+          <svg viewBox="0 0 24 24" id="defaultAvatarSvg">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
+          </svg>
+        </div>
+        <div class="avatar-badge-edit">📷</div>
+      </div>
+      <input type="file" id="avatarFileInput" accept="image/*" hidden onchange="handleImageSelected(event)">
+
+      <div class="profile-form-group">
+        <label class="profile-label">Nama Pengguna / Username:</label>
+        <input type="text" id="profileUsernameInput" class="profile-input" placeholder="Masukkan nama lu...">
+      </div>
+
+      <div class="profile-form-group">
+        <label class="profile-label">Email:</label>
+        <input type="email" id="profileEmailInput" class="profile-input" placeholder="Masukkan email lu...">
+      </div>
+
+      <div class="profile-form-group">
+        <label class="profile-label">Jabatan / Gelar (Title):</label>
+        <input type="text" id="profileTitleInput" class="profile-input" placeholder="Misal: Administrator / Owner...">
+      </div>
+
+      <button type="button" class="profile-save-btn" onclick="saveProfileData()">Simpan Perubahan</button>
+    </div>
+  </div>
+
+  <!-- MODAL CROP 1:1 PREVIEW -->
+  <div id="cropModalOverlay" class="popupBox">
+    <div class="popupContent">
+      <h2>CROP FOTO 1:1</h2>
+      <div style="font-size:0.75rem; color:#aaa; margin-bottom:10px;">Pratinjau bulat (Otomatis menyesuaikan rasio 1:1).</div>
+      <div class="crop-preview-box">
+        <img id="cropPreviewImg" src="" alt="Crop Preview">
+      </div>
+      <div style="display:flex; gap:8px;">
+        <button type="button" class="profile-save-btn" onclick="confirmCropAvatar()" style="margin:0; background:var(--hijau-terang); color:#000;">Gunakan Foto</button>
+        <button type="button" class="profile-save-btn" onclick="closeCropModal()" style="margin:0; background:#2a2a2a; color:#fff;">Batal</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL CUSTOM ALERT -->
+  <div id="customModalOverlay" class="popupBox">
+    <div class="custom-modal-box">
+      <div class="custom-modal-title" id="customModalTitle">Informasi</div>
+      <div class="custom-modal-msg" id="customModalMsg">Pesan...</div>
+      <button type="button" class="custom-modal-btn" onclick="closeCustomModal()">OK</button>
+    </div>
+  </div>
+
+  <!-- BOTTOM NAVBAR M-BANKING (7 TOMBOL) -->
+  <nav class="mbanking-bottom-nav">
+      <a href="index.html" class="nav-item">
+          <img src="icon.png" alt="Home">
+          <span>Home</span>
+      </a>
+      <a href="product.html" class="nav-item">
+          <img src="voucher.png" alt="Produk">
+          <span>Produk</span>
+      </a>
+      <a href="debt.html" class="nav-item">
+          <img src="debt.png" alt="Utang">
+          <span>Utang</span>
+      </a>
+      <a href="customer.html" class="nav-item">
+          <img src="nama.png" alt="Customer">
+          <span>Customer</span>
+      </a>
+      <a href="recap.html" class="nav-item">
+          <img src="rekap.png" alt="Rekap">
+          <span>Rekap</span>
+      </a>
+      <a href="monthly.html" class="nav-item">
+          <img src="pembukuan.png" alt="Laporan">
+          <span>Laporan</span>
+      </a>
+      <a href="profile.html" class="nav-item active">
+          <svg viewBox="0 0 24 24" style="width:20px; height:20px; fill:currentColor; filter:none;"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>
+          <span>Profil</span>
+      </a>
+  </nav>
+
+  <script>
+    function showCustomAlert(message, title = "Informasi") {
+      return new Promise((resolve) => {
+        document.getElementById("customModalTitle").innerText = title;
+        document.getElementById("customModalMsg").innerText = message;
+        document.getElementById("customModalOverlay").classList.add("active");
+        window.modalResolve = resolve;
+      });
+    }
+
+    function closeCustomModal() {
+      document.getElementById("customModalOverlay").classList.remove("active");
+      if(window.modalResolve) window.modalResolve();
+    }
+
+    let tempCroppedBase64 = "";
+
+    window.addEventListener("DOMContentLoaded", () => {
+      const username = localStorage.getItem("username") || "";
+      const email = localStorage.getItem("email") || "";
+      const title = localStorage.getItem("title") || "";
+      const savedPic = localStorage.getItem("profile_picture") || localStorage.getItem("user_avatar");
+
+      document.getElementById("profileUsernameInput").value = username;
+      document.getElementById("profileEmailInput").value = email;
+      document.getElementById("profileTitleInput").value = title;
+
+      if(savedPic) {
+        const container = document.getElementById("profileAvatarContainer");
+        container.innerHTML = `<img src="${savedPic}" alt="Avatar">`;
+        tempCroppedBase64 = savedPic;
+      }
+    });
+
+    function handleImageSelected(event) {
+      const file = event.target.files[0];
+      if(!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const img = new Image();
+        img.onload = function() {
+          // Canvas otomatis crop 1:1 persegi tengah
+          const canvas = document.createElement("canvas");
+          const size = Math.min(img.width, img.height);
+          canvas.width = 300;
+          canvas.height = 300;
+          const ctx = canvas.getContext("2d");
+
+          const offsetX = (img.width - size) / 2;
+          const offsetY = (img.height - size) / 2;
+
+          ctx.drawImage(img, offsetX, offsetY, size, size, 0, 0, 300, 300);
+          tempCroppedBase64 = canvas.toDataURL("image/jpeg", 0.85);
+
+          document.getElementById("cropPreviewImg").src = tempCroppedBase64;
+          document.getElementById("cropModalOverlay").classList.add("active");
+        };
+        img.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function confirmCropAvatar() {
+      const container = document.getElementById("profileAvatarContainer");
+      container.innerHTML = `<img src="${tempCroppedBase64}" alt="Avatar">`;
+      document.getElementById("cropModalOverlay").classList.remove("active");
+    }
+
+    function closeCropModal() {
+      document.getElementById("cropModalOverlay").classList.remove("active");
+    }
+
+    async function saveProfileData() {
+      const newUsername = document.getElementById("profileUsernameInput").value.trim();
+      const newEmail = document.getElementById("profileEmailInput").value.trim();
+      const newTitle = document.getElementById("profileTitleInput").value.trim();
+
+      if(!newUsername) {
+        await showCustomAlert("Nama pengguna tidak boleh kosong!", "Peringatan");
+        return;
+      }
+
+      localStorage.setItem("username", newUsername);
+      localStorage.setItem("email", newEmail);
+      localStorage.setItem("title", newTitle);
+      if(tempCroppedBase64) {
+        localStorage.setItem("profile_picture", tempCroppedBase64);
+        localStorage.setItem("user_avatar", tempCroppedBase64);
+      }
+
+      await showCustomAlert("Profil dan foto berhasil diperbarui!", "Berhasil");
+      window.location.href = "index.html";
+    }
+  </script>
+
+</body>
+</html>

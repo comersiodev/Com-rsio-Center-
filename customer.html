@@ -29,7 +29,7 @@
       :root{
         --emas: #e8b13c;
         --emas-terang: #ffd166;
-        --gelap: #000000;
+        --gelap: #0a0a0a;
       }
 
       *{
@@ -43,176 +43,131 @@
         width: 100%;
         min-height: 100vh;
         font-family: 'FiraCondBook', sans-serif;
-        background: var(--gelap) !important;
+        background: #0a0a0a !important;
         color: #ffffff;
         overflow-x: hidden;
       }
 
-      body{
-        background-color: var(--gelap) !important;
-      }
-
-      /* =========================
-         UI NAVBAR DRAWER & STYLING
-      ========================= */
-      .navbar {
-        position: fixed;
-        top: 0;
-        left: -300px;
-        width: 280px;
-        height: 100%;
-        background: #000000;
-        border-right: 2px solid var(--emas-terang);
-        z-index: 999999;
-        transition: left 0.3s ease;
-        padding: 20px;
-        display: flex;
-        flex-direction: column;
-      }
-
-      .navbar.active {
-        left: 0;
-      }
-
-      .closeNavbar {
-        align-self: flex-end;
-        font-size: 1.3rem;
-        color: var(--emas-terang);
-        cursor: pointer;
-        margin-bottom: 10px;
-        font-family: 'FiraCondBold', sans-serif;
-      }
-
-      .navbarHeader {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        padding-bottom: 15px;
-        border-bottom: 1px solid rgba(255, 209, 102, 0.2);
-        margin-bottom: 15px;
-      }
-
-      .navLogo {
-        width: 45px;
-        height: 45px;
-        object-fit: contain;
-        border-radius: 50%;
-        border: 1px solid var(--emas-terang);
-      }
-
-      .navText p {
-        margin: 0;
-        font-size: 0.85rem;
-      }
-
-      #navUsername {
-        font-family: 'FiraCondBold', sans-serif;
-        color: var(--emas-terang);
-        font-size: 1rem;
-      }
-
-      #navEmail, #navTitle {
-        color: #aaa;
-        font-size: 0.75rem;
-      }
-
-      .navbarMenu {
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
-        overflow-y: auto;
-      }
-
-      .navMenuBox {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        background: #0b0f0c;
-        border: 1px solid rgba(255, 209, 102, 0.3);
-        padding: 12px 14px;
-        border-radius: 12px;
-        text-decoration: none;
-        color: #ffffff;
-        font-family: 'FiraCondBold', sans-serif;
-        font-size: 0.9rem;
-        transition: all 0.2s ease;
-      }
-
-      .navMenuBox:hover {
-        background: #151d16;
-        border-color: var(--emas-terang);
-      }
-
-      .navMenuBox img {
-        width: 24px;
-        height: 24px;
-        object-fit: contain;
-      }
-
-      /* OVERLAY */
-      .overlay {
+      /* BACKGROUND LAYER & DIM EFFECT */
+      .bg-layer{
         position: fixed;
         inset: 0;
-        background: rgba(0,0,0,0.7);
-        display: none;
-        z-index: 99999;
+        background-image: url('background.jpg');
+        background-size: cover;
+        background-position: center center;
+        background-repeat: no-repeat;
+        z-index: 0;
       }
 
-      .overlay.active {
-        display: block;
+      .bg-dim{
+        position: fixed;
+        inset: 0;
+        background: rgba(6, 10, 7, 0.82);
+        z-index: 1;
+      }
+
+      /* TOP BAR M-BANKING */
+      .mbanking-topbar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 60px;
+        background: rgba(10, 14, 11, 0.95);
+        border-bottom: 1px solid rgba(232, 177, 60, 0.25);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 16px;
+        z-index: 20;
+        backdrop-filter: blur(8px);
+      }
+
+      .mbanking-brand-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      .mbanking-brand {
+        font-family: 'OswaldBold', sans-serif;
+        font-size: 1.1rem;
+        color: #ffffff;
+        letter-spacing: 0.5px;
+        line-height: 1.1;
+      }
+
+      .mbanking-brand span {
+        color: var(--emas-terang);
+      }
+
+      .mbanking-greeting-top {
+        font-size: 0.7rem;
+        color: var(--emas-terang);
+        font-family: 'FiraCondBold', sans-serif;
+        margin-top: 1px;
+        line-height: 1;
+      }
+
+      .topbar-right-box {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .date-badge-top {
+        font-family: 'FiraCondBold', sans-serif;
+        font-size: 0.8rem;
+        color: var(--emas-terang);
+        background: rgba(232, 177, 60, 0.1);
+        border: 1px solid rgba(232, 177, 60, 0.3);
+        padding: 4px 8px;
+        border-radius: 8px;
+      }
+
+      .profile-circle-btn {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        border: 2px solid var(--emas-terang);
+        background: #121814;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        text-decoration: none;
+        transition: transform 0.2s, box-shadow 0.2s;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+      }
+
+      .profile-circle-btn:hover {
+        transform: scale(1.08);
+        box-shadow: 0 0 12px rgba(255, 209, 102, 0.4);
+      }
+
+      .profile-circle-btn svg, .profile-circle-btn img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .profile-circle-btn svg {
+        width: 20px;
+        height: 20px;
+        fill: var(--emas-terang);
+        padding: 2px;
       }
 
       /* =========================
-         HEADER BOX (PRESISI SEPERTI PAYMENT.HTML)
+         CONTENT WRAP
       ========================= */
       .content-wrap {
         position: relative;
         z-index: 5;
-        padding: 20px 16px 60px 16px;
+        padding: 76px 16px 100px 16px;
         max-width: 600px;
         margin: 0 auto;
-      }
-
-      div.headerBox {
-        all: unset !important;
-        display: flex !important;
-        align-items: center !important;
-        gap: 12px !important;
-        width: 100% !important;
-        border-bottom: 1px solid rgba(255, 209, 102, 0.2) !important;
-        padding-bottom: 12px !important;
-        margin-bottom: 15px !important;
-        background: transparent !important;
-        box-shadow: none !important;
-      }
-
-      .mainLogo {
-        width: 40px !important;
-        height: 40px !important;
-        object-fit: contain !important;
-        border-radius: 50% !important;
-        border: 1px solid var(--emas-terang) !important;
-        margin: 0 !important;
-        cursor: pointer;
-        transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-      }
-
-      .headerRight h1 {
-        font-family: 'OswaldBold', sans-serif !important;
-        font-size: 1.3rem !important;
-        color: #ffffff !important;
-        margin: 0 !important;
-        padding: 0 !important;
-      }
-
-      .headerRight h1 span {
-        color: var(--emas-terang);
-      }
-
-      .headerRight p {
-        color: #aaa;
-        font-size: 0.8rem;
-        margin: 2px 0 0 0;
       }
 
       /* =========================
@@ -224,33 +179,38 @@
       }
 
       .customer-card {
-        background: #000000;
-        border: 2px solid var(--emas-terang);
+        background: rgba(12, 17, 13, 0.92);
+        border: 2px solid var(--emas);
         border-radius: 16px;
-        margin-bottom: 16px;
-        padding: 18px 20px;
+        margin-bottom: 14px;
+        padding: 16px 18px;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        box-shadow: 0 4px 15px rgba(255, 209, 102, 0.15);
+        box-shadow: 0 4px 15px rgba(0,0,0,0.6);
+        transition: border-color 0.2s;
+      }
+
+      .customer-card:hover {
+        border-color: var(--emas-terang);
       }
 
       .customer-info h3 {
-        margin: 0 0 4px 0;
+        margin: 0 0 3px 0;
         font-family: 'FiraCondBold', sans-serif;
-        font-size: 1.1rem;
+        font-size: 1.05rem;
         color: var(--emas-terang);
       }
 
       .customer-info p {
-        margin: 0 0 4px 0;
+        margin: 0 0 3px 0;
         font-size: 0.9rem;
         color: #fff;
       }
 
       .customer-info small {
         color: #aaa;
-        font-size: 0.8rem;
+        font-size: 0.75rem;
       }
 
       .customer-stats {
@@ -259,21 +219,21 @@
       }
 
       .customer-stats .total-tx {
-        font-size: 0.85rem;
+        font-size: 0.75rem;
         color: #aaa;
-        margin-bottom: 4px;
+        margin-bottom: 2px;
       }
 
       .customer-stats .total-val {
-        font-size: 0.95rem;
+        font-size: 0.9rem;
         color: var(--emas-terang);
       }
 
       .add-customer-btn {
         display: block;
         width: 100%;
-        margin: 15px auto 40px auto;
-        height: 48px;
+        margin: 15px auto 20px auto;
+        height: 46px;
         background: var(--emas-terang);
         color: #000000;
         border: 2px solid var(--emas-terang);
@@ -282,7 +242,8 @@
         font-size: 0.95rem;
         cursor: pointer;
         text-align: center;
-        line-height: 44px;
+        line-height: 42px;
+        box-shadow: 0 3px 10px rgba(255, 209, 102, 0.3);
       }
 
       .popupBox{
@@ -294,6 +255,7 @@
         align-items: center;
         z-index: 999999;
         padding: 20px;
+        backdrop-filter: blur(5px);
       }
 
       .popupBox.active{
@@ -304,11 +266,12 @@
         display: flex;
         flex-direction: column;
         width: 100%;
-        max-width: 400px;
-        background: #000;
+        max-width: 360px;
+        background: #0d120f;
         border: 2px solid var(--emas-terang);
-        border-radius: 20px;
-        padding: 24px;
+        border-radius: 16px;
+        padding: 20px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.8);
       }
 
       .popupContent h2 {
@@ -316,91 +279,128 @@
         margin-bottom: 6px;
         font-family: 'FiraCondBold', sans-serif;
         color: var(--emas-terang);
-        font-size: 1rem;
+        font-size: 0.85rem;
+        text-transform: uppercase;
       }
 
       input{
         width: 100%;
-        height: 50px;
-        background: #111;
-        border: 2px solid var(--emas-terang);
-        border-radius: 14px;
+        height: 44px;
+        background: #000;
+        border: 1.5px solid var(--emas);
+        border-radius: 10px;
         color: white;
-        padding: 0 16px;
+        padding: 0 12px;
         box-sizing: border-box;
-        margin-bottom: 14px;
+        margin-bottom: 12px;
         font-family: 'FiraCondBook', sans-serif;
+        font-size: 0.95rem;
+        outline: none;
+      }
+
+      input:focus {
+        border-color: var(--emas-terang);
+        box-shadow: 0 0 8px rgba(255, 209, 102, 0.25);
       }
 
       .popupButtonGroup{
         display: flex;
-        gap: 10px;
-        margin-top: 10px;
+        gap: 8px;
+        margin-top: 8px;
       }
 
       .cancelButton,
       .addButton{
         flex: 1;
-        height: 48px;
+        height: 42px;
         border: none;
-        border-radius: 12px;
+        border-radius: 10px;
         cursor: pointer;
         font-family: 'FiraCondBold', sans-serif;
+        font-size: 0.9rem;
       }
 
       .cancelButton{
-        background: #2a2a2a;
-        color: white;
+        background: #222;
+        color: #aaa;
+        border: 1px solid #444;
       }
 
       .addButton{
         background: var(--emas-terang);
         color: black;
+        box-shadow: 0 3px 10px rgba(255, 209, 102, 0.3);
+      }
+
+      /* BOTTOM NAVBAR M-BANKING (7 TOMBOL) */
+      .mbanking-bottom-nav {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 64px;
+        background: rgba(10, 14, 11, 0.96);
+        border-top: 1px solid rgba(232, 177, 60, 0.3);
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        z-index: 99999;
+        backdrop-filter: blur(8px);
+      }
+
+      .nav-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        color: #888;
+        font-family: 'FiraCondBold', sans-serif;
+        font-size: 0.55rem;
+        gap: 3px;
+        padding: 4px 0;
+        transition: color 0.2s;
+      }
+
+      .nav-item img {
+        width: 20px;
+        height: 20px;
+        object-fit: contain;
+        filter: grayscale(100%) opacity(0.6);
+        transition: filter 0.2s;
+      }
+
+      .nav-item.active, .nav-item:hover {
+        color: var(--emas-terang);
+      }
+
+      .nav-item.active img, .nav-item:hover img {
+        filter: none;
       }
     </style>
 </head>
 
 <body>
 
-<!-- =========================
-     NAVBAR DRAWER
-========================= -->
-<div id="navbar" class="navbar">
-    <div class="closeNavbar" onclick="toggleNavbar()">✕</div>
-    
-    <div class="navbarHeader">
-        <img src="icon.png" class="navLogo">
-        <div class="navText">
-            <p id="navUsername"></p>
-            <p id="navEmail"></p>
-            <p id="navTitle"></p>
-        </div>
-    </div>
+  <div class="bg-layer"></div>
+  <div class="bg-dim"></div>
 
-    <div class="navbarMenu">
-        <a href="index.html" class="navMenuBox"><img src="icon.png"><span>Home</span></a>
-        <a href="product.html" class="navMenuBox"><img src="voucher.png"><span>Produk</span></a>
-        <a href="debt.html" class="navMenuBox"><img src="debt.png"><span>Utang</span></a>
-        <a href="customer.html" class="navMenuBox"><img src="nama.png"><span>Customer</span></a>
-        <a href="recap.html" class="navMenuBox"><img src="rekap.png"><span>Rekap Utang</span></a>
-        <a href="monthly.html" class="navMenuBox"><img src="pembukuan.png"><span>Laporan Bulanan</span></a>
+  <!-- TOP BAR M-BANKING -->
+  <div class="mbanking-topbar">
+    <div class="mbanking-brand-container">
+      <div class="mbanking-brand">Comersio <span>Center</span></div>
+      <div class="mbanking-greeting-top">Data Customer</div>
     </div>
-</div>
-
-<div id="overlay" class="overlay" onclick="toggleNavbar()"></div>
+    <div class="topbar-right-box">
+      <div class="date-badge-top" id="dateText">01 Jan 2026</div>
+      <a href="profile.html" class="profile-circle-btn" id="topProfileBtn" title="Pengaturan Profile">
+        <svg viewBox="0 0 24 24">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
+        </svg>
+      </a>
+    </div>
+  </div>
 
 <div class="content-wrap">
-    <!-- HEADER BOX PRESISI PERSIS PAYMENT.HTML -->
-    <div class="headerBox">
-        <div class="headerLeft">
-            <img src="icon.png" class="mainLogo" id="rotatingLogo" onclick="handleNavbarTrigger()" title="Buka Menu Navbar">
-        </div>
-        <div class="headerRight">
-            <h1>DATA <span>CUSTOMER</span></h1>
-            <p>Daftar customer & total tagihan aktif.</p>
-        </div>
-    </div>
-
     <div class="customer-list-container">
         <div id="customerList"></div>
 
@@ -419,45 +419,45 @@
         <input type="text" id="customerName" placeholder="Masukkan nama customer disini...">
 
         <div class="popupButtonGroup">
-            <button class="cancelButton" onclick="closePopup()">Cancel</button>
+            <button class="cancelButton" onclick="closePopup()">Batal</button>
             <button class="addButton" onclick="addCustomer()">Tambahkan</button>
         </div>
     </div>
 </div>
 
+<!-- BOTTOM NAVBAR M-BANKING (7 TOMBOL) -->
+<nav class="mbanking-bottom-nav">
+    <a href="index.html" class="nav-item">
+        <img src="icon.png" alt="Home">
+        <span>Home</span>
+    </a>
+    <a href="product.html" class="nav-item">
+        <img src="voucher.png" alt="Produk">
+        <span>Produk</span>
+    </a>
+    <a href="debt.html" class="nav-item">
+        <img src="debt.png" alt="Utang">
+        <span>Utang</span>
+    </a>
+    <a href="customer.html" class="nav-item active">
+        <img src="nama.png" alt="Customer">
+        <span>Customer</span>
+    </a>
+    <a href="recap.html" class="nav-item">
+        <img src="rekap.png" alt="Rekap">
+        <span>Rekap</span>
+    </a>
+    <a href="monthly.html" class="nav-item">
+        <img src="pembukuan.png" alt="Laporan">
+        <span>Laporan</span>
+    </a>
+    <a href="profile.html" class="nav-item" title="Pengaturan Profil">
+        <svg viewBox="0 0 24 24" style="width:20px; height:20px; fill:currentColor; filter:none;"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>
+        <span>Profil</span>
+    </a>
+</nav>
+
 <script>
-document.getElementById("navUsername").innerText = localStorage.getItem("username") || "Unknown User";
-document.getElementById("navEmail").innerText = localStorage.getItem("email") || "No Email";
-document.getElementById("navTitle").innerText = localStorage.getItem("title") || "No Title";
-
-function toggleNavbar(){
-    document.getElementById("navbar").classList.toggle("active");
-    document.getElementById("overlay").classList.toggle("active");
-}
-
-let clickState = 0;
-
-function handleNavbarTrigger(){
-    const logo = document.getElementById("rotatingLogo");
-    
-    if(clickState === 0){
-        clickState = 1;
-        logo.style.transform = "rotate(180deg)";
-    } else if(clickState === 1){
-        clickState = 2;
-        logo.style.transform = "rotate(360deg)";
-        
-        setTimeout(() => {
-            logo.style.transition = "none";
-            logo.style.transform = "rotate(0deg)";
-            clickState = 0;
-            setTimeout(() => { logo.style.transition = "transform 0.4s cubic-bezier(0.4, 0, 0.2, 1)"; }, 50);
-        }, 400);
-    }
-
-    toggleNavbar();
-}
-
 function openPopup(){
     document.getElementById("popupBox").classList.add("active");
 }
@@ -467,7 +467,20 @@ function closePopup(){
 }
 
 window.onload = function(){
+    updateDateOnly();
     renderCustomerList();
+
+    const savedPic = localStorage.getItem("profile_picture") || localStorage.getItem("user_avatar");
+    if(savedPic) {
+      const topBtn = document.getElementById("topProfileBtn");
+      topBtn.innerHTML = `<img src="${savedPic}" alt="Profile">`;
+    }
+}
+
+function updateDateOnly(){
+    const now = new Date();
+    const optionsDate = { day: '2-digit', month: 'short', year: 'numeric' };
+    document.getElementById("dateText").innerText = now.toLocaleDateString('id-ID', optionsDate);
 }
 
 function renderCustomerList(){

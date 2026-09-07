@@ -2,35 +2,23 @@
 <html lang="id">
 
 <head>
-
 <meta charset="UTF-8">
-
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-
-<title>
-Debt Comérsio - Produk
-</title>
-
-<link rel="stylesheet"
-href="style.css">
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Debt Comérsio - Produk</title>
+<link rel="stylesheet" href="style.css">
 <style>
-
   @font-face{
     font-family: 'OswaldBold';
     src: url('oswald-bold.ttf') format('truetype');
     font-weight: 700;
     font-style: normal;
   }
-
   @font-face{
     font-family: 'FiraCondBold';
     src: url('firasanscondensed-bold.otf') format('opentype');
     font-weight: 700;
     font-style: normal;
   }
-
   @font-face{
     font-family: 'FiraCondBook';
     src: url('firasanscondensed-book.otf') format('opentype');
@@ -41,7 +29,7 @@ href="style.css">
   :root{
     --emas: #e8b13c;
     --emas-terang: #ffd166;
-    --gelap: #000000;
+    --gelap: #0a0a0a;
   }
 
   *{
@@ -55,123 +43,120 @@ href="style.css">
     width: 100%;
     min-height: 100vh;
     font-family: 'FiraCondBook', sans-serif;
-    background: var(--gelap) !important;
+    background: #0a0a0a !important;
     color: #ffffff;
     overflow-x: hidden;
   }
 
-  body{
-    background-color: var(--gelap) !important;
-  }
-
-  /* =========================
-     UI NAVBAR DRAWER & STYLING
-  ========================= */
-  .navbar {
-    position: fixed;
-    top: 0;
-    left: -300px;
-    width: 280px;
-    height: 100%;
-    background: #000000;
-    border-right: 2px solid var(--emas-terang);
-    z-index: 999999;
-    transition: left 0.3s ease;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .navbar.active {
-    left: 0;
-  }
-
-  .closeNavbar {
-    align-self: flex-end;
-    font-size: 1.3rem;
-    color: var(--emas-terang);
-    cursor: pointer;
-    margin-bottom: 10px;
-    font-family: 'FiraCondBold', sans-serif;
-  }
-
-  .navbarHeader {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding-bottom: 15px;
-    border-bottom: 1px solid rgba(255, 209, 102, 0.2);
-    margin-bottom: 15px;
-  }
-
-  .navLogo {
-    width: 45px;
-    height: 45px;
-    object-fit: contain;
-    border-radius: 50%;
-    border: 1px solid var(--emas-terang);
-  }
-
-  .navText p {
-    margin: 0;
-    font-size: 0.85rem;
-  }
-
-  #navUsername {
-    font-family: 'FiraCondBold', sans-serif;
-    color: var(--emas-terang);
-    font-size: 1rem;
-  }
-
-  #navEmail, #navTitle {
-    color: #aaa;
-    font-size: 0.75rem;
-  }
-
-  .navbarMenu {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    overflow-y: auto;
-  }
-
-  .navMenuBox {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    background: #0b0f0c;
-    border: 1px solid rgba(255, 209, 102, 0.3);
-    padding: 12px 14px;
-    border-radius: 12px;
-    text-decoration: none;
-    color: #ffffff;
-    font-family: 'FiraCondBold', sans-serif;
-    font-size: 0.9rem;
-    transition: all 0.2s ease;
-  }
-
-  .navMenuBox:hover {
-    background: #151d16;
-    border-color: var(--emas-terang);
-  }
-
-  .navMenuBox img {
-    width: 24px;
-    height: 24px;
-    object-fit: contain;
-  }
-
-  /* OVERLAY */
-  .overlay {
+  /* BACKGROUND LAYER & DIM EFFECT */
+  .bg-layer{
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,0.7);
-    display: none;
-    z-index: 99999;
+    background-image: url('background.jpg');
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    z-index: 0;
   }
 
-  .overlay.active {
-    display: block;
+  .bg-dim{
+    position: fixed;
+    inset: 0;
+    background: rgba(6, 10, 7, 0.82);
+    z-index: 1;
+  }
+
+  /* TOP BAR M-BANKING */
+  .mbanking-topbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background: rgba(10, 14, 11, 0.95);
+    border-bottom: 1px solid rgba(232, 177, 60, 0.25);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 16px;
+    z-index: 20;
+    backdrop-filter: blur(8px);
+  }
+
+  .mbanking-brand-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .mbanking-brand {
+    font-family: 'OswaldBold', sans-serif;
+    font-size: 1.1rem;
+    color: #ffffff;
+    letter-spacing: 0.5px;
+    line-height: 1.1;
+  }
+
+  .mbanking-brand span {
+    color: var(--emas-terang);
+  }
+
+  .mbanking-greeting-top {
+    font-size: 0.7rem;
+    color: var(--emas-terang);
+    font-family: 'FiraCondBold', sans-serif;
+    margin-top: 1px;
+    line-height: 1;
+  }
+
+  .topbar-right-box {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .date-badge-top {
+    font-family: 'FiraCondBold', sans-serif;
+    font-size: 0.8rem;
+    color: var(--emas-terang);
+    background: rgba(232, 177, 60, 0.1);
+    border: 1px solid rgba(232, 177, 60, 0.3);
+    padding: 4px 8px;
+    border-radius: 8px;
+  }
+
+  .profile-circle-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 2px solid var(--emas-terang);
+    background: #121814;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    text-decoration: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+  }
+
+  .profile-circle-btn:hover {
+    transform: scale(1.08);
+    box-shadow: 0 0 12px rgba(255, 209, 102, 0.4);
+  }
+
+  .profile-circle-btn svg, .profile-circle-btn img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .profile-circle-btn svg {
+    width: 20px;
+    height: 20px;
+    fill: var(--emas-terang);
+    padding: 2px;
   }
 
   /* =========================
@@ -180,51 +165,51 @@ href="style.css">
   .content-wrap {
     position: relative;
     z-index: 5;
-    padding: 20px 16px 60px 16px;
+    padding: 76px 16px 100px 16px;
     max-width: 650px;
     margin: 0 auto;
   }
 
-  div.headerBox {
-    all: unset !important;
-    display: flex !important;
-    align-items: center !important;
-    gap: 12px !important;
-    width: 100% !important;
-    border-bottom: 1px solid rgba(255, 209, 102, 0.2) !important;
-    padding-bottom: 12px !important;
-    margin-bottom: 15px !important;
-    background: transparent !important;
-    box-shadow: none !important;
+  /* TOOLBAR ATAS (ATUR HARGA JUAL SVG BUTTON) */
+  .margin-toolbar {
+    background: rgba(12, 17, 13, 0.85);
+    border: 1.5px solid rgba(232, 177, 60, 0.3);
+    border-radius: 12px;
+    padding: 12px 16px;
+    margin-bottom: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
   }
 
-  .mainLogo {
-    width: 40px !important;
-    height: 40px !important;
-    object-fit: contain !important;
-    border-radius: 50% !important;
-    border: 1px solid var(--emas-terang) !important;
-    margin: 0 !important;
-    cursor: pointer;
-    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  .margin-info-text {
+    font-size: 0.85rem;
+    font-family: 'FiraCondBold', sans-serif;
+    color: #fff;
   }
 
-  .headerRight h1 {
-    font-family: 'OswaldBold', sans-serif !important;
-    font-size: 1.3rem !important;
-    color: #ffffff !important;
-    margin: 0 !important;
-    padding: 0 !important;
-  }
-
-  .headerRight h1 span {
+  .margin-info-text span {
     color: var(--emas-terang);
   }
 
-  .headerRight p {
-    color: #aaa;
+  .btn-setting-margin {
+    background: #111;
+    border: 1px solid var(--emas-terang);
+    color: var(--emas-terang);
+    padding: 6px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'FiraCondBold', sans-serif;
     font-size: 0.8rem;
-    margin: 2px 0 0 0;
+    transition: background 0.2s;
+  }
+
+  .btn-setting-margin:hover {
+    background: rgba(232, 177, 60, 0.2);
   }
 
   /* =========================
@@ -236,12 +221,12 @@ href="style.css">
   }
 
   .product-card {
-    background: #000000;
-    border: 2px solid var(--emas-terang);
+    background: rgba(12, 17, 13, 0.92);
+    border: 2px solid var(--emas);
     border-radius: 16px;
     margin-bottom: 16px;
     overflow: hidden;
-    box-shadow: 0 4px 15px rgba(255, 209, 102, 0.1);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.6);
   }
 
   .product-header {
@@ -249,8 +234,8 @@ href="style.css">
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: #0b0f0c;
-    border-bottom: 1px solid rgba(255, 209, 102, 0.2);
+    background: rgba(16, 23, 18, 0.95);
+    border-bottom: 1px solid rgba(232, 177, 60, 0.25);
   }
 
   .product-title-wrap {
@@ -268,13 +253,13 @@ href="style.css">
   .product-title {
     margin: 0;
     font-family: 'FiraCondBold', sans-serif;
-    font-size: 1.1rem;
+    font-size: 1.05rem;
     color: var(--emas-terang);
   }
 
   .product-body {
     padding: 16px 20px;
-    background: #050505;
+    background: #080c09;
   }
 
   /* NOMINAL BADGES GRID */
@@ -286,8 +271,8 @@ href="style.css">
   }
 
   .nominal-badge {
-    background: #111;
-    border: 1px solid var(--emas-terang);
+    background: #000;
+    border: 1px solid rgba(232, 177, 60, 0.4);
     border-radius: 10px;
     padding: 8px 6px;
     text-align: center;
@@ -295,12 +280,13 @@ href="style.css">
     color: #fff;
     font-family: 'FiraCondBold', sans-serif;
     cursor: pointer;
-    transition: background 0.2s;
+    transition: all 0.2s;
   }
 
   .nominal-badge:hover {
     background: var(--emas-terang);
     color: #000;
+    border-color: var(--emas-terang);
   }
 
   /* TABLE LISTING PRODUK CUSTOM */
@@ -320,15 +306,15 @@ href="style.css">
   th, td {
     padding: 10px 8px;
     text-align: center;
-    border-bottom: 1px solid #1a1a1a;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     vertical-align: middle;
   }
 
   th {
     font-family: 'FiraCondBold', sans-serif;
     color: var(--emas-terang);
-    background: #0b0f0c;
-    border-bottom: 2px solid var(--emas-terang);
+    background: #0d120f;
+    border-bottom: 2px solid var(--emas);
   }
 
   /* ACTION BUTTONS */
@@ -355,6 +341,7 @@ href="style.css">
   .btn-add-product {
     background: var(--emas-terang);
     color: #000000;
+    box-shadow: 0 3px 10px rgba(255, 209, 102, 0.3);
   }
 
   /* =========================
@@ -369,6 +356,7 @@ href="style.css">
     align-items: center;
     z-index: 999999;
     padding: 20px;
+    backdrop-filter: blur(5px);
   }
 
   .popupBox.active{
@@ -379,11 +367,12 @@ href="style.css">
     display: flex;
     flex-direction: column;
     width: 100%;
-    max-width: 400px;
-    background: #000;
+    max-width: 360px;
+    background: #0d120f;
     border: 2px solid var(--emas-terang);
-    border-radius: 20px;
-    padding: 24px;
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.8);
   }
 
   .popupContent h2 {
@@ -391,20 +380,28 @@ href="style.css">
     font-family: 'FiraCondBold', sans-serif;
     color: var(--emas-terang);
     text-align: center;
-    font-size: 1.3rem;
+    font-size: 1.1rem;
+    margin-bottom: 12px;
   }
 
   input, select{
     width: 100%;
-    height: 50px;
-    background: #111;
-    border: 2px solid var(--emas-terang);
-    border-radius: 14px;
+    height: 44px;
+    background: #000;
+    border: 1.5px solid var(--emas);
+    border-radius: 10px;
     color: white;
-    padding: 0 16px;
+    padding: 0 12px;
     box-sizing: border-box;
-    margin-top: 12px;
+    margin-top: 6px;
     font-family: 'FiraCondBook', sans-serif;
+    font-size: 0.95rem;
+    outline: none;
+  }
+
+  input:focus, select:focus {
+    border-color: var(--emas-terang);
+    box-shadow: 0 0 8px rgba(255, 209, 102, 0.25);
   }
 
   select option {
@@ -412,72 +409,129 @@ href="style.css">
     color: white;
   }
 
+  .popupContent label {
+    margin-top: 10px;
+    display: block;
+    font-size: 0.75rem;
+    color: var(--emas-terang);
+    font-family: 'FiraCondBold', sans-serif;
+    text-transform: uppercase;
+  }
+
   .popupButtonGroup{
     display: flex;
-    gap: 10px;
-    margin-top: 20px;
+    gap: 8px;
+    margin-top: 16px;
   }
 
   .cancelButton,
   .addButton{
     flex: 1;
-    height: 48px;
+    height: 42px;
     border: none;
-    border-radius: 12px;
+    border-radius: 10px;
     cursor: pointer;
     font-family: 'FiraCondBold', sans-serif;
+    font-size: 0.9rem;
   }
 
   .cancelButton{
-    background: #2a2a2a;
-    color: white;
+    background: #222;
+    color: #aaa;
+    border: 1px solid #444;
   }
 
   .addButton{
     background: var(--emas-terang);
     color: black;
+    box-shadow: 0 3px 10px rgba(255, 209, 102, 0.3);
+  }
+
+  /* TOMBOL KHUSUS HAPUS DI POPUP KONFIRMASI */
+  .btn-delete-confirm {
+    background: #ff3b3b !important;
+    color: white !important;
+  }
+
+  /* BOTTOM NAVBAR M-BANKING (7 TOMBOL) */
+  .mbanking-bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 64px;
+    background: rgba(10, 14, 11, 0.96);
+    border-top: 1px solid rgba(232, 177, 60, 0.3);
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    z-index: 99999;
+    backdrop-filter: blur(8px);
+  }
+
+  .nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: #888;
+    font-family: 'FiraCondBold', sans-serif;
+    font-size: 0.55rem;
+    gap: 3px;
+    padding: 4px 0;
+    transition: color 0.2s;
+  }
+
+  .nav-item img {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+    filter: grayscale(100%) opacity(0.6);
+    transition: filter 0.2s;
+  }
+
+  .nav-item.active, .nav-item:hover {
+    color: var(--emas-terang);
+  }
+
+  .nav-item.active img, .nav-item:hover img {
+    filter: none;
   }
 </style>
-
 </head>
 
 <body>
 
-<!-- =========================
-     NAVBAR
-========================= -->
-<div id="navbar" class="navbar">
-    <div class="closeNavbar" onclick="toggleNavbar()">✕</div>
-    <div class="navbarHeader">
-        <img src="icon.png" class="navLogo">
-        <div class="navText">
-            <p id="navUsername"></p>
-            <p id="navEmail"></p>
-            <p id="navTitle"></p>
-        </div>
-    </div>
-    <div class="navbarMenu">
-        <a href="index.html" class="navMenuBox"><img src="icon.png"><span>Home</span></a>
-        <a href="debt.html" class="navMenuBox"><img src="debt.png"><span>Utang</span></a>
-        <a href="customer.html" class="navMenuBox"><img src="nama.png"><span>Customer</span></a>
-        <a href="product.html" class="navMenuBox"><img src="debt.png"><span>Produk & Harga</span></a>
-        <a href="recap.html" class="navMenuBox"><img src="rekap.png"><span>Rekap Utang</span></a>
-        <a href="monthly.html" class="navMenuBox"><img src="pembukuan.png"><span>Laporan Bulanan</span></a>
-    </div>
-</div>
+  <div class="bg-layer"></div>
+  <div class="bg-dim"></div>
 
-<div id="overlay" class="overlay" onclick="toggleNavbar()"></div>
+  <!-- TOP BAR M-BANKING -->
+  <div class="mbanking-topbar">
+    <div class="mbanking-brand-container">
+      <div class="mbanking-brand">Comersio <span>Center</span></div>
+      <div class="mbanking-greeting-top">Daftar Produk</div>
+    </div>
+    <div class="topbar-right-box">
+      <div class="date-badge-top" id="dateText">01 Jan 2026</div>
+      <a href="profile.html" class="profile-circle-btn" id="topProfileBtn" title="Pengaturan Profile">
+        <svg viewBox="0 0 24 24">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
+        </svg>
+      </a>
+    </div>
+  </div>
 
 <div class="content-wrap">
-    <div class="headerBox">
-        <div class="headerLeft">
-            <img src="icon.png" class="mainLogo" id="rotatingLogo" onclick="handleNavbarTrigger()" title="Buka Menu Navbar">
+    <!-- TOOLBAR ATUR TAMBAHAN HARGA JUAL DIGITAL -->
+    <div class="margin-toolbar">
+        <div class="margin-info-text">
+            Kenaikan Harga Jual: <span id="displayMarginVal">Rp 2.000</span>
         </div>
-        <div class="headerRight">
-            <h1>DAFTAR <span>PRODUK</span></h1>
-            <p>Kelola master produk & nominal untuk input transaksi utang.</p>
-            <p id="dateNow" style="font-size: 0.78rem; color: var(--emas-terang); margin-top: 2px;"></p>
-        </div>
+        <button type="button" class="btn-setting-margin" onclick="openMarginModal()">
+            <!-- SVG Icon Gear -->
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+            Atur Harga Jual
+        </button>
     </div>
 
     <!-- PRODUCT LIST CONTAINER -->
@@ -492,7 +546,7 @@ href="style.css">
                 </div>
             </div>
             <div class="product-body">
-                <p style="font-size: 0.8rem; color: #aaa; margin: 0 0 8px 0;">Klik nominal untuk langsung masukkan ke utang:</p>
+                <p style="font-size: 0.8rem; color: #aaa; margin: 0 0 8px 0;">Klik nominal (harga otomatis Modal + Kenaikan Jual):</p>
                 <div class="nominal-grid" id="grid-Pulsa"></div>
             </div>
         </div>
@@ -506,7 +560,7 @@ href="style.css">
                 </div>
             </div>
             <div class="product-body">
-                <p style="font-size: 0.8rem; color: #aaa; margin: 0 0 8px 0;">Klik nominal untuk langsung masukkan ke utang:</p>
+                <p style="font-size: 0.8rem; color: #aaa; margin: 0 0 8px 0;">Klik nominal (harga otomatis Modal + Kenaikan Jual):</p>
                 <div class="nominal-grid" id="grid-DANA"></div>
             </div>
         </div>
@@ -520,7 +574,7 @@ href="style.css">
                 </div>
             </div>
             <div class="product-body">
-                <p style="font-size: 0.8rem; color: #aaa; margin: 0 0 8px 0;">Klik nominal untuk langsung masukkan ke utang:</p>
+                <p style="font-size: 0.8rem; color: #aaa; margin: 0 0 8px 0;">Klik nominal (harga otomatis Modal + Kenaikan Jual):</p>
                 <div class="nominal-grid" id="grid-GoPay"></div>
             </div>
         </div>
@@ -534,7 +588,7 @@ href="style.css">
                 </div>
             </div>
             <div class="product-body">
-                <p style="font-size: 0.8rem; color: #aaa; margin: 0 0 8px 0;">Klik nominal untuk langsung masukkan ke utang:</p>
+                <p style="font-size: 0.8rem; color: #aaa; margin: 0 0 8px 0;">Klik nominal (harga otomatis Modal + Kenaikan Jual):</p>
                 <div class="nominal-grid" id="grid-OVO"></div>
             </div>
         </div>
@@ -548,12 +602,12 @@ href="style.css">
                 </div>
             </div>
             <div class="product-body">
-                <p style="font-size: 0.8rem; color: #aaa; margin: 0 0 8px 0;">Klik nominal untuk langsung masukkan ke utang:</p>
+                <p style="font-size: 0.8rem; color: #aaa; margin: 0 0 8px 0;">Klik nominal (harga otomatis Modal + Kenaikan Jual):</p>
                 <div class="nominal-grid" id="grid-SeaBank"></div>
             </div>
         </div>
 
-        <!-- 6. KELOMPOK CUSTOM -->
+        <!-- 6. KELOMPOK CUSTOM (MODAL + HARGA JUAL) -->
         <div class="product-card">
             <div class="product-header">
                 <div class="product-title-wrap">
@@ -567,7 +621,7 @@ href="style.css">
                         <thead>
                             <tr>
                                 <th>Nama Produk</th>
-                                <th>Harga / Nominal</th>
+                                <th>Modal / Jual / Cuan</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
@@ -585,89 +639,153 @@ href="style.css">
     </div>
 </div>
 
-<!-- POPUP TAMBAH PRODUK CUSTOM -->
+<!-- POPUP ATUR TAMBAHAN HARGA JUAL DIGITAL -->
+<div id="marginPopup" class="popupBox">
+    <div class="popupContent">
+        <h2>ATUR TAMBAHAN HARGA JUAL</h2>
+        <p style="text-align:center; color:#aaa; font-size:0.8rem; margin-top:-4px; margin-bottom:12px;">Nominal tambahan otomatis yang dipatok ke harga jual produk digital.</p>
+        <input type="number" id="inputGlobalMargin" placeholder="Masukkan tambahan harga jual (Rp)...">
+        <div class="popupButtonGroup">
+            <button class="cancelButton" onclick="closeMarginPopup()">Batal</button>
+            <button class="addButton" onclick="saveGlobalMargin()">Simpan</button>
+        </div>
+    </div>
+</div>
+
+<!-- POPUP TAMBAH PRODUK CUSTOM (MODAL + HARGA JUAL) -->
 <div id="popupBox" class="popupBox">
     <div class="popupContent">
-        <h2>TAMBAH PRODUK</h2>
-        <input type="text" id="customNamaProduk" placeholder="Nama Produk / Layanan">
-        <input type="number" id="customHargaProduk" placeholder="Harga / Nominal (Rp)">
+        <h2>TAMBAH PRODUK KUSTOM</h2>
+        <label>Nama Produk / Layanan:</label>
+        <input type="text" id="customNamaProduk" placeholder="Nama Produk / Layanan...">
+        <label>Harga Modal (Rp):</label>
+        <input type="number" id="customModalProduk" placeholder="Harga Modal (Rp)">
+        <label>Harga Jual (Rp):</label>
+        <input type="number" id="customHargaJualProduk" placeholder="Harga Jual (Rp)">
         <div class="popupButtonGroup">
-            <button class="cancelButton" onclick="closePopup()">Cancel</button>
+            <button class="cancelButton" onclick="closePopup()">Batal</button>
             <button class="addButton" onclick="saveCustomProduct()">Simpan</button>
         </div>
     </div>
 </div>
 
-<!-- POPUP PILIH CUSTOMER SAAT KLIK PRODUK (TERHUBUNG KE DEBT.HTML) -->
+<!-- POPUP KONFIRMASI HAPUS CUSTOM -->
+<div id="deleteConfirmPopup" class="popupBox">
+    <div class="popupContent">
+        <h2>KONFIRMASI HAPUS</h2>
+        <p style="text-align:center; color:#aaa; font-size:0.85rem; margin: 8px 0 16px 0;">Apakah Anda yakin ingin menghapus produk ini dari daftar?</p>
+        <div class="popupButtonGroup">
+            <button class="cancelButton" onclick="closeDeletePopup()">Batal</button>
+            <button class="addButton btn-delete-confirm" onclick="confirmDeleteProduct()">Hapus</button>
+        </div>
+    </div>
+</div>
+
+<!-- POPUP PILIH CUSTOMER SAAT KLIK PRODUK -->
 <div id="selectCustomerPopup" class="popupBox">
     <div class="popupContent">
         <h2>PILIH CUSTOMER</h2>
-        <p id="selectedProductInfo" style="text-align:center; color:#aaa; font-size:0.85rem; margin-top:-5px; margin-bottom:10px;"></p>
+        <p id="selectedProductInfo" style="text-align:center; color:#aaa; font-size:0.8rem; margin-top:-4px; margin-bottom:10px;"></p>
         
-        <label style="font-size:0.85rem; color:var(--emas-terang); font-family:'FiraCondBold', sans-serif;">Masukkan ke Customer:</label>
+        <label>Masukkan ke Customer:</label>
         <select id="targetCustomerDropdown">
             <!-- Diisi via JS -->
         </select>
 
         <div class="popupButtonGroup">
-            <button class="cancelButton" onclick="closeSelectCustomerPopup()">Cancel</button>
-            <button class="addButton" onclick="confirmAddProductToDebt()">Tambahkan ke Utang</button>
+            <button class="cancelButton" onclick="closeSelectCustomerPopup()">Batal</button>
+            <button class="addButton" onclick="confirmAddProductToDebt()">Tambahkan</button>
         </div>
     </div>
 </div>
 
+<!-- BOTTOM NAVBAR M-BANKING (7 TOMBOL) -->
+<nav class="mbanking-bottom-nav">
+    <a href="index.html" class="nav-item">
+        <img src="icon.png" alt="Home">
+        <span>Home</span>
+    </a>
+    <a href="product.html" class="nav-item active">
+        <img src="voucher.png" alt="Produk">
+        <span>Produk</span>
+    </a>
+    <a href="debt.html" class="nav-item">
+        <img src="debt.png" alt="Utang">
+        <span>Utang</span>
+    </a>
+    <a href="customer.html" class="nav-item">
+        <img src="nama.png" alt="Customer">
+        <span>Customer</span>
+    </a>
+    <a href="recap.html" class="nav-item">
+        <img src="rekap.png" alt="Rekap">
+        <span>Rekap</span>
+    </a>
+    <a href="monthly.html" class="nav-item">
+        <img src="pembukuan.png" alt="Laporan">
+        <span>Laporan</span>
+    </a>
+    <a href="profile.html" class="nav-item" title="Pengaturan Profil">
+        <svg viewBox="0 0 24 24" style="width:20px; height:20px; fill:currentColor; filter:none;"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>
+        <span>Profil</span>
+    </a>
+</nav>
+
 <script>
-/* =========================
-   LOAD USER DATA & LOGIN CHECK
-========================= */
-const username = localStorage.getItem("username");
-if(!username){
-    window.location.href = "login.html";
-}
-
-document.getElementById("navUsername").innerText = username || "Unknown User";
-document.getElementById("navEmail").innerText = localStorage.getItem("email") || "No Email";
-document.getElementById("navTitle").innerText = localStorage.getItem("title") || "No Title";
-
 window.onload = function(){
-    updateDateTime();
-    setInterval(updateDateTime, 1000);
+    updateDateOnly();
     renderDefaultNominals();
     renderCustomProducts();
-}
+    updateMarginDisplay();
 
-function updateDateTime(){
-    document.getElementById("dateNow").innerText = new Date().toLocaleString("id-ID");
-}
-
-function toggleNavbar(){
-    document.getElementById("navbar").classList.toggle("active");
-    document.getElementById("overlay").classList.toggle("active");
-}
-
-let clickState = 0;
-function handleNavbarTrigger(){
-    const logo = document.getElementById("rotatingLogo");
-    if(clickState === 0){
-        clickState = 1;
-        logo.style.transform = "rotate(180deg)";
-    } else if(clickState === 1){
-        clickState = 2;
-        logo.style.transform = "rotate(360deg)";
-        setTimeout(() => {
-            logo.style.transition = "none";
-            logo.style.transform = "rotate(0deg)";
-            clickState = 0;
-            setTimeout(() => { logo.style.transition = "transform 0.4s cubic-bezier(0.4, 0, 0.2, 1)"; }, 50);
-        }, 400);
+    const savedPic = localStorage.getItem("profile_picture") || localStorage.getItem("user_avatar");
+    if(savedPic) {
+      const topBtn = document.getElementById("topProfileBtn");
+      topBtn.innerHTML = `<img src="${savedPic}" alt="Profile">`;
     }
-    toggleNavbar();
+}
+
+function updateDateOnly(){
+    const now = new Date();
+    const optionsDate = { day: '2-digit', month: 'short', year: 'numeric' };
+    document.getElementById("dateText").innerText = now.toLocaleDateString('id-ID', optionsDate);
 }
 
 /* =========================
-   RENDER DEFAULT NOMINALS (20rb s.d 300rb) & INTERAKSI KE DEBT.HTML
+   GLOBAL HARGA JUAL DIGITAL
 ========================= */
-let selectedProductTemp = { nama: "", harga: 0 };
+let globalMargin = parseInt(localStorage.getItem("globalMargin")) || 2000;
+
+function updateMarginDisplay(){
+    document.getElementById("displayMarginVal").innerText = `Rp ${globalMargin.toLocaleString("id-ID")}`;
+}
+
+function openMarginModal(){
+    document.getElementById("inputGlobalMargin").value = globalMargin;
+    document.getElementById("marginPopup").classList.add("active");
+}
+
+function closeMarginPopup(){
+    document.getElementById("marginPopup").classList.remove("active");
+}
+
+function saveGlobalMargin(){
+    const val = parseInt(document.getElementById("inputGlobalMargin").value);
+    if(isNaN(val) || val < 0){
+        alert("Masukkan nominal tambahan harga jual yang valid!");
+        return;
+    }
+    globalMargin = val;
+    localStorage.setItem("globalMargin", globalMargin);
+    updateMarginDisplay();
+    renderDefaultNominals();
+    closeMarginPopup();
+}
+
+/* =========================
+   RENDER DEFAULT NOMINALS (MODAL & JUAL OTOMATIS)
+========================= */
+let selectedProductTemp = { nama: "", modal: 0, harga: 0 };
 
 function renderDefaultNominals(){
     const categories = [
@@ -690,17 +808,20 @@ function renderDefaultNominals(){
         
         let html = "";
         nominals.forEach(nom => {
+            const modalVal = nom;
+            const jualVal = nom + globalMargin;
             const productName = `${cat.label} Rp ${nom.toLocaleString("id-ID")}`;
-            html += `<div class="nominal-badge" onclick="prepareAddProductToDebt('${productName}', ${nom})">Rp ${nom.toLocaleString("id-ID")}</div>`;
+            html += `<div class="nominal-badge" onclick="prepareAddProductToDebt('${productName}', ${modalVal}, ${jualVal})">Rp ${nom.toLocaleString("id-ID")}</div>`;
         });
         gridContainer.innerHTML = html;
     });
 }
 
 /* =========================
-   CUSTOM PRODUCTS MANAGEMENT (LOCALSTORAGE)
+   CUSTOM PRODUCTS MANAGEMENT (MODAL + HARGA JUAL)
 ========================= */
 let customProducts = JSON.parse(localStorage.getItem("customProducts")) || [];
+let deleteIndexTemp = null;
 
 function renderCustomProducts(){
     const tbody = document.getElementById("customProductTableBody");
@@ -712,12 +833,20 @@ function renderCustomProducts(){
     }
 
     customProducts.forEach((prod, index) => {
+        const modal = prod.modal || 0;
+        const hargaJual = prod.hargaJual || 0;
+        const cuan = hargaJual - modal;
+
         tbody.innerHTML += `
             <tr>
-                <td style="cursor:pointer; color:var(--emas-terang);" onclick="prepareAddProductToDebt('${prod.nama}', ${prod.harga})" title="Klik untuk masukkan ke utang customer">${prod.nama}</td>
-                <td style="color: var(--emas-terang); font-family: 'FiraCondBold', sans-serif;">Rp ${prod.harga.toLocaleString("id-ID")}</td>
+                <td style="cursor:pointer; color:var(--emas-terang); font-family:'FiraCondBold', sans-serif;" onclick="prepareAddProductToDebt('${prod.nama}', ${modal}, ${hargaJual})" title="Klik untuk masukkan ke utang customer">${prod.nama}</td>
                 <td>
-                    <button type="button" onclick="deleteCustomProduct(${index})" style="background:#ff3b3b; color:white; border:none; border-radius:8px; padding:5px 10px; cursor:pointer; font-size:11px; font-family:'FiraCondBold', sans-serif;">
+                    <span style="color:#aaa;">Modal: Rp ${modal.toLocaleString("id-ID")}</span><br>
+                    <span style="color:var(--emas-terang);">Jual: Rp ${hargaJual.toLocaleString("id-ID")}</span><br>
+                    <small style="color:#4caf5e;">Cuan: Rp ${cuan.toLocaleString("id-ID")}</small>
+                </td>
+                <td>
+                    <button type="button" onclick="promptDeleteProduct(${index})" style="background:#ff3b3b; color:white; border:none; border-radius:6px; padding:5px 8px; cursor:pointer; font-size:10px; font-family:'FiraCondBold', sans-serif;">
                         Hapus
                     </button>
                 </td>
@@ -728,7 +857,8 @@ function renderCustomProducts(){
 
 function openPopup(){
     document.getElementById("customNamaProduk").value = "";
-    document.getElementById("customHargaProduk").value = "";
+    document.getElementById("customModalProduk").value = "";
+    document.getElementById("customHargaJualProduk").value = "";
     document.getElementById("popupBox").classList.add("active");
 }
 
@@ -738,16 +868,18 @@ function closePopup(){
 
 function saveCustomProduct(){
     const nama = document.getElementById("customNamaProduk").value.trim();
-    const harga = parseInt(document.getElementById("customHargaProduk").value);
+    const modal = parseInt(document.getElementById("customModalProduk").value);
+    const hargaJual = parseInt(document.getElementById("customHargaJualProduk").value);
 
-    if(nama === "" || isNaN(harga) || harga <= 0){
-        alert("Masukkan nama produk dan harga yang valid!");
+    if(nama === "" || isNaN(modal) || modal < 0 || isNaN(hargaJual) || hargaJual < 0){
+        alert("Masukkan nama, modal, dan harga jual yang valid!");
         return;
     }
 
     customProducts.push({
         nama: nama,
-        harga: harga
+        modal: modal,
+        hargaJual: hargaJual
     });
 
     localStorage.setItem("customProducts", JSON.stringify(customProducts));
@@ -755,19 +887,30 @@ function saveCustomProduct(){
     closePopup();
 }
 
-function deleteCustomProduct(index){
-    if(!confirm("Hapus produk ini dari daftar?")) return;
+function promptDeleteProduct(index){
+    deleteIndexTemp = index;
+    document.getElementById("deleteConfirmPopup").classList.add("active");
+}
 
-    customProducts.splice(index, 1);
-    localStorage.setItem("customProducts", JSON.stringify(customProducts));
-    renderCustomProducts();
+function closeDeletePopup(){
+    deleteIndexTemp = null;
+    document.getElementById("deleteConfirmPopup").classList.remove("active");
+}
+
+function confirmDeleteProduct(){
+    if(deleteIndexTemp !== null){
+        customProducts.splice(deleteIndexTemp, 1);
+        localStorage.setItem("customProducts", JSON.stringify(customProducts));
+        renderCustomProducts();
+    }
+    closeDeletePopup();
 }
 
 /* =========================
-   INTEGRASI KE DEBT.HTML (PILIH PRODUK LANGSUNG MASUK KE UTANG)
+   INTEGRASI KE DEBT.HTML
 ========================= */
-function prepareAddProductToDebt(nama, harga){
-    selectedProductTemp = { nama: nama, harga: harga };
+function prepareAddProductToDebt(nama, modal, harga){
+    selectedProductTemp = { nama: nama, modal: modal, harga: harga };
     
     const customers = JSON.parse(localStorage.getItem("customers")) || [];
     const select = document.getElementById("targetCustomerDropdown");
@@ -785,7 +928,7 @@ function prepareAddProductToDebt(nama, harga){
         select.appendChild(opt);
     });
 
-    document.getElementById("selectedProductInfo").innerText = `Produk: ${nama} (Rp ${harga.toLocaleString("id-ID")})`;
+    document.getElementById("selectedProductInfo").innerText = `Produk: ${nama} (Jual: Rp ${harga.toLocaleString("id-ID")})`;
     document.getElementById("selectCustomerPopup").classList.add("active");
 }
 
@@ -809,6 +952,7 @@ function confirmAddProductToDebt(){
 
     debts[chosenCustId].push({
         produk: selectedProductTemp.nama,
+        modal: selectedProductTemp.modal,
         harga: selectedProductTemp.harga,
         dibayar: 0,
         tip: 0,
