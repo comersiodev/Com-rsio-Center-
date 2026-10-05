@@ -1,0 +1,1975 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Comersio Center</title>
+<link rel="stylesheet" href="style.css">
+<!-- Panggil Manifest -->
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#000000">
+
+<!-- Daftarkan Service Worker -->
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js')
+      .then(() => console.log("Comersio Center siap offline!"))
+      .catch(err => console.log("Gagal daftar sw:", err));
+  }
+</script>
+<style>
+  @font-face{
+    font-family: 'OswaldBold';
+    src: url('oswald-bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+  }
+
+  @font-face{
+    font-family: 'FiraCondBold';
+    src: url('firasanscondensed-bold.otf') format('opentype');
+    font-weight: 700;
+    font-style: normal;
+  }
+
+  @font-face{
+    font-family: 'FiraCondBook';
+    src: url('firasanscondensed-book.otf') format('opentype');
+    font-weight: 400;
+    font-style: normal;
+  }
+
+  :root{
+    --hijau: #2f6b3a;
+    --hijau-terang: #4caf5e;
+    --emas: #e8b13c;
+    --emas-terang: #ffd166;
+    --gelap: #0b0f0c;
+  }
+
+  *{
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  html, body{
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden;
+    font-family: 'FiraCondBook', sans-serif;
+  }
+
+  body{
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    background: #0a0a0a;
+  }
+
+  .bg-layer{
+    position: fixed;
+    inset: 0;
+    background-image: url('background.jpg');
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    z-index: 0;
+  }
+
+  .bg-dim{
+    position: fixed;
+    inset: 0;
+    background: rgba(6, 10, 7, 0.78);
+    z-index: 1;
+  }
+
+  /* TOP BAR M-BANKING */
+  .mbanking-topbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 56px;
+    background: rgba(10, 14, 11, 0.95);
+    border-bottom: 1px solid rgba(232, 177, 60, 0.25);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 16px;
+    z-index: 20;
+    backdrop-filter: blur(8px);
+  }
+
+  .mbanking-brand-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .mbanking-brand {
+    font-family: 'OswaldBold', sans-serif;
+    font-size: 1.1rem;
+    color: #ffffff;
+    letter-spacing: 0.5px;
+    line-height: 1.1;
+  }
+
+  .mbanking-brand span {
+    color: var(--emas-terang);
+  }
+
+  .mbanking-greeting-top {
+    font-size: 0.7rem;
+    color: var(--emas-terang);
+    font-family: 'FiraCondBold', sans-serif;
+    margin-top: 1px;
+    line-height: 1;
+  }
+
+  .profile-circle-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 2px solid var(--emas-terang);
+    background: #121814;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    text-decoration: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+  }
+
+  .profile-circle-btn:hover {
+    transform: scale(1.08);
+    box-shadow: 0 0 12px rgba(255, 209, 102, 0.4);
+  }
+
+  .profile-circle-btn svg, .profile-circle-btn img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .profile-circle-btn svg {
+    width: 20px;
+    height: 20px;
+    fill: var(--emas-terang);
+    padding: 2px;
+  }
+
+  /* LAYAR UTAMA DASHBOARD */
+  #screen-dashboard{
+    position: fixed;
+    inset: 0;
+    z-index: 5;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 64px;
+    padding-bottom: 80px;
+    overflow-y: auto;
+  }
+
+  /* KARTU REKENING SALDO SEABANK STYLE */
+  .mbanking-account-card {
+    position: relative;
+    overflow: hidden;
+    width: 92%;
+    max-width: 360px;
+    margin: 4px auto 10px auto;
+    background: linear-gradient(135deg, #111a13, #1c2b1e);
+    border: 2px solid var(--emas);
+    border-radius: 14px;
+    padding: 14px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.6);
+    flex-shrink: 0;
+  }
+
+  .card-watermark-icon {
+    position: absolute;
+    right: -25px;
+    bottom: -25px;
+    width: 130px;
+    height: 130px;
+    object-fit: contain;
+    opacity: 0.12;
+    pointer-events: none;
+    transform: rotate(-15deg);
+  }
+
+  .mbanking-acc-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.7rem;
+    color: #aaa;
+    text-transform: uppercase;
+    font-family: 'FiraCondBold', sans-serif;
+    margin-bottom: 3px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .balance-row-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    padding-bottom: 6px;
+    margin-bottom: 8px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .mbanking-acc-balance {
+    font-family: 'OswaldBold', sans-serif;
+    font-size: 1.35rem;
+    color: var(--emas-terang);
+    margin: 0;
+  }
+
+  .mbanking-acc-footer {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .acc-sub-box .sub-label {
+    font-size: 0.6rem;
+    color: #888;
+  }
+
+  .acc-sub-box .sub-val {
+    font-family: 'FiraCondBold', sans-serif;
+    font-size: 0.75rem;
+    line-height: 1.2;
+  }
+
+  .acc-sub-box .sub-val.income { color: var(--hijau-terang); }
+  .acc-sub-box .sub-val.expense { color: #ff6b6b; }
+  .acc-sub-box .sub-val.profit { color: var(--emas-terang); }
+
+  /* CONTAINER GRID MENU M-BANKING */
+  .menu-grid-wrap {
+    width: 92%;
+    max-width: 360px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+
+  .menu-grid-item {
+    font-family: 'FiraCondBold', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    text-align: center;
+    color: #f5f5f5;
+    background: rgba(10, 14, 11, 0.85);
+    border: 1.5px solid var(--emas-terang);
+    border-radius: 12px;
+    padding: 12px 6px;
+    font-size: 0.75rem;
+    line-height: 1.25;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.4);
+    transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+    cursor: pointer;
+    user-select: none;
+    min-height: 85px;
+  }
+
+  .menu-grid-item img, .menu-grid-item svg {
+    width: 26px;
+    height: 26px;
+    object-fit: contain;
+    margin-bottom: 6px;
+    fill: var(--emas-terang);
+  }
+
+  .menu-grid-item.bounce {
+    animation: bounceClick 0.4s cubic-bezier(.36,1.7,.4,1.1);
+  }
+
+  @keyframes bounceClick {
+    0%   { transform: scale(1); }
+    30%  { transform: scale(0.88); }
+    55%  { transform: scale(1.08); }
+    100% { transform: scale(1); }
+  }
+
+  .menu-grid-item:hover {
+    border-color: var(--emas);
+    box-shadow: 0 0 15px rgba(255, 209, 102, 0.25);
+    transform: translateY(-2px);
+  }
+
+  #modularBoardsContainer {
+    width: 92%;
+    max-width: 360px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  .converter-container {
+    width: 100%;
+    background: rgba(12, 17, 13, 0.95);
+    border: 2px solid var(--emas);
+    border-radius: 14px;
+    padding: 14px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.6);
+  }
+
+  .converter-header {
+    font-family: 'FiraCondBold', sans-serif;
+    font-size: 0.9rem;
+    color: var(--emas-terang);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .currency-pills-scroll {
+    display: flex;
+    gap: 6px;
+    overflow-x: auto;
+    padding-bottom: 8px;
+    margin-bottom: 10px;
+    scrollbar-width: none;
+  }
+  .currency-pills-scroll::-webkit-scrollbar {
+    display: none;
+  }
+
+  .currency-pill {
+    background: #151c17;
+    border: 1px solid rgba(232, 177, 60, 0.3);
+    color: #ccc;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-family: 'FiraCondBold', sans-serif;
+    font-size: 0.75rem;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.2s;
+  }
+
+  .currency-pill.active {
+    background: var(--emas-terang);
+    color: #0b0f0c;
+    border-color: var(--emas-terang);
+    box-shadow: 0 0 10px rgba(255, 209, 102, 0.4);
+  }
+
+  .converter-input-row {
+    display: flex;
+    align-items: center;
+    background: #000;
+    border: 1.5px solid rgba(255, 209, 102, 0.4);
+    border-radius: 10px;
+    padding: 0 10px;
+    margin-bottom: 8px;
+  }
+
+  .converter-input {
+    flex: 1;
+    height: 40px;
+    background: transparent;
+    border: none;
+    color: #fff;
+    font-family: 'FiraCondBold', sans-serif;
+    font-size: 1rem;
+    outline: none;
+  }
+
+  .converter-input-unit {
+    font-family: 'FiraCondBold', sans-serif;
+    color: var(--emas-terang);
+    font-size: 0.85rem;
+  }
+
+  .converter-switch-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+
+  .converter-mode-badge {
+    font-size: 0.7rem;
+    color: var(--hijau-terang);
+    font-family: 'FiraCondBold', sans-serif;
+    background: rgba(76, 175, 94, 0.15);
+    padding: 2px 8px;
+    border-radius: 6px;
+    border: 1px solid rgba(76, 175, 94, 0.3);
+  }
+
+  .converter-switch-btn {
+    background: rgba(232, 177, 60, 0.15);
+    border: 1px solid var(--emas-terang);
+    color: var(--emas-terang);
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.2s, background 0.2s;
+  }
+
+  .converter-switch-btn:hover {
+    background: rgba(232, 177, 60, 0.3);
+    transform: rotate(180deg);
+  }
+
+  .converter-result-box {
+    padding-top: 8px;
+    border-top: 1px dashed rgba(255, 209, 102, 0.3);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.85rem;
+    color: #aaa;
+  }
+
+  .converter-result-val {
+    font-family: 'FiraCondBold', sans-serif;
+    color: var(--hijau-terang);
+    font-size: 1.05rem;
+  }
+
+  .asset-ticker-container {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid rgba(232, 177, 60, 0.25);
+  }
+
+  .asset-ticker-title {
+    font-family: 'FiraCondBold', sans-serif;
+    font-size: 0.75rem;
+    color: var(--emas-terang);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .asset-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px;
+  }
+
+  .asset-card {
+    background: #080c09;
+    border: 1px solid rgba(255, 209, 102, 0.2);
+    border-radius: 8px;
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .asset-name {
+    font-size: 0.7rem;
+    color: #aaa;
+    font-family: 'FiraCondBold', sans-serif;
+  }
+
+  .asset-price {
+    font-size: 0.85rem;
+    color: #fff;
+    font-family: 'FiraCondBold', sans-serif;
+    margin-top: 2px;
+  }
+
+  .note-board-container {
+    width: 100%;
+    background: rgba(12, 17, 13, 0.92);
+    border: 2px solid var(--emas);
+    border-radius: 14px;
+    padding: 14px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.6);
+  }
+
+  .note-board-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+    border-bottom: 1px solid rgba(255, 209, 102, 0.2);
+    padding-bottom: 6px;
+  }
+
+  .note-board-title {
+    font-family: 'FiraCondBold', sans-serif;
+    font-size: 0.9rem;
+    color: var(--emas-terang);
+    text-transform: uppercase;
+  }
+
+  .single-note-box {
+    background: #000;
+    border: 1px solid rgba(255, 209, 102, 0.3);
+    border-radius: 10px;
+    padding: 10px;
+    min-height: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .single-note-content {
+    font-size: 0.85rem;
+    color: #f0f0f0;
+    word-break: break-word;
+    flex: 1;
+    white-space: pre-wrap;
+  }
+
+  .market-board {
+    width: 100%;
+    background: rgba(10, 14, 11, 0.95);
+    border: 2px solid var(--emas);
+    border-radius: 14px;
+    padding: 12px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.6);
+  }
+
+  .market-board-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(232, 177, 60, 0.3);
+    padding-bottom: 6px;
+    margin-bottom: 8px;
+    font-family: 'OswaldBold', sans-serif;
+    color: var(--emas-terang);
+    font-size: 0.9rem;
+    letter-spacing: 0.5px;
+  }
+
+  .live-dot {
+    width: 8px;
+    height: 8px;
+    background-color: #ff3b3b;
+    border-radius: 50%;
+    display: inline-block;
+    box-shadow: 0 0 8px #ff3b3b;
+    animation: pulseLive 1.5s infinite;
+  }
+
+  @keyframes pulseLive {
+    0% { transform: scale(0.95); opacity: 0.8; }
+    50% { transform: scale(1.2); opacity: 1; }
+    100% { transform: scale(0.95); opacity: 0.8; }
+  }
+
+  .news-ticker-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    max-height: 150px;
+    overflow-y: auto;
+  }
+
+  .news-item-card {
+    background: #080c09;
+    border: 1px solid rgba(255, 209, 102, 0.2);
+    border-radius: 8px;
+    padding: 8px 10px;
+    text-decoration: none;
+    color: #e0e0e0;
+    display: block;
+    transition: all 0.2s;
+  }
+
+  .news-item-card:hover {
+    border-color: var(--emas-terang);
+    background: rgba(232, 177, 60, 0.08);
+    transform: translateX(2px);
+  }
+
+  .news-item-title {
+    font-size: 0.8rem;
+    font-family: 'FiraCondBold', sans-serif;
+    color: #fff;
+    margin-bottom: 2px;
+    line-height: 1.2;
+  }
+
+  .news-item-time {
+    font-size: 0.65rem;
+    color: var(--emas-terang);
+  }
+
+  .tradingview-btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: linear-gradient(135deg, #112618, #1a3c25);
+    border: 1.5px solid var(--hijau-terang);
+    border-radius: 10px;
+    padding: 10px 12px;
+    text-decoration: none;
+    color: #fff;
+    margin-top: 8px;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .tradingview-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 12px rgba(76, 175, 94, 0.4);
+  }
+
+  .tradingview-left {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .tv-title {
+    font-family: 'FiraCondBold', sans-serif;
+    font-size: 0.85rem;
+    color: var(--emas-terang);
+  }
+
+  .tv-sub {
+    font-size: 0.65rem;
+    color: #aaa;
+  }
+
+  .tv-arrow {
+    font-family: 'OswaldBold', sans-serif;
+    color: var(--hijau-terang);
+    font-size: 1rem;
+  }
+
+  .mbanking-bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 64px;
+    background: rgba(10, 14, 11, 0.96);
+    border-top: 1px solid rgba(232, 177, 60, 0.3);
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    z-index: 99999;
+    backdrop-filter: blur(8px);
+  }
+
+  .nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: #888;
+    font-family: 'FiraCondBold', sans-serif;
+    font-size: 0.55rem;
+    gap: 3px;
+    padding: 4px 0;
+    transition: color 0.2s;
+    cursor: pointer;
+    background: none;
+    border: none;
+  }
+
+  .nav-item img {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+    filter: grayscale(100%) opacity(0.6);
+    transition: filter 0.2s;
+  }
+
+  .nav-item.active, .nav-item:hover {
+    color: var(--emas-terang);
+  }
+
+  .nav-item.active img, .nav-item:hover img {
+    filter: none;
+  }
+
+  .popupBox {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 999999;
+    padding: 20px;
+  }
+
+  .popupBox.active {
+    display: flex;
+  }
+
+  .popupContent {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 340px;
+    background: #000;
+    border: 2px solid var(--emas-terang);
+    border-radius: 20px;
+    padding: 20px;
+    max-height: 85vh;
+    overflow-y: auto;
+  }
+
+  .popupContent h2 {
+    margin-top: 0;
+    margin-bottom: 12px;
+    font-family: 'FiraCondBold', sans-serif;
+    color: var(--emas-terang);
+    text-align: center;
+    font-size: 1.1rem;
+  }
+
+  .option-btn {
+    width: 100%;
+    background: #111;
+    border: 1.5px solid var(--emas-terang);
+    color: white;
+    padding: 12px;
+    border-radius: 12px;
+    font-family: 'FiraCondBold', sans-serif;
+    font-size: 0.95rem;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: background 0.2s;
+    text-align: center;
+  }
+
+  .option-btn:hover {
+    background: rgba(232, 177, 60, 0.2);
+    color: var(--emas-terang);
+  }
+
+  .option-btn.logout {
+    border-color: #ff3b3b;
+    color: #ff3b3b;
+  }
+
+  .option-btn.logout:hover {
+    background: rgba(255, 59, 59, 0.2);
+  }
+
+  .cancelButton {
+    width: 100%;
+    background: #2a2a2a;
+    border: none;
+    color: white;
+    padding: 10px;
+    border-radius: 10px;
+    font-family: 'FiraCondBold', sans-serif;
+    cursor: pointer;
+    margin-top: 5px;
+  }
+
+  .custom-modal-box {
+    background: #0d120f;
+    border: 2px solid var(--emas-terang);
+    border-radius: 16px;
+    padding: 20px;
+    width: 100%;
+    max-width: 320px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+  }
+
+  .custom-modal-title {
+    font-family: 'FiraCondBold', sans-serif;
+    font-size: 1.1rem;
+    color: var(--emas-terang);
+    margin-bottom: 8px;
+  }
+
+  .custom-modal-msg {
+    font-size: 0.9rem;
+    color: #ddd;
+    margin-bottom: 16px;
+    line-height: 1.4;
+    white-space: pre-wrap;
+  }
+
+  .custom-modal-input {
+    width: 100%;
+    height: 42px;
+    background: #000;
+    border: 1px solid var(--emas);
+    border-radius: 8px;
+    color: #fff;
+    padding: 0 12px;
+    font-family: 'FiraCondBook', sans-serif;
+    font-size: 0.95rem;
+    margin-bottom: 16px;
+    outline: none;
+  }
+
+  .custom-modal-buttons {
+    display: flex;
+    gap: 8px;
+  }
+
+  .custom-modal-btn {
+    flex: 1;
+    padding: 10px;
+    border-radius: 8px;
+    font-family: 'FiraCondBold', sans-serif;
+    font-size: 0.9rem;
+    cursor: pointer;
+    border: none;
+  }
+
+  .custom-modal-btn.primary {
+    background: var(--emas-terang);
+    color: #000;
+  }
+
+  .custom-modal-btn.secondary {
+    background: #222;
+    color: #aaa;
+    border: 1px solid #444;
+  }
+
+  .board-setting-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #121814;
+    border: 1px solid rgba(232, 177, 60, 0.3);
+    border-radius: 8px;
+    padding: 6px 10px;
+    margin-bottom: 5px;
+    font-size: 0.8rem;
+    color: #fff;
+  }
+
+  .board-setting-item input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    min-width: 16px;
+    min-height: 16px;
+    accent-color: var(--emas-terang);
+    margin: 0;
+    cursor: pointer;
+  }
+
+  .board-setting-controls {
+    display: flex;
+    gap: 3px;
+    align-items: center;
+  }
+
+  .board-ctrl-btn {
+    background: rgba(232, 177, 60, 0.2);
+    border: 1px solid var(--emas);
+    color: var(--emas-terang);
+    width: 22px;
+    height: 22px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.7rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .board-ctrl-btn:hover {
+    background: rgba(232, 177, 60, 0.4);
+  }
+
+  .board-delete-btn {
+    background: rgba(255, 59, 59, 0.2);
+    border: 1px solid #ff3b3b;
+    color: #ff3b3b;
+    width: 22px;
+    height: 22px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.7rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .board-delete-btn:hover {
+    background: rgba(255, 59, 59, 0.4);
+  }
+</style>
+</head>
+<body>
+
+  <div class="bg-layer"></div>
+  <div class="bg-dim"></div>
+
+  <!-- TOP BAR M-BANKING -->
+  <div class="mbanking-topbar">
+    <div class="mbanking-brand-container">
+      <div class="mbanking-brand">Comersio <span>Center</span></div>
+      <div class="mbanking-greeting-top" id="display-greeting">Selamat Datang</div>
+    </div>
+    <div style="display:flex; align-items:center; gap:8px;">
+      <a href="profile.html" class="profile-circle-btn" id="topProfileBtn" title="Pengaturan Profile">
+        <svg viewBox="0 0 24 24">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+
+  <!-- LAYAR UTAMA DASHBOARD -->
+  <div id="screen-dashboard">
+    
+    <!-- KARTU REKENING SALDO SEABANK STYLE -->
+    <div class="mbanking-account-card">
+      <img src="icon.png" alt="" class="card-watermark-icon">
+
+      <div class="mbanking-acc-header">
+        <span>Sisa Saldo Akumulasi</span>
+        <span>IDR</span>
+      </div>
+
+      <div class="balance-row-wrapper">
+        <div class="mbanking-acc-balance" id="display-saldo">Rp 0</div>
+      </div>
+
+      <div class="mbanking-acc-footer">
+        <div class="acc-sub-box">
+          <div class="sub-label">Pemasukan</div>
+          <div class="sub-val income" id="display-income">Rp 0</div>
+        </div>
+        <div class="acc-sub-box">
+          <div class="sub-label">Total Utang</div>
+          <div class="sub-val expense" id="display-expense">Rp 0</div>
+        </div>
+        <div class="acc-sub-box">
+          <div class="sub-label" id="label-profit-title">Keuntungan</div>
+          <div class="sub-val profit" id="display-profit">Rp 0</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DERETAN MENU UTAMA BENTUK GRID M-BANKING -->
+    <div class="menu-grid-wrap">
+      <a href="customer.html" class="menu-grid-item" data-name="Nama & ID Customer">
+        <img src="nama.png" alt="">
+        <span>Customer</span>
+      </a>
+      <a href="product.html" class="menu-grid-item" data-name="Produk">
+        <img src="voucher.png" alt="">
+        <span>Produk</span>
+      </a>
+      <a href="debt.html" class="menu-grid-item" data-name="Rekap Utang">
+        <img src="debt.png" alt="">
+        <span>Rekap Utang</span>
+      </a>
+      <a href="monthly.html" class="menu-grid-item" data-name="Pembukuan">
+        <img src="pembukuan.png" alt="">
+        <span>Pembukuan</span>
+      </a>
+      <a href="recap.html" class="menu-grid-item" data-name="Rekap Total">
+        <img src="rekap.png" alt="">
+        <span>Rekap Total</span>
+      </a>
+
+      <!-- PENGATURAN -->
+      <div class="menu-grid-item" onclick="openDataOptionsPopup()" style="cursor:pointer; border-color: var(--emas);">
+        <svg viewBox="0 0 24 24">
+          <path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c-.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c-.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/>
+        </svg>
+        <span>Pengaturan</span>
+      </div>
+    </div>
+
+    <!-- MODULAR DYNAMIC BOARDS CONTAINER -->
+    <div id="modularBoardsContainer"></div>
+
+  </div>
+
+  <!-- CUSTOM MODAL POPUP CONTAINER -->
+  <div id="customModalOverlay" class="popupBox">
+    <div class="custom-modal-box">
+      <div class="custom-modal-title" id="customModalTitle">Informasi</div>
+      <div class="custom-modal-msg" id="customModalMsg">Pesan konfirmasi...</div>
+      <div id="customModalInputWrapper" style="display:none;">
+        <input type="text" id="customModalInputField" class="custom-modal-input" placeholder="Ketik disini...">
+      </div>
+      <div class="custom-modal-buttons" id="customModalBtnContainer">
+        <button type="button" class="custom-modal-btn primary" id="customModalOkBtn" onclick="closeCustomModal(true)">OK</button>
+        <button type="button" class="custom-modal-btn secondary" id="customModalCancelBtn" onclick="closeCustomModal(false)" style="display:none;">Batal</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- POPUP PENGATURAN UTAMA -->
+  <div id="dataOptionsPopup" class="popupBox">
+    <div class="popupContent">
+        <h2>PENGATURAN</h2>
+        <button type="button" class="option-btn" onclick="editSaldoBase(); closeDataOptionsPopup();">💰 Atur Saldo Dasar</button>
+        <button type="button" class="option-btn" onclick="openStartDatePicker(); closeDataOptionsPopup();">📅 Atur Tanggal Mulai Hitung Profit</button>
+        <button type="button" class="option-btn" onclick="openBoardCustomizer(); closeDataOptionsPopup();">⚙️ Atur Tampilan & Posisi Board</button>
+        <button type="button" class="option-btn" onclick="saveComersioData(); closeDataOptionsPopup();">💾 Save Data</button>
+        <button type="button" class="option-btn" onclick="document.getElementById('loadFile').click(); closeDataOptionsPopup();">📂 Load Data</button>
+        <button type="button" class="option-btn logout" onclick="logoutComersio()">🚪 Logout</button>
+        <button type="button" class="cancelButton" onclick="closeDataOptionsPopup()">Batal</button>
+    </div>
+  </div>
+  
+  <!-- POPUP PICKER TANGGAL MULAI PROFIT -->
+  <div id="startDatePickerPopup" class="popupBox">
+    <div class="popupContent">
+      <h2>TANGGAL MULAI PROFIT</h2>
+      <div style="font-size:0.8rem; color:#aaa; margin-bottom:12px; text-align:center;">Pilih tanggal mulai untuk hitung total profit dari data di <b>monthly.html</b>:</div>
+      <input type="date" id="profitStartDateInput" class="custom-modal-input" style="margin-bottom:12px; text-align:center;">
+      <button type="button" class="option-btn" onclick="saveProfitStartDate()" style="background:var(--emas); color:#000;">Simpan Tanggal</button>
+      <button type="button" class="option-btn" onclick="resetProfitStartDate()" style="background:#333; color:#fff;">Reset (Hitung Semua)</button>
+      <button type="button" class="cancelButton" onclick="closeStartDatePicker()">Batal</button>
+    </div>
+  </div>
+
+  <input type="file" id="loadFile" accept=".ayj" hidden>
+
+  <!-- POPUP CUSTOMIZER BOARD -->
+  <div id="boardCustomizerPopup" class="popupBox">
+    <div class="popupContent">
+      <h2>KUSTOMISASI BOARD</h2>
+      <div style="font-size:0.75rem; color:#aaa; margin-bottom:8px; text-align:center;">Atur posisi, visibilitas, atau tambah board.</div>
+      
+      <button type="button" class="option-btn" onclick="addNewCustomBoardPrompt()" style="background:var(--hijau); font-size:0.8rem; padding:6px; margin-bottom:8px;">➕ Tambah Board Custom</button>
+
+      <div id="boardCustomizerList" style="display:flex; flex-direction:column; gap:4px; max-height:190px; overflow-y:auto; margin-bottom:10px;"></div>
+      
+      <button type="button" class="option-btn" onclick="saveBoardSettings()" style="background:var(--emas); color:#000; padding:10px;">Simpan Perubahan</button>
+      <button type="button" class="cancelButton" onclick="closeBoardCustomizer()">Batal</button>
+    </div>
+  </div>
+
+  <!-- BOTTOM NAVBAR M-BANKING (7 TOMBOL) -->
+  <nav class="mbanking-bottom-nav">
+      <a href="index.html" class="nav-item active">
+          <img src="icon.png" alt="Home">
+          <span>Home</span>
+      </a>
+      <a href="product.html" class="nav-item">
+          <img src="voucher.png" alt="Produk">
+          <span>Produk</span>
+      </a>
+      <a href="debt.html" class="nav-item">
+          <img src="debt.png" alt="Utang">
+          <span>Utang</span>
+      </a>
+      <a href="customer.html" class="nav-item">
+          <img src="nama.png" alt="Customer">
+          <span>Customer</span>
+      </a>
+      <a href="recap.html" class="nav-item">
+          <img src="rekap.png" alt="Rekap">
+          <span>Rekap</span>
+      </a>
+      <a href="monthly.html" class="nav-item">
+          <img src="pembukuan.png" alt="Laporan">
+          <span>Laporan</span>
+      </a>
+      <a href="profile.html" class="nav-item" title="Pengaturan Profil">
+          <svg viewBox="0 0 24 24" style="width:20px; height:20px; fill:currentColor; filter:none;"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>
+          <span>Profil</span>
+      </a>
+  </nav>
+
+  <script>
+    let modalCallback = null;
+
+    function showCustomAlert(message, title = "Informasi") {
+      return new Promise((resolve) => {
+        document.getElementById("customModalTitle").innerText = title;
+        document.getElementById("customModalMsg").innerText = message;
+        document.getElementById("customModalInputWrapper").style.display = "none";
+        document.getElementById("customModalCancelBtn").style.display = "none";
+        document.getElementById("customModalOverlay").classList.add("active");
+        modalCallback = (res) => resolve(res);
+      });
+    }
+
+    function showCustomConfirm(message, title = "Konfirmasi") {
+      return new Promise((resolve) => {
+        document.getElementById("customModalTitle").innerText = title;
+        document.getElementById("customModalMsg").innerText = message;
+        document.getElementById("customModalInputWrapper").style.display = "none";
+        document.getElementById("customModalCancelBtn").style.display = "block";
+        document.getElementById("customModalOverlay").classList.add("active");
+        modalCallback = (res) => resolve(res);
+      });
+    }
+
+    function showCustomPrompt(message, defaultValue = "", title = "Masukan") {
+      return new Promise((resolve) => {
+        document.getElementById("customModalTitle").innerText = title;
+        document.getElementById("customModalMsg").innerText = message;
+        const inputField = document.getElementById("customModalInputField");
+        inputField.value = defaultValue;
+        document.getElementById("customModalInputWrapper").style.display = "block";
+        document.getElementById("customModalCancelBtn").style.display = "block";
+        document.getElementById("customModalOverlay").classList.add("active");
+        setTimeout(() => inputField.focus(), 100);
+        modalCallback = (res) => {
+          if(res) {
+            resolve(inputField.value);
+          } else {
+            resolve(null);
+          }
+        };
+      });
+    }
+
+    function closeCustomModal(result) {
+      document.getElementById("customModalOverlay").classList.remove("active");
+      if(modalCallback) {
+        modalCallback(result);
+        modalCallback = null;
+      }
+    }
+
+    const username = localStorage.getItem("username") || "Sobat";
+
+    window.addEventListener("DOMContentLoaded", () => {
+      const savedPic = localStorage.getItem("profile_picture") || localStorage.getItem("user_avatar");
+      if(savedPic) {
+        const topBtn = document.getElementById("topProfileBtn");
+        topBtn.innerHTML = `<img src="${savedPic}" alt="Profile">`;
+      }
+    });
+
+    function setDynamicGreeting() {
+      const now = new Date();
+      const hour = now.getHours();
+      let timeGreet = "Selamat Datang";
+
+      if (hour >= 3 && hour < 11) {
+        timeGreet = "Selamat Pagi";
+      } else if (hour >= 11 && hour < 15) {
+        timeGreet = "Selamat Siang";
+      } else if (hour >= 15 && hour < 18) {
+        timeGreet = "Selamat Sore";
+      } else {
+        timeGreet = "Selamat Malam";
+      }
+
+      document.getElementById("display-greeting").innerText = `${timeGreet}, ${username}`;
+      
+      let lastGreetDate = localStorage.getItem("ilya_greet_date");
+      let todayStr = new Date().toDateString();
+      if(lastGreetDate !== todayStr) {
+        localStorage.setItem("ilya_greet_date", todayStr);
+        setTimeout(() => {
+          showCustomAlert(`Halo ${username}! Senang melihatmu kembali di Comersio Center hari ini. Semoga aktivitas pembukuan dan bisnismu lancar ya! 😊`, "Ilya Assistant");
+        }, 600);
+      }
+    }
+
+    setDynamicGreeting();
+
+    /* =========================================
+       LOGIKA KEUANGAN FIX REAL-TIME:
+       1. Saldo Akumulasi = Saldo Dasar - Total Sisa Utang + Profit Realized
+          (Otomatis TERPOTONG kalau ada utang/tagihan belum lunas)
+       2. Pemasukan = Total All-Time & Pemasukan Bulan Ini
+       3. Profit Filter = Membaca otomatis dari tanggal mulai (Start Date) dari data di monthly.html
+    ========================================= */
+    function loadDashboardFinance() {
+      let baseSaldoRaw = localStorage.getItem("comersio_base_saldo");
+      let baseSaldo = (baseSaldoRaw !== null && baseSaldoRaw !== "") ? parseFloat(baseSaldoRaw) : 0;
+
+      let totalIncomeAllTime = 0;
+      let totalIncomeThisMonth = 0;
+      let totalDebt = 0;
+      let totalProfit = 0;
+      let profitRealizedForSaldo = 0;
+
+      const now = new Date();
+      const currentMonth = now.getMonth();
+      const currentYear = now.getFullYear();
+
+      // Membaca Tanggal Mulai Hitung Profit dari LocalStorage (Format YYYY-MM-DD)
+      let startDateStr = localStorage.getItem("comersio_profit_start_date") || "";
+      let startDateObj = startDateStr ? new Date(startDateStr) : null;
+
+      function isAfterStartDate(dateStr) {
+        if (!startDateObj || isNaN(startDateObj.getTime())) return true;
+        if (!dateStr) return true;
+        try {
+          let checkDate = new Date(dateStr);
+          if (isNaN(checkDate.getTime())) return true;
+          return checkDate >= startDateObj;
+        } catch(e) {
+          return true;
+        }
+      }
+
+      function isThisMonth(dateString) {
+        if (!dateString) return false;
+        try {
+          let itemDate = new Date(dateString);
+          if (isNaN(itemDate.getTime())) return false;
+          return (itemDate.getMonth() === currentMonth) && (itemDate.getFullYear() === currentYear);
+        } catch(e) {
+          return false;
+        }
+      }
+
+      // 1. REKAP UTANG AKTIF (Belum Lunas)
+      try {
+        let debtsData = JSON.parse(localStorage.getItem("debts")) || {};
+        for (let custId in debtsData) {
+          let items = debtsData[custId];
+          if (Array.isArray(items)) {
+            items.forEach(item => {
+              if (!item.excluded) {
+                let harga = parseFloat(item.harga) || 0;
+                let modal = parseFloat(item.modal) || 0;
+                let dibayar = parseFloat(item.dibayar) || 0;
+                let tip = parseFloat(item.tip) || 0;
+                
+                let sisa = harga - dibayar;
+                if (sisa > 0) totalDebt += sisa;
+
+                let masuk = dibayar + tip;
+                totalIncomeAllTime += masuk;
+
+                if (isThisMonth(item.waktu)) {
+                  totalIncomeThisMonth += masuk;
+                }
+
+                // Profit Realized dari cicilan utang yang masuk
+                let itemProfit = 0;
+                if (harga > 0) {
+                  let netProfitTotal = (harga - modal) + tip;
+                  let ratio = dibayar / harga;
+                  itemProfit = (netProfitTotal * ratio);
+                } else {
+                  itemProfit = tip;
+                }
+
+                profitRealizedForSaldo += itemProfit;
+
+                if (isAfterStartDate(item.waktu)) {
+                  totalProfit += itemProfit;
+                }
+              }
+            });
+          }
+        }
+      } catch(e) {}
+
+      // 2. REKAP DARI MONTHLY.HTML / MONTHLYLOGS
+      try {
+        let monthlyData = JSON.parse(localStorage.getItem("monthlyLogs")) || JSON.parse(localStorage.getItem("monthly")) || [];
+        if (Array.isArray(monthlyData)) {
+          monthlyData.forEach(row => {
+            let bayar = parseFloat(row.dibayar || row.harga || row.income || 0); 
+            let tip = parseFloat(row.tip || 0);
+            let modal = parseFloat(row.modal || 0);
+            let masuk = bayar + tip;
+
+            totalIncomeAllTime += masuk;
+
+            let rowTime = row.waktuLog || row.waktu;
+
+            if (isThisMonth(rowTime)) {
+              totalIncomeThisMonth += masuk;
+            }
+
+            let rowProfit = parseFloat(row.profit || 0);
+            if (rowProfit === 0 || isNaN(rowProfit)) {
+              rowProfit = (masuk - modal);
+            }
+
+            profitRealizedForSaldo += rowProfit;
+
+            if (isAfterStartDate(rowTime)) {
+              totalProfit += rowProfit;
+            }
+          });
+        }
+      } catch(e) {}
+
+      // FORMULA SALDO AKUMULASI FIX:
+      // Saldo Dasar di Pengaturan - Total Utang Belum Lunas + Total Profit yang Sudah Diterima
+      let finalSaldo = baseSaldo - totalDebt + profitRealizedForSaldo;
+
+      const formatIDR = (num) => {
+        if (isNaN(num)) num = 0;
+        if (num < 0) {
+          return "-Rp " + Math.abs(Math.round(num)).toLocaleString('id-ID');
+        }
+        return "Rp " + Math.round(num).toLocaleString('id-ID');
+      };
+
+      // Output Saldo Akumulasi
+      document.getElementById("display-saldo").innerText = formatIDR(finalSaldo);
+
+      // Output Pemasukan
+      document.getElementById("display-income").innerHTML = `
+        <span style="font-size:0.75rem;">${formatIDR(totalIncomeAllTime)}</span>
+        <div style="font-size:0.55rem; color:#aaa; font-weight:normal;">Bln ini: ${formatIDR(totalIncomeThisMonth)}</div>
+      `;
+
+      // Output Total Sisa Utang
+      document.getElementById("display-expense").innerText = formatIDR(totalDebt);
+
+      // Output Keuntungan berdasarkan Tanggal Mulai
+      const labelEl = document.getElementById("label-profit-title");
+      if(labelEl) {
+        labelEl.innerText = startDateStr ? `Keuntungan (Sejak ${startDateStr})` : "Keuntungan (All Time)";
+      }
+      document.getElementById("display-profit").innerText = formatIDR(totalProfit);
+    }
+
+    async function editSaldoBase() {
+      let currentBase = localStorage.getItem("comersio_base_saldo") || "";
+      let input = await showCustomPrompt("Masukkan nominal Saldo Dasar (Awal/Kas):", currentBase, "Atur Saldo Dasar");
+      if (input !== null) {
+        if(input.trim() === "") {
+          localStorage.setItem("comersio_base_saldo", "0");
+        } else {
+          let parsed = parseFloat(input);
+          if (!isNaN(parsed)) {
+            localStorage.setItem("comersio_base_saldo", parsed);
+          } else {
+            await showCustomAlert("Format angka tidak valid!", "Kesalahan");
+            return;
+          }
+        }
+        loadDashboardFinance();
+        await showCustomAlert("Saldo dasar berhasil diperbarui!", "Berhasil");
+      }
+    }
+
+    function openStartDatePicker() {
+      let currentVal = localStorage.getItem("comersio_profit_start_date") || "";
+      document.getElementById("profitStartDateInput").value = currentVal;
+      document.getElementById("startDatePickerPopup").classList.add("active");
+    }
+
+    function closeStartDatePicker() {
+      document.getElementById("startDatePickerPopup").classList.remove("active");
+    }
+
+    async function saveProfitStartDate() {
+      let selectedDate = document.getElementById("profitStartDateInput").value;
+      if(selectedDate) {
+        localStorage.setItem("comersio_profit_start_date", selectedDate);
+        closeStartDatePicker();
+        loadDashboardFinance();
+        await showCustomAlert(`Hitungan profit sekarang dimulai dari tanggal ${selectedDate}!`, "Berhasil");
+      } else {
+        await showCustomAlert("Pilih tanggal terlebih dahulu!", "Peringatan");
+      }
+    }
+
+    async function resetProfitStartDate() {
+      localStorage.removeItem("comersio_profit_start_date");
+      closeStartDatePicker();
+      loadDashboardFinance();
+      await showCustomAlert("Hitungan profit dikembalikan ke All Time!", "Berhasil");
+    }
+
+    loadDashboardFinance();
+
+    let defaultBoardsConfig = [
+      { id: "converter", name: "Money Converter & Kurs Aset", visible: true, order: 0, isCustom: false },
+      { id: "note", name: "Catatan Utama", visible: true, order: 1, isCustom: false },
+      { id: "bloomberg", name: "Bloomberg Economy", visible: true, order: 2, isCustom: false },
+      { id: "coingecko", name: "CoinGecko Market & News", visible: true, order: 3, isCustom: false },
+      { id: "cryptowave", name: "Cryptowave Indonesia", visible: true, order: 4, isCustom: false },
+      { id: "indostock", name: "Berita Stock Indonesia", visible: true, order: 5, isCustom: false }
+    ];
+
+    function getBoardsConfig() {
+      let saved = localStorage.getItem("comersio_boards_config");
+      if(saved) {
+        try { 
+          let parsed = JSON.parse(saved);
+          if(!parsed.some(b => b.id === "coingecko")) {
+            parsed.push({ id: "coingecko", name: "CoinGecko Market & News", visible: true, order: parsed.length, isCustom: false });
+          }
+          return parsed;
+        } catch(e) {}
+      }
+      return defaultBoardsConfig;
+    }
+
+    function renderAllBoards() {
+      const container = document.getElementById("modularBoardsContainer");
+      container.innerHTML = "";
+
+      let config = getBoardsConfig();
+      config.sort((a, b) => a.order - b.order);
+
+      config.forEach(b => {
+        if(!b.visible) return;
+
+        if(b.id === "converter") {
+          container.appendChild(createConverterBoardElement());
+        } else if(b.id === "note") {
+          container.appendChild(createNoteBoardElement());
+        } else if(b.id === "bloomberg") {
+          container.appendChild(createBloombergBoardElement());
+        } else if(b.id === "coingecko") {
+          container.appendChild(createCoinGeckoBoardElement());
+        } else if(b.id === "cryptowave") {
+          container.appendChild(createCryptowaveBoardElement());
+        } else if(b.id === "indostock") {
+          container.appendChild(createIndoStockBoardElement());
+        } else if(b.isCustom) {
+          container.appendChild(createCustomBoardElement(b));
+        }
+      });
+    }
+
+    function createConverterBoardElement() {
+      const div = document.createElement("div");
+      div.className = "converter-container";
+      div.innerHTML = `
+        <div class="converter-header">
+          <span>💱 Kurs Live Google Finance</span>
+          <span class="converter-mode-badge" id="converterModeLabel">Asing ➔ IDR</span>
+        </div>
+        <div class="currency-pills-scroll" id="currencyPillsContainer">
+          <div class="currency-pill active" data-curr="USD" onclick="selectCurrency('USD')">USD ($)</div>
+          <div class="currency-pill" data-curr="EUR" onclick="selectCurrency('EUR')">EUR (€)</div>
+          <div class="currency-pill" data-curr="GBP" onclick="selectCurrency('GBP')">GBP (£)</div>
+          <div class="currency-pill" data-curr="SGD" onclick="selectCurrency('SGD')">SGD ($)</div>
+          <div class="currency-pill" data-curr="AUD" onclick="selectCurrency('AUD')">AUD ($)</div>
+          <div class="currency-pill" data-curr="MYR" onclick="selectCurrency('MYR')">MYR (RM)</div>
+          <div class="currency-pill" data-curr="CNY" onclick="selectCurrency('CNY')">CNY (¥)</div>
+          <div class="currency-pill" data-curr="THB" onclick="selectCurrency('THB')">THB (฿)</div>
+          <div class="currency-pill" data-curr="JPY" onclick="selectCurrency('JPY')">JPY (¥)</div>
+          <div class="currency-pill" data-curr="KRW" onclick="selectCurrency('KRW')">KRW (₩)</div>
+        </div>
+        <div class="converter-input-row">
+          <input type="number" id="converterInput" class="converter-input" placeholder="Masukkan nominal..." value="1" oninput="convertCurrency()">
+          <span class="converter-input-unit" id="inputUnitLabel">USD</span>
+        </div>
+        <div class="converter-switch-row">
+          <span style="font-size: 0.75rem; color: #888;" id="currentRateInfo">Memuat kurs Google Finance...</span>
+          <div class="converter-switch-btn" onclick="toggleConverterDirection()" title="Balik Arah Konversi">↕</div>
+        </div>
+        <div class="converter-result-box">
+          <span id="converterResultDesc">Hasil Konversi (IDR):</span>
+          <span class="converter-result-val" id="converterResult">Menghitung...</span>
+        </div>
+
+        <div class="asset-ticker-container">
+          <div class="asset-ticker-title">
+            <span>📈 Komoditas & Aset Real-Time (IDR)</span>
+            <span style="font-size:0.65rem; color:var(--hijau-terang);">● LIVE</span>
+          </div>
+          <div class="asset-grid">
+            <div class="asset-card">
+              <span class="asset-name">Bitcoin (BTC)</span>
+              <span class="asset-price" id="assetBtc">Memuat...</span>
+            </div>
+            <div class="asset-card">
+              <span class="asset-name">Ethereum (ETH)</span>
+              <span class="asset-price" id="assetEth">Memuat...</span>
+            </div>
+            <div class="asset-card">
+              <span class="asset-name">Gold / Emas (XAU)</span>
+              <span class="asset-price" id="assetGold">Memuat...</span>
+            </div>
+            <div class="asset-card">
+              <span class="asset-name">Nikel (Nickel)</span>
+              <span class="asset-price" id="assetNickel">Memuat...</span>
+            </div>
+          </div>
+        </div>
+      `;
+      setTimeout(() => {
+        convertCurrency();
+        fetchGoogleFinanceRates();
+      }, 50);
+      return div;
+    }
+
+    function createNoteBoardElement() {
+      const div = document.createElement("div");
+      div.className = "note-board-container";
+      div.innerHTML = `
+        <div class="note-board-header">
+          <span class="note-board-title">📝 Catatan Utama</span>
+        </div>
+        <div class="single-note-box" id="singleNoteBox">
+          <div class="single-note-content" id="singleNoteContent">Belum ada catatan aktif di board.</div>
+        </div>
+      `;
+      setTimeout(() => loadActiveNoteBoard(), 50);
+      return div;
+    }
+
+    function createBloombergBoardElement() {
+      const div = document.createElement("div");
+      div.className = "market-board";
+      div.innerHTML = `
+        <div class="market-board-header">
+          <span>📊 BLOOMBERG ECONOMY</span>
+          <span style="display: flex; align-items: center; gap: 6px; font-size: 0.7rem; color: #aaa;">
+            <span class="live-dot"></span> LIVE FEED
+          </span>
+        </div>
+        <div class="news-ticker-list">
+          <a href="https://www.bloomberg.com/markets" target="_blank" class="news-item-card">
+            <div class="news-item-title">Global Markets Rally as Central Banks Signal Rate Adjustments</div>
+            <div class="news-item-time">Bloomberg • 5 mins ago</div>
+          </a>
+          <a href="https://www.bloomberg.com/economics" target="_blank" class="news-item-card">
+            <div class="news-item-title">USD Index Strengthens Amid Stronger Employment Data Reports</div>
+            <div class="news-item-time">Bloomberg • 18 mins ago</div>
+          </a>
+        </div>
+      `;
+      return div;
+    }
+
+    function createCoinGeckoBoardElement() {
+      const div = document.createElement("div");
+      div.className = "market-board";
+      div.innerHTML = `
+        <div class="market-board-header">
+          <span>🦎 COINGECKO MARKET & NEWS</span>
+          <span style="display: flex; align-items: center; gap: 6px; font-size: 0.7rem; color: #aaa;">
+            <span class="live-dot"></span> REAL-TIME
+          </span>
+        </div>
+        <div class="asset-ticker-container" style="margin-top: 0; padding-top: 0; border-top: none; margin-bottom: 8px;">
+          <div class="asset-grid">
+            <div class="asset-card">
+              <span class="asset-name">Solana (SOL)</span>
+              <span class="asset-price" id="cgSol">Memuat...</span>
+            </div>
+            <div class="asset-card">
+              <span class="asset-name">Binance Coin (BNB)</span>
+              <span class="asset-price" id="cgBnb">Memuat...</span>
+            </div>
+          </div>
+        </div>
+        <div class="news-ticker-list">
+          <a href="https://www.coingecko.com/en/news" target="_blank" class="news-item-card">
+            <div class="news-item-title">Crypto Market Update: Altcoins Gain Momentum as Bitcoin Holds Support</div>
+            <div class="news-item-time">CoinGecko News • Real-time</div>
+          </a>
+          <a href="https://www.coingecko.com/en/news" target="_blank" class="news-item-card">
+            <div class="news-item-title">DeFi TVL Rebounds Following Major Protocol Upgrades and Inflows</div>
+            <div class="news-item-time">CoinGecko Insights • Terbaru</div>
+          </a>
+        </div>
+      `;
+      setTimeout(() => fetchCoinGeckoMiniPrices(), 50);
+      return div;
+    }
+
+    async function fetchCoinGeckoMiniPrices() {
+      try {
+        const usdIdr = liveRates["USD"] || 17630;
+        const res = await fetch("https://api.coingecko.com/api/v3/simple/price?ids=solana,binancecoin&vs_currencies=usd");
+        const data = await res.json();
+        if(data.solana && document.getElementById("cgSol")) {
+          document.getElementById("cgSol").innerText = "Rp " + Math.round(data.solana.usd * usdIdr).toLocaleString('id-ID');
+        }
+        if(data.binancecoin && document.getElementById("cgBnb")) {
+          document.getElementById("cgBnb").innerText = "Rp " + Math.round(data.binancecoin.usd * usdIdr).toLocaleString('id-ID');
+        }
+      } catch(e) {}
+    }
+
+    function createCryptowaveBoardElement() {
+      const div = document.createElement("div");
+      div.className = "market-board";
+      div.innerHTML = `
+        <div class="market-board-header">
+          <span>🌊 CRYPTOWAVE INDONESIA</span>
+          <span style="display: flex; align-items: center; gap: 6px; font-size: 0.7rem; color: #aaa;">
+            <span class="live-dot"></span> REAL-TIME
+          </span>
+        </div>
+        <div class="news-ticker-list" style="margin-bottom: 6px;">
+          <a href="https://cryptowave.co.id" target="_blank" class="news-item-card">
+            <div class="news-item-title">Bitcoin Lanjut Reli, Melesat ke Harga Tinggi Didukung Volume ETF</div>
+            <div class="news-item-time">Cryptowave.co.id • Berita Terbaru</div>
+          </a>
+          <a href="https://cryptowave.co.id" target="_blank" class="news-item-card">
+            <div class="news-item-title">Data Ekonomi Makro & Suku Bunga Pengaruhi Pasar Kripto Global</div>
+            <div class="news-item-time">Cryptowave.co.id • Analisis</div>
+          </a>
+        </div>
+        <a href="https://id.tradingview.com" target="_blank" class="tradingview-btn">
+          <div class="tradingview-left">
+            <span class="tv-title">📈 TradingView Indonesia</span>
+            <span class="tv-sub">Buka Chart & Analisis Pasar Real-Time</span>
+          </div>
+          <span class="tv-arrow">➔</span>
+        </a>
+      `;
+      return div;
+    }
+
+    function createIndoStockBoardElement() {
+      const div = document.createElement("div");
+      div.className = "market-board";
+      div.innerHTML = `
+        <div class="market-board-header">
+          <span>📈 BERITA STOCK INDONESIA</span>
+          <span style="display: flex; align-items: center; gap: 6px; font-size: 0.7rem; color: #aaa;">
+            <span class="live-dot"></span> IDX / BEI
+          </span>
+        </div>
+        <div class="news-ticker-list">
+          <a href="https://www.idx.co.id" target="_blank" class="news-item-card">
+            <div class="news-item-title">IHSG Ditutup Hijau Didukung Saham Big Banks & Emiten Komoditas</div>
+            <div class="news-item-time">IDX News • Berita Pasar</div>
+          </a>
+          <a href="https://www.idx.co.id" target="_blank" class="news-item-card">
+            <div class="news-item-title">Daftar Saham Top Gainers & Corporate Action Emiten Pekan Ini</div>
+            <div class="news-item-time">Bursa Efek Indonesia • Market Update</div>
+          </a>
+        </div>
+      `;
+      return div;
+    }
+
+    function createCustomBoardElement(boardObj) {
+      const div = document.createElement("div");
+      div.className = "market-board";
+      div.innerHTML = `
+        <div class="market-board-header">
+          <span>📌 ${boardObj.name}</span>
+          <span style="font-size: 0.7rem; color: var(--emas-terang);">CUSTOM BOARD</span>
+        </div>
+        <div class="news-ticker-list">
+          <a href="${boardObj.url || 'https://google.com'}" target="_blank" class="news-item-card">
+            <div class="news-item-title">Kunjungi Link / Berita Terkait: ${boardObj.name}</div>
+            <div class="news-item-time">Klik untuk membuka tautan eksternal</div>
+          </a>
+        </div>
+      `;
+      return div;
+    }
+
+    let liveRates = {
+      USD: 17630, EUR: 19100, GBP: 22400, SGD: 13200, AUD: 11500,
+      MYR: 4050, CNY: 2450, THB: 515, JPY: 118, KRW: 13.2
+    };
+
+    let selectedCurrency = "USD";
+    let isIdrToForeign = false;
+
+    async function fetchGoogleFinanceRates() {
+      try {
+        const response = await fetch("https://open.er-api.com/v6/latest/USD");
+        const data = await response.json();
+        if(data && data.rates && data.rates.IDR) {
+          const baseGoogleRate = 17630;
+          liveRates["USD"] = baseGoogleRate;
+          for(let curr in liveRates) {
+            if(curr !== "USD" && data.rates[curr]) {
+              let usdVal = 1 / data.rates[curr];
+              liveRates[curr] = Math.round(usdVal * baseGoogleRate * 100) / 100;
+            }
+          }
+        }
+      } catch (err) {}
+      convertCurrency();
+      fetchLiveAssetPrices();
+      fetchCoinGeckoMiniPrices();
+    }
+
+    async function fetchLiveAssetPrices() {
+      try {
+        const usdIdr = liveRates["USD"] || 17630;
+        const cryptoRes = await fetch("https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum&vs_currencies=usd");
+        const cryptoData = await cryptoRes.json();
+
+        if(cryptoData.bitcoin && document.getElementById("assetBtc")) {
+          document.getElementById("assetBtc").innerText = "Rp " + Math.round(cryptoData.bitcoin.usd * usdIdr).toLocaleString('id-ID');
+        }
+        if(cryptoData.ethereum && document.getElementById("assetEth")) {
+          document.getElementById("assetEth").innerText = "Rp " + Math.round(cryptoData.ethereum.usd * usdIdr).toLocaleString('id-ID');
+        }
+        if(document.getElementById("assetGold")) {
+          document.getElementById("assetGold").innerText = "Rp " + Math.round(80.3 * usdIdr).toLocaleString('id-ID') + "/g";
+        }
+        if(document.getElementById("assetNickel")) {
+          document.getElementById("assetNickel").innerText = "Rp " + Math.round(16 * usdIdr).toLocaleString('id-ID') + "/kg";
+        }
+      } catch(e) {}
+    }
+
+    function selectCurrency(curr) {
+      selectedCurrency = curr;
+      document.querySelectorAll('.currency-pill').forEach(pill => {
+        if(pill.getAttribute('data-curr') === curr) {
+          pill.classList.add('active');
+        } else {
+          pill.classList.remove('active');
+        }
+      });
+      convertCurrency();
+    }
+
+    function toggleConverterDirection() {
+      isIdrToForeign = !isIdrToForeign;
+      const label = document.getElementById("converterModeLabel");
+      const unitLabel = document.getElementById("inputUnitLabel");
+      const input = document.getElementById("converterInput");
+      
+      if(isIdrToForeign) {
+        if(label) label.innerText = "IDR ➔ Asing";
+        if(unitLabel) unitLabel.innerText = "IDR";
+        if(input) input.value = "17630";
+      } else {
+        if(label) label.innerText = "Asing ➔ IDR";
+        if(unitLabel) unitLabel.innerText = selectedCurrency;
+        if(input) input.value = "1";
+      }
+      convertCurrency();
+    }
+
+    function convertCurrency() {
+      const inputEl = document.getElementById("converterInput");
+      if(!inputEl) return;
+      const val = parseFloat(inputEl.value) || 0;
+      const rate = liveRates[selectedCurrency] || 17630;
+      const resultEl = document.getElementById("converterResult");
+      const descEl = document.getElementById("converterResultDesc");
+      const rateInfo = document.getElementById("currentRateInfo");
+      const unitLabel = document.getElementById("inputUnitLabel");
+
+      if(!isIdrToForeign) {
+        if(unitLabel) unitLabel.innerText = selectedCurrency;
+        if(rateInfo) rateInfo.innerText = `Google Finance: 1 ${selectedCurrency} = Rp ${rate.toLocaleString('id-ID', {maximumFractionDigits:0})}`;
+        const converted = val * rate;
+        if(descEl) descEl.innerText = `Hasil Konversi (IDR):`;
+        if(resultEl) resultEl.innerText = "Rp " + converted.toLocaleString("id-ID", {maximumFractionDigits: 2});
+      } else {
+        if(unitLabel) unitLabel.innerText = "IDR";
+        if(rateInfo) rateInfo.innerText = `Google Finance: 1 ${selectedCurrency} = Rp ${rate.toLocaleString('id-ID', {maximumFractionDigits:0})}`;
+        const converted = val / rate;
+        if(descEl) descEl.innerText = `Hasil Konversi (${selectedCurrency}):`;
+        if(resultEl) resultEl.innerText = `${selectedCurrency} ` + converted.toLocaleString("id-ID", {maximumFractionDigits: 2});
+      }
+    }
+
+    fetchGoogleFinanceRates();
+
+    function loadActiveNoteBoard() {
+      const activeNote = localStorage.getItem("comersio_active_board_note");
+      const contentEl = document.getElementById("singleNoteContent");
+      if(!contentEl) return;
+      if(activeNote && activeNote.trim() !== "") {
+        contentEl.innerText = activeNote;
+      } else {
+        contentEl.innerText = "Belum ada catatan aktif di board.";
+      }
+    }
+
+    let tempBoardsConfig = [];
+
+    function openBoardCustomizer() {
+      tempBoardsConfig = JSON.parse(JSON.stringify(getBoardsConfig()));
+      tempBoardsConfig.sort((a, b) => a.order - b.order);
+      renderCustomizerList();
+      document.getElementById("boardCustomizerPopup").classList.add("active");
+    }
+
+    function closeBoardCustomizer() {
+      document.getElementById("boardCustomizerPopup").classList.remove("active");
+    }
+
+    function renderCustomizerList() {
+      const container = document.getElementById("boardCustomizerList");
+      container.innerHTML = "";
+
+      tempBoardsConfig.forEach((b, idx) => {
+        const item = document.createElement("div");
+        item.className = "board-setting-item";
+        item.innerHTML = `
+          <label style="display:flex; align-items:center; gap:6px; cursor:pointer; flex:1; overflow:hidden;">
+            <input type="checkbox" ${b.visible ? 'checked' : ''} onchange="toggleBoardVisible(${idx}, this.checked)">
+            <span style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis; font-size:0.8rem;">${b.name} ${b.isCustom ? '(Custom)' : ''}</span>
+          </label>
+          <div class="board-setting-controls">
+            <button type="button" class="board-ctrl-btn" onclick="moveBoardOrder(${idx}, -1)" title="Geser ke Atas">▲</button>
+            <button type="button" class="board-ctrl-btn" onclick="moveBoardOrder(${idx}, 1)" title="Geser ke Bawah">▼</button>
+            ${b.isCustom ? `<button type="button" class="board-delete-btn" onclick="deleteCustomBoard(${idx})" title="Hapus Board">🗑️</button>` : ''}
+          </div>
+        `;
+        container.appendChild(item);
+      });
+    }
+
+    function toggleBoardVisible(index, isChecked) {
+      tempBoardsConfig[index].visible = isChecked;
+    }
+
+    function moveBoardOrder(index, direction) {
+      let targetIndex = index + direction;
+      if(targetIndex < 0 || targetIndex >= tempBoardsConfig.length) return;
+      
+      let temp = tempBoardsConfig[index];
+      tempBoardsConfig[index] = tempBoardsConfig[targetIndex];
+      tempBoardsConfig[targetIndex] = temp;
+
+      tempBoardsConfig.forEach((item, i) => { item.order = i; });
+      renderCustomizerList();
+    }
+
+    async function addNewCustomBoardPrompt() {
+      let name = await showCustomPrompt("Masukkan nama/judul Board custom baru:", "", "Tambah Board");
+      if(!name || name.trim() === "") return;
+      let url = await showCustomPrompt("Masukkan tautan URL web/berita terkait (misal: https://...):", "https://", "URL Web");
+      if(!url) url = "https://google.com";
+
+      let newId = "custom_" + Date.now();
+      tempBoardsConfig.push({
+        id: newId, name: name.trim(), visible: true,
+        order: tempBoardsConfig.length, isCustom: true, url: url.trim()
+      });
+      renderCustomizerList();
+      await showCustomAlert("Board custom berhasil ditambahkan! Klik 'Simpan Perubahan' untuk menerapkan.", "Berhasil");
+    }
+
+    async function deleteCustomBoard(index) {
+      let conf = await showCustomConfirm(`Hapus board "${tempBoardsConfig[index].name}" selamanya?`, "Konfirmasi Hapus");
+      if(conf) {
+        tempBoardsConfig.splice(index, 1);
+        tempBoardsConfig.forEach((item, i) => { item.order = i; });
+        renderCustomizerList();
+      }
+    }
+
+    async function saveBoardSettings() {
+      localStorage.setItem("comersio_boards_config", JSON.stringify(tempBoardsConfig));
+      closeBoardCustomizer();
+      renderAllBoards();
+      await showCustomAlert("Pengaturan tampilan dan posisi board berhasil disimpan!", "Berhasil");
+    }
+
+    renderAllBoards();
+
+    document.querySelectorAll('.menu-grid-item').forEach(item => {
+      if(item.hasAttribute('href')){
+        item.addEventListener('click', function(e){
+          e.preventDefault();
+          const href = this.getAttribute('href');
+          this.classList.add('bounce');
+          setTimeout(() => { window.location.href = href; }, 300);
+        });
+      }
+    });
+
+    function openDataOptionsPopup() {
+      document.getElementById("dataOptionsPopup").classList.add("active");
+    }
+
+    function closeDataOptionsPopup() {
+      document.getElementById("dataOptionsPopup").classList.remove("active");
+    }
+
+    function saveComersioData(){
+        const data = {
+            customers: JSON.parse(localStorage.getItem("customers")) || [],
+            debts: JSON.parse(localStorage.getItem("debts")) || {},
+            products: JSON.parse(localStorage.getItem("products")) || [],
+            monthly: JSON.parse(localStorage.getItem("monthly")) || [],
+            monthlyLogs: JSON.parse(localStorage.getItem("monthlyLogs")) || [],
+            active_board_note: localStorage.getItem("comersio_active_board_note") || "",
+            notes_archive: JSON.parse(localStorage.getItem("comersio_notes_archive")) || [],
+            boards_config: JSON.parse(localStorage.getItem("comersio_boards_config")) || defaultBoardsConfig,
+            base_saldo: localStorage.getItem("comersio_base_saldo") || "0",
+            profit_start_date: localStorage.getItem("comersio_profit_start_date") || "",
+            profile: {
+                username: localStorage.getItem("username") || "Sobat",
+                email: localStorage.getItem("email") || "",
+                title: localStorage.getItem("title") || "",
+                profile_picture: localStorage.getItem("profile_picture") || localStorage.getItem("user_avatar") || ""
+            }
+        };
+
+        const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+        const link = document.createElement("a");
+        link.href = URL.createObjectURL(blob);
+        link.download = "Comersio.ayj";
+        link.click();
+    }
+
+    document.getElementById("loadFile").addEventListener("change", function(e){
+        const file = e.target.files[0];
+        if(!file) return;
+
+        const reader = new FileReader();
+        reader.onload = async function(event){
+            try{
+                const data = JSON.parse(event.target.result);
+                localStorage.setItem("customers", JSON.stringify(data.customers || []));
+                localStorage.setItem("debts", JSON.stringify(data.debts || {}));
+                localStorage.setItem("products", JSON.stringify(data.products || []));
+                localStorage.setItem("monthly", JSON.stringify(data.monthly || []));
+                if(data.monthlyLogs) localStorage.setItem("monthlyLogs", JSON.stringify(data.monthlyLogs));
+                if(data.active_board_note !== undefined) localStorage.setItem("comersio_active_board_note", data.active_board_note);
+                if(data.notes_archive) localStorage.setItem("comersio_notes_archive", JSON.stringify(data.notes_archive));
+                if(data.boards_config) localStorage.setItem("comersio_boards_config", JSON.stringify(data.boards_config));
+                if(data.base_saldo !== undefined) localStorage.setItem("comersio_base_saldo", data.base_saldo);
+                if(data.profit_start_date !== undefined) localStorage.setItem("comersio_profit_start_date", data.profit_start_date);
+
+                if(data.profile) {
+                  if(data.profile.username) localStorage.setItem("username", data.profile.username);
+                  if(data.profile.email !== undefined) localStorage.setItem("email", data.profile.email);
+                  if(data.profile.title !== undefined) localStorage.setItem("title", data.profile.title);
+                  if(data.profile.profile_picture) {
+                    localStorage.setItem("profile_picture", data.profile.profile_picture);
+                    localStorage.setItem("user_avatar", data.profile.profile_picture);
+                  }
+                }
+
+                await showCustomAlert("Data berhasil di load!", "Berhasil");
+                location.reload();
+            }catch{
+                await showCustomAlert("File bukan Comersio.ayj", "Kesalahan");
+            }
+        };
+        reader.readAsText(file);
+    });
+
+    async function logoutComersio(){
+        let conf = await showCustomConfirm("Apakah kamu yakin ingin keluar?", "Konfirmasi Logout");
+        if(conf) {
+          localStorage.removeItem("username");
+          localStorage.removeItem("email");
+          localStorage.removeItem("title");
+          localStorage.removeItem("profile_picture");
+          localStorage.removeItem("user_avatar");
+          window.location.href = "login.html";
+        }
+    }
+  </script>
+
+</body>
+</html>
