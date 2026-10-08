@@ -985,8 +985,10 @@ function toggleExcludeItem(custId, index){
             customer: custId,
             produk: item.produk,
             modal: item.modal || 0,
-            harga: item.harga,
-            profit: (item.harga || 0) - (item.modal || 0),
+            harga: item.harga || 0,
+            dibayar: item.dibayar || 0,
+            tip: item.tip || 0,
+            profit: ((item.dibayar || 0) + (item.tip || 0)) - (item.modal || 0),
             waktuLog: new Date().toLocaleString("id-ID"),
             keterangan: "Log Tagihan (Excluded dari Tagihan Aktif)"
         });
@@ -1292,7 +1294,7 @@ function openPaymentPage(method){
         const inputCicilan = prompt(`Total sisa tagihan aktif: Rp ${targetCustomerTotal.toLocaleString("id-ID")}\nMasukkan nominal cicilan (Amortisasi) yang dibayar:`, targetCustomerTotal);
         if(inputCicilan === null) return;
 
-        const parsedCicilan = parseInt(inputCinan); // typo handled gracefully or keep logic
+        // FIXED TYPO BAWAAN AGAR TIDAK ERROR (Sebelumnya parseInt(inputCinan))
         const parsedCicilanNum = parseInt(inputCicilan);
         if(isNaN(parsedCicilanNum) || parsedCicilanNum <= 0){
             alert("Nominal pembayaran tidak valid!");

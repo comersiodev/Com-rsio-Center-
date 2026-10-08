@@ -5,11 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Comersio Center</title>
 <link rel="stylesheet" href="style.css">
-<!-- Panggil Manifest -->
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#000000">
 
-<!-- Daftarkan Service Worker -->
 <script>
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('sw.js')
@@ -84,7 +82,6 @@
     z-index: 1;
   }
 
-  /* TOP BAR M-BANKING */
   .mbanking-topbar {
     position: fixed;
     top: 0;
@@ -161,7 +158,6 @@
     padding: 2px;
   }
 
-  /* LAYAR UTAMA DASHBOARD */
   #screen-dashboard{
     position: fixed;
     inset: 0;
@@ -174,7 +170,6 @@
     overflow-y: auto;
   }
 
-  /* KARTU REKENING SALDO SEABANK STYLE */
   .mbanking-account-card {
     position: relative;
     overflow: hidden;
@@ -255,7 +250,6 @@
   .acc-sub-box .sub-val.expense { color: #ff6b6b; }
   .acc-sub-box .sub-val.profit { color: var(--emas-terang); }
 
-  /* CONTAINER GRID MENU M-BANKING */
   .menu-grid-wrap {
     width: 92%;
     max-width: 360px;
@@ -921,7 +915,6 @@
   <div class="bg-layer"></div>
   <div class="bg-dim"></div>
 
-  <!-- TOP BAR M-BANKING -->
   <div class="mbanking-topbar">
     <div class="mbanking-brand-container">
       <div class="mbanking-brand">Comersio <span>Center</span></div>
@@ -936,10 +929,8 @@
     </div>
   </div>
 
-  <!-- LAYAR UTAMA DASHBOARD -->
   <div id="screen-dashboard">
     
-    <!-- KARTU REKENING SALDO SEABANK STYLE -->
     <div class="mbanking-account-card">
       <img src="icon.png" alt="" class="card-watermark-icon">
 
@@ -958,7 +949,7 @@
           <div class="sub-val income" id="display-income">Rp 0</div>
         </div>
         <div class="acc-sub-box">
-          <div class="sub-label">Total Utang</div>
+          <div class="sub-label">Pengeluaran (Modal)</div>
           <div class="sub-val expense" id="display-expense">Rp 0</div>
         </div>
         <div class="acc-sub-box">
@@ -968,7 +959,6 @@
       </div>
     </div>
 
-    <!-- DERETAN MENU UTAMA BENTUK GRID M-BANKING -->
     <div class="menu-grid-wrap">
       <a href="customer.html" class="menu-grid-item" data-name="Nama & ID Customer">
         <img src="nama.png" alt="">
@@ -991,7 +981,6 @@
         <span>Rekap Total</span>
       </a>
 
-      <!-- PENGATURAN -->
       <div class="menu-grid-item" onclick="openDataOptionsPopup()" style="cursor:pointer; border-color: var(--emas);">
         <svg viewBox="0 0 24 24">
           <path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c-.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c-.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/>
@@ -1000,12 +989,10 @@
       </div>
     </div>
 
-    <!-- MODULAR DYNAMIC BOARDS CONTAINER -->
     <div id="modularBoardsContainer"></div>
 
   </div>
 
-  <!-- CUSTOM MODAL POPUP CONTAINER -->
   <div id="customModalOverlay" class="popupBox">
     <div class="custom-modal-box">
       <div class="custom-modal-title" id="customModalTitle">Informasi</div>
@@ -1020,12 +1007,11 @@
     </div>
   </div>
 
-  <!-- POPUP PENGATURAN UTAMA -->
   <div id="dataOptionsPopup" class="popupBox">
     <div class="popupContent">
         <h2>PENGATURAN</h2>
         <button type="button" class="option-btn" onclick="editSaldoBase(); closeDataOptionsPopup();">💰 Atur Saldo Dasar</button>
-        <button type="button" class="option-btn" onclick="openStartDatePicker(); closeDataOptionsPopup();">📅 Atur Tanggal Mulai Hitung Profit</button>
+        <button type="button" class="option-btn" onclick="openStartDatePicker(); closeDataOptionsPopup();">📅 Atur Bulan Mulai Hitung Profit</button>
         <button type="button" class="option-btn" onclick="openBoardCustomizer(); closeDataOptionsPopup();">⚙️ Atur Tampilan & Posisi Board</button>
         <button type="button" class="option-btn" onclick="saveComersioData(); closeDataOptionsPopup();">💾 Save Data</button>
         <button type="button" class="option-btn" onclick="document.getElementById('loadFile').click(); closeDataOptionsPopup();">📂 Load Data</button>
@@ -1034,13 +1020,12 @@
     </div>
   </div>
   
-  <!-- POPUP PICKER TANGGAL MULAI PROFIT -->
   <div id="startDatePickerPopup" class="popupBox">
     <div class="popupContent">
-      <h2>TANGGAL MULAI PROFIT</h2>
-      <div style="font-size:0.8rem; color:#aaa; margin-bottom:12px; text-align:center;">Pilih tanggal mulai untuk hitung total profit dari data di <b>monthly.html</b>:</div>
-      <input type="date" id="profitStartDateInput" class="custom-modal-input" style="margin-bottom:12px; text-align:center;">
-      <button type="button" class="option-btn" onclick="saveProfitStartDate()" style="background:var(--emas); color:#000;">Simpan Tanggal</button>
+      <h2>BULAN MULAI PROFIT</h2>
+      <div style="font-size:0.8rem; color:#aaa; margin-bottom:12px; text-align:center;">Pilih <b>bulan & tahun</b> mulai hitung profit. Semua transaksi dari bulan tersebut sampai terbaru akan dihitung:</div>
+      <input type="month" id="profitStartDateInput" class="custom-modal-input" style="margin-bottom:12px; text-align:center;">
+      <button type="button" class="option-btn" onclick="saveProfitStartDate()" style="background:var(--emas); color:#000;">Simpan Bulan</button>
       <button type="button" class="option-btn" onclick="resetProfitStartDate()" style="background:#333; color:#fff;">Reset (Hitung Semua)</button>
       <button type="button" class="cancelButton" onclick="closeStartDatePicker()">Batal</button>
     </div>
@@ -1048,7 +1033,6 @@
 
   <input type="file" id="loadFile" accept=".ayj" hidden>
 
-  <!-- POPUP CUSTOMIZER BOARD -->
   <div id="boardCustomizerPopup" class="popupBox">
     <div class="popupContent">
       <h2>KUSTOMISASI BOARD</h2>
@@ -1063,7 +1047,6 @@
     </div>
   </div>
 
-  <!-- BOTTOM NAVBAR M-BANKING (7 TOMBOL) -->
   <nav class="mbanking-bottom-nav">
       <a href="index.html" class="nav-item active">
           <img src="icon.png" alt="Home">
@@ -1131,11 +1114,7 @@
         document.getElementById("customModalOverlay").classList.add("active");
         setTimeout(() => inputField.focus(), 100);
         modalCallback = (res) => {
-          if(res) {
-            resolve(inputField.value);
-          } else {
-            resolve(null);
-          }
+          if(res) { resolve(inputField.value); } else { resolve(null); }
         };
       });
     }
@@ -1162,16 +1141,10 @@
       const now = new Date();
       const hour = now.getHours();
       let timeGreet = "Selamat Datang";
-
-      if (hour >= 3 && hour < 11) {
-        timeGreet = "Selamat Pagi";
-      } else if (hour >= 11 && hour < 15) {
-        timeGreet = "Selamat Siang";
-      } else if (hour >= 15 && hour < 18) {
-        timeGreet = "Selamat Sore";
-      } else {
-        timeGreet = "Selamat Malam";
-      }
+      if (hour >= 3 && hour < 11) timeGreet = "Selamat Pagi";
+      else if (hour >= 11 && hour < 15) timeGreet = "Selamat Siang";
+      else if (hour >= 15 && hour < 18) timeGreet = "Selamat Sore";
+      else timeGreet = "Selamat Malam";
 
       document.getElementById("display-greeting").innerText = `${timeGreet}, ${username}`;
       
@@ -1187,158 +1160,282 @@
 
     setDynamicGreeting();
 
-    /* =========================================
-       LOGIKA KEUANGAN FIX REAL-TIME:
-       1. Saldo Akumulasi = Saldo Dasar - Total Sisa Utang + Profit Realized
-          (Otomatis TERPOTONG kalau ada utang/tagihan belum lunas)
-       2. Pemasukan = Total All-Time & Pemasukan Bulan Ini
-       3. Profit Filter = Membaca otomatis dari tanggal mulai (Start Date) dari data di monthly.html
-    ========================================= */
+    /* =========================================================
+       PARSER TANGGAL SUPER FLEKSIBEL
+    ========================================================= */
+    function parseTgl(val) {
+      if (val === null || val === undefined || val === "") return null;
+
+      if (val instanceof Date) {
+        return isNaN(val.getTime()) ? null : val;
+      }
+
+      if (typeof val === "number") {
+        let ts = val;
+        if (ts < 10000000000) ts = ts * 1000;
+        let d = new Date(ts);
+        return isNaN(d.getTime()) ? null : d;
+      }
+
+      let s = String(val).trim();
+      if (!s) return null;
+
+      // DD/MM/YYYY atau DD-MM-YYYY
+      let m1 = s.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{2,4})/);
+      if (m1) {
+        let d = parseInt(m1[1], 10);
+        let mo = parseInt(m1[2], 10) - 1;
+        let y = parseInt(m1[3], 10);
+        if (y < 100) y += 2000;
+        let dt = new Date(y, mo, d);
+        if (!isNaN(dt.getTime())) return dt;
+      }
+
+      // YYYY-MM-DD atau YYYY/MM/DD
+      let m2 = s.match(/^(\d{4})[\/\-](\d{1,2})[\/\-](\d{1,2})/);
+      if (m2) {
+        let dt = new Date(parseInt(m2[1],10), parseInt(m2[2],10) - 1, parseInt(m2[3],10));
+        if (!isNaN(dt.getTime())) return dt;
+      }
+
+      // YYYY-MM (bulan saja)
+      let m3 = s.match(/^(\d{4})[\/\-](\d{1,2})$/);
+      if (m3) {
+        let dt = new Date(parseInt(m3[1],10), parseInt(m3[2],10) - 1, 1);
+        if (!isNaN(dt.getTime())) return dt;
+      }
+
+      let d = new Date(s);
+      return isNaN(d.getTime()) ? null : d;
+    }
+
+    function getWaktuField(obj) {
+      if (!obj) return null;
+      return obj.waktu || obj.waktuLog || obj.tanggal || obj.tgl ||
+             obj.date || obj.created_at || obj.createdAt ||
+             obj.timestamp || obj.time || null;
+    }
+
+    function numField(obj, ...keys) {
+      if (!obj) return 0;
+      for (let k of keys) {
+        if (obj[k] !== undefined && obj[k] !== null && obj[k] !== "") {
+          let v = parseFloat(obj[k]);
+          if (!isNaN(v)) return v;
+        }
+      }
+      return 0;
+    }
+
+    function bulanKeIndex(bulanVal) {
+      if (bulanVal === undefined || bulanVal === null) return -1;
+
+      if (typeof bulanVal === "number") {
+        return bulanVal > 11 ? bulanVal - 1 : bulanVal;
+      }
+
+      let s = String(bulanVal).trim().toLowerCase();
+      if (!s) return -1;
+
+      const NAMA_ID = ["januari","februari","maret","april","mei","juni",
+                       "juli","agustus","september","oktober","november","desember"];
+      const NAMA_EN = ["january","february","march","april","may","june",
+                       "july","august","september","october","november","december"];
+      const NAMA_SHORT_ID = ["jan","feb","mar","apr","mei","jun","jul","agu","sep","okt","nov","des"];
+      const NAMA_SHORT_EN = ["jan","feb","mar","apr","may","jun","jul","aug","sep","oct","nov","dec"];
+
+      let idx = NAMA_ID.indexOf(s);
+      if (idx !== -1) return idx;
+      idx = NAMA_EN.indexOf(s);
+      if (idx !== -1) return idx;
+      idx = NAMA_SHORT_ID.indexOf(s);
+      if (idx !== -1) return idx;
+      idx = NAMA_SHORT_EN.indexOf(s);
+      if (idx !== -1) return idx;
+
+      let n = parseInt(s, 10);
+      if (!isNaN(n)) return n > 11 ? n - 1 : n;
+
+      return -1;
+    }
+
+    /* =========================================================
+       MAIN FUNCTION
+    ========================================================= */
     function loadDashboardFinance() {
       let baseSaldoRaw = localStorage.getItem("comersio_base_saldo");
       let baseSaldo = (baseSaldoRaw !== null && baseSaldoRaw !== "") ? parseFloat(baseSaldoRaw) : 0;
 
       let totalIncomeAllTime = 0;
       let totalIncomeThisMonth = 0;
-      let totalDebt = 0;
+      let totalModalOut = 0;
       let totalProfit = 0;
-      let profitRealizedForSaldo = 0;
 
       const now = new Date();
       const currentMonth = now.getMonth();
       const currentYear = now.getFullYear();
 
-      // Membaca Tanggal Mulai Hitung Profit dari LocalStorage (Format YYYY-MM-DD)
+      // startMonth: format "YYYY-MM" → ambil tahun & bulan saja
       let startDateStr = localStorage.getItem("comersio_profit_start_date") || "";
-      let startDateObj = startDateStr ? new Date(startDateStr) : null;
-
-      function isAfterStartDate(dateStr) {
-        if (!startDateObj || isNaN(startDateObj.getTime())) return true;
-        if (!dateStr) return true;
-        try {
-          let checkDate = new Date(dateStr);
-          if (isNaN(checkDate.getTime())) return true;
-          return checkDate >= startDateObj;
-        } catch(e) {
-          return true;
+      let startYear = null;
+      let startMonth = null;
+      if (startDateStr) {
+        let m = startDateStr.match(/^(\d{4})[\/\-](\d{1,2})/);
+        if (m) {
+          startYear = parseInt(m[1], 10);
+          startMonth = parseInt(m[2], 10) - 1;
         }
       }
 
-      function isThisMonth(dateString) {
-        if (!dateString) return false;
-        try {
-          let itemDate = new Date(dateString);
-          if (isNaN(itemDate.getTime())) return false;
-          return (itemDate.getMonth() === currentMonth) && (itemDate.getFullYear() === currentYear);
-        } catch(e) {
-          return false;
-        }
+      function isSameMonth(dateVal) {
+        let d = parseTgl(dateVal);
+        if (!d) return false;
+        return d.getMonth() === currentMonth && d.getFullYear() === currentYear;
       }
 
-      // 1. REKAP UTANG AKTIF (Belum Lunas)
+      /* ===== FILTER PROFIT: PER-BULAN, bukan per-hari ===== */
+      function isAfterStartMonth(dateVal) {
+        if (startYear === null || startMonth === null) return true;
+        let d = parseTgl(dateVal);
+        if (!d) return true;
+        let iy = d.getFullYear();
+        let im = d.getMonth();
+        if (iy > startYear) return true;
+        if (iy < startYear) return false;
+        return im >= startMonth;
+      }
+
+      function isMonthIdxAfterStart(y, m) {
+        if (startYear === null || startMonth === null) return true;
+        if (y > startYear) return true;
+        if (y < startYear) return false;
+        return m >= startMonth;
+      }
+
+      /* ---------- 1. REKAP DEBTS ---------- */
       try {
         let debtsData = JSON.parse(localStorage.getItem("debts")) || {};
         for (let custId in debtsData) {
           let items = debtsData[custId];
-          if (Array.isArray(items)) {
-            items.forEach(item => {
-              if (!item.excluded) {
-                let harga = parseFloat(item.harga) || 0;
-                let modal = parseFloat(item.modal) || 0;
-                let dibayar = parseFloat(item.dibayar) || 0;
-                let tip = parseFloat(item.tip) || 0;
-                
-                let sisa = harga - dibayar;
-                if (sisa > 0) totalDebt += sisa;
+          if (!Array.isArray(items)) continue;
 
-                let masuk = dibayar + tip;
-                totalIncomeAllTime += masuk;
+          items.forEach(item => {
+            if (item.excluded) return;
 
-                if (isThisMonth(item.waktu)) {
-                  totalIncomeThisMonth += masuk;
-                }
+            let harga   = numField(item, "harga", "hargaJual", "price", "total");
+            let modal   = numField(item, "modal", "hargaModal", "cost", "hpp");
+            let dibayar = numField(item, "dibayar", "bayar", "paid", "amount");
+            let tip     = numField(item, "tip", "tips");
+            let waktu   = getWaktuField(item);
 
-                // Profit Realized dari cicilan utang yang masuk
-                let itemProfit = 0;
-                if (harga > 0) {
-                  let netProfitTotal = (harga - modal) + tip;
-                  let ratio = dibayar / harga;
-                  itemProfit = (netProfitTotal * ratio);
-                } else {
-                  itemProfit = tip;
-                }
-
-                profitRealizedForSaldo += itemProfit;
-
-                if (isAfterStartDate(item.waktu)) {
-                  totalProfit += itemProfit;
-                }
-              }
-            });
-          }
-        }
-      } catch(e) {}
-
-      // 2. REKAP DARI MONTHLY.HTML / MONTHLYLOGS
-      try {
-        let monthlyData = JSON.parse(localStorage.getItem("monthlyLogs")) || JSON.parse(localStorage.getItem("monthly")) || [];
-        if (Array.isArray(monthlyData)) {
-          monthlyData.forEach(row => {
-            let bayar = parseFloat(row.dibayar || row.harga || row.income || 0); 
-            let tip = parseFloat(row.tip || 0);
-            let modal = parseFloat(row.modal || 0);
-            let masuk = bayar + tip;
-
+            let masuk = dibayar + tip;
             totalIncomeAllTime += masuk;
+            if (isSameMonth(waktu)) totalIncomeThisMonth += masuk;
 
-            let rowTime = row.waktuLog || row.waktu;
+            totalModalOut += modal;
 
-            if (isThisMonth(rowTime)) {
-              totalIncomeThisMonth += masuk;
-            }
-
-            let rowProfit = parseFloat(row.profit || 0);
-            if (rowProfit === 0 || isNaN(rowProfit)) {
-              rowProfit = (masuk - modal);
-            }
-
-            profitRealizedForSaldo += rowProfit;
-
-            if (isAfterStartDate(rowTime)) {
-              totalProfit += rowProfit;
-            }
+            let itemProfit = (harga - modal) + tip;
+            if (isAfterStartMonth(waktu)) totalProfit += itemProfit;
           });
         }
-      } catch(e) {}
+      } catch(e) { console.warn("debts err:", e); }
 
-      // FORMULA SALDO AKUMULASI FIX:
-      // Saldo Dasar di Pengaturan - Total Utang Belum Lunas + Total Profit yang Sudah Diterima
-      let finalSaldo = baseSaldo - totalDebt + profitRealizedForSaldo;
+      /* ---------- 2. REKAP MONTHLY / MONTHLYLOGS ---------- */
+      try {
+        let monthlyData = JSON.parse(localStorage.getItem("monthlyLogs")) ||
+                          JSON.parse(localStorage.getItem("monthly")) || [];
 
-      const formatIDR = (num) => {
-        if (isNaN(num)) num = 0;
-        if (num < 0) {
-          return "-Rp " + Math.abs(Math.round(num)).toLocaleString('id-ID');
+        if (Array.isArray(monthlyData)) {
+          monthlyData.forEach(row => {
+            if (!row || typeof row !== "object") return;
+
+            let bulanVal = row.bulan !== undefined ? row.bulan :
+                           row.month !== undefined ? row.month : null;
+            let tahunVal = row.tahun !== undefined ? row.tahun :
+                           row.year  !== undefined ? row.year  : null;
+
+            let isSummary = (bulanVal !== null || tahunVal !== null) &&
+                            (row.pemasukan !== undefined ||
+                             row.totalMasuk !== undefined ||
+                             row.income !== undefined ||
+                             row.totalPemasukan !== undefined);
+
+            if (isSummary) {
+              let bulanIdx = bulanKeIndex(bulanVal);
+              let tahunNum = parseInt(tahunVal, 10);
+              if (isNaN(tahunNum)) {
+                let d = parseTgl(getWaktuField(row));
+                if (d) tahunNum = d.getFullYear();
+                else tahunNum = currentYear;
+              }
+              if (bulanIdx < 0) bulanIdx = 0;
+
+              let pemasukan = numField(row, "pemasukan", "totalMasuk", "income", "totalPemasukan");
+              let modalRow  = numField(row, "modal", "pengeluaran", "expense", "totalModal", "hpp");
+              let profitRow = numField(row, "profit", "keuntungan", "laba", "totalProfit");
+
+              totalIncomeAllTime += pemasukan;
+              if (bulanIdx === currentMonth && tahunNum === currentYear) {
+                totalIncomeThisMonth += pemasukan;
+              }
+
+              totalModalOut += modalRow;
+
+              // FILTER: pakai (tahun, bulan) — bukan tanggal
+              if (isMonthIdxAfterStart(tahunNum, bulanIdx)) {
+                totalProfit += profitRow;
+              }
+              return;
+            }
+
+            // Transaksi per-item
+            let bayar = numField(row, "dibayar", "bayar", "pemasukan", "income");
+            let tip   = numField(row, "tip", "tips");
+            let modal = numField(row, "modal", "hargaModal", "cost", "hpp");
+            let harga = numField(row, "harga", "hargaJual", "price", "total");
+            let waktu = getWaktuField(row);
+
+            let masuk = bayar + tip;
+            totalIncomeAllTime += masuk;
+            if (isSameMonth(waktu)) totalIncomeThisMonth += masuk;
+
+            totalModalOut += modal;
+
+            let rowProfit;
+            if (harga > 0 || modal > 0) {
+              rowProfit = (harga - modal) + tip;
+            } else {
+              rowProfit = numField(row, "profit", "keuntungan", "laba");
+            }
+
+            if (isAfterStartMonth(waktu)) totalProfit += rowProfit;
+          });
         }
-        return "Rp " + Math.round(num).toLocaleString('id-ID');
+      } catch(e) { console.warn("monthly err:", e); }
+
+      /* ---------- FORMULA ---------- */
+      let finalSaldo = baseSaldo - totalModalOut + totalIncomeAllTime;
+
+      const formatIDR = (n) => {
+        if (isNaN(n)) n = 0;
+        if (n < 0) return "-Rp " + Math.abs(Math.round(n)).toLocaleString('id-ID');
+        return "Rp " + Math.round(n).toLocaleString('id-ID');
       };
 
-      // Output Saldo Akumulasi
       document.getElementById("display-saldo").innerText = formatIDR(finalSaldo);
 
-      // Output Pemasukan
       document.getElementById("display-income").innerHTML = `
         <span style="font-size:0.75rem;">${formatIDR(totalIncomeAllTime)}</span>
         <div style="font-size:0.55rem; color:#aaa; font-weight:normal;">Bln ini: ${formatIDR(totalIncomeThisMonth)}</div>
       `;
 
-      // Output Total Sisa Utang
-      document.getElementById("display-expense").innerText = formatIDR(totalDebt);
+      document.getElementById("display-expense").innerText = formatIDR(totalModalOut);
 
-      // Output Keuntungan berdasarkan Tanggal Mulai
       const labelEl = document.getElementById("label-profit-title");
       if(labelEl) {
-        labelEl.innerText = startDateStr ? `Keuntungan (Sejak ${startDateStr})` : "Keuntungan (All Time)";
+        labelEl.innerText = startDateStr
+          ? `Keuntungan (Sejak ${startDateStr})`
+          : "Keuntungan (All Time)";
       }
       document.getElementById("display-profit").innerText = formatIDR(totalProfit);
     }
@@ -1365,6 +1462,14 @@
 
     function openStartDatePicker() {
       let currentVal = localStorage.getItem("comersio_profit_start_date") || "";
+      // Ambil YYYY-MM aja
+      if (currentVal) {
+        let m = currentVal.match(/^(\d{4})[\/\-](\d{1,2})/);
+        if (m) {
+          let mm = m[2].padStart(2, "0");
+          currentVal = m[1] + "-" + mm;
+        }
+      }
       document.getElementById("profitStartDateInput").value = currentVal;
       document.getElementById("startDatePickerPopup").classList.add("active");
     }
@@ -1374,14 +1479,14 @@
     }
 
     async function saveProfitStartDate() {
-      let selectedDate = document.getElementById("profitStartDateInput").value;
-      if(selectedDate) {
-        localStorage.setItem("comersio_profit_start_date", selectedDate);
+      let selectedMonth = document.getElementById("profitStartDateInput").value; // "YYYY-MM"
+      if(selectedMonth) {
+        localStorage.setItem("comersio_profit_start_date", selectedMonth);
         closeStartDatePicker();
         loadDashboardFinance();
-        await showCustomAlert(`Hitungan profit sekarang dimulai dari tanggal ${selectedDate}!`, "Berhasil");
+        await showCustomAlert(`Hitungan profit sekarang dimulai dari bulan ${selectedMonth} sampai terbaru!`, "Berhasil");
       } else {
-        await showCustomAlert("Pilih tanggal terlebih dahulu!", "Peringatan");
+        await showCustomAlert("Pilih bulan & tahun terlebih dahulu!", "Peringatan");
       }
     }
 
@@ -1905,6 +2010,7 @@
             boards_config: JSON.parse(localStorage.getItem("comersio_boards_config")) || defaultBoardsConfig,
             base_saldo: localStorage.getItem("comersio_base_saldo") || "0",
             profit_start_date: localStorage.getItem("comersio_profit_start_date") || "",
+            global_customer_limit: localStorage.getItem("global_customer_limit") || "0",
             profile: {
                 username: localStorage.getItem("username") || "Sobat",
                 email: localStorage.getItem("email") || "",
@@ -1938,6 +2044,7 @@
                 if(data.boards_config) localStorage.setItem("comersio_boards_config", JSON.stringify(data.boards_config));
                 if(data.base_saldo !== undefined) localStorage.setItem("comersio_base_saldo", data.base_saldo);
                 if(data.profit_start_date !== undefined) localStorage.setItem("comersio_profit_start_date", data.profit_start_date);
+                if(data.global_customer_limit !== undefined) localStorage.setItem("global_customer_limit", data.global_customer_limit);
 
                 if(data.profile) {
                   if(data.profile.username) localStorage.setItem("username", data.profile.username);
