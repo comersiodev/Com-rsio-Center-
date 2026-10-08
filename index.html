@@ -1023,9 +1023,11 @@
   <div id="startDatePickerPopup" class="popupBox">
     <div class="popupContent">
       <h2>BULAN MULAI PROFIT</h2>
-      <div style="font-size:0.8rem; color:#aaa; margin-bottom:12px; text-align:center;">Pilih <b>bulan & tahun</b> mulai hitung profit. Semua transaksi dari bulan tersebut sampai terbaru akan dihitung:</div>
+      <div style="font-size:0.8rem; color:#aaa; margin-bottom:12px; text-align:center;">
+        Pilih <b>bulan & tahun mulai</b>. Profit akan dihitung <b style="color:#4caf5e;">DARI bulan itu SAMPAI BULAN TERBARU</b> (bukan cuma bulan itu aja).
+      </div>
       <input type="month" id="profitStartDateInput" class="custom-modal-input" style="margin-bottom:12px; text-align:center;">
-      <button type="button" class="option-btn" onclick="saveProfitStartDate()" style="background:var(--emas); color:#000;">Simpan Bulan</button>
+      <button type="button" class="option-btn" onclick="saveProfitStartDate()" style="background:var(--emas); color:#000;">Simpan Bulan Mulai</button>
       <button type="button" class="option-btn" onclick="resetProfitStartDate()" style="background:#333; color:#fff;">Reset (Hitung Semua)</button>
       <button type="button" class="cancelButton" onclick="closeStartDatePicker()">Batal</button>
     </div>
@@ -1180,7 +1182,6 @@
       let s = String(val).trim();
       if (!s) return null;
 
-      // DD/MM/YYYY atau DD-MM-YYYY
       let m1 = s.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{2,4})/);
       if (m1) {
         let d = parseInt(m1[1], 10);
@@ -1191,14 +1192,12 @@
         if (!isNaN(dt.getTime())) return dt;
       }
 
-      // YYYY-MM-DD atau YYYY/MM/DD
       let m2 = s.match(/^(\d{4})[\/\-](\d{1,2})[\/\-](\d{1,2})/);
       if (m2) {
         let dt = new Date(parseInt(m2[1],10), parseInt(m2[2],10) - 1, parseInt(m2[3],10));
         if (!isNaN(dt.getTime())) return dt;
       }
 
-      // YYYY-MM (bulan saja)
       let m3 = s.match(/^(\d{4})[\/\-](\d{1,2})$/);
       if (m3) {
         let dt = new Date(parseInt(m3[1],10), parseInt(m3[2],10) - 1, 1);
@@ -1259,6 +1258,12 @@
       return -1;
     }
 
+    function namaBulanIndonesia(idx) {
+      const NAMA = ["Januari","Februari","Maret","April","Mei","Juni",
+                    "Juli","Agustus","September","Oktober","November","Desember"];
+      return NAMA[idx] || "-";
+    }
+
     /* =========================================================
        MAIN FUNCTION
     ========================================================= */
@@ -1275,7 +1280,6 @@
       const currentMonth = now.getMonth();
       const currentYear = now.getFullYear();
 
-      // startMonth: format "YYYY-MM" → ambil tahun & bulan saja
       let startDateStr = localStorage.getItem("comersio_profit_start_date") || "";
       let startYear = null;
       let startMonth = null;
@@ -1293,23 +1297,18 @@
         return d.getMonth() === currentMonth && d.getFullYear() === currentYear;
       }
 
-      /* ===== FILTER PROFIT: PER-BULAN, bukan per-hari ===== */
+      function cekProfitMasuk(tahunItem, bulanItem) {
+        if (startYear === null || startMonth === null) return true;
+        if (tahunItem > startYear) return true;
+        if (tahunItem < startYear) return false;
+        return bulanItem >= startMonth;
+      }
+
       function isAfterStartMonth(dateVal) {
         if (startYear === null || startMonth === null) return true;
         let d = parseTgl(dateVal);
         if (!d) return true;
-        let iy = d.getFullYear();
-        let im = d.getMonth();
-        if (iy > startYear) return true;
-        if (iy < startYear) return false;
-        return im >= startMonth;
-      }
-
-      function isMonthIdxAfterStart(y, m) {
-        if (startYear === null || startMonth === null) return true;
-        if (y > startYear) return true;
-        if (y < startYear) return false;
-        return m >= startMonth;
+        return cekProfitMasuk(d.getFullYear(), d.getMonth());
       }
 
       /* ---------- 1. REKAP DEBTS ---------- */
@@ -1381,14 +1380,12 @@
 
               totalModalOut += modalRow;
 
-              // FILTER: pakai (tahun, bulan) — bukan tanggal
-              if (isMonthIdxAfterStart(tahunNum, bulanIdx)) {
+              if (cekProfitMasuk(tahunNum, bulanIdx)) {
                 totalProfit += profitRow;
               }
               return;
             }
 
-            // Transaksi per-item
             let bayar = numField(row, "dibayar", "bayar", "pemasukan", "income");
             let tip   = numField(row, "tip", "tips");
             let modal = numField(row, "modal", "hargaModal", "cost", "hpp");
@@ -1413,7 +1410,6 @@
         }
       } catch(e) { console.warn("monthly err:", e); }
 
-      /* ---------- FORMULA ---------- */
       let finalSaldo = baseSaldo - totalModalOut + totalIncomeAllTime;
 
       const formatIDR = (n) => {
@@ -1433,9 +1429,15 @@
 
       const labelEl = document.getElementById("label-profit-title");
       if(labelEl) {
-        labelEl.innerText = startDateStr
-          ? `Keuntungan (Sejak ${startDateStr})`
-          : "Keuntungan (All Time)";
+        if (startYear !== null && startMonth !== null) {
+          let nowLabel = namaBulanIndonesia(currentMonth) + " " + currentYear;
+          let startLabel = namaBulanIndonesia(startMonth) + " " + startYear;
+          labelEl.innerText = `Keuntungan (${startLabel} - ${nowLabel})`;
+          labelEl.style.fontSize = "0.55rem";
+        } else {
+          labelEl.innerText = "Keuntungan (All Time)";
+          labelEl.style.fontSize = "0.6rem";
+        }
       }
       document.getElementById("display-profit").innerText = formatIDR(totalProfit);
     }
@@ -1462,7 +1464,6 @@
 
     function openStartDatePicker() {
       let currentVal = localStorage.getItem("comersio_profit_start_date") || "";
-      // Ambil YYYY-MM aja
       if (currentVal) {
         let m = currentVal.match(/^(\d{4})[\/\-](\d{1,2})/);
         if (m) {
@@ -1479,12 +1480,18 @@
     }
 
     async function saveProfitStartDate() {
-      let selectedMonth = document.getElementById("profitStartDateInput").value; // "YYYY-MM"
+      let selectedMonth = document.getElementById("profitStartDateInput").value;
       if(selectedMonth) {
         localStorage.setItem("comersio_profit_start_date", selectedMonth);
         closeStartDatePicker();
         loadDashboardFinance();
-        await showCustomAlert(`Hitungan profit sekarang dimulai dari bulan ${selectedMonth} sampai terbaru!`, "Berhasil");
+        let m = selectedMonth.match(/^(\d{4})[\/\-](\d{1,2})/);
+        let lbl = selectedMonth;
+        if (m) {
+          let idx = parseInt(m[2], 10) - 1;
+          lbl = namaBulanIndonesia(idx) + " " + m[1];
+        }
+        await showCustomAlert(`Profit dihitung DARI ${lbl} SAMPAI BULAN TERBARU.`, "Berhasil");
       } else {
         await showCustomAlert("Pilih bulan & tahun terlebih dahulu!", "Peringatan");
       }
@@ -1998,71 +2005,94 @@
       document.getElementById("dataOptionsPopup").classList.remove("active");
     }
 
+    /* =========================================================
+       SAVE DATA — AUTO-CAPTURE SEMUA KEY localStorage
+       Gak peduli namanya products / produk / daftar_produk
+       Semua otomatis ke-backup!
+    ========================================================= */
     function saveComersioData(){
-        const data = {
-            customers: JSON.parse(localStorage.getItem("customers")) || [],
-            debts: JSON.parse(localStorage.getItem("debts")) || {},
-            products: JSON.parse(localStorage.getItem("products")) || [],
-            monthly: JSON.parse(localStorage.getItem("monthly")) || [],
-            monthlyLogs: JSON.parse(localStorage.getItem("monthlyLogs")) || [],
-            active_board_note: localStorage.getItem("comersio_active_board_note") || "",
-            notes_archive: JSON.parse(localStorage.getItem("comersio_notes_archive")) || [],
-            boards_config: JSON.parse(localStorage.getItem("comersio_boards_config")) || defaultBoardsConfig,
-            base_saldo: localStorage.getItem("comersio_base_saldo") || "0",
-            profit_start_date: localStorage.getItem("comersio_profit_start_date") || "",
-            global_customer_limit: localStorage.getItem("global_customer_limit") || "0",
-            profile: {
-                username: localStorage.getItem("username") || "Sobat",
-                email: localStorage.getItem("email") || "",
-                title: localStorage.getItem("title") || "",
-                profile_picture: localStorage.getItem("profile_picture") || localStorage.getItem("user_avatar") || ""
-            }
-        };
+      const data = {
+        __format: "comersio-ayj",
+        __version: 2,
+        __savedAt: new Date().toISOString(),
+        storage: {}
+      };
 
-        const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
-        const link = document.createElement("a");
-        link.href = URL.createObjectURL(blob);
-        link.download = "Comersio.ayj";
-        link.click();
+      for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        if (!key) continue;
+        if (key === "ilya_greet_date") continue;
+        try {
+          data.storage[key] = localStorage.getItem(key);
+        } catch(e) {}
+      }
+
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = "Comersio.ayj";
+      link.click();
     }
 
+    /* =========================================================
+       LOAD DATA — AUTO-RESTORE SEMUA KEY (v2) + fallback v1
+    ========================================================= */
     document.getElementById("loadFile").addEventListener("change", function(e){
-        const file = e.target.files[0];
-        if(!file) return;
+      const file = e.target.files[0];
+      if(!file) return;
 
-        const reader = new FileReader();
-        reader.onload = async function(event){
-            try{
-                const data = JSON.parse(event.target.result);
-                localStorage.setItem("customers", JSON.stringify(data.customers || []));
-                localStorage.setItem("debts", JSON.stringify(data.debts || {}));
-                localStorage.setItem("products", JSON.stringify(data.products || []));
-                localStorage.setItem("monthly", JSON.stringify(data.monthly || []));
-                if(data.monthlyLogs) localStorage.setItem("monthlyLogs", JSON.stringify(data.monthlyLogs));
-                if(data.active_board_note !== undefined) localStorage.setItem("comersio_active_board_note", data.active_board_note);
-                if(data.notes_archive) localStorage.setItem("comersio_notes_archive", JSON.stringify(data.notes_archive));
-                if(data.boards_config) localStorage.setItem("comersio_boards_config", JSON.stringify(data.boards_config));
-                if(data.base_saldo !== undefined) localStorage.setItem("comersio_base_saldo", data.base_saldo);
-                if(data.profit_start_date !== undefined) localStorage.setItem("comersio_profit_start_date", data.profit_start_date);
-                if(data.global_customer_limit !== undefined) localStorage.setItem("global_customer_limit", data.global_customer_limit);
+      const reader = new FileReader();
+      reader.onload = async function(event){
+        try{
+          const data = JSON.parse(event.target.result);
 
-                if(data.profile) {
-                  if(data.profile.username) localStorage.setItem("username", data.profile.username);
-                  if(data.profile.email !== undefined) localStorage.setItem("email", data.profile.email);
-                  if(data.profile.title !== undefined) localStorage.setItem("title", data.profile.title);
-                  if(data.profile.profile_picture) {
-                    localStorage.setItem("profile_picture", data.profile.profile_picture);
-                    localStorage.setItem("user_avatar", data.profile.profile_picture);
-                  }
-                }
+          // FORMAT BARU (v2): restore semua key
+          if (data.__format === "comersio-ayj" && data.storage && typeof data.storage === "object") {
+            let count = 0;
+            Object.keys(data.storage).forEach(key => {
+              try {
+                const val = data.storage[key];
+                if (val === null || val === undefined) return;
+                localStorage.setItem(key, String(val));
+                count++;
+              } catch(err) {}
+            });
+            await showCustomAlert(`Data berhasil di-load (${count} entri dipulihkan).`, "Berhasil");
+            location.reload();
+            return;
+          }
 
-                await showCustomAlert("Data berhasil di load!", "Berhasil");
-                location.reload();
-            }catch{
-                await showCustomAlert("File bukan Comersio.ayj", "Kesalahan");
+          // FORMAT LAMA (v1): backward compatible
+          localStorage.setItem("customers", JSON.stringify(data.customers || []));
+          localStorage.setItem("debts", JSON.stringify(data.debts || {}));
+          localStorage.setItem("products", JSON.stringify(data.products || []));
+          localStorage.setItem("monthly", JSON.stringify(data.monthly || []));
+          if(data.monthlyLogs) localStorage.setItem("monthlyLogs", JSON.stringify(data.monthlyLogs));
+          if(data.active_board_note !== undefined) localStorage.setItem("comersio_active_board_note", data.active_board_note);
+          if(data.notes_archive) localStorage.setItem("comersio_notes_archive", JSON.stringify(data.notes_archive));
+          if(data.boards_config) localStorage.setItem("comersio_boards_config", JSON.stringify(data.boards_config));
+          if(data.base_saldo !== undefined) localStorage.setItem("comersio_base_saldo", data.base_saldo);
+          if(data.profit_start_date !== undefined) localStorage.setItem("comersio_profit_start_date", data.profit_start_date);
+          if(data.global_customer_limit !== undefined) localStorage.setItem("global_customer_limit", data.global_customer_limit);
+
+          if(data.profile) {
+            if(data.profile.username) localStorage.setItem("username", data.profile.username);
+            if(data.profile.email !== undefined) localStorage.setItem("email", data.profile.email);
+            if(data.profile.title !== undefined) localStorage.setItem("title", data.profile.title);
+            if(data.profile.profile_picture) {
+              localStorage.setItem("profile_picture", data.profile.profile_picture);
+              localStorage.setItem("user_avatar", data.profile.profile_picture);
             }
-        };
-        reader.readAsText(file);
+          }
+
+          await showCustomAlert("Data berhasil di-load (format lama).", "Berhasil");
+          location.reload();
+
+        }catch(err){
+          await showCustomAlert("File bukan Comersio.json", "Kesalahan");
+        }
+      };
+      reader.readAsText(file);
     });
 
     async function logoutComersio(){
