@@ -16,24 +16,9 @@
   }
 </script>
 <style>
-  @font-face{
-    font-family: 'OswaldBold';
-    src: url('oswald-bold.ttf') format('truetype');
-    font-weight: 700;
-    font-style: normal;
-  }
-  @font-face{
-    font-family: 'FiraCondBold';
-    src: url('firasanscondensed-bold.otf') format('opentype');
-    font-weight: 700;
-    font-style: normal;
-  }
-  @font-face{
-    font-family: 'FiraCondBook';
-    src: url('firasanscondensed-book.otf') format('opentype');
-    font-weight: 400;
-    font-style: normal;
-  }
+  @font-face{ font-family: 'OswaldBold'; src: url('oswald-bold.ttf') format('truetype'); font-weight: 700; font-style: normal; }
+  @font-face{ font-family: 'FiraCondBold'; src: url('firasanscondensed-bold.otf') format('opentype'); font-weight: 700; font-style: normal; }
+  @font-face{ font-family: 'FiraCondBook'; src: url('firasanscondensed-book.otf') format('opentype'); font-weight: 400; font-style: normal; }
 
   :root{
     --hijau: #2f6b3a;
@@ -43,570 +28,164 @@
     --gelap: #0b0f0c;
   }
 
-  *{
-    box-sizing: border-box;
-    -webkit-tap-highlight-color: transparent;
-  }
+  *{ box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
-  html, body{
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    overflow: hidden;
-    font-family: 'FiraCondBook', sans-serif;
-  }
+  html, body{ margin: 0; padding: 0; height: 100%; overflow: hidden; font-family: 'FiraCondBook', sans-serif; }
 
-  body{
-    position: relative;
-    width: 100%;
-    height: 100vh;
-    background: #0a0a0a;
-  }
+  body{ position: relative; width: 100%; height: 100vh; background: #0a0a0a; }
 
-  .bg-layer{
-    position: fixed;
-    inset: 0;
-    background-image: url('background.jpg');
-    background-size: cover;
-    background-position: center center;
-    background-repeat: no-repeat;
-    z-index: 0;
-  }
+  .bg-layer{ position: fixed; inset: 0; background-image: url('background.jpg'); background-size: cover; background-position: center center; background-repeat: no-repeat; z-index: 0; }
 
-  .bg-dim{
-    position: fixed;
-    inset: 0;
-    background: rgba(6, 10, 7, 0.78);
-    z-index: 1;
-  }
+  .bg-dim{ position: fixed; inset: 0; background: rgba(6, 10, 7, 0.78); z-index: 1; }
 
-  /* ============ WRAPPER: TOPBAR ============ */
   .mbanking-topbar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 56px;
+    position: fixed; top: 0; left: 0; right: 0; height: 56px;
     background: rgba(10, 14, 11, 0.95);
     border-bottom: 1px solid rgba(232, 177, 60, 0.25);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 16px;
-    z-index: 20;
-    backdrop-filter: blur(8px);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 16px; z-index: 20; backdrop-filter: blur(8px);
   }
 
-  .mbanking-brand-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-
-  .mbanking-brand {
-    font-family: 'OswaldBold', sans-serif;
-    font-size: 1.1rem;
-    color: #ffffff;
-    letter-spacing: 0.5px;
-    line-height: 1.1;
-  }
-
-  .mbanking-brand span {
-    color: var(--emas-terang);
-  }
-
-  .mbanking-greeting-top {
-    font-size: 0.7rem;
-    color: var(--emas-terang);
-    font-family: 'FiraCondBold', sans-serif;
-    margin-top: 1px;
-    line-height: 1;
-  }
+  .mbanking-brand-container { display: flex; flex-direction: column; justify-content: center; }
+  .mbanking-brand { font-family: 'OswaldBold', sans-serif; font-size: 1.1rem; color: #ffffff; letter-spacing: 0.5px; line-height: 1.1; }
+  .mbanking-brand span { color: var(--emas-terang); }
+  .mbanking-greeting-top { font-size: 0.7rem; color: var(--emas-terang); font-family: 'FiraCondBold', sans-serif; margin-top: 1px; line-height: 1; }
 
   .profile-circle-btn {
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    border: 2px solid var(--emas-terang);
-    background: #121814;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    text-decoration: none;
+    width: 36px; height: 36px; border-radius: 50%;
+    border: 2px solid var(--emas-terang); background: #121814;
+    overflow: hidden; display: flex; align-items: center; justify-content: center;
+    cursor: pointer; text-decoration: none;
     transition: transform 0.2s, box-shadow 0.2s;
     box-shadow: 0 2px 8px rgba(0,0,0,0.5);
   }
 
-  .profile-circle-btn:hover {
-    transform: scale(1.08);
-    box-shadow: 0 0 12px rgba(255, 209, 102, 0.4);
-  }
-
-  .profile-circle-btn svg, .profile-circle-btn img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  .profile-circle-btn svg {
-    width: 20px;
-    height: 20px;
-    fill: var(--emas-terang);
-    padding: 2px;
-  }
+  .profile-circle-btn:hover { transform: scale(1.08); box-shadow: 0 0 12px rgba(255, 209, 102, 0.4); }
+  .profile-circle-btn svg, .profile-circle-btn img { width: 100%; height: 100%; object-fit: cover; }
+  .profile-circle-btn svg { width: 20px; height: 20px; fill: #ffd166; padding: 2px; }
 
   #screen-dashboard{
-    position: fixed;
-    inset: 0;
-    z-index: 5;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-top: 64px;
-    padding-bottom: 80px;
-    overflow-y: auto;
+    position: fixed; inset: 0; z-index: 5;
+    display: flex; flex-direction: column; align-items: center;
+    padding-top: 64px; padding-bottom: 80px; overflow-y: auto;
   }
 
   .mbanking-account-card {
-    position: relative;
-    overflow: hidden;
-    width: 92%;
-    max-width: 360px;
-    margin: 4px auto 10px auto;
+    position: relative; overflow: hidden;
+    width: 92%; max-width: 360px; margin: 4px auto 10px auto;
     background: linear-gradient(135deg, #111a13, #1c2b1e);
-    border: 2px solid var(--emas);
-    border-radius: 14px;
-    padding: 14px;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.6);
-    flex-shrink: 0;
+    border: 2px solid var(--emas); border-radius: 14px; padding: 14px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.6); flex-shrink: 0;
   }
 
-  .card-watermark-icon {
-    position: absolute;
-    right: -25px;
-    bottom: -25px;
-    width: 130px;
-    height: 130px;
-    object-fit: contain;
-    opacity: 0.12;
-    pointer-events: none;
-    transform: rotate(-15deg);
-  }
+  .card-watermark-icon { position: absolute; right: -25px; bottom: -25px; width: 130px; height: 130px; object-fit: contain; opacity: 0.12; pointer-events: none; transform: rotate(-15deg); }
 
-  .mbanking-acc-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 0.7rem;
-    color: #aaa;
-    text-transform: uppercase;
-    font-family: 'FiraCondBold', sans-serif;
-    margin-bottom: 3px;
-    position: relative;
-    z-index: 2;
-  }
+  .mbanking-acc-header { display: flex; justify-content: space-between; align-items: center; font-size: 0.7rem; color: #aaa; text-transform: uppercase; font-family: 'FiraCondBold', sans-serif; margin-bottom: 3px; position: relative; z-index: 2; }
 
-  .balance-row-wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
-    padding-bottom: 6px;
-    margin-bottom: 8px;
-    position: relative;
-    z-index: 2;
-  }
+  .balance-row-wrapper { display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 6px; margin-bottom: 8px; position: relative; z-index: 2; }
 
-  .mbanking-acc-balance {
-    font-family: 'OswaldBold', sans-serif;
-    font-size: 1.35rem;
-    color: var(--emas-terang);
-    margin: 0;
-  }
+  .mbanking-acc-balance { font-family: 'OswaldBold', sans-serif; font-size: 1.35rem; color: var(--emas-terang); margin: 0; }
 
-  .mbanking-acc-footer {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 6px;
-    position: relative;
-    z-index: 2;
-  }
+  .mbanking-acc-footer { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; position: relative; z-index: 2; }
 
-  .acc-sub-box .sub-label {
-    font-size: 0.6rem;
-    color: #888;
-  }
-
-  .acc-sub-box .sub-val {
-    font-family: 'FiraCondBold', sans-serif;
-    font-size: 0.75rem;
-    line-height: 1.2;
-  }
-
+  .acc-sub-box .sub-label { font-size: 0.6rem; color: #888; }
+  .acc-sub-box .sub-val { font-family: 'FiraCondBold', sans-serif; font-size: 0.75rem; line-height: 1.2; }
   .acc-sub-box .sub-val.income { color: var(--hijau-terang); }
   .acc-sub-box .sub-val.expense { color: #ff6b6b; }
   .acc-sub-box .sub-val.profit { color: var(--emas-terang); }
 
-  .menu-grid-wrap {
-    width: 92%;
-    max-width: 360px;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
-    margin-bottom: 12px;
-  }
+  .menu-grid-wrap { width: 92%; max-width: 360px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 12px; }
 
   .menu-grid-item {
     font-family: 'FiraCondBold', sans-serif;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none;
-    text-align: center;
-    color: #f5f5f5;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-decoration: none; text-align: center; color: #f5f5f5;
     background: rgba(10, 14, 11, 0.85);
     border: 1.5px solid var(--emas-terang);
-    border-radius: 12px;
-    padding: 12px 6px;
-    font-size: 0.75rem;
-    line-height: 1.25;
+    border-radius: 12px; padding: 12px 6px;
+    font-size: 0.75rem; line-height: 1.25;
     box-shadow: 0 3px 10px rgba(0,0,0,0.4);
     transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
-    cursor: pointer;
-    user-select: none;
-    min-height: 85px;
+    cursor: pointer; user-select: none; min-height: 85px;
   }
 
-  .menu-grid-item img, .menu-grid-item svg {
-    width: 26px;
-    height: 26px;
-    object-fit: contain;
-    margin-bottom: 6px;
-    fill: var(--emas-terang);
-  }
+  .menu-grid-item img, .menu-grid-item svg { width: 26px; height: 26px; object-fit: contain; margin-bottom: 6px; fill: var(--emas-terang); }
 
-  .menu-grid-item.bounce {
-    animation: bounceClick 0.4s cubic-bezier(.36,1.7,.4,1.1);
-  }
+  .menu-grid-item.bounce { animation: bounceClick 0.4s cubic-bezier(.36,1.7,.4,1.1); }
 
   @keyframes bounceClick {
-    0%   { transform: scale(1); }
-    30%  { transform: scale(0.88); }
-    55%  { transform: scale(1.08); }
+    0% { transform: scale(1); }
+    30% { transform: scale(0.88); }
+    55% { transform: scale(1.08); }
     100% { transform: scale(1); }
   }
 
-  .menu-grid-item:hover {
-    border-color: var(--emas);
-    box-shadow: 0 0 15px rgba(255, 209, 102, 0.25);
-    transform: translateY(-2px);
-  }
+  .menu-grid-item:hover { border-color: var(--emas); box-shadow: 0 0 15px rgba(255, 209, 102, 0.25); transform: translateY(-2px); }
 
-  #modularBoardsContainer {
-    width: 92%;
-    max-width: 360px;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    margin-bottom: 20px;
-  }
+  #modularBoardsContainer { width: 92%; max-width: 360px; display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px; }
 
-  .media-downloader-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 8px;
-  }
+  .media-downloader-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
 
   .media-dl-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    text-decoration: none;
-    color: #f5f5f5;
-    background: #080c09;
-    border: 1px solid rgba(255, 209, 102, 0.25);
-    border-radius: 10px;
-    padding: 12px 8px;
-    transition: all 0.2s;
-    cursor: pointer;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; text-decoration: none; color: #f5f5f5;
+    background: #080c09; border: 1px solid rgba(255, 209, 102, 0.25);
+    border-radius: 10px; padding: 12px 8px;
+    transition: all 0.2s; cursor: pointer;
   }
 
-  .media-dl-item:hover {
-    border-color: var(--emas-terang);
-    background: rgba(232, 177, 60, 0.08);
-    transform: translateY(-2px);
-    box-shadow: 0 0 12px rgba(255, 209, 102, 0.2);
-  }
+  .media-dl-item:hover { border-color: var(--emas-terang); background: rgba(232, 177, 60, 0.08); transform: translateY(-2px); box-shadow: 0 0 12px rgba(255, 209, 102, 0.2); }
 
-  .media-dl-item img {
-    width: 32px;
-    height: 32px;
-    border-radius: 8px;
-    margin-bottom: 6px;
-    object-fit: contain;
-    background: #fff;
-    padding: 2px;
-  }
+  .media-dl-item img { width: 32px; height: 32px; border-radius: 8px; margin-bottom: 6px; object-fit: contain; background: #fff; padding: 2px; }
+  .media-dl-item span { font-family: 'FiraCondBold', sans-serif; font-size: 0.8rem; color: var(--emas-terang); }
+  .media-dl-item small { font-size: 0.6rem; color: #888; margin-top: 2px; }
 
-  .media-dl-item span {
-    font-family: 'FiraCondBold', sans-serif;
-    font-size: 0.8rem;
-    color: var(--emas-terang);
-  }
+  .converter-container { width: 100%; background: rgba(12, 17, 13, 0.95); border: 2px solid var(--emas); border-radius: 14px; padding: 14px; box-shadow: 0 6px 20px rgba(0,0,0,0.6); }
 
-  .media-dl-item small {
-    font-size: 0.6rem;
-    color: #888;
-    margin-top: 2px;
-  }
+  .converter-header { font-family: 'FiraCondBold', sans-serif; font-size: 0.9rem; color: var(--emas-terang); text-transform: uppercase; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
 
-  .converter-container {
-    width: 100%;
-    background: rgba(12, 17, 13, 0.95);
-    border: 2px solid var(--emas);
-    border-radius: 14px;
-    padding: 14px;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.6);
-  }
-
-  .converter-header {
-    font-family: 'FiraCondBold', sans-serif;
-    font-size: 0.9rem;
-    color: var(--emas-terang);
-    text-transform: uppercase;
-    margin-bottom: 10px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .currency-pills-scroll {
-    display: flex;
-    gap: 6px;
-    overflow-x: auto;
-    padding-bottom: 8px;
-    margin-bottom: 10px;
-    scrollbar-width: none;
-  }
+  .currency-pills-scroll { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 8px; margin-bottom: 10px; scrollbar-width: none; }
   .currency-pills-scroll::-webkit-scrollbar { display: none; }
 
-  .currency-pill {
-    background: #151c17;
-    border: 1px solid rgba(232, 177, 60, 0.3);
-    color: #ccc;
-    padding: 5px 10px;
-    border-radius: 20px;
-    font-family: 'FiraCondBold', sans-serif;
-    font-size: 0.75rem;
-    cursor: pointer;
-    white-space: nowrap;
-    transition: all 0.2s;
-  }
+  .currency-pill { background: #151c17; border: 1px solid rgba(232, 177, 60, 0.3); color: #ccc; padding: 5px 10px; border-radius: 20px; font-family: 'FiraCondBold', sans-serif; font-size: 0.75rem; cursor: pointer; white-space: nowrap; transition: all 0.2s; }
+  .currency-pill.active { background: var(--emas-terang); color: #0b0f0c; border-color: var(--emas-terang); box-shadow: 0 0 10px rgba(255, 209, 102, 0.4); }
 
-  .currency-pill.active {
-    background: var(--emas-terang);
-    color: #0b0f0c;
-    border-color: var(--emas-terang);
-    box-shadow: 0 0 10px rgba(255, 209, 102, 0.4);
-  }
+  .converter-input-row { display: flex; align-items: center; background: #000; border: 1.5px solid rgba(255, 209, 102, 0.4); border-radius: 10px; padding: 0 10px; margin-bottom: 8px; }
+  .converter-input { flex: 1; height: 40px; background: transparent; border: none; color: #fff; font-family: 'FiraCondBold', sans-serif; font-size: 1rem; outline: none; }
+  .converter-input-unit { font-family: 'FiraCondBold', sans-serif; color: var(--emas-terang); font-size: 0.85rem; }
 
-  .converter-input-row {
-    display: flex;
-    align-items: center;
-    background: #000;
-    border: 1.5px solid rgba(255, 209, 102, 0.4);
-    border-radius: 10px;
-    padding: 0 10px;
-    margin-bottom: 8px;
-  }
+  .converter-switch-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+  .converter-mode-badge { font-size: 0.7rem; color: var(--hijau-terang); font-family: 'FiraCondBold', sans-serif; background: rgba(76, 175, 94, 0.15); padding: 2px 8px; border-radius: 6px; border: 1px solid rgba(76, 175, 94, 0.3); }
 
-  .converter-input {
-    flex: 1;
-    height: 40px;
-    background: transparent;
-    border: none;
-    color: #fff;
-    font-family: 'FiraCondBold', sans-serif;
-    font-size: 1rem;
-    outline: none;
-  }
+  .converter-switch-btn { background: rgba(232, 177, 60, 0.15); border: 1px solid var(--emas-terang); color: var(--emas-terang); border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: transform 0.2s, background 0.2s; }
+  .converter-switch-btn:hover { background: rgba(232, 177, 60, 0.3); transform: rotate(180deg); }
 
-  .converter-input-unit {
-    font-family: 'FiraCondBold', sans-serif;
-    color: var(--emas-terang);
-    font-size: 0.85rem;
-  }
+  .converter-result-box { padding-top: 8px; border-top: 1px dashed rgba(255, 209, 102, 0.3); display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem; color: #aaa; }
+  .converter-result-val { font-family: 'FiraCondBold', sans-serif; color: var(--hijau-terang); font-size: 1.05rem; }
 
-  .converter-switch-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 8px;
-  }
+  .asset-ticker-container { margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(232, 177, 60, 0.25); }
 
-  .converter-mode-badge {
-    font-size: 0.7rem;
-    color: var(--hijau-terang);
-    font-family: 'FiraCondBold', sans-serif;
-    background: rgba(76, 175, 94, 0.15);
-    padding: 2px 8px;
-    border-radius: 6px;
-    border: 1px solid rgba(76, 175, 94, 0.3);
-  }
+  .asset-ticker-title { font-family: 'FiraCondBold', sans-serif; font-size: 0.75rem; color: var(--emas-terang); text-transform: uppercase; margin-bottom: 6px; display: flex; justify-content: space-between; align-items: center; }
 
-  .converter-switch-btn {
-    background: rgba(232, 177, 60, 0.15);
-    border: 1px solid var(--emas-terang);
-    color: var(--emas-terang);
-    border-radius: 50%;
-    width: 28px;
-    height: 28px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: transform 0.2s, background 0.2s;
-  }
+  .asset-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px; }
 
-  .converter-switch-btn:hover {
-    background: rgba(232, 177, 60, 0.3);
-    transform: rotate(180deg);
-  }
+  .asset-card { background: #080c09; border: 1px solid rgba(255, 209, 102, 0.2); border-radius: 8px; padding: 8px; display: flex; flex-direction: column; }
+  .asset-name { font-size: 0.7rem; color: #aaa; font-family: 'FiraCondBold', sans-serif; }
+  .asset-price { font-size: 0.85rem; color: #fff; font-family: 'FiraCondBold', sans-serif; margin-top: 2px; }
 
-  .converter-result-box {
-    padding-top: 8px;
-    border-top: 1px dashed rgba(255, 209, 102, 0.3);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 0.85rem;
-    color: #aaa;
-  }
+  .note-board-container { width: 100%; background: rgba(12, 17, 13, 0.92); border: 2px solid var(--emas); border-radius: 14px; padding: 14px; box-shadow: 0 6px 20px rgba(0,0,0,0.6); }
 
-  .converter-result-val {
-    font-family: 'FiraCondBold', sans-serif;
-    color: var(--hijau-terang);
-    font-size: 1.05rem;
-  }
+  .note-board-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; border-bottom: 1px solid rgba(255, 209, 102, 0.2); padding-bottom: 6px; }
 
-  .asset-ticker-container {
-    margin-top: 10px;
-    padding-top: 10px;
-    border-top: 1px solid rgba(232, 177, 60, 0.25);
-  }
+  .note-board-title { font-family: 'FiraCondBold', sans-serif; font-size: 0.9rem; color: var(--emas-terang); text-transform: uppercase; }
 
-  .asset-ticker-title {
-    font-family: 'FiraCondBold', sans-serif;
-    font-size: 0.75rem;
-    color: var(--emas-terang);
-    text-transform: uppercase;
-    margin-bottom: 6px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
+  .single-note-box { background: #000; border: 1px solid rgba(255, 209, 102, 0.3); border-radius: 10px; padding: 10px; min-height: 50px; display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
 
-  .asset-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 6px;
-  }
+  .market-board { width: 100%; background: rgba(10, 14, 11, 0.95); border: 2px solid var(--emas); border-radius: 14px; padding: 12px; box-shadow: 0 6px 20px rgba(0,0,0,0.6); }
 
-  .asset-card {
-    background: #080c09;
-    border: 1px solid rgba(255, 209, 102, 0.2);
-    border-radius: 8px;
-    padding: 8px;
-    display: flex;
-    flex-direction: column;
-  }
+  .market-board-header { display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(232, 177, 60, 0.3); padding-bottom: 6px; margin-bottom: 8px; font-family: 'OswaldBold', sans-serif; color: var(--emas-terang); font-size: 0.9rem; letter-spacing: 0.5px; }
 
-  .asset-name {
-    font-size: 0.7rem;
-    color: #aaa;
-    font-family: 'FiraCondBold', sans-serif;
-  }
-
-  .asset-price {
-    font-size: 0.85rem;
-    color: #fff;
-    font-family: 'FiraCondBold', sans-serif;
-    margin-top: 2px;
-  }
-
-  .note-board-container {
-    width: 100%;
-    background: rgba(12, 17, 13, 0.92);
-    border: 2px solid var(--emas);
-    border-radius: 14px;
-    padding: 14px;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.6);
-  }
-
-  .note-board-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 8px;
-    border-bottom: 1px solid rgba(255, 209, 102, 0.2);
-    padding-bottom: 6px;
-  }
-
-  .note-board-title {
-    font-family: 'FiraCondBold', sans-serif;
-    font-size: 0.9rem;
-    color: var(--emas-terang);
-    text-transform: uppercase;
-  }
-
-  .single-note-box {
-    background: #000;
-    border: 1px solid rgba(255, 209, 102, 0.3);
-    border-radius: 10px;
-    padding: 10px;
-    min-height: 50px;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 8px;
-  }
-
-  .market-board {
-    width: 100%;
-    background: rgba(10, 14, 11, 0.95);
-    border: 2px solid var(--emas);
-    border-radius: 14px;
-    padding: 12px;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.6);
-  }
-
-  .market-board-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border-bottom: 1px solid rgba(232, 177, 60, 0.3);
-    padding-bottom: 6px;
-    margin-bottom: 8px;
-    font-family: 'OswaldBold', sans-serif;
-    color: var(--emas-terang);
-    font-size: 0.9rem;
-    letter-spacing: 0.5px;
-  }
-
-  .live-dot {
-    width: 8px;
-    height: 8px;
-    background-color: #ff3b3b;
-    border-radius: 50%;
-    display: inline-block;
-    box-shadow: 0 0 8px #ff3b3b;
-    animation: pulseLive 1.5s infinite;
-  }
+  .live-dot { width: 8px; height: 8px; background-color: #ff3b3b; border-radius: 50%; display: inline-block; box-shadow: 0 0 8px #ff3b3b; animation: pulseLive 1.5s infinite; }
 
   @keyframes pulseLive {
     0% { transform: scale(0.95); opacity: 0.8; }
@@ -614,493 +193,122 @@
     100% { transform: scale(0.95); opacity: 0.8; }
   }
 
-  .news-ticker-list {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    max-height: 150px;
-    overflow-y: auto;
-  }
+  .news-ticker-list { display: flex; flex-direction: column; gap: 6px; max-height: 150px; overflow-y: auto; }
 
-  .news-item-card {
-    background: #080c09;
-    border: 1px solid rgba(255, 209, 102, 0.2);
-    border-radius: 8px;
-    padding: 8px 10px;
-    text-decoration: none;
-    color: #e0e0e0;
-    display: block;
-    transition: all 0.2s;
-  }
+  .news-item-card { background: #080c09; border: 1px solid rgba(255, 209, 102, 0.2); border-radius: 8px; padding: 8px 10px; text-decoration: none; color: #e0e0e0; display: block; transition: all 0.2s; }
 
-  .news-item-card:hover {
-    border-color: var(--emas-terang);
-    background: rgba(232, 177, 60, 0.08);
-    transform: translateX(2px);
-  }
+  .news-item-card:hover { border-color: var(--emas-terang); background: rgba(232, 177, 60, 0.08); transform: translateX(2px); }
 
-  .news-item-title {
-    font-size: 0.8rem;
-    font-family: 'FiraCondBold', sans-serif;
-    color: #fff;
-    margin-bottom: 2px;
-    line-height: 1.2;
-  }
+  .news-item-title { font-size: 0.8rem; font-family: 'FiraCondBold', sans-serif; color: #fff; margin-bottom: 2px; line-height: 1.2; }
 
-  .news-item-time {
-    font-size: 0.65rem;
-    color: var(--emas-terang);
-  }
+  .news-item-time { font-size: 0.65rem; color: var(--emas-terang); }
 
-  .tradingview-btn {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background: linear-gradient(135deg, #112618, #1a3c25);
-    border: 1.5px solid var(--hijau-terang);
-    border-radius: 10px;
-    padding: 10px 12px;
-    text-decoration: none;
-    color: #fff;
-    margin-top: 8px;
-    transition: transform 0.2s, box-shadow 0.2s;
-  }
+  .tradingview-btn { display: flex; align-items: center; justify-content: space-between; background: linear-gradient(135deg, #112618, #1a3c25); border: 1.5px solid var(--hijau-terang); border-radius: 10px; padding: 10px 12px; text-decoration: none; color: #fff; margin-top: 8px; transition: transform 0.2s, box-shadow 0.2s; }
 
-  .tradingview-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 0 12px rgba(76, 175, 94, 0.4);
-  }
+  .tradingview-btn:hover { transform: translateY(-2px); box-shadow: 0 0 12px rgba(76, 175, 94, 0.4); }
 
-  .tradingview-left {
-    display: flex;
-    flex-direction: column;
-  }
+  .tradingview-left { display: flex; flex-direction: column; }
+  .tv-title { font-family: 'FiraCondBold', sans-serif; font-size: 0.85rem; color: var(--emas-terang); }
+  .tv-sub { font-size: 0.65rem; color: #aaa; }
+  .tv-arrow { font-family: 'OswaldBold', sans-serif; color: var(--hijau-terang); font-size: 1rem; }
 
-  .tv-title {
-    font-family: 'FiraCondBold', sans-serif;
-    font-size: 0.85rem;
-    color: var(--emas-terang);
-  }
-
-  .tv-sub {
-    font-size: 0.65rem;
-    color: #aaa;
-  }
-
-  .tv-arrow {
-    font-family: 'OswaldBold', sans-serif;
-    color: var(--hijau-terang);
-    font-size: 1rem;
-  }
-
-  /* ============ WRAPPER: BOTTOM NAVBAR ============ */
   .mbanking-bottom-nav {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 64px;
+    position: fixed; bottom: 0; left: 0; right: 0; height: 64px;
     background: rgba(10, 14, 11, 0.96);
     border-top: 1px solid rgba(232, 177, 60, 0.3);
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    z-index: 99999;
-    backdrop-filter: blur(8px);
+    display: grid; grid-template-columns: repeat(7, 1fr);
+    z-index: 99999; backdrop-filter: blur(8px);
   }
 
-  .nav-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none;
-    color: #888;
-    font-family: 'FiraCondBold', sans-serif;
-    font-size: 0.55rem;
-    gap: 3px;
-    padding: 4px 0;
-    transition: color 0.2s;
-    cursor: pointer;
-    background: none;
-    border: none;
-  }
+  .nav-item { display: flex; flex-direction: column; align-items: center; justify-content: center; text-decoration: none; color: #888; font-family: 'FiraCondBold', sans-serif; font-size: 0.55rem; gap: 3px; padding: 4px 0; transition: color 0.2s; cursor: pointer; background: none; border: none; }
 
-  .nav-item img {
-    width: 20px;
-    height: 20px;
-    object-fit: contain;
-    filter: grayscale(100%) opacity(0.6);
-    transition: filter 0.2s;
-  }
+  .nav-item img { width: 20px; height: 20px; object-fit: contain; filter: grayscale(100%) opacity(0.6); transition: filter 0.2s; }
 
-  .nav-item.active, .nav-item:hover {
-    color: var(--emas-terang);
-  }
+  .nav-item.active, .nav-item:hover { color: var(--emas-terang); }
+  .nav-item.active img, .nav-item:hover img { filter: none; }
 
-  .nav-item.active img, .nav-item:hover img {
-    filter: none;
-  }
-
-  /* ============ IN-APP BROWSER OVERLAY ============ */
-  .in-app-browser {
-    position: fixed;
-    inset: 0;
-    z-index: 9999998;
-    background: #000;
-    display: none;
-    flex-direction: column;
-  }
-
+  .in-app-browser { position: fixed; inset: 0; z-index: 9999998; background: #000; display: none; flex-direction: column; }
   .in-app-browser.active { display: flex; }
 
-  .iab-bar {
-    height: 56px;
-    background: rgba(10, 14, 11, 0.98);
-    border-bottom: 2px solid var(--emas);
-    display: flex;
-    align-items: center;
-    padding: 0 10px;
-    gap: 10px;
-    flex-shrink: 0;
-    backdrop-filter: blur(8px);
-  }
+  .iab-bar { height: 56px; background: rgba(10, 14, 11, 0.98); border-bottom: 2px solid var(--emas); display: flex; align-items: center; padding: 0 10px; gap: 10px; flex-shrink: 0; backdrop-filter: blur(8px); }
 
-  .iab-btn {
-    width: 40px;
-    height: 40px;
-    border-radius: 10px;
-    border: 1.5px solid;
-    background: transparent;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.1rem;
-    cursor: pointer;
-    flex-shrink: 0;
-    font-family: 'FiraCondBold', sans-serif;
-    transition: all 0.2s;
-    padding: 0;
-    line-height: 1;
-  }
+  .iab-btn { width: 40px; height: 40px; border-radius: 10px; border: 1.5px solid; background: transparent; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; cursor: pointer; flex-shrink: 0; font-family: 'FiraCondBold', sans-serif; transition: all 0.2s; padding: 0; line-height: 1; }
 
-  .iab-close {
-    border-color: #ff3b3b;
-    color: #ff3b3b;
-    background: rgba(255,59,59,0.15);
-  }
+  .iab-close { border-color: #ff3b3b; color: #ff3b3b; background: rgba(255,59,59,0.15); }
+  .iab-close:hover, .iab-close:active { background: rgba(255,59,59,0.4); }
 
-  .iab-close:hover, .iab-close:active {
-    background: rgba(255,59,59,0.4);
-  }
+  .iab-external { border-color: var(--hijau-terang); color: var(--hijau-terang); background: rgba(76,175,94,0.15); }
+  .iab-external:hover, .iab-external:active { background: rgba(76,175,94,0.4); }
 
-  .iab-external {
-    border-color: var(--hijau-terang);
-    color: var(--hijau-terang);
-    background: rgba(76,175,94,0.15);
-  }
+  .iab-title { flex: 1; color: var(--emas-terang); font-family: 'FiraCondBold', sans-serif; font-size: 0.9rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-align: center; padding: 0 4px; }
 
-  .iab-external:hover, .iab-external:active {
-    background: rgba(76,175,94,0.4);
-  }
+  .iab-frame-wrap { flex: 1; position: relative; background: #fff; overflow: hidden; }
 
-  .iab-title {
-    flex: 1;
-    color: var(--emas-terang);
-    font-family: 'FiraCondBold', sans-serif;
-    font-size: 0.9rem;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    text-align: center;
-    padding: 0 4px;
-  }
+  #iabFrame { width: 100%; height: 100%; border: 0; background: #fff; display: block; }
 
-  .iab-frame-wrap {
-    flex: 1;
-    position: relative;
-    background: #fff;
-    overflow: hidden;
-  }
-
-  #iabFrame {
-    width: 100%;
-    height: 100%;
-    border: 0;
-    background: #fff;
-    display: block;
-  }
-
-  .iab-loading, .iab-blocked {
-    position: absolute;
-    inset: 0;
-    background: #0b0f0c;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 30px;
-    z-index: 2;
-  }
+  .iab-loading, .iab-blocked { position: absolute; inset: 0; background: #0b0f0c; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 30px; z-index: 2; }
 
   .iab-loading { display: flex; }
   .iab-blocked { display: none; }
 
-  .iab-spinner {
-    width: 44px;
-    height: 44px;
-    border: 3px solid rgba(232,177,60,0.25);
-    border-top-color: var(--emas-terang);
-    border-radius: 50%;
-    animation: iabSpin 0.8s linear infinite;
-  }
+  .iab-spinner { width: 44px; height: 44px; border: 3px solid rgba(232,177,60,0.25); border-top-color: var(--emas-terang); border-radius: 50%; animation: iabSpin 0.8s linear infinite; }
 
   @keyframes iabSpin { to { transform: rotate(360deg); } }
 
-  .iab-blocked-icon {
-    font-size: 3rem;
-    margin-bottom: 12px;
-  }
+  .iab-blocked-icon { font-size: 3rem; margin-bottom: 12px; }
 
-  .iab-blocked-title {
-    color: #fff;
-    font-family: 'FiraCondBold', sans-serif;
-    font-size: 1rem;
-    margin-bottom: 6px;
-  }
+  .iab-blocked-title { color: #fff; font-family: 'FiraCondBold', sans-serif; font-size: 1rem; margin-bottom: 6px; }
 
-  .iab-blocked-sub {
-    color: #aaa;
-    font-size: 0.8rem;
-    margin-bottom: 22px;
-    line-height: 1.4;
-  }
+  .iab-blocked-sub { color: #aaa; font-size: 0.8rem; margin-bottom: 22px; line-height: 1.4; }
 
-  .iab-open-ext-btn {
-    background: var(--emas-terang);
-    color: #000;
-    padding: 12px 26px;
-    border: none;
-    border-radius: 10px;
-    font-family: 'FiraCondBold', sans-serif;
-    font-size: 0.95rem;
-    cursor: pointer;
-    font-weight: bold;
-    box-shadow: 0 4px 14px rgba(255,209,102,0.35);
-  }
+  .iab-open-ext-btn { background: var(--emas-terang); color: #000; padding: 12px 26px; border: none; border-radius: 10px; font-family: 'FiraCondBold', sans-serif; font-size: 0.95rem; cursor: pointer; font-weight: bold; box-shadow: 0 4px 14px rgba(255,209,102,0.35); }
 
-  .iab-open-ext-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 18px rgba(255,209,102,0.5);
-  }
+  .iab-open-ext-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(255,209,102,0.5); }
 
-  /* ============ POPUPS ============ */
-  .popupBox {
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.85);
-    display: none;
-    justify-content: center;
-    align-items: center;
-    z-index: 9999999;
-    padding: 20px;
-  }
-
+  .popupBox { position: fixed; inset: 0; background: rgba(0,0,0,0.85); display: none; justify-content: center; align-items: center; z-index: 9999999; padding: 20px; }
   .popupBox.active { display: flex; }
 
-  .popupContent {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    max-width: 340px;
-    background: #000;
-    border: 2px solid var(--emas-terang);
-    border-radius: 20px;
-    padding: 20px;
-    max-height: 85vh;
-    overflow-y: auto;
-  }
+  .popupContent { display: flex; flex-direction: column; width: 100%; max-width: 340px; background: #000; border: 2px solid var(--emas-terang); border-radius: 20px; padding: 20px; max-height: 85vh; overflow-y: auto; }
 
-  .popupContent h2 {
-    margin-top: 0;
-    margin-bottom: 12px;
-    font-family: 'FiraCondBold', sans-serif;
-    color: var(--emas-terang);
-    text-align: center;
-    font-size: 1.1rem;
-  }
+  .popupContent h2 { margin-top: 0; margin-bottom: 12px; font-family: 'FiraCondBold', sans-serif; color: var(--emas-terang); text-align: center; font-size: 1.1rem; }
 
-  .option-btn {
-    width: 100%;
-    background: #111;
-    border: 1.5px solid var(--emas-terang);
-    color: white;
-    padding: 12px;
-    border-radius: 12px;
-    font-family: 'FiraCondBold', sans-serif;
-    font-size: 0.95rem;
-    margin-bottom: 10px;
-    cursor: pointer;
-    transition: background 0.2s;
-    text-align: center;
-  }
+  .option-btn { width: 100%; background: #111; border: 1.5px solid var(--emas-terang); color: white; padding: 12px; border-radius: 12px; font-family: 'FiraCondBold', sans-serif; font-size: 0.95rem; margin-bottom: 10px; cursor: pointer; transition: background 0.2s; text-align: center; }
 
-  .option-btn:hover {
-    background: rgba(232, 177, 60, 0.2);
-    color: var(--emas-terang);
-  }
+  .option-btn:hover { background: rgba(232, 177, 60, 0.2); color: var(--emas-terang); }
 
-  .option-btn.logout {
-    border-color: #ff3b3b;
-    color: #ff3b3b;
-  }
+  .option-btn.logout { border-color: #ff3b3b; color: #ff3b3b; }
+  .option-btn.logout:hover { background: rgba(255, 59, 59, 0.2); }
 
-  .option-btn.logout:hover {
-    background: rgba(255, 59, 59, 0.2);
-  }
+  .cancelButton { width: 100%; background: #2a2a2a; border: none; color: white; padding: 10px; border-radius: 10px; font-family: 'FiraCondBold', sans-serif; cursor: pointer; margin-top: 5px; }
 
-  .cancelButton {
-    width: 100%;
-    background: #2a2a2a;
-    border: none;
-    color: white;
-    padding: 10px;
-    border-radius: 10px;
-    font-family: 'FiraCondBold', sans-serif;
-    cursor: pointer;
-    margin-top: 5px;
-  }
+  .custom-modal-box { background: #0d120f; border: 2px solid var(--emas-terang); border-radius: 16px; padding: 20px; width: 100%; max-width: 320px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.8); }
 
-  .custom-modal-box {
-    background: #0d120f;
-    border: 2px solid var(--emas-terang);
-    border-radius: 16px;
-    padding: 20px;
-    width: 100%;
-    max-width: 320px;
-    text-align: center;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.8);
-  }
+  .custom-modal-title { font-family: 'FiraCondBold', sans-serif; font-size: 1.1rem; color: var(--emas-terang); margin-bottom: 8px; }
 
-  .custom-modal-title {
-    font-family: 'FiraCondBold', sans-serif;
-    font-size: 1.1rem;
-    color: var(--emas-terang);
-    margin-bottom: 8px;
-  }
+  .custom-modal-msg { font-size: 0.9rem; color: #ddd; margin-bottom: 16px; line-height: 1.4; white-space: pre-wrap; }
 
-  .custom-modal-msg {
-    font-size: 0.9rem;
-    color: #ddd;
-    margin-bottom: 16px;
-    line-height: 1.4;
-    white-space: pre-wrap;
-  }
+  .custom-modal-input { width: 100%; height: 42px; background: #000; border: 1px solid var(--emas); border-radius: 8px; color: #fff; padding: 0 12px; font-family: 'FiraCondBook', sans-serif; font-size: 0.95rem; margin-bottom: 16px; outline: none; }
 
-  .custom-modal-input {
-    width: 100%;
-    height: 42px;
-    background: #000;
-    border: 1px solid var(--emas);
-    border-radius: 8px;
-    color: #fff;
-    padding: 0 12px;
-    font-family: 'FiraCondBook', sans-serif;
-    font-size: 0.95rem;
-    margin-bottom: 16px;
-    outline: none;
-  }
+  .custom-modal-buttons { display: flex; gap: 8px; }
 
-  .custom-modal-buttons {
-    display: flex;
-    gap: 8px;
-  }
+  .custom-modal-btn { flex: 1; padding: 10px; border-radius: 8px; font-family: 'FiraCondBold', sans-serif; font-size: 0.9rem; cursor: pointer; border: none; }
 
-  .custom-modal-btn {
-    flex: 1;
-    padding: 10px;
-    border-radius: 8px;
-    font-family: 'FiraCondBold', sans-serif;
-    font-size: 0.9rem;
-    cursor: pointer;
-    border: none;
-  }
+  .custom-modal-btn.primary { background: var(--emas-terang); color: #000; }
+  .custom-modal-btn.secondary { background: #222; color: #aaa; border: 1px solid #444; }
 
-  .custom-modal-btn.primary {
-    background: var(--emas-terang);
-    color: #000;
-  }
+  .board-setting-item { display: flex; align-items: center; justify-content: space-between; background: #121814; border: 1px solid rgba(232, 177, 60, 0.3); border-radius: 8px; padding: 6px 10px; margin-bottom: 5px; font-size: 0.8rem; color: #fff; }
 
-  .custom-modal-btn.secondary {
-    background: #222;
-    color: #aaa;
-    border: 1px solid #444;
-  }
+  .board-setting-item input[type="checkbox"] { width: 16px; height: 16px; min-width: 16px; min-height: 16px; accent-color: var(--emas-terang); margin: 0; cursor: pointer; }
 
-  .board-setting-item {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background: #121814;
-    border: 1px solid rgba(232, 177, 60, 0.3);
-    border-radius: 8px;
-    padding: 6px 10px;
-    margin-bottom: 5px;
-    font-size: 0.8rem;
-    color: #fff;
-  }
+  .board-setting-controls { display: flex; gap: 3px; align-items: center; }
 
-  .board-setting-item input[type="checkbox"] {
-    width: 16px;
-    height: 16px;
-    min-width: 16px;
-    min-height: 16px;
-    accent-color: var(--emas-terang);
-    margin: 0;
-    cursor: pointer;
-  }
+  .board-ctrl-btn { background: rgba(232, 177, 60, 0.2); border: 1px solid var(--emas); color: var(--emas-terang); width: 22px; height: 22px; border-radius: 4px; cursor: pointer; font-size: 0.7rem; display: flex; align-items: center; justify-content: center; }
 
-  .board-setting-controls {
-    display: flex;
-    gap: 3px;
-    align-items: center;
-  }
+  .board-ctrl-btn:hover { background: rgba(232, 177, 60, 0.4); }
 
-  .board-ctrl-btn {
-    background: rgba(232, 177, 60, 0.2);
-    border: 1px solid var(--emas);
-    color: var(--emas-terang);
-    width: 22px;
-    height: 22px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 0.7rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+  .board-delete-btn { background: rgba(255, 59, 59, 0.2); border: 1px solid #ff3b3b; color: #ff3b3b; width: 22px; height: 22px; border-radius: 4px; cursor: pointer; font-size: 0.7rem; display: flex; align-items: center; justify-content: center; }
 
-  .board-ctrl-btn:hover {
-    background: rgba(232, 177, 60, 0.4);
-  }
-
-  .board-delete-btn {
-    background: rgba(255, 59, 59, 0.2);
-    border: 1px solid #ff3b3b;
-    color: #ff3b3b;
-    width: 22px;
-    height: 22px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 0.7rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .board-delete-btn:hover {
-    background: rgba(255, 59, 59, 0.4);
-  }
+  .board-delete-btn:hover { background: rgba(255, 59, 59, 0.4); }
 </style>
 </head>
 <body>
@@ -1108,7 +316,6 @@
   <div class="bg-layer"></div>
   <div class="bg-dim"></div>
 
-  <!-- ============ WRAPPER START: TOPBAR ============ -->
   <div class="mbanking-topbar">
     <div class="mbanking-brand-container">
       <div class="mbanking-brand">Comersio <span>Center</span></div>
@@ -1116,15 +323,11 @@
     </div>
     <div style="display:flex; align-items:center; gap:8px;">
       <a href="profile.html" class="profile-circle-btn" id="topProfileBtn" title="Pengaturan Profile">
-        <svg viewBox="0 0 24 24">
-          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
-        </svg>
+        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>
       </a>
     </div>
   </div>
-  <!-- ============ WRAPPER END: TOPBAR ============ -->
 
-  <!-- ============ WRAPPER START: DASHBOARD CONTENT ============ -->
   <div id="screen-dashboard">
     
     <div class="mbanking-account-card">
@@ -1156,31 +359,14 @@
     </div>
 
     <div class="menu-grid-wrap">
-      <a href="customer.html" class="menu-grid-item" data-name="Nama & ID Customer">
-        <img src="nama.png" alt="">
-        <span>Customer</span>
-      </a>
-      <a href="product.html" class="menu-grid-item" data-name="Produk">
-        <img src="voucher.png" alt="">
-        <span>Produk</span>
-      </a>
-      <a href="debt.html" class="menu-grid-item" data-name="Rekap Utang">
-        <img src="debt.png" alt="">
-        <span>Rekap Utang</span>
-      </a>
-      <a href="monthly.html" class="menu-grid-item" data-name="Pembukuan">
-        <img src="pembukuan.png" alt="">
-        <span>Pembukuan</span>
-      </a>
-      <a href="recap.html" class="menu-grid-item" data-name="Rekap Total">
-        <img src="rekap.png" alt="">
-        <span>Rekap Total</span>
-      </a>
+      <a href="customer.html" class="menu-grid-item" data-name="Nama & ID Customer"><img src="nama.png" alt=""><span>Customer</span></a>
+      <a href="product.html" class="menu-grid-item" data-name="Produk"><img src="voucher.png" alt=""><span>Produk</span></a>
+      <a href="debt.html" class="menu-grid-item" data-name="Rekap Utang"><img src="debt.png" alt=""><span>Rekap Utang</span></a>
+      <a href="monthly.html" class="menu-grid-item" data-name="Pembukuan"><img src="pembukuan.png" alt=""><span>Pembukuan</span></a>
+      <a href="recap.html" class="menu-grid-item" data-name="Rekap Total"><img src="rekap.png" alt=""><span>Rekap Total</span></a>
 
       <div class="menu-grid-item" onclick="openDataOptionsPopup()" style="cursor:pointer; border-color: var(--emas);">
-        <svg viewBox="0 0 24 24">
-          <path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c-.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c-.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/>
-        </svg>
+        <svg viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c-.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c-.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
         <span>Pengaturan</span>
       </div>
     </div>
@@ -1188,42 +374,20 @@
     <div id="modularBoardsContainer"></div>
 
   </div>
-  <!-- ============ WRAPPER END: DASHBOARD CONTENT ============ -->
 
-  <!-- ============ WRAPPER START: BOTTOM NAVBAR ============ -->
   <nav class="mbanking-bottom-nav">
-      <a href="index.html" class="nav-item active">
-          <img src="icon.png" alt="Home">
-          <span>Home</span>
-      </a>
-      <a href="product.html" class="nav-item">
-          <img src="voucher.png" alt="Produk">
-          <span>Produk</span>
-      </a>
-      <a href="debt.html" class="nav-item">
-          <img src="debt.png" alt="Utang">
-          <span>Utang</span>
-      </a>
-      <a href="customer.html" class="nav-item">
-          <img src="nama.png" alt="Customer">
-          <span>Customer</span>
-      </a>
-      <a href="recap.html" class="nav-item">
-          <img src="rekap.png" alt="Rekap">
-          <span>Rekap</span>
-      </a>
-      <a href="monthly.html" class="nav-item">
-          <img src="pembukuan.png" alt="Laporan">
-          <span>Laporan</span>
-      </a>
+      <a href="index.html" class="nav-item active"><img src="icon.png" alt="Home"><span>Home</span></a>
+      <a href="product.html" class="nav-item"><img src="voucher.png" alt="Produk"><span>Produk</span></a>
+      <a href="debt.html" class="nav-item"><img src="debt.png" alt="Utang"><span>Utang</span></a>
+      <a href="customer.html" class="nav-item"><img src="nama.png" alt="Customer"><span>Customer</span></a>
+      <a href="recap.html" class="nav-item"><img src="rekap.png" alt="Rekap"><span>Rekap</span></a>
+      <a href="monthly.html" class="nav-item"><img src="pembukuan.png" alt="Laporan"><span>Laporan</span></a>
       <a href="profile.html" class="nav-item" title="Pengaturan Profil">
           <svg viewBox="0 0 24 24" style="width:20px; height:20px; fill:currentColor; filter:none;"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>
           <span>Profil</span>
       </a>
   </nav>
-  <!-- ============ WRAPPER END: BOTTOM NAVBAR ============ -->
 
-  <!-- ============ WRAPPER START: IN-APP BROWSER OVERLAY ============ -->
   <div id="inAppBrowser" class="in-app-browser">
     <div class="iab-bar">
       <button type="button" class="iab-btn iab-close" onclick="closeInAppBrowser()" title="Tutup">✕</button>
@@ -1244,7 +408,6 @@
       </div>
     </div>
   </div>
-  <!-- ============ WRAPPER END: IN-APP BROWSER OVERLAY ============ -->
 
   <div id="customModalOverlay" class="popupBox">
     <div class="custom-modal-box">
@@ -1276,9 +439,7 @@
   <div id="startDatePickerPopup" class="popupBox">
     <div class="popupContent">
       <h2>BULAN MULAI PROFIT</h2>
-      <div style="font-size:0.8rem; color:#aaa; margin-bottom:12px; text-align:center;">
-        Pilih <b>bulan & tahun mulai</b>. Profit akan dihitung <b style="color:#4caf5e;">DARI bulan itu SAMPAI BULAN TERBARU</b>.
-      </div>
+      <div style="font-size:0.8rem; color:#aaa; margin-bottom:12px; text-align:center;">Pilih <b>bulan & tahun mulai</b>. Profit dihitung <b style="color:#4caf5e;">DARI bulan itu SAMPAI BULAN TERBARU</b>.</div>
       <input type="month" id="profitStartDateInput" class="custom-modal-input" style="margin-bottom:12px; text-align:center;">
       <button type="button" class="option-btn" onclick="saveProfitStartDate()" style="background:var(--emas); color:#000;">Simpan Bulan Mulai</button>
       <button type="button" class="option-btn" onclick="resetProfitStartDate()" style="background:#333; color:#fff;">Reset (Hitung Semua)</button>
@@ -1342,15 +503,73 @@
 
     function closeCustomModal(result) {
       document.getElementById("customModalOverlay").classList.remove("active");
-      if(modalCallback) {
-        modalCallback(result);
-        modalCallback = null;
+      if(modalCallback) { modalCallback(result); modalCallback = null; }
+    }
+
+    const username = localStorage.getItem("username") || "Sobat";
+
+    /* =========================================================
+       FIX PROFILE PICTURE — versi robust
+       Preload gambar dulu, baru render. Kalo gagal → SVG default.
+    ========================================================= */
+    window.addEventListener("DOMContentLoaded", () => {
+      const topBtn = document.getElementById("topProfileBtn");
+      if (!topBtn) return;
+
+      const defaultSVG = '<svg viewBox="0 0 24 24" style="width:20px;height:20px;fill:#ffd166;padding:2px;">' +
+        '<path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>' +
+        '</svg>';
+
+      let savedPic = localStorage.getItem("profile_picture") || localStorage.getItem("user_avatar") || "";
+      savedPic = String(savedPic).trim();
+
+      const isInvalid = !savedPic ||
+                        savedPic === "null" ||
+                        savedPic === "undefined" ||
+                        savedPic === "data:," ||
+                        savedPic.length < 10;
+
+      if (isInvalid) {
+        topBtn.innerHTML = defaultSVG;
+        return;
+      }
+
+      // Preload: cek dulu gambarnya valid atau broken
+      const testImg = new Image();
+      testImg.onload = function() {
+        topBtn.innerHTML = '<img src="' + savedPic + '" alt="Profile">';
+      };
+      testImg.onerror = function() {
+        topBtn.innerHTML = defaultSVG;
+      };
+      testImg.src = savedPic;
+    });
+
+    function setDynamicGreeting() {
+      const now = new Date();
+      const hour = now.getHours();
+      let timeGreet = "Selamat Datang";
+      if (hour >= 3 && hour < 11) timeGreet = "Selamat Pagi";
+      else if (hour >= 11 && hour < 15) timeGreet = "Selamat Siang";
+      else if (hour >= 15 && hour < 18) timeGreet = "Selamat Sore";
+      else timeGreet = "Selamat Malam";
+
+      document.getElementById("display-greeting").innerText = `${timeGreet}, ${username}`;
+      
+      let lastGreetDate = localStorage.getItem("ilya_greet_date");
+      let todayStr = new Date().toDateString();
+      if(lastGreetDate !== todayStr) {
+        localStorage.setItem("ilya_greet_date", todayStr);
+        setTimeout(() => {
+          showCustomAlert(`Halo ${username}! Senang melihatmu kembali di Comersio Center hari ini. Semoga aktivitas pembukuan dan bisnismu lancar ya! 😊`, "Ilya Assistant");
+        }, 600);
       }
     }
 
+    setDynamicGreeting();
+
     /* =========================================================
-       IN-APP BROWSER (Overlay)
-       Buka link di dalam dashboard tanpa ninggalin header/navbar
+       IN-APP BROWSER
     ========================================================= */
     let iabCurrentUrl = "";
     let iabBlockedTimer = null;
@@ -1365,28 +584,18 @@
 
       loading.style.display = "flex";
       blocked.style.display = "none";
-
       frame.src = "about:blank";
 
       document.getElementById("inAppBrowser").classList.add("active");
 
-      // Setup onload dulu sebelum set src
       frame.onload = function() {
-        // Coba deteksi kalo iframe diblok
         let isBlocked = false;
         try {
           const doc = frame.contentDocument;
-          if (doc) {
-            // Kalo cross-origin, akses throw → berarti loaded (OK)
-            // Kalo same-origin about:blank → berarti diblok
-            if (doc.location && doc.location.href === "about:blank") {
-              isBlocked = true;
-            }
+          if (doc && doc.location && doc.location.href === "about:blank") {
+            isBlocked = true;
           }
-        } catch (e) {
-          // cross-origin = OK, gak diblok
-          isBlocked = false;
-        }
+        } catch (e) { isBlocked = false; }
 
         if (isBlocked) {
           loading.style.display = "none";
@@ -1396,12 +605,9 @@
         }
       };
 
-      setTimeout(() => {
-        frame.src = url;
-      }, 100);
+      setTimeout(() => { frame.src = url; }, 100);
 
       if (iabBlockedTimer) clearTimeout(iabBlockedTimer);
-      // Kalo 8 detik gak ada onload, tampilkan blocked
       iabBlockedTimer = setTimeout(() => {
         if (loading.style.display === "flex") {
           loading.style.display = "none";
@@ -1423,12 +629,9 @@
       const win = window.open(iabCurrentUrl, "_blank", "noopener,noreferrer");
       if (!win || win.closed || typeof win.closed === 'undefined') {
         location.href = iabCurrentUrl;
-      } else {
-        win.focus();
-      }
+      } else { win.focus(); }
     }
 
-    /* Fungsi universal untuk semua link eksternal di board */
     function openExternalLink(e, url, title) {
       if (e) e.preventDefault();
       openInAppBrowser(url, title);
@@ -1436,7 +639,7 @@
     }
 
     /* =========================================================
-       PARSER TANGGAL SUPER FLEKSIBEL
+       PARSER TANGGAL
     ========================================================= */
     function parseTgl(val) {
       if (val === null || val === undefined || val === "") return null;
@@ -1514,25 +717,18 @@
       return NAMA[idx] || "-";
     }
 
-    /* =========================================================
-       MAIN FUNCTION
-    ========================================================= */
     function loadDashboardFinance() {
       let baseSaldoRaw = localStorage.getItem("comersio_base_saldo");
       let baseSaldo = (baseSaldoRaw !== null && baseSaldoRaw !== "") ? parseFloat(baseSaldoRaw) : 0;
 
-      let totalIncomeAllTime = 0;
-      let totalIncomeThisMonth = 0;
-      let totalModalOut = 0;
-      let totalProfit = 0;
+      let totalIncomeAllTime = 0, totalIncomeThisMonth = 0, totalModalOut = 0, totalProfit = 0;
 
       const now = new Date();
       const currentMonth = now.getMonth();
       const currentYear = now.getFullYear();
 
       let startDateStr = localStorage.getItem("comersio_profit_start_date") || "";
-      let startYear = null;
-      let startMonth = null;
+      let startYear = null, startMonth = null;
       if (startDateStr) {
         let m = startDateStr.match(/^(\d{4})[\/\-](\d{1,2})/);
         if (m) {
@@ -1682,10 +878,7 @@
       let currentVal = localStorage.getItem("comersio_profit_start_date") || "";
       if (currentVal) {
         let m = currentVal.match(/^(\d{4})[\/\-](\d{1,2})/);
-        if (m) {
-          let mm = m[2].padStart(2, "0");
-          currentVal = m[1] + "-" + mm;
-        }
+        if (m) { currentVal = m[1] + "-" + m[2].padStart(2, "0"); }
       }
       document.getElementById("profitStartDateInput").value = currentVal;
       document.getElementById("startDatePickerPopup").classList.add("active");
@@ -1730,7 +923,7 @@
       { id: "coingecko", name: "CoinGecko Market & News", visible: true, order: 4, isCustom: false },
       { id: "cryptowave", name: "Cryptowave Indonesia", visible: true, order: 5, isCustom: false },
       { id: "indostock", name: "Berita Stock Indonesia", visible: true, order: 6, isCustom: false },
-      { id: "football", name: "Berita Bola Terkini", visible: true, order: 7, isCustom: false } 
+      { id: "football", name: "DetikSport Terkini", visible: true, order: 7, isCustom: false } 
     ];
 
     function getBoardsConfig() {
@@ -1746,8 +939,14 @@
             parsed.push({ id: "coingecko", name: "CoinGecko Market & News", visible: true, order: parsed.length, isCustom: false });
           }
           if(!parsed.some(b => b.id === "football")) {
-            parsed.push({ id: "football", name: "Berita Bola Terkini", visible: true, order: parsed.length, isCustom: false });
+            parsed.push({ id: "football", name: "DetikSport Terkini", visible: true, order: parsed.length, isCustom: false });
           }
+          // Migrasi nama lama ke baru
+          parsed.forEach(b => {
+            if (b.id === "football" && b.name === "Berita Bola Terkini") {
+              b.name = "DetikSport Terkini";
+            }
+          });
           return parsed;
         } catch(e) {}
       }
@@ -1783,35 +982,23 @@
           <span style="font-size: 0.7rem; color: var(--emas-terang);">TikTok, IG, Threads & Profile</span>
         </div>
         <div class="media-downloader-grid">
-          <a href="javascript:void(0)"
-             onclick="return openExternalLink(event, 'https://snaptik.fi/id/download-tiktok-video', 'SnapTik')"
-             class="media-dl-item">
-            <img src="https://www.google.com/s2/favicons?domain=snaptik.fi&sz=64" alt="SnapTik"
-                 onerror="this.onerror=null;this.src='https://snaptik.fi/favicon.ico';">
+          <a href="javascript:void(0)" onclick="return openExternalLink(event, 'https://snaptik.fi/id/download-tiktok-video', 'SnapTik')" class="media-dl-item">
+            <img src="https://www.google.com/s2/favicons?domain=snaptik.fi&sz=64" alt="SnapTik" onerror="this.onerror=null;this.src='https://snaptik.fi/favicon.ico';">
             <span>SnapTik</span>
             <small>TikTok Downloader</small>
           </a>
-          <a href="javascript:void(0)"
-             onclick="return openExternalLink(event, 'https://fastdl.app/id3Uw', 'FastDL')"
-             class="media-dl-item">
-            <img src="https://www.google.com/s2/favicons?domain=fastdl.app&sz=64" alt="FastDL"
-                 onerror="this.onerror=null;this.src='https://fastdl.app/favicon.ico';">
+          <a href="javascript:void(0)" onclick="return openExternalLink(event, 'https://fastdl.app/id3Uw', 'FastDL')" class="media-dl-item">
+            <img src="https://www.google.com/s2/favicons?domain=fastdl.app&sz=64" alt="FastDL" onerror="this.onerror=null;this.src='https://fastdl.app/favicon.ico';">
             <span>FastDL</span>
             <small>IG Downloader</small>
           </a>
-          <a href="javascript:void(0)"
-             onclick="return openExternalLink(event, 'https://www.instadp.com/', 'InstaDP')"
-             class="media-dl-item">
-            <img src="https://www.google.com/s2/favicons?domain=instadp.com&sz=64" alt="InstaDP"
-                 onerror="this.onerror=null;this.src='https://www.instadp.com/favicon.ico';">
+          <a href="javascript:void(0)" onclick="return openExternalLink(event, 'https://www.instadp.com/', 'InstaDP')" class="media-dl-item">
+            <img src="https://www.google.com/s2/favicons?domain=instadp.com&sz=64" alt="InstaDP" onerror="this.onerror=null;this.src='https://www.instadp.com/favicon.ico';">
             <span>InstaDP</span>
             <small>Profile Picture</small>
           </a>
-          <a href="javascript:void(0)"
-             onclick="return openExternalLink(event, 'https://lovethreads.net/en', 'LoveThreads')"
-             class="media-dl-item">
-            <img src="https://lovethreads.net/icons/favicon-32x32.png" alt="LoveThreads"
-                 onerror="this.onerror=null;this.src='https://lovethreads.net/icons/favicon.ico';">
+          <a href="javascript:void(0)" onclick="return openExternalLink(event, 'https://lovethreads.net/en', 'LoveThreads')" class="media-dl-item">
+            <img src="https://lovethreads.net/icons/favicon-32x32.png" alt="LoveThreads" onerror="this.onerror=null;this.src='https://lovethreads.net/icons/favicon.ico';">
             <span>LoveThreads</span>
             <small>Threads Downloader</small>
           </a>
@@ -2005,48 +1192,121 @@
       return div;
     }
 
+    /* ===== DETIKSPORT BOARD — REAL-TIME ===== */
     function createFootballBoardElement() {
       const div = document.createElement("div");
       div.className = "market-board";
       div.innerHTML = `
         <div class="market-board-header">
-          <span>⚽ BERITA BOLA TERKINI</span>
-          <span style="display: flex; align-items: center; gap: 6px; font-size: 0.7rem; color: #aaa;"><span class="live-dot"></span> LIVE</span>
+          <span>⚽ DETIKSPORT TERKINI</span>
+          <span style="display: flex; align-items: center; gap: 6px; font-size: 0.7rem; color: #aaa;">
+            <span class="live-dot"></span> REAL-TIME
+          </span>
         </div>
         <div class="news-ticker-list" id="footballNewsList">
-          <div class="news-item-card"><div class="news-item-title">Memuat berita terbaru...</div></div>
+          <div class="news-item-card"><div class="news-item-title">Memuat berita DetikSport...</div></div>
         </div>
+        <a href="javascript:void(0)" onclick="return openExternalLink(event, 'https://sport.detik.com/', 'DetikSport')" class="tradingview-btn" style="margin-top:8px;">
+          <div class="tradingview-left">
+            <span class="tv-title">🌐 Buka sport.detik.com</span>
+            <span class="tv-sub">Semua berita olahraga DetikSport</span>
+          </div>
+          <span class="tv-arrow">➔</span>
+        </a>
       `;
       setTimeout(() => fetchFootballNews(), 50);
       return div;
     }
 
-    async function fetchFootballNews() {
+    function formatWaktuRelatif(dateStr) {
       try {
-        const res = await fetch("https://api.rss2json.com/v1/api.json?rss_url=https%3A%2F%2Fwww.suara.com%2Frss%2Fbola");
-        const data = await res.json();
-        if(data.status === "ok" && data.items.length > 0) {
-          let html = "";
-          for(let i = 0; i < Math.min(3, data.items.length); i++) {
-            let item = data.items[i];
-            let dateStr = item.pubDate.split(" ")[1] || "Baru saja";
-            const safeUrl = item.link.replace(/'/g, "\\'");
-            html += `
-              <a href="javascript:void(0)"
-                 onclick="return openExternalLink(event, '${safeUrl}', 'Berita Bola')"
-                 class="news-item-card">
-                <div class="news-item-title">${item.title}</div>
-                <div class="news-item-time">Update: ${dateStr}</div>
-              </a>
-            `;
-          }
-          document.getElementById("footballNewsList").innerHTML = html;
-        }
-      } catch(e) {
-        document.getElementById("footballNewsList").innerHTML = `
-          <div class="news-item-card"><div class="news-item-title" style="color:#ff6b6b;">Gagal memuat berita. Periksa koneksi.</div></div>
+        const d = new Date(dateStr);
+        if (isNaN(d.getTime())) return "Baru saja";
+        const diffMin = Math.floor((Date.now() - d.getTime()) / 60000);
+        if (diffMin < 1) return "Baru saja";
+        if (diffMin < 60) return diffMin + " menit lalu";
+        if (diffMin < 1440) return Math.floor(diffMin / 60) + " jam lalu";
+        return Math.floor(diffMin / 1440) + " hari lalu";
+      } catch(e) { return "Baru saja"; }
+    }
+
+    function renderFootballItems(items) {
+      const listEl = document.getElementById("footballNewsList");
+      if (!listEl) return;
+
+      let html = "";
+      const maxItems = Math.min(4, items.length);
+
+      for (let i = 0; i < maxItems; i++) {
+        const item = items[i];
+        // Bersihin suffix "- detikSport" / "- DetikSport" dari judul Google News
+        let title = (item.title || "Berita DetikSport").replace(/\s*-\s*detik\s*sport$/i, "").trim();
+        const waktu = formatWaktuRelatif(item.pubDate);
+        const link = item.link || "https://sport.detik.com/";
+
+        const safeUrl = link.replace(/'/g, "\\'").replace(/"/g, '\\"');
+        const safeTitle = title.replace(/'/g, "\\'").replace(/"/g, '\\"');
+
+        html += `
+          <a href="javascript:void(0)"
+             onclick="return openExternalLink(event, '${safeUrl}', 'DetikSport')"
+             class="news-item-card">
+            <div class="news-item-title">${title}</div>
+            <div class="news-item-time">DetikSport • ${waktu}</div>
+          </a>
         `;
       }
+      listEl.innerHTML = html;
+    }
+
+    async function fetchFootballNews() {
+      const listEl = document.getElementById("footballNewsList");
+      if (!listEl) return;
+
+      // Google News RSS difilter ke sport.detik.com (RSS resmi Detik udah dimatiin Nov 2020)
+      const googleNewsRss = "https://news.google.com/rss/search?q=site:sport.detik.com&hl=id&gl=ID&ceid=ID:id";
+
+      // Sumber 1: rss2json
+      try {
+        const r2jUrl = "https://api.rss2json.com/v1/api.json?rss_url=" + encodeURIComponent(googleNewsRss);
+        const res = await fetch(r2jUrl);
+        const data = await res.json();
+        if (data.status === "ok" && Array.isArray(data.items) && data.items.length > 0) {
+          renderFootballItems(data.items);
+          return;
+        }
+      } catch(e) { /* lanjut ke fallback */ }
+
+      // Sumber 2 (fallback): allorigins + parse XML manual
+      try {
+        const proxyUrl = "https://api.allorigins.win/raw?url=" + encodeURIComponent(googleNewsRss);
+        const res = await fetch(proxyUrl);
+        const xmlText = await res.text();
+        const parser = new DOMParser();
+        const xml = parser.parseFromString(xmlText, "text/xml");
+        const itemNodes = xml.querySelectorAll("item");
+
+        if (itemNodes.length > 0) {
+          const items = [];
+          for (let i = 0; i < itemNodes.length; i++) {
+            const node = itemNodes[i];
+            items.push({
+              title: node.querySelector("title") ? node.querySelector("title").textContent : "Berita DetikSport",
+              link: node.querySelector("link") ? node.querySelector("link").textContent : "https://sport.detik.com/",
+              pubDate: node.querySelector("pubDate") ? node.querySelector("pubDate").textContent : new Date().toISOString()
+            });
+          }
+          renderFootballItems(items);
+          return;
+        }
+      } catch(e) { /* gagal semua */ }
+
+      listEl.innerHTML = `
+        <div class="news-item-card">
+          <div class="news-item-title" style="color:#ff6b6b;">Gagal memuat berita DetikSport.</div>
+          <div class="news-item-time">Tap tombol di bawah buat buka langsung.</div>
+        </div>
+      `;
     }
 
     function createCustomBoardElement(boardObj) {
@@ -2060,9 +1320,7 @@
           <span style="font-size: 0.7rem; color: var(--emas-terang);">CUSTOM</span>
         </div>
         <div class="news-ticker-list">
-          <a href="javascript:void(0)"
-             onclick="return openExternalLink(event, '${safeUrl}', '${safeName}')"
-             class="news-item-card">
+          <a href="javascript:void(0)" onclick="return openExternalLink(event, '${safeUrl}', '${safeName}')" class="news-item-card">
             <div class="news-item-title">Kunjungi Link / Berita Terkait: ${boardObj.name}</div>
             <div class="news-item-time">Klik untuk membuka tautan eksternal</div>
           </a>
@@ -2071,11 +1329,7 @@
       return div;
     }
 
-    let liveRates = {
-      USD: 17630, EUR: 19100, GBP: 22400, SGD: 13200, AUD: 11500,
-      MYR: 4050, CNY: 2450, THB: 515, JPY: 118, KRW: 13.2
-    };
-
+    let liveRates = { USD: 17630, EUR: 19100, GBP: 22400, SGD: 13200, AUD: 11500, MYR: 4050, CNY: 2450, THB: 515, JPY: 118, KRW: 13.2 };
     let selectedCurrency = "USD";
     let isIdrToForeign = false;
 
@@ -2299,16 +1553,10 @@
     function closeDataOptionsPopup() { document.getElementById("dataOptionsPopup").classList.remove("active"); }
 
     function saveComersioData(){
-      const data = {
-        __format: "comersio-ayj",
-        __version: 2,
-        __savedAt: new Date().toISOString(),
-        storage: {}
-      };
+      const data = { __format: "comersio-ayj", __version: 2, __savedAt: new Date().toISOString(), storage: {} };
       for (let i = 0; i < localStorage.length; i++) {
         const key = localStorage.key(i);
-        if (!key) continue;
-        if (key === "ilya_greet_date") continue;
+        if (!key || key === "ilya_greet_date") continue;
         try { data.storage[key] = localStorage.getItem(key); } catch(e) {}
       }
       const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
