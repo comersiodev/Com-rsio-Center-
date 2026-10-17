@@ -11,19 +11,16 @@
     font-family: 'OswaldBold';
     src: url('oswald-bold.ttf') format('truetype');
     font-weight: 700;
-    font-style: normal;
   }
   @font-face{
     font-family: 'FiraCondBold';
     src: url('firasanscondensed-bold.otf') format('opentype');
     font-weight: 700;
-    font-style: normal;
   }
   @font-face{
     font-family: 'FiraCondBook';
     src: url('firasanscondensed-book.otf') format('opentype');
     font-weight: 400;
-    font-style: normal;
   }
 
   :root{
@@ -32,93 +29,85 @@
     --gelap: #0a0a0a;
   }
 
-  *{
-    box-sizing: border-box;
-    -webkit-tap-highlight-color: transparent;
-  }
+  *{ box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
   html, body{
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    min-height: 100vh;
+    margin: 0; padding: 0; width: 100%; min-height: 100vh;
     font-family: 'FiraCondBook', sans-serif;
     background: #0a0a0a !important;
     color: #ffffff;
     overflow-x: hidden;
   }
 
-  /* BACKGROUND LAYER & DIM EFFECT */
   .bg-layer{
-    position: fixed;
-    inset: 0;
+    position: fixed; inset: 0;
     background-image: url('background.jpg');
-    background-size: cover;
-    background-position: center center;
-    background-repeat: no-repeat;
+    background-size: cover; background-position: center; background-repeat: no-repeat;
     z-index: 0;
   }
-
   .bg-dim{
-    position: fixed;
-    inset: 0;
+    position: fixed; inset: 0;
     background: rgba(6, 10, 7, 0.82);
     z-index: 1;
   }
 
-  /* TOP BAR M-BANKING */
-  .mbanking-topbar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 60px;
+  /* TOP BAR */
+  .mbanking-topbar{
+    position: fixed; top: 0; left: 0; right: 0; height: 60px;
     background: rgba(10, 14, 11, 0.95);
     border-bottom: 1px solid rgba(232, 177, 60, 0.25);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 16px;
-    z-index: 20;
-    backdrop-filter: blur(8px);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 16px; z-index: 20; backdrop-filter: blur(8px);
   }
-
-  .mbanking-brand-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-
-  .mbanking-brand {
+  .mbanking-brand-container{ display: flex; flex-direction: column; justify-content: center; }
+  .mbanking-brand{
     font-family: 'OswaldBold', sans-serif;
-    font-size: 1.1rem;
-    color: #ffffff;
-    letter-spacing: 0.5px;
-    line-height: 1.1;
+    font-size: 1.1rem; color: #ffffff; letter-spacing: 0.5px; line-height: 1.1;
   }
-
-  .mbanking-brand span {
-    color: var(--emas-terang);
+  .mbanking-brand span{ color: var(--emas-terang); }
+  .mbanking-greeting-top{
+    font-size: 0.7rem; color: var(--emas-terang);
+    font-family: 'FiraCondBold', sans-serif; margin-top: 1px; line-height: 1;
   }
-
-  .mbanking-greeting-top {
-    font-size: 0.7rem;
+  .backBtn{
+    background: transparent;
+    border: 1px solid rgba(232, 177, 60, 0.5);
     color: var(--emas-terang);
+    padding: 6px 12px; border-radius: 8px;
     font-family: 'FiraCondBold', sans-serif;
-    margin-top: 1px;
-    line-height: 1;
+    font-size: 0.78rem; cursor: pointer;
+    letter-spacing: 0.5px;
   }
+  .backBtn:active{ transform: scale(0.97); }
 
-  .content-wrap {
-    position: relative;
-    z-index: 5;
+  .content-wrap{
+    position: relative; z-index: 5;
     padding: 76px 16px 60px 16px;
-    max-width: 480px;
-    margin: 0 auto;
+    max-width: 480px; margin: 0 auto;
   }
 
-  /* KOTAK BILL UTAMA */
-  #captureArea {
+  /* MODE TOGGLE */
+  .modeToggleWrap{
+    display: flex;
+    background: rgba(10, 14, 11, 0.9);
+    border: 1px solid rgba(232, 177, 60, 0.3);
+    border-radius: 24px;
+    padding: 4px;
+    max-width: 320px;
+    margin: 0 auto 16px;
+    gap: 4px;
+  }
+  .modeBtn{
+    flex: 1; background: transparent; border: none;
+    color: #999; padding: 8px 10px; border-radius: 20px;
+    font-family: 'FiraCondBold', sans-serif;
+    font-size: 0.82rem; cursor: pointer;
+    transition: all 0.2s; letter-spacing: 0.5px;
+  }
+  .modeBtn.active{ background: var(--emas-terang); color: #000; }
+
+  /* ============ NORMAL MODE ============ */
+  #captureArea{
     background: rgba(12, 17, 13, 0.95);
     border: 2px solid var(--emas);
     border-radius: 16px;
@@ -126,8 +115,7 @@
     box-shadow: 0 6px 25px rgba(0,0,0,0.7);
   }
 
-  /* HEADER BOX: LOGO + TEKS SEJAJAR DI TENGAH, DILANJUT BILLING DI BAWAHNYA */
-  div.headerBox {
+  div.headerBox{
     all: unset !important;
     display: flex !important;
     flex-direction: column !important;
@@ -140,211 +128,200 @@
     background: transparent !important;
     box-shadow: none !important;
   }
-
-  .headerTopRow {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    justify-content: center;
-  }
-
-  .mainLogo {
-    width: 40px !important;
-    height: 40px !important;
-    object-fit: contain !important;
-    border-radius: 50% !important;
+  .headerTopRow{ display: flex; align-items: center; gap: 12px; justify-content: center; }
+  .mainLogo{
+    width: 40px !important; height: 40px !important;
+    object-fit: contain !important; border-radius: 50% !important;
     border: 1px solid var(--emas-terang) !important;
-    margin: 0 !important;
-    background: transparent !important;
-    cursor: default;
+    margin: 0 !important; background: transparent !important; cursor: default;
   }
-
-  .headerRight {
+  .headerRight{
     all: unset !important;
-    display: flex !important;
-    flex-direction: column !important;
-    text-align: left !important;
+    display: flex !important; flex-direction: column !important; text-align: left !important;
   }
-
-  .headerRight h1 {
+  .headerRight h1{
     font-family: 'OswaldBold', sans-serif !important;
-    font-size: 1.25rem !important;
-    color: #ffffff !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    letter-spacing: 0.5px;
+    font-size: 1.25rem !important; color: #ffffff !important;
+    margin: 0 !important; padding: 0 !important; letter-spacing: 0.5px;
     background: transparent !important;
   }
-
-  .headerRight h1 span {
-    color: var(--emas-terang);
-  }
-
-  .headerBillingSub {
+  .headerRight h1 span{ color: var(--emas-terang); }
+  .headerBillingSub{
     font-family: 'FiraCondBold', sans-serif;
-    font-size: 0.78rem;
-    color: var(--emas-terang);
-    margin-top: 4px;
-    letter-spacing: 1px;
-    text-transform: uppercase;
+    font-size: 0.78rem; color: var(--emas-terang);
+    margin-top: 4px; letter-spacing: 1px; text-transform: uppercase;
   }
 
-  .paymentInfo {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 15px;
-    font-size: 0.85rem;
-    color: var(--emas-terang);
+  .paymentInfo{
+    display: flex; justify-content: space-between; align-items: flex-start;
+    margin-bottom: 15px; font-size: 0.85rem; color: var(--emas-terang);
     font-family: 'FiraCondBold', sans-serif;
   }
+  .paymentInfoRight{ text-align: right; color: #bbb; font-size: 0.78rem; }
+  .paymentInfo p{ margin: 0; }
 
-  .paymentInfoRight {
-    text-align: right;
-    color: #bbb;
-    font-size: 0.78rem;
-  }
-
-  .paymentInfo p {
-    margin: 0;
-  }
-
-  /* KOTAK STRUK GABUNGAN (SINGLE RECEIPT BOX) */
-  .receiptBox {
+  .receiptBox{
     background: #0d120f;
     border: 1px solid rgba(232, 177, 60, 0.3);
     border-radius: 12px;
-    padding: 14px;
-    margin-top: 10px;
+    padding: 14px; margin-top: 10px;
   }
-
-  .receiptRow {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 0.85rem;
-    padding: 6px 0;
+  .receiptRow{
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 0.85rem; padding: 6px 0;
     border-bottom: 1px dashed rgba(255, 209, 102, 0.15);
   }
+  .receiptRow:last-child{ border-bottom: none; }
 
-  .receiptRow:last-child {
-    border-bottom: none;
-  }
-
-  /* TOTAL AKHIR BOX */
-  .totalDebtBox {
+  .totalDebtBox{
     background: #000000;
     border: 2px solid var(--emas-terang);
-    padding: 12px 14px;
-    border-radius: 12px;
+    padding: 12px 14px; border-radius: 12px;
     font-family: 'FiraCondBold', sans-serif;
     margin-top: 15px;
-    display: flex;
-    justify-content: space-between;
-    color: var(--emas-terang);
-    font-size: 0.95rem;
+    display: flex; justify-content: space-between;
+    color: var(--emas-terang); font-size: 0.95rem;
   }
 
-  /* PAYMENT METHOD BOX */
-  .paymentList {
+  .paymentList{
     margin-top: 15px;
     background: #0d120f;
     border: 1px solid rgba(232, 177, 60, 0.3);
-    border-radius: 14px;
-    padding: 15px;
+    border-radius: 14px; padding: 15px;
   }
-
-  .paymentHeader {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10px;
-  }
-
-  .paymentHeaderLeft {
-    color: #fff;
-    font-size: 0.9rem;
+  .paymentHeader{ display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+  .paymentHeaderLeft{ color: #fff; font-size: 0.9rem; font-family: 'FiraCondBold', sans-serif; }
+  .paymentHeaderRight{ display: flex; align-items: center; gap: 8px; }
+  .paymentHeaderRight img{ width: 50px; object-fit: contain; }
+  .paymentHeaderRight span{ color: var(--emas-terang); font-size: 0.9rem; font-family: 'FiraCondBold', sans-serif; }
+  .paymentInfoText{ color: #aaa; font-size: 0.8rem; margin-bottom: 12px; text-align: center; }
+  .paymentCard{
+    background: #000000; padding: 14px; border-radius: 10px;
+    border: 1px solid var(--emas); text-align: center; color: white;
     font-family: 'FiraCondBold', sans-serif;
   }
-
-  .paymentHeaderRight {
-    display: flex;
-    align-items: center;
-    gap: 8px;
+  .qrisContainer{
+    display: flex; flex-direction: column; align-items: center;
+    background: #ffffff; padding: 8px;
+    border-radius: 0 !important; border: none !important;
+    max-width: 176px; margin: 0 auto;
+  }
+  .qrisImage{
+    width: 160px; height: 160px; object-fit: contain;
+    border-radius: 0 !important; display: block;
   }
 
-  .paymentHeaderRight img {
-    width: 50px;
-    object-fit: contain;
-  }
-
-  .paymentHeaderRight span {
-    color: var(--emas-terang);
-    font-size: 0.9rem;
-    font-family: 'FiraCondBold', sans-serif;
-  }
-
-  .paymentInfoText {
-    color: #aaa;
-    font-size: 0.8rem;
-    margin-bottom: 12px;
-    text-align: center;
-  }
-
-  .paymentCard {
+  /* ============ NOTA MODE ============ */
+  .notaBill{
     background: #000000;
-    padding: 14px;
+    border: 2px solid var(--emas);
     border-radius: 10px;
-    border: 1px solid var(--emas);
-    text-align: center;
-    color: white;
-    font-family: 'FiraCondBold', sans-serif;
-  }
-
-  /* KOTAK QRIS KOTAK KAKU TANPA LENGKUNGAN */
-  .qrisContainer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background: #ffffff;
-    padding: 8px;
-    border-radius: 0px !important;
-    border: none !important;
-    max-width: 176px;
+    padding: 22px 18px;
+    max-width: 400px;
     margin: 0 auto;
+    box-shadow: 0 6px 25px rgba(0,0,0,0.7);
   }
-
-  .qrisImage {
-    width: 160px;
-    height: 160px;
-    object-fit: contain;
-    border-radius: 0px !important;
-    display: block;
+  .notaHeader{ text-align: center; }
+  .notaBrand{
+    font-family: 'OswaldBold', sans-serif;
+    font-size: 1.6rem; color: var(--emas-terang);
+    letter-spacing: 4px; line-height: 1;
   }
-
-  /* TOMBOL SIMPAN */
-  .saveButton {
-    width: 100%;
-    height: 48px;
-    border: none;
-    border-radius: 12px;
-    margin-top: 20px;
-    background: var(--emas-terang);
-    color: black;
-    font-size: 0.95rem;
+  .notaTagline{
     font-family: 'FiraCondBold', sans-serif;
+    font-size: 0.7rem; color: #888;
+    letter-spacing: 3px; margin-top: 6px;
+  }
+  .notaDivider{
+    border: none;
+    border-top: 2px dotted var(--emas);
+    opacity: 0.65;
+    margin: 12px 0;
+  }
+  .notaRow{
+    display: flex; justify-content: space-between; align-items: flex-start;
+    gap: 12px; padding: 3px 0; font-size: 0.83rem;
+  }
+  .notaLabel{
+    color: #888;
+    font-family: 'FiraCondBook', sans-serif;
+    white-space: nowrap;
+  }
+  .notaValue{
+    color: #fff;
+    font-family: 'FiraCondBold', sans-serif;
+    text-align: right; word-break: break-word; max-width: 62%;
+  }
+  .notaGold{ color: var(--emas-terang) !important; }
+  .notaRed{ color: #ff5555 !important; }
+
+  .notaTotalBox{
+    display: flex; justify-content: space-between; align-items: center;
+    background: var(--emas-terang); color: #000;
+    padding: 10px 14px;
+    font-family: 'FiraCondBold', sans-serif;
+    font-size: 0.95rem; letter-spacing: 0.5px;
+    border-radius: 4px;
+  }
+
+  .notaSectionTitle{
+    font-family: 'FiraCondBold', sans-serif;
+    font-size: 0.7rem; color: var(--emas-terang);
+    letter-spacing: 1.5px; text-align: center;
+    margin-bottom: 8px;
+  }
+  .notaFooter{ text-align: center; padding-top: 4px; }
+  .notaFooter div:first-child{
+    font-family: 'FiraCondBold', sans-serif;
+    font-size: 0.85rem; color: var(--emas-terang);
+  }
+  .notaFooterSmall{ font-size: 0.65rem; color: #666; margin-top: 4px; }
+
+  .notaMethodHeader{
+    display: flex; align-items: center; justify-content: center;
+    gap: 8px; margin-bottom: 10px;
+  }
+  .notaMethodHeader img{ width: 36px; height: 36px; object-fit: contain; }
+  .notaMethodHeader span{
+    font-family: 'FiraCondBold', sans-serif;
+    color: var(--emas-terang); font-size: 0.95rem;
+  }
+  .notaPaymentBox{
+    background: #000;
+    border: 1px solid var(--emas);
+    border-radius: 8px;
+    padding: 12px; text-align: center;
+  }
+  .notaQrisContainer{
+    display: flex; flex-direction: column; align-items: center;
+    background: #ffffff; padding: 6px;
+    border-radius: 0 !important;
+    max-width: 160px; margin: 0 auto;
+  }
+  .notaQrisImage{
+    width: 148px; height: 148px; object-fit: contain;
+    display: block; border-radius: 0 !important;
+  }
+  .notaTransferNumber{
+    font-family: 'FiraCondBold', sans-serif;
+    font-size: 1.1rem; color: var(--emas-terang);
+    letter-spacing: 1px;
+  }
+  .notaTransferOwner{ font-size: 0.75rem; color: #999; margin-top: 4px; }
+  .notaScanHint{ font-size: 0.7rem; color: #aaa; margin-top: 8px; }
+
+  /* SAVE BUTTON */
+  .saveButton{
+    width: 100%; height: 48px; border: none; border-radius: 12px;
+    margin-top: 20px;
+    background: var(--emas-terang); color: black;
+    font-size: 0.95rem; font-family: 'FiraCondBold', sans-serif;
     cursor: pointer;
     box-shadow: 0 4px 15px rgba(255, 209, 102, 0.3);
     transition: transform 0.2s;
   }
-
-  .saveButton:active {
-    transform: scale(0.98);
-  }
-
-  .noCapture {
-    z-index: 99;
-  }
+  .saveButton:active{ transform: scale(0.98); }
+  .noCapture{ z-index: 99; }
 </style>
 </head>
 
@@ -353,16 +330,24 @@
   <div class="bg-layer"></div>
   <div class="bg-dim"></div>
 
-  <!-- TOP BAR M-BANKING -->
+  <!-- TOP BAR -->
   <div class="mbanking-topbar">
     <div class="mbanking-brand-container">
       <div class="mbanking-brand">Comersio <span>Center</span></div>
       <div class="mbanking-greeting-top">Detail Pembayaran</div>
     </div>
+    <button class="backBtn noCapture" onclick="window.location.href='index.html'">← Kembali</button>
   </div>
 
   <div class="content-wrap" style="padding-top: 70px;">
-    <!-- AREA BILL -->
+
+    <!-- MODE TOGGLE -->
+    <div class="modeToggleWrap noCapture">
+      <button class="modeBtn active" data-mode="normal" onclick="switchMode('normal')">Mode Normal</button>
+      <button class="modeBtn" data-mode="nota" onclick="switchMode('nota')">Nota Billing</button>
+    </div>
+
+    <!-- ============ NORMAL MODE ============ -->
     <div id="captureArea">
       <div class="headerBox">
         <div class="headerTopRow">
@@ -380,15 +365,10 @@
         </h2>
 
         <div class="paymentInfo">
-          <div>
-            <p id="paymentCustomerId"></p>
-          </div>
-          <div class="paymentInfoRight">
-            <p id="livePaymentTime"></p>
-          </div>
+          <div><p id="paymentCustomerId"></p></div>
+          <div class="paymentInfoRight"><p id="livePaymentTime"></p></div>
         </div>
 
-        <!-- STRUK GABUNGAN (SINGLE RECEIPT BOX) -->
         <div class="receiptBox" id="paymentListSimple"></div>
 
         <div class="totalDebtBox">
@@ -400,7 +380,68 @@
       </div>
     </div>
 
-    <!-- TOMBOL SIMPAN -->
+    <!-- ============ NOTA MODE ============ -->
+    <div id="notaCaptureArea" class="notaBill" style="display:none;">
+      <div class="notaHeader">
+        <div class="notaBrand">COMÉRSIO</div>
+        <div class="notaTagline">NOTA PEMBAYARAN</div>
+      </div>
+
+      <div class="notaDivider"></div>
+
+      <div class="notaRow">
+        <span class="notaLabel">No. ID</span>
+        <span class="notaValue" id="notaCustomerId">-</span>
+      </div>
+      <div class="notaRow">
+        <span class="notaLabel">Tanggal</span>
+        <span class="notaValue" id="notaDate">-</span>
+      </div>
+
+      <div class="notaDivider"></div>
+
+      <div class="notaRow">
+        <span class="notaLabel">Produk</span>
+        <span class="notaValue" id="notaProduk">-</span>
+      </div>
+      <div class="notaRow">
+        <span class="notaLabel">Total Hutang</span>
+        <span class="notaValue" id="notaTotalHutang">Rp 0</span>
+      </div>
+      <div class="notaRow">
+        <span class="notaLabel">Sudah Dibayar</span>
+        <span class="notaValue notaGold" id="notaDibayar">Rp 0</span>
+      </div>
+      <div class="notaRow">
+        <span class="notaLabel">Sisa Tagihan</span>
+        <span class="notaValue notaRed" id="notaSisa">Rp 0</span>
+      </div>
+      <div class="notaRow">
+        <span class="notaLabel">Status</span>
+        <span class="notaValue" id="notaStatus">-</span>
+      </div>
+
+      <div class="notaDivider"></div>
+
+      <div class="notaTotalBox">
+        <span>TOTAL AKHIR</span>
+        <span id="notaTotalAkhir">Rp 0</span>
+      </div>
+
+      <div class="notaDivider"></div>
+
+      <div class="notaSectionTitle">METODE PEMBAYARAN</div>
+      <div id="notaPaymentContent"></div>
+
+      <div class="notaDivider"></div>
+
+      <div class="notaFooter">
+        <div>~ Terima Kasih ~</div>
+        <div class="notaFooterSmall">Nota ini sebagai bukti pembayaran yang sah</div>
+      </div>
+    </div>
+
+    <!-- SAVE BUTTON -->
     <button class="saveButton noCapture" onclick="saveAsImage()">
       SIMPAN BILL PEMBAYARAN
     </button>
@@ -408,17 +449,19 @@
 
 <script>
 /* =========================
-   STORAGE & RENDER BILL
+   STORAGE & DATA
 ========================= */
 const customer = localStorage.getItem("paymentCustomer") || "-";
 const total = localStorage.getItem("paymentTotal") || "0";
 const method = localStorage.getItem("paymentMethod") || "qris";
 const paymentMode = localStorage.getItem("paymentMode") || "full";
-
 const debts = JSON.parse(localStorage.getItem("debts")) || {};
 
 document.getElementById("paymentCustomerId").innerText = `ID : ${customer}`;
 
+/* =========================
+   LIVE TIME
+========================= */
 function updateLivePaymentTime(){
     const now = new Date();
     const day = String(now.getDate()).padStart(2,"0");
@@ -428,14 +471,20 @@ function updateLivePaymentTime(){
     const minutes = String(now.getMinutes()).padStart(2,"0");
     const seconds = String(now.getSeconds()).padStart(2,"0");
 
-    document.getElementById("livePaymentTime").innerText = `${day}/${month}/${year} • ${hours}:${minutes}:${seconds}`;
-}
+    document.getElementById("livePaymentTime").innerText =
+        `${day}/${month}/${year} • ${hours}:${minutes}:${seconds}`;
 
+    const notaDate = document.getElementById('notaDate');
+    if(notaDate) notaDate.innerText = `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
+}
 updateLivePaymentTime();
 setInterval(updateLivePaymentTime, 1000);
 
 document.getElementById("paymentTotal").innerText = parseInt(total || 0).toLocaleString("id-ID");
 
+/* =========================
+   HITUNG DATA
+========================= */
 const list = document.getElementById("paymentListSimple");
 const customerDebt = debts[customer] || [];
 
@@ -447,7 +496,6 @@ customerDebt.forEach(item => {
     const harga = item.harga || 0;
     const dibayar = item.dibayar || 0;
     const sisa = harga - dibayar;
-
     if(sisa > 0){
         productNames.push(item.produk);
         totalHutangGabungan += harga;
@@ -457,10 +505,12 @@ customerDebt.forEach(item => {
 
 const gabunganProdukStr = productNames.length > 0 ? productNames.join(", ") : "-";
 const sisaTagihanGabungan = totalHutangGabungan - totalDibayarGabungan;
+const statusPembayaran = (paymentMode === 'amort') ? "Amortisasi" : "Full";
+const statusColor = (paymentMode === 'amort') ? "#ffb703" : "#4caf5e";
 
-let statusPembayaran = (paymentMode === 'amort') ? "Amortisasi" : "Full";
-let statusColor = (paymentMode === 'amort') ? "#ffb703" : "#4caf5e";
-
+/* =========================
+   RENDER NORMAL MODE
+========================= */
 if(productNames.length > 0){
     list.innerHTML = `
         <div class="receiptRow">
@@ -489,6 +539,9 @@ if(productNames.length > 0){
     list.innerHTML = `<p style="text-align:center; color:#777; padding: 10px; margin:0;">Tidak ada rincian utang aktif.</p>`;
 }
 
+/* =========================
+   PAYMENT DATA
+========================= */
 const paymentData = {
     qris:{ logo:"QRIS Logo.png", name:"QRIS", type:"qris" },
     gopay:{ logo:"GoPay.png", name:"GoPay", type:"ewallet", number:"083874854586", owner:"An E•• P••••••" },
@@ -501,7 +554,9 @@ const paymentData = {
 };
 
 const pay = paymentData[method] || paymentData["qris"];
-let infoText = pay.type === "qris" ? "Scan QR Code di bawah ini untuk melakukan pembayaran" : "Salin nomor di bawah ini untuk melakukan pembayaran";
+const infoText = pay.type === "qris"
+    ? "Scan QR Code di bawah ini untuk melakukan pembayaran"
+    : "Salin nomor di bawah ini untuk melakukan pembayaran";
 
 const content = document.getElementById("paymentContent");
 
@@ -544,23 +599,99 @@ if(pay.type === "qris"){
     `;
 }
 
+/* =========================
+   RENDER NOTA MODE
+========================= */
+function renderNota(){
+    updateLivePaymentTime();
+
+    document.getElementById('notaCustomerId').innerText = customer;
+    document.getElementById('notaProduk').innerText = gabunganProdukStr;
+    document.getElementById('notaTotalHutang').innerText = 'Rp ' + totalHutangGabungan.toLocaleString('id-ID');
+    document.getElementById('notaDibayar').innerText = 'Rp ' + totalDibayarGabungan.toLocaleString('id-ID');
+    document.getElementById('notaSisa').innerText = 'Rp ' + sisaTagihanGabungan.toLocaleString('id-ID');
+    document.getElementById('notaStatus').innerText = statusPembayaran;
+    document.getElementById('notaTotalAkhir').innerText = 'Rp ' + parseInt(total || 0).toLocaleString('id-ID');
+
+    const notaPay = document.getElementById('notaPaymentContent');
+
+    if(pay.type === 'qris'){
+        notaPay.innerHTML = `
+            <div class="notaMethodHeader">
+                <img src="${pay.logo}" alt="QRIS">
+                <span>${pay.name}</span>
+            </div>
+            <div class="notaPaymentBox">
+                <div class="notaQrisContainer">
+                    <img src="QRIS.png" class="notaQrisImage" alt="QR Code">
+                </div>
+                <div class="notaScanHint">Scan Menggunakan QRIS (All Banking & E-Wallet)</div>
+            </div>
+        `;
+    } else {
+        notaPay.innerHTML = `
+            <div class="notaMethodHeader">
+                <img src="${pay.logo}" alt="${pay.name}">
+                <span>${pay.name}</span>
+            </div>
+            <div class="notaPaymentBox">
+                <div class="notaTransferNumber">${pay.number}</div>
+                <div class="notaTransferOwner">a.n. ${pay.owner}</div>
+            </div>
+        `;
+    }
+}
+
+/* =========================
+   MODE SWITCHING
+========================= */
+let currentMode = localStorage.getItem('billDisplayMode') || 'normal';
+
+function switchMode(mode){
+    currentMode = mode;
+    localStorage.setItem('billDisplayMode', mode);
+
+    document.querySelectorAll('.modeBtn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.mode === mode);
+    });
+
+    document.getElementById('captureArea').style.display = (mode === 'normal') ? 'block' : 'none';
+    document.getElementById('notaCaptureArea').style.display = (mode === 'nota') ? 'block' : 'none';
+
+    if(mode === 'nota') renderNota();
+}
+
+/* init mode aktif */
+switchMode(currentMode);
+
+/* =========================
+   SAVE AS IMAGE
+========================= */
 function saveAsImage(){
     const button = document.querySelector(".saveButton");
+    const originalText = button.innerText;
     button.innerText = "Memproses Gambar...";
+    button.disabled = true;
 
-    html2canvas(document.getElementById("captureArea"), {
+    const targetEl = (currentMode === 'nota')
+        ? document.getElementById('notaCaptureArea')
+        : document.getElementById('captureArea');
+
+    html2canvas(targetEl, {
         scale: 3,
         useCORS: true,
         backgroundColor: "#000000"
     }).then(canvas => {
         const link = document.createElement("a");
-        link.download = `Bill-Comersio-${customer}.png`;
+        link.download = `Bill-Comersio-${customer}-${currentMode}.png`;
         link.href = canvas.toDataURL("image/png");
         link.click();
-        button.innerText = "SIMPAN BILL PEMBAYARAN";
+        button.innerText = originalText;
+        button.disabled = false;
     }).catch(err => {
         alert("Gagal menyimpan gambar.");
-        button.innerText = "SIMPAN BILL PEMBAYARAN";
+        button.innerText = originalText;
+        button.disabled = false;
     });
 }
 </script>
