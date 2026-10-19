@@ -45,13 +45,7 @@
   .board-ctrl-btn svg, .board-delete-btn svg { width: 12px !important; height: 12px !important; }
   .live-label svg { width: 8px !important; height: 8px !important; }
 
-  .mbanking-topbar {
-    position: fixed; top: 0; left: 0; right: 0; height: 56px;
-    background: rgba(10, 14, 11, 0.95);
-    border-bottom: 1px solid rgba(232, 177, 60, 0.25);
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 0 16px; z-index: 20; backdrop-filter: blur(8px);
-  }
+  .mbanking-topbar { position: fixed; top: 0; left: 0; right: 0; height: 56px; background: rgba(10, 14, 11, 0.95); border-bottom: 1px solid rgba(232, 177, 60, 0.25); display: flex; align-items: center; justify-content: space-between; padding: 0 16px; z-index: 20; backdrop-filter: blur(8px); }
   .mbanking-brand-container { display: flex; flex-direction: column; justify-content: center; }
   .mbanking-brand { font-family: 'OswaldBold', sans-serif; font-size: 1.1rem; color: #ffffff; letter-spacing: 0.5px; line-height: 1.1; }
   .mbanking-brand span { color: var(--emas-terang); }
@@ -62,15 +56,7 @@
   .profile-circle-btn img { width: 100%; height: 100%; object-fit: cover; }
 
   .profile-dropdown-wrapper { position: relative; display: inline-block; }
-
-  .profile-bubble-menu {
-    position: absolute; top: 45px; right: 0; width: 250px;
-    background: rgba(12, 17, 13, 0.98); border: 2px solid var(--emas-terang);
-    border-radius: 14px; box-shadow: 0 10px 30px rgba(0,0,0,0.8);
-    display: none; flex-direction: column; z-index: 999999;
-    backdrop-filter: blur(10px); overflow: hidden;
-    animation: bubbleIn 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-  }
+  .profile-bubble-menu { position: absolute; top: 45px; right: 0; width: 250px; background: rgba(12, 17, 13, 0.98); border: 2px solid var(--emas-terang); border-radius: 14px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); display: none; flex-direction: column; z-index: 999999; backdrop-filter: blur(10px); overflow: hidden; animation: bubbleIn 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
   .profile-bubble-menu.active { display: flex; }
   @keyframes bubbleIn { from { opacity: 0; transform: translateY(-8px) scale(0.95); } to { opacity: 1; transform: translateY(0) scale(1); } }
 
@@ -778,6 +764,12 @@
       return NAMA[idx] || "-";
     }
 
+    /* =========================================================
+       LOAD DASHBOARD FINANCE
+       FIX: sekarang baca DUA sumber — debts (aktif) + archivedDebts (lunas)
+       Keduanya dihitung penuh ke saldo, pemasukan, modal, profit.
+       Arsip cuma pindah tampilan, BUKAN keluar dari hitungan.
+    ========================================================= */
     function loadDashboardFinance() {
       let baseSaldoRaw = localStorage.getItem("comersio_base_saldo");
       let baseSaldo = (baseSaldoRaw !== null && baseSaldoRaw !== "") ? parseFloat(baseSaldoRaw) : 0;
@@ -791,25 +783,43 @@
       function cekProfitMasuk(tahunItem, bulanItem) { if (startYear === null || startMonth === null) return true; if (tahunItem > startYear) return true; if (tahunItem < startYear) return false; return bulanItem >= startMonth; }
       function isAfterStartMonth(dateVal) { if (startYear === null || startMonth === null) return true; let d = parseTgl(dateVal); if (!d) return true; return cekProfitMasuk(d.getFullYear(), d.getMonth()); }
 
+      // Helper: proses 1 item transaksi (dipakai untuk debts & archivedDebts)
+      function processItem(item) {
+        if (!item || item.excluded) return;
+        let harga   = numField(item, "harga", "hargaJual", "price", "total");
+        let modal   = numField(item, "modal", "hargaModal", "cost", "hpp");
+        let dibayar = numField(item, "dibayar", "bayar", "paid", "amount");
+        let tip     = numField(item, "tip", "tips");
+        let waktu   = getWaktuField(item);
+        let masuk   = dibayar + tip;
+        totalIncomeAllTime += masuk;
+        if (isSameMonth(waktu)) totalIncomeThisMonth += masuk;
+        totalModalOut += modal;
+        let itemProfit = (harga - modal) + tip;
+        if (isAfterStartMonth(waktu)) totalProfit += itemProfit;
+      }
+
+      // ==== 1. Transaksi AKTIF (belum lunas) ====
       try {
         let debtsData = JSON.parse(localStorage.getItem("debts")) || {};
-        for (let custId in debtsData) { let items = debtsData[custId]; if (!Array.isArray(items)) continue;
-          items.forEach(item => {
-            if (item.excluded) return;
-            let harga = numField(item,"harga","hargaJual","price","total");
-            let modal = numField(item,"modal","hargaModal","cost","hpp");
-            let dibayar = numField(item,"dibayar","bayar","paid","amount");
-            let tip = numField(item,"tip","tips");
-            let waktu = getWaktuField(item);
-            let masuk = dibayar + tip;
-            totalIncomeAllTime += masuk; if (isSameMonth(waktu)) totalIncomeThisMonth += masuk;
-            totalModalOut += modal;
-            let itemProfit = (harga - modal) + tip;
-            if (isAfterStartMonth(waktu)) totalProfit += itemProfit;
-          });
+        for (let custId in debtsData) {
+          let items = debtsData[custId];
+          if (!Array.isArray(items)) continue;
+          items.forEach(processItem);
         }
-      } catch(e) {}
+      } catch(e) { console.warn("debts err:", e); }
 
+      // ==== 2. Transaksi ARSIP (sudah lunas) — TETAP DIHITUNG ====
+      try {
+        let archivedData = JSON.parse(localStorage.getItem("archivedDebts")) || {};
+        for (let custId in archivedData) {
+          let items = archivedData[custId];
+          if (!Array.isArray(items)) continue;
+          items.forEach(processItem);
+        }
+      } catch(e) { console.warn("archivedDebts err:", e); }
+
+      // ==== 3. Log bulanan (kalau ada) ====
       try {
         let monthlyData = JSON.parse(localStorage.getItem("monthlyLogs")) || JSON.parse(localStorage.getItem("monthly")) || [];
         if (Array.isArray(monthlyData)) {
@@ -846,7 +856,7 @@
             if (isAfterStartMonth(waktu)) totalProfit += rowProfit;
           });
         }
-      } catch(e) {}
+      } catch(e) { console.warn("monthly err:", e); }
 
       let finalSaldo = baseSaldo - totalModalOut + totalIncomeAllTime;
       const formatIDR = (n) => { if (isNaN(n)) n = 0; if (n < 0) return "-Rp " + Math.abs(Math.round(n)).toLocaleString('id-ID'); return "Rp " + Math.round(n).toLocaleString('id-ID'); };
@@ -1325,10 +1335,6 @@
       link.href = URL.createObjectURL(blob); link.download = "Comersio.ayj"; link.click();
     }
 
-    /* =========================================================
-       LOAD FILE — ROBUST: support format v1 (flat), v2 (storage nested),
-       dan format flat apapun yang mirip localStorage keys
-    ========================================================= */
     document.getElementById("loadFile").addEventListener("change", function(e){
       const file = e.target.files[0];
       if(!file) return;
@@ -1344,7 +1350,6 @@
           let loadedCount = 0;
           let loadedFormat = "unknown";
 
-          // ==== FORMAT V2: data.storage nested (dari save versi baru) ====
           if (data.storage && typeof data.storage === "object" && !Array.isArray(data.storage)) {
             Object.keys(data.storage).forEach(key => {
               try {
@@ -1355,11 +1360,7 @@
               } catch(err) {}
             });
             loadedFormat = "v2 (storage)";
-          }
-
-          // ==== FORMAT V1: properti flat di root (dari save versi lama) ====
-          else {
-            // Mapping lengkap: property name di file → localStorage key
+          } else {
             const v1Map = {
               "customers": "customers",
               "debts": "debts",
@@ -1391,7 +1392,6 @@
               }
             });
 
-            // Profile nested
             if (data.profile && typeof data.profile === "object") {
               if (data.profile.username) { localStorage.setItem("username", String(data.profile.username)); loadedCount++; }
               if (data.profile.email !== undefined) { localStorage.setItem("email", String(data.profile.email)); loadedCount++; }
@@ -1403,7 +1403,6 @@
               }
             }
 
-            // Fallback super-generic: kalau object punya key yang sama dengan nama localStorage key, copy langsung
             if (loadedCount === 0) {
               const knownLsKeys = ["customers","debts","archivedDebts","products","customProducts","monthly","monthlyLogs","comersio_base_saldo","comersio_boards_config","comersio_active_board_note","comersio_active_board_note_v2","comersio_notes_archive","comersio_profit_start_date","username","email","title","profile_picture","user_avatar","global_customer_limit","global_charge_value","globalMargin"];
               Object.keys(data).forEach(k => {
