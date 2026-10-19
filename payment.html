@@ -7,330 +7,131 @@
 <link rel="stylesheet" href="style.css">
 <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 <style>
-  @font-face{
-    font-family: 'OswaldBold';
-    src: url('oswald-bold.ttf') format('truetype');
-    font-weight: 700;
-  }
-  @font-face{
-    font-family: 'FiraCondBold';
-    src: url('firasanscondensed-bold.otf') format('opentype');
-    font-weight: 700;
-  }
-  @font-face{
-    font-family: 'FiraCondBook';
-    src: url('firasanscondensed-book.otf') format('opentype');
-    font-weight: 400;
-  }
+  @font-face{font-family:'OswaldBold';src:url('oswald-bold.ttf') format('truetype');font-weight:700;}
+  @font-face{font-family:'FiraCondBold';src:url('firasanscondensed-bold.otf') format('opentype');font-weight:700;}
+  @font-face{font-family:'FiraCondBook';src:url('firasanscondensed-book.otf') format('opentype');font-weight:400;}
+  :root{--emas:#e8b13c;--emas-terang:#ffd166;--gelap:#0a0a0a;}
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  html,body{margin:0;padding:0;width:100%;min-height:100vh;font-family:'FiraCondBook',sans-serif;background:#0a0a0a !important;color:#fff;overflow-x:hidden;}
+  .bg-layer{position:fixed;inset:0;background-image:url('background.jpg');background-size:cover;background-position:center;background-repeat:no-repeat;z-index:0;}
+  .bg-dim{position:fixed;inset:0;background:rgba(6,10,7,0.82);z-index:1;}
+  .mbanking-topbar{position:fixed;top:0;left:0;right:0;height:60px;background:rgba(10,14,11,0.95);border-bottom:1px solid rgba(232,177,60,0.25);display:flex;align-items:center;justify-content:space-between;padding:0 16px;z-index:20;backdrop-filter:blur(8px);}
+  .mbanking-brand-container{display:flex;flex-direction:column;justify-content:center;}
+  .mbanking-brand{font-family:'OswaldBold',sans-serif;font-size:1.1rem;color:#fff;letter-spacing:0.5px;line-height:1.1;}
+  .mbanking-brand span{color:var(--emas-terang);}
+  .mbanking-greeting-top{font-size:0.7rem;color:var(--emas-terang);font-family:'FiraCondBold',sans-serif;margin-top:1px;line-height:1;}
+  .backBtn{background:transparent;border:1px solid rgba(232,177,60,0.5);color:var(--emas-terang);padding:6px 12px;border-radius:8px;font-family:'FiraCondBold',sans-serif;font-size:0.78rem;cursor:pointer;letter-spacing:0.5px;}
+  .backBtn:active{transform:scale(0.97);}
+  .content-wrap{position:relative;z-index:5;padding:76px 16px 60px 16px;max-width:480px;margin:0 auto;}
+  .modeToggleWrap{display:flex;background:rgba(10,14,11,0.9);border:1px solid rgba(232,177,60,0.3);border-radius:24px;padding:4px;max-width:320px;margin:0 auto 16px;gap:4px;}
+  .modeBtn{flex:1;background:transparent;border:none;color:#999;padding:8px 10px;border-radius:20px;font-family:'FiraCondBold',sans-serif;font-size:0.82rem;cursor:pointer;transition:all 0.2s;letter-spacing:0.5px;}
+  .modeBtn.active{background:var(--emas-terang);color:#000;}
+  #captureArea{background:rgba(12,17,13,0.95);border:2px solid var(--emas);border-radius:16px;padding:20px;box-shadow:0 6px 25px rgba(0,0,0,0.7);}
+  div.headerBox{all:unset !important;display:flex !important;flex-direction:column !important;align-items:center !important;text-align:center !important;width:100% !important;border-bottom:1px solid rgba(255,209,102,0.2) !important;padding-bottom:15px !important;margin-bottom:15px !important;background:transparent !important;box-shadow:none !important;}
+  .headerTopRow{display:flex;align-items:center;gap:12px;justify-content:center;}
+  .mainLogo{width:40px !important;height:40px !important;object-fit:contain !important;border-radius:50% !important;border:1px solid var(--emas-terang) !important;margin:0 !important;background:#0a0a0a !important;cursor:default;}
+  .headerRight{all:unset !important;display:flex !important;flex-direction:column !important;text-align:left !important;}
+  .headerRight h1{font-family:'OswaldBold',sans-serif !important;font-size:1.25rem !important;color:#fff !important;margin:0 !important;padding:0 !important;letter-spacing:0.5px;background:transparent !important;}
+  .headerRight h1 span{color:var(--emas-terang);}
+  .headerBillingSub{font-family:'FiraCondBold',sans-serif;font-size:0.78rem;color:var(--emas-terang);margin-top:4px;letter-spacing:1px;text-transform:uppercase;}
+  .paymentInfo{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:15px;font-size:0.85rem;color:var(--emas-terang);font-family:'FiraCondBold',sans-serif;}
+  .paymentInfoRight{text-align:right;color:#bbb;font-size:0.78rem;}
+  .paymentInfo p{margin:0;}
+  .receiptBox{background:#0d120f;border:1px solid rgba(232,177,60,0.3);border-radius:12px;padding:14px;margin-top:10px;}
+  .receiptRow{display:flex;justify-content:space-between;align-items:center;font-size:0.85rem;padding:6px 0;border-bottom:1px dashed rgba(255,209,102,0.15);}
+  .receiptRow:last-child{border-bottom:none;}
+  .totalDebtBox{background:#000;border:2px solid var(--emas-terang);padding:12px 14px;border-radius:12px;font-family:'FiraCondBold',sans-serif;margin-top:15px;display:flex;justify-content:space-between;color:var(--emas-terang);font-size:0.95rem;}
+  .paymentList{margin-top:15px;background:#0d120f;border:1px solid rgba(232,177,60,0.3);border-radius:14px;padding:15px;}
+  .paymentHeader{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
+  .paymentHeaderLeft{color:#fff;font-size:0.9rem;font-family:'FiraCondBold',sans-serif;}
+  .paymentHeaderRight{display:flex;align-items:center;gap:8px;}
+  .paymentHeaderRight img{width:50px;height:30px;object-fit:contain;border-radius:4px;background:#fff;padding:2px 4px;}
+  .paymentHeaderRight span{color:var(--emas-terang);font-size:0.9rem;font-family:'FiraCondBold',sans-serif;}
+  .paymentInfoText{color:#aaa;font-size:0.8rem;margin-bottom:12px;text-align:center;}
+  .paymentCard{background:#000;padding:14px;border-radius:10px;border:1px solid var(--emas);text-align:center;color:#fff;font-family:'FiraCondBold',sans-serif;}
+  .qrisContainer{display:flex;flex-direction:column;align-items:center;background:#fff;padding:8px;border-radius:0 !important;border:none !important;max-width:176px;margin:0 auto;}
+  .qrisImage{width:160px;height:160px;object-fit:contain;border-radius:0 !important;display:block;}
 
-  :root{
-    --emas: #e8b13c;
-    --emas-terang: #ffd166;
-    --gelap: #0a0a0a;
-  }
-
-  *{ box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-
-  html, body{
-    margin: 0; padding: 0; width: 100%; min-height: 100vh;
-    font-family: 'FiraCondBook', sans-serif;
-    background: #0a0a0a !important;
-    color: #ffffff;
-    overflow-x: hidden;
-  }
-
-  .bg-layer{
-    position: fixed; inset: 0;
-    background-image: url('background.jpg');
-    background-size: cover; background-position: center; background-repeat: no-repeat;
-    z-index: 0;
-  }
-  .bg-dim{
-    position: fixed; inset: 0;
-    background: rgba(6, 10, 7, 0.82);
-    z-index: 1;
-  }
-
-  /* TOP BAR */
-  .mbanking-topbar{
-    position: fixed; top: 0; left: 0; right: 0; height: 60px;
-    background: rgba(10, 14, 11, 0.95);
-    border-bottom: 1px solid rgba(232, 177, 60, 0.25);
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 0 16px; z-index: 20; backdrop-filter: blur(8px);
-  }
-  .mbanking-brand-container{ display: flex; flex-direction: column; justify-content: center; }
-  .mbanking-brand{
-    font-family: 'OswaldBold', sans-serif;
-    font-size: 1.1rem; color: #ffffff; letter-spacing: 0.5px; line-height: 1.1;
-  }
-  .mbanking-brand span{ color: var(--emas-terang); }
-  .mbanking-greeting-top{
-    font-size: 0.7rem; color: var(--emas-terang);
-    font-family: 'FiraCondBold', sans-serif; margin-top: 1px; line-height: 1;
-  }
-  .backBtn{
-    background: transparent;
-    border: 1px solid rgba(232, 177, 60, 0.5);
-    color: var(--emas-terang);
-    padding: 6px 12px; border-radius: 8px;
-    font-family: 'FiraCondBold', sans-serif;
-    font-size: 0.78rem; cursor: pointer;
-    letter-spacing: 0.5px;
-  }
-  .backBtn:active{ transform: scale(0.97); }
-
-  .content-wrap{
-    position: relative; z-index: 5;
-    padding: 76px 16px 60px 16px;
-    max-width: 480px; margin: 0 auto;
-  }
-
-  /* MODE TOGGLE */
-  .modeToggleWrap{
-    display: flex;
-    background: rgba(10, 14, 11, 0.9);
-    border: 1px solid rgba(232, 177, 60, 0.3);
-    border-radius: 24px;
-    padding: 4px;
-    max-width: 320px;
-    margin: 0 auto 16px;
-    gap: 4px;
-  }
-  .modeBtn{
-    flex: 1; background: transparent; border: none;
-    color: #999; padding: 8px 10px; border-radius: 20px;
-    font-family: 'FiraCondBold', sans-serif;
-    font-size: 0.82rem; cursor: pointer;
-    transition: all 0.2s; letter-spacing: 0.5px;
-  }
-  .modeBtn.active{ background: var(--emas-terang); color: #000; }
-
-  /* ============ NORMAL MODE ============ */
-  #captureArea{
-    background: rgba(12, 17, 13, 0.95);
-    border: 2px solid var(--emas);
-    border-radius: 16px;
-    padding: 20px;
-    box-shadow: 0 6px 25px rgba(0,0,0,0.7);
-  }
-
-  div.headerBox{
-    all: unset !important;
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    text-align: center !important;
-    width: 100% !important;
-    border-bottom: 1px solid rgba(255, 209, 102, 0.2) !important;
-    padding-bottom: 15px !important;
-    margin-bottom: 15px !important;
-    background: transparent !important;
-    box-shadow: none !important;
-  }
-  .headerTopRow{ display: flex; align-items: center; gap: 12px; justify-content: center; }
-  .mainLogo{
-    width: 40px !important; height: 40px !important;
-    object-fit: contain !important; border-radius: 50% !important;
-    border: 1px solid var(--emas-terang) !important;
-    margin: 0 !important; background: transparent !important; cursor: default;
-  }
-  .headerRight{
-    all: unset !important;
-    display: flex !important; flex-direction: column !important; text-align: left !important;
-  }
-  .headerRight h1{
-    font-family: 'OswaldBold', sans-serif !important;
-    font-size: 1.25rem !important; color: #ffffff !important;
-    margin: 0 !important; padding: 0 !important; letter-spacing: 0.5px;
-    background: transparent !important;
-  }
-  .headerRight h1 span{ color: var(--emas-terang); }
-  .headerBillingSub{
-    font-family: 'FiraCondBold', sans-serif;
-    font-size: 0.78rem; color: var(--emas-terang);
-    margin-top: 4px; letter-spacing: 1px; text-transform: uppercase;
-  }
-
-  .paymentInfo{
-    display: flex; justify-content: space-between; align-items: flex-start;
-    margin-bottom: 15px; font-size: 0.85rem; color: var(--emas-terang);
-    font-family: 'FiraCondBold', sans-serif;
-  }
-  .paymentInfoRight{ text-align: right; color: #bbb; font-size: 0.78rem; }
-  .paymentInfo p{ margin: 0; }
-
-  .receiptBox{
-    background: #0d120f;
-    border: 1px solid rgba(232, 177, 60, 0.3);
-    border-radius: 12px;
-    padding: 14px; margin-top: 10px;
-  }
-  .receiptRow{
-    display: flex; justify-content: space-between; align-items: center;
-    font-size: 0.85rem; padding: 6px 0;
-    border-bottom: 1px dashed rgba(255, 209, 102, 0.15);
-  }
-  .receiptRow:last-child{ border-bottom: none; }
-
-  .totalDebtBox{
-    background: #000000;
-    border: 2px solid var(--emas-terang);
-    padding: 12px 14px; border-radius: 12px;
-    font-family: 'FiraCondBold', sans-serif;
-    margin-top: 15px;
-    display: flex; justify-content: space-between;
-    color: var(--emas-terang); font-size: 0.95rem;
-  }
-
-  .paymentList{
-    margin-top: 15px;
-    background: #0d120f;
-    border: 1px solid rgba(232, 177, 60, 0.3);
-    border-radius: 14px; padding: 15px;
-  }
-  .paymentHeader{ display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
-  .paymentHeaderLeft{ color: #fff; font-size: 0.9rem; font-family: 'FiraCondBold', sans-serif; }
-  .paymentHeaderRight{ display: flex; align-items: center; gap: 8px; }
-  .paymentHeaderRight img{ width: 50px; object-fit: contain; }
-  .paymentHeaderRight span{ color: var(--emas-terang); font-size: 0.9rem; font-family: 'FiraCondBold', sans-serif; }
-  .paymentInfoText{ color: #aaa; font-size: 0.8rem; margin-bottom: 12px; text-align: center; }
-  .paymentCard{
-    background: #000000; padding: 14px; border-radius: 10px;
-    border: 1px solid var(--emas); text-align: center; color: white;
-    font-family: 'FiraCondBold', sans-serif;
-  }
-  .qrisContainer{
-    display: flex; flex-direction: column; align-items: center;
-    background: #ffffff; padding: 8px;
-    border-radius: 0 !important; border: none !important;
-    max-width: 176px; margin: 0 auto;
-  }
-  .qrisImage{
-    width: 160px; height: 160px; object-fit: contain;
-    border-radius: 0 !important; display: block;
-  }
-
-  /* ============ NOTA MODE ============ */
+  /* ============================================
+     NOTA BILLING — ZIGZAG (CSS + div, tanpa SVG)
+     Ujung zigzag = belah ketupat bergaris emas,
+     separuh atas/bawah saja yang kelihatan,
+     lalu nyambung ke border kiri/kanan body.
+  ============================================ */
   .notaBill{
-    background: #000000;
-    border: 2px solid var(--emas);
-    border-radius: 10px;
-    padding: 22px 18px;
-    max-width: 400px;
-    margin: 0 auto;
-    box-shadow: 0 6px 25px rgba(0,0,0,0.7);
-  }
-  .notaHeader{ text-align: center; }
-  .notaBrand{
-    font-family: 'OswaldBold', sans-serif;
-    font-size: 1.6rem; color: var(--emas-terang);
-    letter-spacing: 4px; line-height: 1;
-  }
-  .notaTagline{
-    font-family: 'FiraCondBold', sans-serif;
-    font-size: 0.7rem; color: #888;
-    letter-spacing: 3px; margin-top: 6px;
-  }
-  .notaDivider{
-    border: none;
-    border-top: 2px dotted var(--emas);
-    opacity: 0.65;
-    margin: 12px 0;
-  }
-  .notaRow{
-    display: flex; justify-content: space-between; align-items: flex-start;
-    gap: 12px; padding: 3px 0; font-size: 0.83rem;
-  }
-  .notaLabel{
-    color: #888;
-    font-family: 'FiraCondBook', sans-serif;
-    white-space: nowrap;
-  }
-  .notaValue{
-    color: #fff;
-    font-family: 'FiraCondBold', sans-serif;
-    text-align: right; word-break: break-word; max-width: 62%;
-  }
-  .notaGold{ color: var(--emas-terang) !important; }
-  .notaRed{ color: #ff5555 !important; }
-
-  .notaTotalBox{
-    display: flex; justify-content: space-between; align-items: center;
-    background: var(--emas-terang); color: #000;
-    padding: 10px 14px;
-    font-family: 'FiraCondBold', sans-serif;
-    font-size: 0.95rem; letter-spacing: 0.5px;
-    border-radius: 4px;
+    background:transparent;
+    border:none;
+    padding:0;
+    width:400px;
+    max-width:100%;
+    margin:0 auto;
+    position:relative;
   }
 
-  .notaSectionTitle{
-    font-family: 'FiraCondBold', sans-serif;
-    font-size: 0.7rem; color: var(--emas-terang);
-    letter-spacing: 1.5px; text-align: center;
-    margin-bottom: 8px;
+  .tornStrip{
+    position:relative;
+    width:100%;
+    height:30px;
+    overflow:hidden;
+    display:block;
   }
-  .notaFooter{ text-align: center; padding-top: 4px; }
-  .notaFooter div:first-child{
-    font-family: 'FiraCondBold', sans-serif;
-    font-size: 0.85rem; color: var(--emas-terang);
-  }
-  .notaFooterSmall{ font-size: 0.65rem; color: #666; margin-top: 4px; }
 
-  .notaMethodHeader{
-    display: flex; align-items: center; justify-content: center;
-    gap: 8px; margin-bottom: 10px;
+  .notaBody{
+    background:#0d0d0d;
+    border-left:2px solid var(--emas);
+    border-right:2px solid var(--emas);
+    padding:8px 16px 14px 16px;
+    position:relative;
   }
-  .notaMethodHeader img{ width: 36px; height: 36px; object-fit: contain; }
-  .notaMethodHeader span{
-    font-family: 'FiraCondBold', sans-serif;
-    color: var(--emas-terang); font-size: 0.95rem;
-  }
-  .notaPaymentBox{
-    background: #000;
-    border: 1px solid var(--emas);
-    border-radius: 8px;
-    padding: 12px; text-align: center;
-  }
-  .notaQrisContainer{
-    display: flex; flex-direction: column; align-items: center;
-    background: #ffffff; padding: 6px;
-    border-radius: 0 !important;
-    max-width: 160px; margin: 0 auto;
-  }
-  .notaQrisImage{
-    width: 148px; height: 148px; object-fit: contain;
-    display: block; border-radius: 0 !important;
-  }
-  .notaTransferNumber{
-    font-family: 'FiraCondBold', sans-serif;
-    font-size: 1.1rem; color: var(--emas-terang);
-    letter-spacing: 1px;
-  }
-  .notaTransferOwner{ font-size: 0.75rem; color: #999; margin-top: 4px; }
-  .notaScanHint{ font-size: 0.7rem; color: #aaa; margin-top: 8px; }
 
-  /* SAVE BUTTON */
-  .saveButton{
-    width: 100%; height: 48px; border: none; border-radius: 12px;
-    margin-top: 20px;
-    background: var(--emas-terang); color: black;
-    font-size: 0.95rem; font-family: 'FiraCondBold', sans-serif;
-    cursor: pointer;
-    box-shadow: 0 4px 15px rgba(255, 209, 102, 0.3);
-    transition: transform 0.2s;
+  .notaHeader{text-align:center;}
+  .notaBrand{font-family:'OswaldBold',sans-serif;font-size:1.6rem;color:var(--emas-terang);letter-spacing:4px;line-height:1;}
+  .notaTagline{font-family:'FiraCondBold',sans-serif;font-size:0.7rem;color:#888;letter-spacing:3px;margin-top:6px;}
+  .notaDivider{border:none;border-top:2px dotted var(--emas);opacity:0.65;margin:12px 0;}
+  .notaRow{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;padding:3px 0;font-size:0.83rem;}
+  .notaLabel{color:#888;font-family:'FiraCondBook',sans-serif;white-space:nowrap;}
+  .notaValue{color:#fff;font-family:'FiraCondBold',sans-serif;text-align:right;word-break:break-word;max-width:62%;}
+  .notaGold{color:var(--emas-terang) !important;}
+  .notaRed{color:#ff5555 !important;}
+  .notaTotalBox{display:flex;justify-content:space-between;align-items:center;background:var(--emas-terang);color:#000;padding:10px 14px;font-family:'FiraCondBold',sans-serif;font-size:0.95rem;letter-spacing:0.5px;border-radius:4px;}
+  .notaSectionTitle{font-family:'FiraCondBold',sans-serif;font-size:0.7rem;color:var(--emas-terang);letter-spacing:1.5px;text-align:center;margin-bottom:8px;}
+  .notaFooter{text-align:center;padding-top:4px;}
+  .notaFooter div:first-child{font-family:'FiraCondBold',sans-serif;font-size:0.85rem;color:var(--emas-terang);}
+  .notaFooterSmall{font-size:0.65rem;color:#666;margin-top:4px;}
+
+  .notaProdukList{padding:2px 0 4px;}
+  .notaProdukItem{
+    padding:7px 0;
+    border-bottom:1px dotted rgba(232,177,60,0.18);
+    font-size:0.85rem;
+    color:#ffffff;
+    font-family:'FiraCondBold',sans-serif;
+    word-break:break-word;
+    line-height:1.35;
   }
-  .saveButton:active{ transform: scale(0.98); }
-  .noCapture{ z-index: 99; }
+  .notaProdukItem:last-child{border-bottom:none;}
+  .notaProdukEmpty{text-align:center;color:#666;padding:8px;font-size:0.85rem;font-style:italic;}
+
+  .notaMethodHeader{display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:10px;}
+  .notaMethodHeader img{width:60px;height:32px;object-fit:contain;border-radius:4px;background:#fff;padding:2px 6px;}
+  .notaMethodHeader span{font-family:'FiraCondBold',sans-serif;color:var(--emas-terang);font-size:0.95rem;}
+  .notaPaymentBox{background:#000;border:1px solid var(--emas);border-radius:8px;padding:12px;text-align:center;}
+  .notaQrisContainer{display:flex;flex-direction:column;align-items:center;background:#fff;padding:6px;border-radius:0 !important;max-width:160px;margin:0 auto;}
+  .notaQrisImage{width:148px;height:148px;object-fit:contain;display:block;border-radius:0 !important;}
+  .notaTransferNumber{font-family:'FiraCondBold',sans-serif;font-size:1.1rem;color:var(--emas-terang);letter-spacing:1px;}
+  .notaTransferOwner{font-size:0.75rem;color:#999;margin-top:4px;}
+  .notaScanHint{font-size:0.7rem;color:#aaa;margin-top:8px;}
+
+  .saveButton{width:100%;height:48px;border:none;border-radius:12px;margin-top:20px;background:var(--emas-terang);color:#000;font-size:0.95rem;font-family:'FiraCondBold',sans-serif;cursor:pointer;box-shadow:0 4px 15px rgba(255,209,102,0.3);transition:transform 0.2s;}
+  .saveButton:active{transform:scale(0.98);}
+  .noCapture{z-index:99;}
 </style>
 </head>
-
 <body>
 
   <div class="bg-layer"></div>
   <div class="bg-dim"></div>
 
-  <!-- TOP BAR -->
   <div class="mbanking-topbar">
     <div class="mbanking-brand-container">
       <div class="mbanking-brand">Comersio <span>Center</span></div>
@@ -341,13 +142,12 @@
 
   <div class="content-wrap" style="padding-top: 70px;">
 
-    <!-- MODE TOGGLE -->
     <div class="modeToggleWrap noCapture">
       <button class="modeBtn active" data-mode="normal" onclick="switchMode('normal')">Mode Normal</button>
       <button class="modeBtn" data-mode="nota" onclick="switchMode('nota')">Nota Billing</button>
     </div>
 
-    <!-- ============ NORMAL MODE ============ -->
+    <!-- MODE NORMAL -->
     <div id="captureArea">
       <div class="headerBox">
         <div class="headerTopRow">
@@ -380,77 +180,82 @@
       </div>
     </div>
 
-    <!-- ============ NOTA MODE ============ -->
+    <!-- MODE NOTA BILLING -->
     <div id="notaCaptureArea" class="notaBill" style="display:none;">
-      <div class="notaHeader">
-        <div class="notaBrand">COMÉRSIO</div>
-        <div class="notaTagline">NOTA PEMBAYARAN</div>
+
+      <div class="tornStrip" id="tornTop"></div>
+
+      <div class="notaBody">
+        <div class="notaHeader">
+          <div class="notaBrand">COMÉRSIO</div>
+          <div class="notaTagline">NOTA PEMBAYARAN</div>
+        </div>
+
+        <div class="notaDivider"></div>
+
+        <div class="notaRow">
+          <span class="notaLabel">No. ID</span>
+          <span class="notaValue" id="notaCustomerId">-</span>
+        </div>
+        <div class="notaRow">
+          <span class="notaLabel">Tanggal</span>
+          <span class="notaValue" id="notaDate">-</span>
+        </div>
+
+        <div class="notaDivider"></div>
+
+        <div class="notaSectionTitle">DAFTAR PRODUK</div>
+        <div class="notaProdukList" id="notaProdukList"></div>
+
+        <div class="notaDivider"></div>
+
+        <div class="notaRow">
+          <span class="notaLabel">Total Hutang</span>
+          <span class="notaValue" id="notaTotalHutang">Rp 0</span>
+        </div>
+        <div class="notaRow">
+          <span class="notaLabel">Sudah Dibayar</span>
+          <span class="notaValue notaGold" id="notaDibayar">Rp 0</span>
+        </div>
+        <div class="notaRow">
+          <span class="notaLabel">Sisa Tagihan</span>
+          <span class="notaValue notaRed" id="notaSisa">Rp 0</span>
+        </div>
+        <div class="notaRow">
+          <span class="notaLabel">Status</span>
+          <span class="notaValue" id="notaStatus">-</span>
+        </div>
+
+        <div class="notaDivider"></div>
+
+        <div class="notaTotalBox">
+          <span>TOTAL AKHIR</span>
+          <span id="notaTotalAkhir">Rp 0</span>
+        </div>
+
+        <div class="notaDivider"></div>
+
+        <div class="notaSectionTitle">METODE PEMBAYARAN</div>
+        <div id="notaPaymentContent"></div>
+
+        <div class="notaDivider"></div>
+
+        <div class="notaFooter">
+          <div>~ Terima Kasih ~</div>
+          <div class="notaFooterSmall">Nota ini sebagai bukti pembayaran yang sah</div>
+        </div>
       </div>
 
-      <div class="notaDivider"></div>
+      <div class="tornStrip" id="tornBottom"></div>
 
-      <div class="notaRow">
-        <span class="notaLabel">No. ID</span>
-        <span class="notaValue" id="notaCustomerId">-</span>
-      </div>
-      <div class="notaRow">
-        <span class="notaLabel">Tanggal</span>
-        <span class="notaValue" id="notaDate">-</span>
-      </div>
-
-      <div class="notaDivider"></div>
-
-      <div class="notaRow">
-        <span class="notaLabel">Produk</span>
-        <span class="notaValue" id="notaProduk">-</span>
-      </div>
-      <div class="notaRow">
-        <span class="notaLabel">Total Hutang</span>
-        <span class="notaValue" id="notaTotalHutang">Rp 0</span>
-      </div>
-      <div class="notaRow">
-        <span class="notaLabel">Sudah Dibayar</span>
-        <span class="notaValue notaGold" id="notaDibayar">Rp 0</span>
-      </div>
-      <div class="notaRow">
-        <span class="notaLabel">Sisa Tagihan</span>
-        <span class="notaValue notaRed" id="notaSisa">Rp 0</span>
-      </div>
-      <div class="notaRow">
-        <span class="notaLabel">Status</span>
-        <span class="notaValue" id="notaStatus">-</span>
-      </div>
-
-      <div class="notaDivider"></div>
-
-      <div class="notaTotalBox">
-        <span>TOTAL AKHIR</span>
-        <span id="notaTotalAkhir">Rp 0</span>
-      </div>
-
-      <div class="notaDivider"></div>
-
-      <div class="notaSectionTitle">METODE PEMBAYARAN</div>
-      <div id="notaPaymentContent"></div>
-
-      <div class="notaDivider"></div>
-
-      <div class="notaFooter">
-        <div>~ Terima Kasih ~</div>
-        <div class="notaFooterSmall">Nota ini sebagai bukti pembayaran yang sah</div>
-      </div>
     </div>
 
-    <!-- SAVE BUTTON -->
     <button class="saveButton noCapture" onclick="saveAsImage()">
       SIMPAN BILL PEMBAYARAN
     </button>
   </div>
 
 <script>
-/* =========================
-   STORAGE & DATA
-========================= */
 const customer = localStorage.getItem("paymentCustomer") || "-";
 const total = localStorage.getItem("paymentTotal") || "0";
 const method = localStorage.getItem("paymentMethod") || "qris";
@@ -459,9 +264,6 @@ const debts = JSON.parse(localStorage.getItem("debts")) || {};
 
 document.getElementById("paymentCustomerId").innerText = `ID : ${customer}`;
 
-/* =========================
-   LIVE TIME
-========================= */
 function updateLivePaymentTime(){
     const now = new Date();
     const day = String(now.getDate()).padStart(2,"0");
@@ -470,10 +272,7 @@ function updateLivePaymentTime(){
     const hours = String(now.getHours()).padStart(2,"0");
     const minutes = String(now.getMinutes()).padStart(2,"0");
     const seconds = String(now.getSeconds()).padStart(2,"0");
-
-    document.getElementById("livePaymentTime").innerText =
-        `${day}/${month}/${year} • ${hours}:${minutes}:${seconds}`;
-
+    document.getElementById("livePaymentTime").innerText = `${day}/${month}/${year} • ${hours}:${minutes}:${seconds}`;
     const notaDate = document.getElementById('notaDate');
     if(notaDate) notaDate.innerText = `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
 }
@@ -482,9 +281,6 @@ setInterval(updateLivePaymentTime, 1000);
 
 document.getElementById("paymentTotal").innerText = parseInt(total || 0).toLocaleString("id-ID");
 
-/* =========================
-   HITUNG DATA
-========================= */
 const list = document.getElementById("paymentListSimple");
 const customerDebt = debts[customer] || [];
 
@@ -508,9 +304,6 @@ const sisaTagihanGabungan = totalHutangGabungan - totalDibayarGabungan;
 const statusPembayaran = (paymentMode === 'amort') ? "Amortisasi" : "Full";
 const statusColor = (paymentMode === 'amort') ? "#ffb703" : "#4caf5e";
 
-/* =========================
-   RENDER NORMAL MODE
-========================= */
 if(productNames.length > 0){
     list.innerHTML = `
         <div class="receiptRow">
@@ -539,9 +332,6 @@ if(productNames.length > 0){
     list.innerHTML = `<p style="text-align:center; color:#777; padding: 10px; margin:0;">Tidak ada rincian utang aktif.</p>`;
 }
 
-/* =========================
-   PAYMENT DATA
-========================= */
 const paymentData = {
     qris:{ logo:"QRIS Logo.png", name:"QRIS", type:"qris" },
     gopay:{ logo:"GoPay.png", name:"GoPay", type:"ewallet", number:"083874854586", owner:"An E•• P••••••" },
@@ -550,7 +340,8 @@ const paymentData = {
     seabank:{ logo:"SeaBank.png", name:"SeaBank", type:"bank", number:"901677273030", owner:"An E•• P••••••" },
     bri:{ logo:"Bank BRI.png", name:"BRI", type:"bank", number:"696101033719531", owner:"An E•• P••••••" },
     bankjago:{ logo:"Bank Jago.png", name:"Bank Jago", type:"bank", number:"100626307457", owner:"An E•• P••••••" },
-    krom:{ logo:"Krom.png", name:"Krom", type:"bank", number:"770015012050", owner:"An E•• P••••••" }
+    krom:{ logo:"Krom.png", name:"Krom", type:"bank", number:"770015012050", owner:"An E•• P••••••" },
+    superbank:{ logo:"https://upload.wikimedia.org/wikipedia/commons/c/c6/Superbank_Indonesia.png", name:"SuperBank", type:"bank", number:"000045742939", owner:"An E•• P••••••" }
 };
 
 const pay = paymentData[method] || paymentData["qris"];
@@ -599,19 +390,24 @@ if(pay.type === "qris"){
     `;
 }
 
-/* =========================
-   RENDER NOTA MODE
-========================= */
 function renderNota(){
     updateLivePaymentTime();
 
     document.getElementById('notaCustomerId').innerText = customer;
-    document.getElementById('notaProduk').innerText = gabunganProdukStr;
     document.getElementById('notaTotalHutang').innerText = 'Rp ' + totalHutangGabungan.toLocaleString('id-ID');
     document.getElementById('notaDibayar').innerText = 'Rp ' + totalDibayarGabungan.toLocaleString('id-ID');
     document.getElementById('notaSisa').innerText = 'Rp ' + sisaTagihanGabungan.toLocaleString('id-ID');
     document.getElementById('notaStatus').innerText = statusPembayaran;
     document.getElementById('notaTotalAkhir').innerText = 'Rp ' + parseInt(total || 0).toLocaleString('id-ID');
+
+    const itemsFiltered = customerDebt.filter(item => ((item.harga || 0) - (item.dibayar || 0)) > 0);
+    const produkListHtml = itemsFiltered.length > 0
+        ? itemsFiltered.map(item => {
+            const nama = item.produk || '-';
+            return `<div class="notaProdukItem">${nama}</div>`;
+        }).join('')
+        : '<div class="notaProdukEmpty">Tidak ada produk aktif</div>';
+    document.getElementById('notaProdukList').innerHTML = produkListHtml;
 
     const notaPay = document.getElementById('notaPaymentContent');
 
@@ -642,9 +438,78 @@ function renderNota(){
     }
 }
 
-/* =========================
-   MODE SWITCHING
-========================= */
+/* ===== SOBEKAN KERTAS (canvas, halus, stroke nyatu sama border samping) ===== */
+const STRIP_H = 30;   // tinggi area sobekan
+const EDGE = 2;       // tebal border samping (sama dgn .notaBody)
+const FILL = '#0d0d0d';
+const GOLD = '#e8b13c';
+
+function rand(a, b){ return a + Math.random() * (b - a); }
+
+// titik-titik zigzag acak: puncak & lembah selang-seling
+function tornPoints(w){
+    const pts = [];
+    const x0 = EDGE / 2, x1 = w - EDGE / 2;
+    let x = x0, up = Math.random() < 0.5;
+    while(x < x1 - 4){
+        pts.push({ x: x, y: up ? rand(4, 12) : rand(16, STRIP_H - 4) });
+        x += rand(7, 15);
+        up = !up;
+    }
+    pts.push({ x: x1, y: up ? rand(4, 12) : rand(16, STRIP_H - 4) });
+    return pts;
+}
+
+function buildTorn(stripId, isTop){
+    const strip = document.getElementById(stripId);
+    const w = parseInt(document.getElementById('notaCaptureArea').style.width) || 400;
+    const dpr = Math.max(window.devicePixelRatio || 1, 3);
+
+    strip.innerHTML = '';
+    const cv = document.createElement('canvas');
+    cv.width = w * dpr;
+    cv.height = STRIP_H * dpr;
+    cv.style.cssText = `display:block;width:${w}px;height:${STRIP_H}px;`;
+    strip.appendChild(cv);
+
+    const ctx = cv.getContext('2d');
+    ctx.scale(dpr, dpr);
+
+    // bawah = cermin dari atas
+    const pts = tornPoints(w).map(p => ({ x: p.x, y: isTop ? p.y : STRIP_H - p.y }));
+    const xL = EDGE / 2, xR = w - EDGE / 2;
+    const yBase = isTop ? STRIP_H : 0;   // sisi yg nyambung ke body
+
+    // satu jalur: garis samping kiri -> zigzag -> garis samping kanan
+    ctx.beginPath();
+    ctx.moveTo(xL, yBase);
+    ctx.lineTo(xL, pts[0].y);
+    pts.forEach(p => ctx.lineTo(p.x, p.y));
+    ctx.lineTo(xR, yBase);
+
+    // isi gelap (tutup jalur lewat sisi body)
+    ctx.fillStyle = FILL;
+    ctx.fill();
+
+    // stroke emas: nyatu dari border samping ke sobekan
+    ctx.lineWidth = EDGE;
+    ctx.strokeStyle = GOLD;
+    ctx.lineJoin = 'miter';
+    ctx.miterLimit = 2.5;
+    ctx.lineCap = 'butt';
+    ctx.stroke();
+}
+
+function fitNota(){
+    const wrap = document.querySelector('.content-wrap');
+    const avail = wrap.clientWidth - 32;
+    const w = Math.max(200, Math.min(400, Math.floor(avail / 20) * 20));
+    document.getElementById('notaCaptureArea').style.width = w + 'px';
+    buildTorn('tornTop', true);
+    buildTorn('tornBottom', false);
+}
+window.addEventListener('resize', () => { if(currentMode === 'nota') fitNota(); });
+
 let currentMode = localStorage.getItem('billDisplayMode') || 'normal';
 
 function switchMode(mode){
@@ -658,15 +523,11 @@ function switchMode(mode){
     document.getElementById('captureArea').style.display = (mode === 'normal') ? 'block' : 'none';
     document.getElementById('notaCaptureArea').style.display = (mode === 'nota') ? 'block' : 'none';
 
-    if(mode === 'nota') renderNota();
+    if(mode === 'nota'){ fitNota(); renderNota(); }
 }
 
-/* init mode aktif */
 switchMode(currentMode);
 
-/* =========================
-   SAVE AS IMAGE
-========================= */
 function saveAsImage(){
     const button = document.querySelector(".saveButton");
     const originalText = button.innerText;
@@ -680,7 +541,8 @@ function saveAsImage(){
     html2canvas(targetEl, {
         scale: 3,
         useCORS: true,
-        backgroundColor: "#000000"
+        backgroundColor: "#0a0a0a",
+        logging: false
     }).then(canvas => {
         const link = document.createElement("a");
         link.download = `Bill-Comersio-${customer}-${currentMode}.png`;

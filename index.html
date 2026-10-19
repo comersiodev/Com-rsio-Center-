@@ -20,13 +20,22 @@
   @font-face{ font-family: 'FiraCondBold'; src: url('firasanscondensed-bold.otf') format('opentype'); font-weight: 700; font-style: normal; }
   @font-face{ font-family: 'FiraCondBook'; src: url('firasanscondensed-book.otf') format('opentype'); font-weight: 400; font-style: normal; }
 
-  :root{ --hijau: #2f6b3a; --hijau-terang: #4caf5e; --emas: #e8b13c; --emas-terang: #ffd166; --gelap: #0b0f0c; }
+  :root{
+    --hijau: #2f6b3a;
+    --hijau-terang: #4caf5e;
+    --emas: #e8b13c;
+    --emas-terang: #ffd166;
+    --gelap: #0b0f0c;
+  }
 
   *{ box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
   html, body{ margin: 0; padding: 0; height: 100%; overflow: hidden; font-family: 'FiraCondBook', sans-serif; }
+
   body{ position: relative; width: 100%; height: 100vh; background: #0a0a0a; }
 
   .bg-layer{ position: fixed; inset: 0; background-image: url('background.jpg'); background-size: cover; background-position: center center; background-repeat: no-repeat; z-index: 0; }
+
   .bg-dim{ position: fixed; inset: 0; background: rgba(6, 10, 7, 0.78); z-index: 1; }
 
   .board-icon, .mi-icon, .custom-modal-btn svg, .option-btn svg, .cancelButton svg,
@@ -45,43 +54,125 @@
   .board-ctrl-btn svg, .board-delete-btn svg { width: 12px !important; height: 12px !important; }
   .live-label svg { width: 8px !important; height: 8px !important; }
 
-  .mbanking-topbar { position: fixed; top: 0; left: 0; right: 0; height: 56px; background: rgba(10, 14, 11, 0.95); border-bottom: 1px solid rgba(232, 177, 60, 0.25); display: flex; align-items: center; justify-content: space-between; padding: 0 16px; z-index: 20; backdrop-filter: blur(8px); }
+  .mbanking-topbar {
+    position: fixed; top: 0; left: 0; right: 0; height: 56px;
+    background: rgba(10, 14, 11, 0.95);
+    border-bottom: 1px solid rgba(232, 177, 60, 0.25);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 16px; z-index: 20; backdrop-filter: blur(8px);
+  }
+
   .mbanking-brand-container { display: flex; flex-direction: column; justify-content: center; }
   .mbanking-brand { font-family: 'OswaldBold', sans-serif; font-size: 1.1rem; color: #ffffff; letter-spacing: 0.5px; line-height: 1.1; }
   .mbanking-brand span { color: var(--emas-terang); }
   .mbanking-greeting-top { font-size: 0.7rem; color: var(--emas-terang); font-family: 'FiraCondBold', sans-serif; margin-top: 1px; line-height: 1; }
 
-  .profile-circle-btn { width: 36px; height: 36px; border-radius: 50%; border: 2px solid var(--emas-terang); background: #121814; overflow: hidden; display: flex; align-items: center; justify-content: center; cursor: pointer; text-decoration: none; transition: transform 0.2s, box-shadow 0.2s; box-shadow: 0 2px 8px rgba(0,0,0,0.5); padding: 0; }
+  .profile-circle-btn {
+    width: 36px; height: 36px; border-radius: 50%;
+    border: 2px solid var(--emas-terang); background: #121814;
+    overflow: hidden; display: flex; align-items: center; justify-content: center;
+    cursor: pointer; text-decoration: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.5); padding: 0;
+  }
+
   .profile-circle-btn:hover { transform: scale(1.08); box-shadow: 0 0 12px rgba(255, 209, 102, 0.4); }
   .profile-circle-btn img { width: 100%; height: 100%; object-fit: cover; }
 
   .profile-dropdown-wrapper { position: relative; display: inline-block; }
-  .profile-bubble-menu { position: absolute; top: 45px; right: 0; width: 250px; background: rgba(12, 17, 13, 0.98); border: 2px solid var(--emas-terang); border-radius: 14px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); display: none; flex-direction: column; z-index: 999999; backdrop-filter: blur(10px); overflow: hidden; animation: bubbleIn 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
-  .profile-bubble-menu.active { display: flex; }
-  @keyframes bubbleIn { from { opacity: 0; transform: translateY(-8px) scale(0.95); } to { opacity: 1; transform: translateY(0) scale(1); } }
 
-  .bubble-profile-preview { display: flex; align-items: center; gap: 10px; padding: 12px; background: rgba(232, 177, 60, 0.08); border-bottom: 1px solid rgba(232, 177, 60, 0.2); text-decoration: none; transition: background 0.2s; }
+  .profile-bubble-menu {
+    position: absolute; top: 45px; right: 0; width: 250px;
+    background: rgba(12, 17, 13, 0.98);
+    border: 2px solid var(--emas-terang);
+    border-radius: 14px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+    display: none; flex-direction: column;
+    z-index: 999999; backdrop-filter: blur(10px);
+    overflow: hidden;
+    animation: bubbleIn 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+  }
+
+  .profile-bubble-menu.active { display: flex; }
+
+  @keyframes bubbleIn {
+    from { opacity: 0; transform: translateY(-8px) scale(0.95); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  .bubble-profile-preview {
+    display: flex; align-items: center; gap: 10px;
+    padding: 12px;
+    background: rgba(232, 177, 60, 0.08);
+    border-bottom: 1px solid rgba(232, 177, 60, 0.2);
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+
   .bubble-profile-preview:hover { background: rgba(232, 177, 60, 0.18); }
-  .bubble-avatar { width: 40px; height: 40px; border-radius: 50%; border: 1.5px solid var(--emas-terang); background: #121814; overflow: hidden; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+
+  .bubble-avatar {
+    width: 40px; height: 40px; border-radius: 50%;
+    border: 1.5px solid var(--emas-terang);
+    background: #121814; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+
   .bubble-avatar img { width: 100%; height: 100%; object-fit: cover; }
+
   .bubble-info { display: flex; flex-direction: column; min-width: 0; }
-  .bubble-name { font-family: 'FiraCondBold', sans-serif; font-size: 0.9rem; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+  .bubble-name {
+    font-family: 'FiraCondBold', sans-serif;
+    font-size: 0.9rem; color: #fff;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+
   .bubble-sub { font-size: 0.7rem; color: var(--emas-terang); display: flex; align-items: center; gap: 3px; }
 
-  .bubble-menu-item { display: flex; align-items: center; gap: 10px; padding: 11px 14px; color: #f0f0f0; text-decoration: none; font-family: 'FiraCondBold', sans-serif; font-size: 0.85rem; border-bottom: 1px solid rgba(255, 255, 255, 0.06); background: transparent; border-top: none; border-left: none; border-right: none; width: 100%; text-align: left; cursor: pointer; transition: background 0.2s, color 0.2s; }
+  .bubble-menu-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 11px 14px;
+    color: #f0f0f0; text-decoration: none;
+    font-family: 'FiraCondBold', sans-serif;
+    font-size: 0.85rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    background: transparent;
+    border-top: none; border-left: none; border-right: none;
+    width: 100%; text-align: left; cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+  }
+
   .bubble-menu-item:last-child { border-bottom: none; }
   .bubble-menu-item:hover { background: rgba(232, 177, 60, 0.15); color: var(--emas-terang); }
   .bubble-menu-item.logout { color: #ff5555; }
   .bubble-menu-item.logout:hover { background: rgba(255, 85, 85, 0.15); color: #ff6b6b; }
 
-  #screen-dashboard { position: fixed; inset: 0; z-index: 5; display: flex; flex-direction: column; align-items: center; padding-top: 64px; padding-bottom: 80px; overflow-y: auto; }
+  #screen-dashboard{
+    position: fixed; inset: 0; z-index: 5;
+    display: flex; flex-direction: column; align-items: center;
+    padding-top: 64px; padding-bottom: 80px; overflow-y: auto;
+  }
 
-  .mbanking-account-card { position: relative; overflow: hidden; width: 92%; max-width: 360px; margin: 4px auto 10px auto; background: linear-gradient(135deg, #111a13, #1c2b1e); border: 2px solid var(--emas); border-radius: 14px; padding: 14px; box-shadow: 0 6px 20px rgba(0,0,0,0.6); flex-shrink: 0; }
+  .mbanking-account-card {
+    position: relative; overflow: hidden;
+    width: 92%; max-width: 360px; margin: 4px auto 10px auto;
+    background: linear-gradient(135deg, #111a13, #1c2b1e);
+    border: 2px solid var(--emas); border-radius: 14px; padding: 14px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.6); flex-shrink: 0;
+  }
+
   .card-watermark-icon { position: absolute; right: -25px; bottom: -25px; width: 130px; height: 130px; object-fit: contain; opacity: 0.12; pointer-events: none; transform: rotate(-15deg); }
+
   .mbanking-acc-header { display: flex; justify-content: space-between; align-items: center; font-size: 0.7rem; color: #aaa; text-transform: uppercase; font-family: 'FiraCondBold', sans-serif; margin-bottom: 3px; position: relative; z-index: 2; }
+
   .balance-row-wrapper { display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 6px; margin-bottom: 8px; position: relative; z-index: 2; }
+
   .mbanking-acc-balance { font-family: 'OswaldBold', sans-serif; font-size: 1.35rem; color: var(--emas-terang); margin: 0; }
+
   .mbanking-acc-footer { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; position: relative; z-index: 2; }
+
   .acc-sub-box .sub-label { font-size: 0.6rem; color: #888; }
   .acc-sub-box .sub-val { font-family: 'FiraCondBold', sans-serif; font-size: 0.75rem; line-height: 1.2; }
   .acc-sub-box .sub-val.income { color: var(--hijau-terang); }
@@ -89,156 +180,432 @@
   .acc-sub-box .sub-val.profit { color: var(--emas-terang); }
 
   .menu-grid-wrap { width: 92%; max-width: 360px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 12px; }
-  .menu-grid-item { font-family: 'FiraCondBold', sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; text-decoration: none; text-align: center; color: #f5f5f5; background: rgba(10, 14, 11, 0.85); border: 1.5px solid var(--emas-terang); border-radius: 12px; padding: 12px 6px; font-size: 0.75rem; line-height: 1.25; box-shadow: 0 3px 10px rgba(0,0,0,0.4); transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s; cursor: pointer; user-select: none; min-height: 85px; position: relative; }
+
+  .menu-grid-item {
+    font-family: 'FiraCondBold', sans-serif;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-decoration: none; text-align: center; color: #f5f5f5;
+    background: rgba(10, 14, 11, 0.85);
+    border: 1.5px solid var(--emas-terang);
+    border-radius: 12px; padding: 12px 6px;
+    font-size: 0.75rem; line-height: 1.25;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.4);
+    transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+    cursor: pointer; user-select: none; min-height: 85px;
+    position: relative;
+  }
+
   .menu-grid-item img, .menu-grid-item svg { width: 26px; height: 26px; object-fit: contain; margin-bottom: 6px; fill: var(--emas-terang); }
+
   .menu-grid-item.bounce { animation: bounceClick 0.4s cubic-bezier(.36,1.7,.4,1.1); }
-  @keyframes bounceClick { 0% { transform: scale(1); } 30% { transform: scale(0.88); } 55% { transform: scale(1.08); } 100% { transform: scale(1); } }
+
+  @keyframes bounceClick {
+    0% { transform: scale(1); }
+    30% { transform: scale(0.88); }
+    55% { transform: scale(1.08); }
+    100% { transform: scale(1); }
+  }
+
   .menu-grid-item:hover { border-color: var(--emas); box-shadow: 0 0 15px rgba(255, 209, 102, 0.25); transform: translateY(-2px); }
 
-  .coming-soon-badge { position: absolute; top: 4px; right: 4px; background: rgba(255, 85, 85, 0.2); border: 1px solid #ff5555; color: #ff6b6b; font-size: 0.5rem; padding: 1px 4px; border-radius: 4px; font-family: 'FiraCondBold', sans-serif; }
+  .coming-soon-badge {
+    position: absolute; top: 4px; right: 4px;
+    background: rgba(255, 85, 85, 0.2);
+    border: 1px solid #ff5555;
+    color: #ff6b6b;
+    font-size: 0.5rem; padding: 1px 4px;
+    border-radius: 4px;
+    font-family: 'FiraCondBold', sans-serif;
+  }
 
   #modularBoardsContainer { width: 92%; max-width: 360px; display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px; }
 
   .media-downloader-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
-  .media-dl-item { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; text-decoration: none; color: #f5f5f5; background: #080c09; border: 1px solid rgba(255, 209, 102, 0.25); border-radius: 10px; padding: 12px 8px; transition: all 0.2s; cursor: pointer; }
+
+  .media-dl-item {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; text-decoration: none; color: #f5f5f5;
+    background: #080c09; border: 1px solid rgba(255, 209, 102, 0.25);
+    border-radius: 10px; padding: 12px 8px;
+    transition: all 0.2s; cursor: pointer;
+  }
+
   .media-dl-item:hover { border-color: var(--emas-terang); background: rgba(232, 177, 60, 0.08); transform: translateY(-2px); box-shadow: 0 0 12px rgba(255, 209, 102, 0.2); }
+
   .media-dl-item img { width: 32px; height: 32px; border-radius: 8px; margin-bottom: 6px; object-fit: contain; background: #fff; padding: 2px; }
   .media-dl-item span { font-family: 'FiraCondBold', sans-serif; font-size: 0.8rem; color: var(--emas-terang); }
   .media-dl-item small { font-size: 0.6rem; color: #888; margin-top: 2px; }
 
   .converter-container { width: 100%; background: rgba(12, 17, 13, 0.95); border: 2px solid var(--emas); border-radius: 14px; padding: 14px; box-shadow: 0 6px 20px rgba(0,0,0,0.6); }
+
   .converter-header { font-family: 'FiraCondBold', sans-serif; font-size: 0.9rem; color: var(--emas-terang); text-transform: uppercase; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; gap: 8px; }
   .converter-header > span:first-child { display: inline-flex; align-items: center; gap: 6px; }
+
   .currency-pills-scroll { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 8px; margin-bottom: 10px; scrollbar-width: none; }
   .currency-pills-scroll::-webkit-scrollbar { display: none; }
+
   .currency-pill { background: #151c17; border: 1px solid rgba(232, 177, 60, 0.3); color: #ccc; padding: 5px 10px; border-radius: 20px; font-family: 'FiraCondBold', sans-serif; font-size: 0.75rem; cursor: pointer; white-space: nowrap; transition: all 0.2s; }
   .currency-pill.active { background: var(--emas-terang); color: #0b0f0c; border-color: var(--emas-terang); box-shadow: 0 0 10px rgba(255, 209, 102, 0.4); }
+
   .converter-input-row { display: flex; align-items: center; background: #000; border: 1.5px solid rgba(255, 209, 102, 0.4); border-radius: 10px; padding: 0 10px; margin-bottom: 8px; }
   .converter-input { flex: 1; height: 40px; background: transparent; border: none; color: #fff; font-family: 'FiraCondBold', sans-serif; font-size: 1rem; outline: none; }
   .converter-input-unit { font-family: 'FiraCondBold', sans-serif; color: var(--emas-terang); font-size: 0.85rem; }
+
   .converter-switch-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
   .converter-mode-badge { font-size: 0.7rem; color: var(--hijau-terang); font-family: 'FiraCondBold', sans-serif; background: rgba(76, 175, 94, 0.15); padding: 2px 8px; border-radius: 6px; border: 1px solid rgba(76, 175, 94, 0.3); }
+
   .converter-switch-btn { background: rgba(232, 177, 60, 0.15); border: 1px solid var(--emas-terang); color: var(--emas-terang); border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: transform 0.2s, background 0.2s; }
   .converter-switch-btn:hover { background: rgba(232, 177, 60, 0.3); transform: rotate(180deg); }
+
   .converter-result-box { padding-top: 8px; border-top: 1px dashed rgba(255, 209, 102, 0.3); display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem; color: #aaa; }
   .converter-result-val { font-family: 'FiraCondBold', sans-serif; color: var(--hijau-terang); font-size: 1.05rem; }
+
   .asset-ticker-container { margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(232, 177, 60, 0.25); }
+
   .asset-ticker-title { font-family: 'FiraCondBold', sans-serif; font-size: 0.75rem; color: var(--emas-terang); text-transform: uppercase; margin-bottom: 6px; display: flex; justify-content: space-between; align-items: center; gap: 6px; }
   .asset-ticker-title > span:first-child { display: inline-flex; align-items: center; gap: 5px; }
   .live-label { display: inline-flex; align-items: center; gap: 4px; font-size: 0.65rem; color: var(--hijau-terang); }
+
   .asset-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px; }
+
   .asset-card { background: #080c09; border: 1px solid rgba(255, 209, 102, 0.2); border-radius: 8px; padding: 8px; display: flex; flex-direction: column; }
   .asset-name { font-size: 0.7rem; color: #aaa; font-family: 'FiraCondBold', sans-serif; }
   .asset-price { font-size: 0.85rem; color: #fff; font-family: 'FiraCondBold', sans-serif; margin-top: 2px; }
 
   .note-board-container { width: 100%; background: rgba(12, 17, 13, 0.92); border: 2px solid var(--emas); border-radius: 14px; padding: 14px; box-shadow: 0 6px 20px rgba(0,0,0,0.6); }
+
   .note-board-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; border-bottom: 1px solid rgba(255, 209, 102, 0.2); padding-bottom: 6px; }
+
   .note-board-title { font-family: 'FiraCondBold', sans-serif; font-size: 0.9rem; color: var(--emas-terang); text-transform: uppercase; display: inline-flex; align-items: center; gap: 6px; }
+
   .single-note-box { background: #000; border: 1px solid rgba(255, 209, 102, 0.3); border-radius: 10px; padding: 10px; min-height: 50px; display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
 
   .market-board { width: 100%; background: rgba(10, 14, 11, 0.95); border: 2px solid var(--emas); border-radius: 14px; padding: 12px; box-shadow: 0 6px 20px rgba(0,0,0,0.6); }
+
   .market-board-header { display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(232, 177, 60, 0.3); padding-bottom: 6px; margin-bottom: 8px; font-family: 'OswaldBold', sans-serif; color: var(--emas-terang); font-size: 0.9rem; letter-spacing: 0.5px; gap: 8px; }
   .market-board-header > span:first-child { display: inline-flex; align-items: center; gap: 6px; }
+
   .live-dot { width: 8px; height: 8px; background-color: #ff3b3b; border-radius: 50%; display: inline-block; box-shadow: 0 0 8px #ff3b3b; animation: pulseLive 1.5s infinite; }
-  @keyframes pulseLive { 0% { transform: scale(0.95); opacity: 0.8; } 50% { transform: scale(1.2); opacity: 1; } 100% { transform: scale(0.95); opacity: 0.8; } }
+
+  @keyframes pulseLive {
+    0% { transform: scale(0.95); opacity: 0.8; }
+    50% { transform: scale(1.2); opacity: 1; }
+    100% { transform: scale(0.95); opacity: 0.8; }
+  }
+
   .news-ticker-list { display: flex; flex-direction: column; gap: 6px; max-height: 150px; overflow-y: auto; }
+
   .news-item-card { background: #080c09; border: 1px solid rgba(255, 209, 102, 0.2); border-radius: 8px; padding: 8px 10px; text-decoration: none; color: #e0e0e0; display: block; transition: all 0.2s; }
+
   .news-item-card:hover { border-color: var(--emas-terang); background: rgba(232, 177, 60, 0.08); transform: translateX(2px); }
+
   .news-item-title { font-size: 0.8rem; font-family: 'FiraCondBold', sans-serif; color: #fff; margin-bottom: 2px; line-height: 1.2; }
+
   .news-item-time { font-size: 0.65rem; color: var(--emas-terang); }
 
   .tradingview-btn { display: flex; align-items: center; justify-content: space-between; background: linear-gradient(135deg, #112618, #1a3c25); border: 1.5px solid var(--hijau-terang); border-radius: 10px; padding: 10px 12px; text-decoration: none; color: #fff; margin-top: 8px; transition: transform 0.2s, box-shadow 0.2s; }
+
   .tradingview-btn:hover { transform: translateY(-2px); box-shadow: 0 0 12px rgba(76, 175, 94, 0.4); }
+
   .tradingview-left { display: flex; flex-direction: column; }
   .tv-title { font-family: 'FiraCondBold', sans-serif; font-size: 0.85rem; color: var(--emas-terang); display: inline-flex; align-items: center; gap: 6px; }
   .tv-sub { font-size: 0.65rem; color: #aaa; }
   .tv-arrow { color: var(--hijau-terang); display: inline-flex; align-items: center; }
 
-  .mbanking-bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; height: 64px; background: rgba(10, 14, 11, 0.96); border-top: 1px solid rgba(232, 177, 60, 0.3); display: grid; grid-template-columns: repeat(7, 1fr); z-index: 99999; backdrop-filter: blur(8px); }
+  .mbanking-bottom-nav {
+    position: fixed; bottom: 0; left: 0; right: 0; height: 64px;
+    background: rgba(10, 14, 11, 0.96);
+    border-top: 1px solid rgba(232, 177, 60, 0.3);
+    display: grid; grid-template-columns: repeat(7, 1fr);
+    z-index: 99999; backdrop-filter: blur(8px);
+  }
+
   .nav-item { display: flex; flex-direction: column; align-items: center; justify-content: center; text-decoration: none; color: #888; font-family: 'FiraCondBold', sans-serif; font-size: 0.55rem; gap: 3px; padding: 4px 0; transition: color 0.2s; cursor: pointer; background: none; border: none; }
+
   .nav-item img { width: 20px; height: 20px; object-fit: contain; filter: grayscale(100%) opacity(0.6); transition: filter 0.2s; }
+
   .nav-item.active, .nav-item:hover { color: var(--emas-terang); }
   .nav-item.active img, .nav-item:hover img { filter: none; }
 
   .in-app-browser { position: fixed; inset: 0; z-index: 9999998; background: #000; display: none; flex-direction: column; }
   .in-app-browser.active { display: flex; }
+
   .iab-bar { height: 56px; background: rgba(10, 14, 11, 0.98); border-bottom: 2px solid var(--emas); display: flex; align-items: center; padding: 0 10px; gap: 10px; flex-shrink: 0; backdrop-filter: blur(8px); }
+
   .iab-btn { width: 40px; height: 40px; border-radius: 10px; border: 1.5px solid; background: transparent; display: flex; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0; transition: all 0.2s; padding: 0; }
+
   .iab-close { border-color: #ff3b3b; color: #ff3b3b; background: rgba(255,59,59,0.15); }
-  .iab-close:hover { background: rgba(255,59,59,0.4); }
+  .iab-close:hover, .iab-close:active { background: rgba(255,59,59,0.4); }
+
   .iab-external { border-color: var(--hijau-terang); color: var(--hijau-terang); background: rgba(76,175,94,0.15); }
-  .iab-external:hover { background: rgba(76,175,94,0.4); }
+  .iab-external:hover, .iab-external:active { background: rgba(76,175,94,0.4); }
+
   .iab-title { flex: 1; color: var(--emas-terang); font-family: 'FiraCondBold', sans-serif; font-size: 0.9rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-align: center; padding: 0 4px; }
+
   .iab-frame-wrap { flex: 1; position: relative; background: #fff; overflow: hidden; }
+
   #iabFrame { width: 100%; height: 100%; border: 0; background: #fff; display: block; }
+
   .iab-loading, .iab-blocked { position: absolute; inset: 0; background: #0b0f0c; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 30px; z-index: 2; }
+
   .iab-loading { display: flex; }
   .iab-blocked { display: none; }
+
   .iab-spinner { width: 44px; height: 44px; border: 3px solid rgba(232,177,60,0.25); border-top-color: var(--emas-terang); border-radius: 50%; animation: iabSpin 0.8s linear infinite; }
+
   @keyframes iabSpin { to { transform: rotate(360deg); } }
+
   .iab-blocked-icon { margin-bottom: 12px; color: var(--emas-terang); }
   .iab-blocked-icon svg { width: 56px; height: 56px; fill: currentColor; }
+
   .iab-blocked-title { color: #fff; font-family: 'FiraCondBold', sans-serif; font-size: 1rem; margin-bottom: 6px; }
+
   .iab-blocked-sub { color: #aaa; font-size: 0.8rem; margin-bottom: 22px; line-height: 1.4; }
+
   .iab-open-ext-btn { background: var(--emas-terang); color: #000; padding: 12px 26px; border: none; border-radius: 10px; font-family: 'FiraCondBold', sans-serif; font-size: 0.95rem; cursor: pointer; font-weight: bold; box-shadow: 0 4px 14px rgba(255,209,102,0.35); display: inline-flex; align-items: center; gap: 6px; }
+
   .iab-open-ext-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(255,209,102,0.5); }
 
   .popupBox { position: fixed; inset: 0; background: rgba(0,0,0,0.85); display: none; justify-content: center; align-items: center; z-index: 9999999; padding: 20px; }
   .popupBox.active { display: flex; }
+
   .popupContent { display: flex; flex-direction: column; width: 100%; max-width: 340px; background: #000; border: 2px solid var(--emas-terang); border-radius: 20px; padding: 20px; max-height: 85vh; overflow-y: auto; }
+
   .popupContent h2 { margin-top: 0; margin-bottom: 12px; font-family: 'FiraCondBold', sans-serif; color: var(--emas-terang); text-align: center; font-size: 1.1rem; display: flex; align-items: center; justify-content: center; gap: 8px; }
+
   .option-btn { width: 100%; background: #111; border: 1.5px solid var(--emas-terang); color: white; padding: 12px; border-radius: 12px; font-family: 'FiraCondBold', sans-serif; font-size: 0.95rem; margin-bottom: 10px; cursor: pointer; transition: background 0.2s; text-align: center; display: inline-flex; align-items: center; justify-content: center; gap: 6px; }
+
   .option-btn:hover { background: rgba(232, 177, 60, 0.2); color: var(--emas-terang); }
+
   .option-btn.logout { border-color: #ff3b3b; color: #ff3b3b; }
   .option-btn.logout:hover { background: rgba(255, 59, 59, 0.2); }
+
   .cancelButton { width: 100%; background: #2a2a2a; border: none; color: white; padding: 10px; border-radius: 10px; font-family: 'FiraCondBold', sans-serif; cursor: pointer; margin-top: 5px; display: inline-flex; align-items: center; justify-content: center; gap: 6px; }
 
   .custom-modal-box { background: #0d120f; border: 2px solid var(--emas-terang); border-radius: 16px; padding: 20px; width: 100%; max-width: 320px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.8); }
+
   .custom-modal-title { font-family: 'FiraCondBold', sans-serif; font-size: 1.1rem; color: var(--emas-terang); margin-bottom: 8px; }
+
   .custom-modal-msg { font-size: 0.9rem; color: #ddd; margin-bottom: 16px; line-height: 1.4; white-space: pre-wrap; }
+
   .custom-modal-input { width: 100%; height: 42px; background: #000; border: 1px solid var(--emas); border-radius: 8px; color: #fff; padding: 0 12px; font-family: 'FiraCondBook', sans-serif; font-size: 0.95rem; margin-bottom: 16px; outline: none; }
+
   .custom-modal-buttons { display: flex; gap: 8px; }
+
   .custom-modal-btn { flex: 1; padding: 10px; border-radius: 8px; font-family: 'FiraCondBold', sans-serif; font-size: 0.9rem; cursor: pointer; border: none; display: inline-flex; align-items: center; justify-content: center; gap: 4px; }
+
   .custom-modal-btn.primary { background: var(--emas-terang); color: #000; }
   .custom-modal-btn.secondary { background: #222; color: #aaa; border: 1px solid #444; }
 
   .board-setting-item { display: flex; align-items: center; justify-content: space-between; background: #121814; border: 1px solid rgba(232, 177, 60, 0.3); border-radius: 8px; padding: 6px 10px; margin-bottom: 5px; font-size: 0.8rem; color: #fff; }
+
   .board-setting-item input[type="checkbox"] { width: 16px; height: 16px; min-width: 16px; min-height: 16px; accent-color: var(--emas-terang); margin: 0; cursor: pointer; }
+
   .board-setting-controls { display: flex; gap: 3px; align-items: center; }
+
   .board-ctrl-btn { background: rgba(232, 177, 60, 0.2); border: 1px solid var(--emas); color: var(--emas-terang); width: 24px; height: 22px; border-radius: 4px; cursor: pointer; display: flex; align-items: center; justify-content: center; padding: 0; }
+
   .board-ctrl-btn:hover { background: rgba(232, 177, 60, 0.4); }
+
   .board-delete-btn { background: rgba(255, 59, 59, 0.2); border: 1px solid #ff3b3b; color: #ff3b3b; width: 24px; height: 22px; border-radius: 4px; cursor: pointer; display: flex; align-items: center; justify-content: center; padding: 0; }
+
   .board-delete-btn:hover { background: rgba(255, 59, 59, 0.4); }
 
-  #patchNotesPopup .popupContent { max-width: 380px; max-height: 88vh; padding: 18px 16px; }
-  .patch-accordion-wrap { display: flex; flex-direction: column; gap: 10px; margin-bottom: 14px; }
-  .patch-item { background: rgba(10, 14, 11, 0.9); border: 1.5px solid rgba(232, 177, 60, 0.35); border-radius: 14px; overflow: hidden; transition: border-color 0.25s ease, box-shadow 0.25s ease; }
-  .patch-item.active { border-color: var(--emas-terang); box-shadow: 0 0 14px rgba(255, 209, 102, 0.22); }
-  .patch-item.latest { background: linear-gradient(180deg, rgba(232, 177, 60, 0.08) 0%, rgba(10, 14, 11, 0.9) 100%); }
-  .patch-header-btn { width: 100%; background: transparent; border: none; color: #fff; padding: 12px 14px; display: flex; align-items: center; gap: 10px; cursor: pointer; font-family: 'FiraCondBold', sans-serif; text-align: left; transition: background 0.2s; }
+  /* PATCH NOTES ACCORDION BUBBLE */
+  #patchNotesPopup .popupContent {
+    max-width: 380px;
+    max-height: 88vh;
+    padding: 18px 16px;
+  }
+
+  .patch-accordion-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+
+  .patch-item {
+    background: rgba(10, 14, 11, 0.9);
+    border: 1.5px solid rgba(232, 177, 60, 0.35);
+    border-radius: 14px;
+    overflow: hidden;
+    transition: border-color 0.25s ease, box-shadow 0.25s ease;
+  }
+
+  .patch-item.active {
+    border-color: var(--emas-terang);
+    box-shadow: 0 0 14px rgba(255, 209, 102, 0.22);
+  }
+
+  .patch-item.latest {
+    background: linear-gradient(180deg, rgba(232, 177, 60, 0.08) 0%, rgba(10, 14, 11, 0.9) 100%);
+  }
+
+  .patch-header-btn {
+    width: 100%;
+    background: transparent;
+    border: none;
+    color: #fff;
+    padding: 12px 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    font-family: 'FiraCondBold', sans-serif;
+    text-align: left;
+    transition: background 0.2s;
+  }
+
   .patch-header-btn:hover { background: rgba(232, 177, 60, 0.08); }
-  .patch-bubble-icon { width: 32px; height: 32px; border-radius: 50%; background: rgba(232, 177, 60, 0.15); border: 1.5px solid var(--emas); color: var(--emas-terang); display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: background 0.25s, color 0.25s, border-color 0.25s, box-shadow 0.25s; }
-  .patch-item.active .patch-bubble-icon { background: var(--emas-terang); color: #000; border-color: var(--emas-terang); box-shadow: 0 0 12px rgba(255, 209, 102, 0.5); }
+
+  .patch-bubble-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: rgba(232, 177, 60, 0.15);
+    border: 1.5px solid var(--emas);
+    color: var(--emas-terang);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: background 0.25s, color 0.25s, border-color 0.25s, box-shadow 0.25s;
+  }
+
+  .patch-item.active .patch-bubble-icon {
+    background: var(--emas-terang);
+    color: #000;
+    border-color: var(--emas-terang);
+    box-shadow: 0 0 12px rgba(255, 209, 102, 0.5);
+  }
+
   .patch-bubble-icon svg { width: 16px !important; height: 16px !important; fill: currentColor; }
-  .patch-meta { flex: 1; min-width: 0; display: flex; flex-direction: column; }
-  .patch-title-row { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
-  .patch-version { font-family: 'OswaldBold', sans-serif; font-size: 0.85rem; color: var(--emas-terang); letter-spacing: 0.5px; white-space: nowrap; }
-  .patch-tag { background: rgba(76, 175, 94, 0.2); border: 1px solid var(--hijau-terang); color: var(--hijau-terang); font-size: 0.55rem; padding: 1px 6px; border-radius: 4px; letter-spacing: 0.5px; white-space: nowrap; }
-  .patch-date { font-size: 0.65rem; color: #888; margin-top: 2px; font-family: 'FiraCondBook', sans-serif; }
-  .patch-chevron { width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; color: var(--emas-terang); flex-shrink: 0; transition: transform 0.3s cubic-bezier(.4,0,.2,1); }
+
+  .patch-meta {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .patch-title-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+
+  .patch-version {
+    font-family: 'OswaldBold', sans-serif;
+    font-size: 0.85rem;
+    color: var(--emas-terang);
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+  }
+
+  .patch-tag {
+    background: rgba(76, 175, 94, 0.2);
+    border: 1px solid var(--hijau-terang);
+    color: var(--hijau-terang);
+    font-size: 0.55rem;
+    padding: 1px 6px;
+    border-radius: 4px;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+  }
+
+  .patch-date {
+    font-size: 0.65rem;
+    color: #888;
+    margin-top: 2px;
+    font-family: 'FiraCondBook', sans-serif;
+  }
+
+  .patch-chevron {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--emas-terang);
+    flex-shrink: 0;
+    transition: transform 0.3s cubic-bezier(.4,0,.2,1);
+  }
+
   .patch-chevron svg { width: 16px !important; height: 16px !important; fill: currentColor; }
-  .patch-item.active .patch-chevron { transform: rotate(180deg); }
-  .patch-body { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.35s cubic-bezier(.4,0,.2,1); }
-  .patch-body-inner { min-height: 0; overflow: hidden; }
-  .patch-item.active .patch-body { grid-template-rows: 1fr; }
-  .patch-body-pad { padding: 4px 14px 14px 14px; }
-  .patch-feature-list { display: flex; flex-direction: column; gap: 10px; border-top: 1px dashed rgba(232, 177, 60, 0.2); padding-top: 12px; }
-  .patch-feature { display: flex; gap: 8px; align-items: flex-start; font-size: 0.8rem; color: #ddd; line-height: 1.45; }
-  .patch-feature-icon { width: 22px; height: 22px; border-radius: 6px; background: rgba(232, 177, 60, 0.12); border: 1px solid rgba(232, 177, 60, 0.3); color: var(--emas-terang); display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+
+  .patch-item.active .patch-chevron {
+    transform: rotate(180deg);
+  }
+
+  .patch-body {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.35s cubic-bezier(.4,0,.2,1);
+  }
+
+  .patch-body-inner {
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .patch-item.active .patch-body {
+    grid-template-rows: 1fr;
+  }
+
+  .patch-body-pad {
+    padding: 4px 14px 14px 14px;
+  }
+
+  .patch-feature-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border-top: 1px dashed rgba(232, 177, 60, 0.2);
+    padding-top: 12px;
+  }
+
+  .patch-feature {
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+    font-size: 0.8rem;
+    color: #ddd;
+    line-height: 1.45;
+  }
+
+  .patch-feature-icon {
+    width: 22px;
+    height: 22px;
+    border-radius: 6px;
+    background: rgba(232, 177, 60, 0.12);
+    border: 1px solid rgba(232, 177, 60, 0.3);
+    color: var(--emas-terang);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
   .patch-feature-icon svg { width: 12px !important; height: 12px !important; fill: currentColor; }
+
   .patch-feature-text { flex: 1; min-width: 0; }
-  .patch-feature-text b { color: var(--emas-terang); font-family: 'FiraCondBold', sans-serif; font-size: 0.82rem; display: block; margin-bottom: 2px; line-height: 1.3; }
-  .patch-feature-text div { color: #aaa; font-size: 0.75rem; line-height: 1.4; word-wrap: break-word; }
+  .patch-feature-text b {
+    color: var(--emas-terang);
+    font-family: 'FiraCondBold', sans-serif;
+    font-size: 0.82rem;
+    display: block;
+    margin-bottom: 2px;
+    line-height: 1.3;
+  }
+  .patch-feature-text div {
+    color: #aaa;
+    font-size: 0.75rem;
+    line-height: 1.4;
+    word-wrap: break-word;
+  }
 </style>
 </head>
 <body>
@@ -254,6 +621,7 @@
     <div style="display:flex; align-items:center; gap:8px;">
       <div class="profile-dropdown-wrapper">
         <button type="button" class="profile-circle-btn" id="topProfileMenuBtn" title="Menu Profil & Akun" onclick="toggleProfileBubble(event)"></button>
+
         <div class="profile-bubble-menu" id="profileBubbleMenu">
           <a href="profile.html" class="bubble-profile-preview">
             <div class="bubble-avatar" id="bubbleAvatarContainer"></div>
@@ -262,6 +630,7 @@
               <span class="bubble-sub">Ubah Profil <svg viewBox="0 0 24 24"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg></span>
             </div>
           </a>
+
           <button type="button" class="bubble-menu-item" onclick="closeProfileBubble(); editSaldoBase();">
             <svg class="mi-icon" viewBox="0 0 24 24"><path d="M21 18v1a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v1h-9a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h9zm-9-2h10V8H12v8zm4-2.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/></svg>
             <span>Atur Saldo Dasar</span>
@@ -388,7 +757,9 @@
       <div style="text-align: center; font-size: 0.72rem; color: #888; margin-bottom: 14px; font-family: 'FiraCondBold', sans-serif;">
         Ketuk tiap patch untuk lihat detail perubahan
       </div>
+
       <div id="patchAccordionWrap" class="patch-accordion-wrap"></div>
+
       <button type="button" class="option-btn" onclick="closePatchNotesModal()" style="background: var(--emas-terang); color: #000; font-weight: bold; margin-bottom:0;">Tutup</button>
     </div>
   </div>
@@ -404,7 +775,7 @@
     </div>
   </div>
 
-  <input type="file" id="loadFile" accept=".ayj,.json" hidden>
+  <input type="file" id="loadFile" accept=".json" hidden>
 
   <div id="boardCustomizerPopup" class="popupBox">
     <div class="popupContent">
@@ -448,70 +819,34 @@
       chevronDown: '<svg viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6z"/></svg>'
     };
 
-    const PATCH_NOTES = [
-      {
-        version: "Mark 4",
-        tag: "TERBARU",
-        date: "19 Oktober 2026",
-        isLatest: true,
-        features: [
-          { icon: SVG.star, title: "Rekap Total & Bulanan Revamp", desc: "Penyempurnaan perhitungan margin keuntungan, pemisahan status Lunas & Belum Lunas secara presisi, serta urutan transaksi kronologis." },
-          { icon: SVG.chart, title: "Grafik & Ekspor PDF", desc: "Peningkatan performa grafik indikator progres keuangan serta cetak laporan PDF profesional langsung dari halaman rekap." },
-          { icon: SVG.bookmark, title: "Sistem Manajemen Utang & Customer", desc: "Optimasi pelacakan sisa utang customer dengan antarmuka m-banking interaktif dan arsip otomatis." },
-          { icon: SVG.user, title: "Profil & Bubble Menu", desc: "Penyederhanaan navigasi atas dengan bubble menu e-wallet modern untuk akses pengaturan, saldo dasar, dan patch notes." }
-        ]
-      },
-      {
-        version: "Mark 3",
-        tag: null,
-        date: "10 September 2026",
-        isLatest: false,
-        features: [
-          { icon: SVG.currency, title: "Money Converter & Kurs Aset Real-Time", desc: "Konversi mata uang asing ke IDR otomatis dengan kurs live, plus monitor harga Bitcoin, Ethereum, Emas, dan Nikel." },
-          { icon: SVG.inbox, title: "Media Downloader Board", desc: "Shortcut cepat ke SnapTik, FastDL, InstaDP, dan LoveThreads untuk download video dan profil medsos." },
-          { icon: SVG.note, title: "Catatan Utama + Kirim WA", desc: "Board catatan cepat dengan fitur simpan otomatis dan kirim langsung ke WhatsApp tanpa copy-paste manual." }
-        ]
-      },
-      {
-        version: "Mark 2",
-        tag: null,
-        date: "25 Agustus 2026",
-        isLatest: false,
-        features: [
-          { icon: SVG.chartLine, title: "Market Board & Live News", desc: "Tambahan board Bloomberg Economy, CoinGecko Market & News, Cryptowave Indonesia, dan Berita Stock Indonesia dengan indikator live." },
-          { icon: SVG.trophy, title: "DetikSport Terkini", desc: "Board berita olahraga real-time yang ambil feed langsung dari DetikSport via RSS." },
-          { icon: SVG.pin, title: "Board Customizer", desc: "Fitur atur urutan, visibilitas, dan tambah board custom dengan URL sendiri." }
-        ]
-      },
-      {
-        version: "Mark 1",
-        tag: "AWAL",
-        date: "01 Juli 2026",
-        isLatest: false,
-        features: [
-          { icon: SVG.bug, title: "Rilis Perdana Comersio Center", desc: "Fondasi aplikasi m-banking mini: dashboard saldo, manajemen customer, produk, utang, rekap, dan pembukuan bulanan." },
-          { icon: SVG.save, title: "Save & Load Data (.ayj)", desc: "Backup dan restore seluruh data aplikasi dalam satu file JSON berformat .ayj." }
-        ]
-      }
-    ];
-
     let openPatchIndex = 0;
     let modalCallback = null;
 
+    // FUNGSI UNTUK SUMMON/RENDER SCRIPT PATCH SECARA ON-DEMAND
     function renderPatchAccordion(){
       const wrap = document.getElementById("patchAccordionWrap");
       if(!wrap) return;
       wrap.innerHTML = "";
 
-      PATCH_NOTES.forEach((patch, idx) => {
+      if(typeof PATCH_NOTES_DATA === "undefined") {
+        wrap.innerHTML = "<div style='color:#ff5555; text-align:center; padding:10px;'>Gagal memuat patch-data.js</div>";
+        return;
+      }
+
+      PATCH_NOTES_DATA.forEach((patch, idx) => {
         const isOpen = (idx === openPatchIndex);
         const item = document.createElement("div");
         item.className = "patch-item" + (isOpen ? " active" : "") + (patch.isLatest ? " latest" : "");
+
         const tagHtml = patch.tag ? `<span class="patch-tag">${patch.tag}</span>` : "";
+
         const featuresHtml = patch.features.map(f => `
           <div class="patch-feature">
             <div class="patch-feature-icon">${f.icon}</div>
-            <div class="patch-feature-text"><b>${f.title}</b><div>${f.desc}</div></div>
+            <div class="patch-feature-text">
+              <b>${f.title}</b>
+              <div>${f.desc}</div>
+            </div>
           </div>
         `).join("");
 
@@ -535,6 +870,7 @@
             </div>
           </div>
         `;
+
         wrap.appendChild(item);
       });
     }
@@ -546,9 +882,12 @@
         else item.classList.remove("active");
       });
       openPatchIndex = idx;
+
       setTimeout(() => {
         const activeItem = document.querySelector("#patchAccordionWrap .patch-item.active");
-        if(activeItem) activeItem.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        if(activeItem){
+          activeItem.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        }
       }, 380);
     }
 
@@ -641,9 +980,22 @@
       testImg.src = savedPic;
     });
 
+    // SUMMON DINAMIS KETIKA POPUP BUKAN
     function openPatchNotesModal() {
       openPatchIndex = 0;
-      renderPatchAccordion();
+      
+      // Jika script belum di-load, inject script patch-data.js secara otomatis!
+      if(typeof PATCH_NOTES_DATA === "undefined") {
+        const script = document.createElement("script");
+        script.src = "patch-data.js";
+        script.onload = () => {
+          renderPatchAccordion();
+        };
+        document.body.appendChild(script);
+      } else {
+        renderPatchAccordion();
+      }
+
       document.getElementById("patchNotesPopup").classList.add("active");
       setTimeout(() => {
         const wrap = document.getElementById("patchAccordionWrap");
@@ -675,6 +1027,7 @@
         }, 600);
       }
     }
+
     setDynamicGreeting();
 
     let iabCurrentUrl = "";
@@ -764,12 +1117,6 @@
       return NAMA[idx] || "-";
     }
 
-    /* =========================================================
-       LOAD DASHBOARD FINANCE
-       FIX: sekarang baca DUA sumber — debts (aktif) + archivedDebts (lunas)
-       Keduanya dihitung penuh ke saldo, pemasukan, modal, profit.
-       Arsip cuma pindah tampilan, BUKAN keluar dari hitungan.
-    ========================================================= */
     function loadDashboardFinance() {
       let baseSaldoRaw = localStorage.getItem("comersio_base_saldo");
       let baseSaldo = (baseSaldoRaw !== null && baseSaldoRaw !== "") ? parseFloat(baseSaldoRaw) : 0;
@@ -783,43 +1130,25 @@
       function cekProfitMasuk(tahunItem, bulanItem) { if (startYear === null || startMonth === null) return true; if (tahunItem > startYear) return true; if (tahunItem < startYear) return false; return bulanItem >= startMonth; }
       function isAfterStartMonth(dateVal) { if (startYear === null || startMonth === null) return true; let d = parseTgl(dateVal); if (!d) return true; return cekProfitMasuk(d.getFullYear(), d.getMonth()); }
 
-      // Helper: proses 1 item transaksi (dipakai untuk debts & archivedDebts)
-      function processItem(item) {
-        if (!item || item.excluded) return;
-        let harga   = numField(item, "harga", "hargaJual", "price", "total");
-        let modal   = numField(item, "modal", "hargaModal", "cost", "hpp");
-        let dibayar = numField(item, "dibayar", "bayar", "paid", "amount");
-        let tip     = numField(item, "tip", "tips");
-        let waktu   = getWaktuField(item);
-        let masuk   = dibayar + tip;
-        totalIncomeAllTime += masuk;
-        if (isSameMonth(waktu)) totalIncomeThisMonth += masuk;
-        totalModalOut += modal;
-        let itemProfit = (harga - modal) + tip;
-        if (isAfterStartMonth(waktu)) totalProfit += itemProfit;
-      }
-
-      // ==== 1. Transaksi AKTIF (belum lunas) ====
       try {
         let debtsData = JSON.parse(localStorage.getItem("debts")) || {};
-        for (let custId in debtsData) {
-          let items = debtsData[custId];
-          if (!Array.isArray(items)) continue;
-          items.forEach(processItem);
+        for (let custId in debtsData) { let items = debtsData[custId]; if (!Array.isArray(items)) continue;
+          items.forEach(item => {
+            if (item.excluded) return;
+            let harga = numField(item,"harga","hargaJual","price","total");
+            let modal = numField(item,"modal","hargaModal","cost","hpp");
+            let dibayar = numField(item,"dibayar","bayar","paid","amount");
+            let tip = numField(item,"tip","tips");
+            let waktu = getWaktuField(item);
+            let masuk = dibayar + tip;
+            totalIncomeAllTime += masuk; if (isSameMonth(waktu)) totalIncomeThisMonth += masuk;
+            totalModalOut += modal;
+            let itemProfit = (harga - modal) + tip;
+            if (isAfterStartMonth(waktu)) totalProfit += itemProfit;
+          });
         }
-      } catch(e) { console.warn("debts err:", e); }
+      } catch(e) {}
 
-      // ==== 2. Transaksi ARSIP (sudah lunas) — TETAP DIHITUNG ====
-      try {
-        let archivedData = JSON.parse(localStorage.getItem("archivedDebts")) || {};
-        for (let custId in archivedData) {
-          let items = archivedData[custId];
-          if (!Array.isArray(items)) continue;
-          items.forEach(processItem);
-        }
-      } catch(e) { console.warn("archivedDebts err:", e); }
-
-      // ==== 3. Log bulanan (kalau ada) ====
       try {
         let monthlyData = JSON.parse(localStorage.getItem("monthlyLogs")) || JSON.parse(localStorage.getItem("monthly")) || [];
         if (Array.isArray(monthlyData)) {
@@ -856,9 +1185,10 @@
             if (isAfterStartMonth(waktu)) totalProfit += rowProfit;
           });
         }
-      } catch(e) { console.warn("monthly err:", e); }
+      } catch(e) {}
 
       let finalSaldo = baseSaldo - totalModalOut + totalIncomeAllTime;
+
       const formatIDR = (n) => { if (isNaN(n)) n = 0; if (n < 0) return "-Rp " + Math.abs(Math.round(n)).toLocaleString('id-ID'); return "Rp " + Math.round(n).toLocaleString('id-ID'); };
 
       document.getElementById("display-saldo").innerText = formatIDR(finalSaldo);
@@ -904,7 +1234,8 @@
       let selectedMonth = document.getElementById("profitStartDateInput").value;
       if(selectedMonth) {
         localStorage.setItem("comersio_profit_start_date", selectedMonth);
-        closeStartDatePicker(); loadDashboardFinance();
+        closeStartDatePicker();
+        loadDashboardFinance();
         let m = selectedMonth.match(/^(\d{4})[\/\-](\d{1,2})/);
         let lbl = selectedMonth;
         if (m) { let idx = parseInt(m[2],10)-1; lbl = namaBulanIndonesia(idx) + " " + m[1]; }
@@ -1098,7 +1429,8 @@
     }
 
     function renderFootballItems(items) {
-      const listEl = document.getElementById("footballNewsList"); if (!listEl) return;
+      const listEl = document.getElementById("footballNewsList");
+      if (!listEl) return;
       let html = ""; const maxItems = Math.min(4, items.length);
       for (let i = 0; i < maxItems; i++) {
         const item = items[i];
@@ -1169,13 +1501,40 @@
     async function fetchLiveAssetPrices() {
       try {
         const usdIdr = liveRates["USD"] || 17630;
+        
+        // 1. Fetch Crypto Real-Time (BTC & ETH)
         const cryptoRes = await fetch("https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum&vs_currencies=usd");
         const cryptoData = await cryptoRes.json();
-        if(cryptoData.bitcoin && document.getElementById("assetBtc")) document.getElementById("assetBtc").innerText = "Rp " + Math.round(cryptoData.bitcoin.usd * usdIdr).toLocaleString('id-ID');
-        if(cryptoData.ethereum && document.getElementById("assetEth")) document.getElementById("assetEth").innerText = "Rp " + Math.round(cryptoData.ethereum.usd * usdIdr).toLocaleString('id-ID');
-        if(document.getElementById("assetGold")) document.getElementById("assetGold").innerText = "Rp " + Math.round(80.3 * usdIdr).toLocaleString('id-ID') + "/g";
-        if(document.getElementById("assetNickel")) document.getElementById("assetNickel").innerText = "Rp " + Math.round(16 * usdIdr).toLocaleString('id-ID') + "/kg";
-      } catch(e) {}
+        if(cryptoData.bitcoin && document.getElementById("assetBtc")) {
+          document.getElementById("assetBtc").innerText = "Rp " + Math.round(cryptoData.bitcoin.usd * usdIdr).toLocaleString('id-ID');
+        }
+        if(cryptoData.ethereum && document.getElementById("assetEth")) {
+          document.getElementById("assetEth").innerText = "Rp " + Math.round(cryptoData.ethereum.usd * usdIdr).toLocaleString('id-ID');
+        }
+
+        // 2. Fetch Harga Emas Live (USD/oz -> IDR/gram)
+        const goldRes = await fetch("https://api.metals.dev/v1/latest?api_key=demo&currency=USD");
+        const goldData = await goldRes.json();
+        if(goldData && goldData.metals && goldData.metals.gold) {
+          const goldUsdPerGram = goldData.metals.gold / 31.1035;
+          const goldIdrPerGram = Math.round(goldUsdPerGram * usdIdr);
+          if(document.getElementById("assetGold")) {
+            document.getElementById("assetGold").innerText = "Rp " + goldIdrPerGram.toLocaleString('id-ID') + "/g";
+          }
+        }
+
+        // 3. Fetch Harga Nikel Live
+        const nickelRes = await fetch("https://api.metals.dev/v1/latest?api_key=demo&currency=USD");
+        const nickelData = await nickelRes.json();
+        if(nickelData && nickelData.metals && nickelData.metals.nickel) {
+          const nickelIdrPerKg = Math.round(nickelData.metals.nickel * usdIdr);
+          if(document.getElementById("assetNickel")) {
+            document.getElementById("assetNickel").innerText = "Rp " + Math.round(nickelData.metals.nickel * usdIdr).toLocaleString('id-ID') + "/kg";
+          }
+        }
+      } catch(e) {
+        console.log("Error fetch asset live:", e);
+      }
     }
 
     function selectCurrency(curr) {
@@ -1324,7 +1683,7 @@
     });
 
     function saveComersioData(){
-      const data = { __format: "comersio-ayj", __version: 2, __savedAt: new Date().toISOString(), storage: {} };
+      const data = { __format: "comersio-json", __version: 2, __savedAt: new Date().toISOString(), storage: {} };
       for (let i = 0; i < localStorage.length; i++) {
         const key = localStorage.key(i);
         if (!key || key === "ilya_greet_date") continue;
@@ -1332,105 +1691,43 @@
       }
       const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
       const link = document.createElement("a");
-      link.href = URL.createObjectURL(blob); link.download = "Comersio.ayj"; link.click();
+      link.href = URL.createObjectURL(blob); link.download = "Comersio.json"; link.click();
     }
 
     document.getElementById("loadFile").addEventListener("change", function(e){
-      const file = e.target.files[0];
-      if(!file) return;
+      const file = e.target.files[0]; if(!file) return;
       const reader = new FileReader();
       reader.onload = async function(event){
-        try {
+        try{
           const data = JSON.parse(event.target.result);
-          if (!data || typeof data !== "object" || Array.isArray(data)) {
-            await showCustomAlert("File tidak valid. Isinya bukan JSON object.", "File Tidak Valid");
-            return;
-          }
-
-          let loadedCount = 0;
-          let loadedFormat = "unknown";
-
-          if (data.storage && typeof data.storage === "object" && !Array.isArray(data.storage)) {
+          if (data.__format === "comersio-json" && data.storage && typeof data.storage === "object") {
+            let count = 0;
             Object.keys(data.storage).forEach(key => {
-              try {
-                const val = data.storage[key];
-                if (val === null || val === undefined) return;
-                localStorage.setItem(key, String(val));
-                loadedCount++;
-              } catch(err) {}
+              try { const val = data.storage[key]; if (val === null || val === undefined) return; localStorage.setItem(key, String(val)); count++; } catch(err) {}
             });
-            loadedFormat = "v2 (storage)";
-          } else {
-            const v1Map = {
-              "customers": "customers",
-              "debts": "debts",
-              "archivedDebts": "archivedDebts",
-              "products": "products",
-              "customProducts": "customProducts",
-              "monthly": "monthly",
-              "monthlyLogs": "monthlyLogs",
-              "active_board_note": "comersio_active_board_note",
-              "active_board_note_v2": "comersio_active_board_note_v2",
-              "notes_archive": "comersio_notes_archive",
-              "boards_config": "comersio_boards_config",
-              "base_saldo": "comersio_base_saldo",
-              "profit_start_date": "comersio_profit_start_date",
-              "global_customer_limit": "global_customer_limit",
-              "global_charge_value": "global_charge_value",
-              "globalMargin": "globalMargin",
-              "charge_default_on_migrated_v1": "charge_default_on_migrated_v1"
-            };
-
-            Object.keys(v1Map).forEach(v1Key => {
-              if (data[v1Key] !== undefined && data[v1Key] !== null) {
-                const lsKey = v1Map[v1Key];
-                let val = data[v1Key];
-                if (typeof val === "object") val = JSON.stringify(val);
-                else val = String(val);
-                localStorage.setItem(lsKey, val);
-                loadedCount++;
-              }
-            });
-
-            if (data.profile && typeof data.profile === "object") {
-              if (data.profile.username) { localStorage.setItem("username", String(data.profile.username)); loadedCount++; }
-              if (data.profile.email !== undefined) { localStorage.setItem("email", String(data.profile.email)); loadedCount++; }
-              if (data.profile.title !== undefined) { localStorage.setItem("title", String(data.profile.title)); loadedCount++; }
-              if (data.profile.profile_picture) {
-                localStorage.setItem("profile_picture", String(data.profile.profile_picture));
-                localStorage.setItem("user_avatar", String(data.profile.profile_picture));
-                loadedCount += 2;
-              }
-            }
-
-            if (loadedCount === 0) {
-              const knownLsKeys = ["customers","debts","archivedDebts","products","customProducts","monthly","monthlyLogs","comersio_base_saldo","comersio_boards_config","comersio_active_board_note","comersio_active_board_note_v2","comersio_notes_archive","comersio_profit_start_date","username","email","title","profile_picture","user_avatar","global_customer_limit","global_charge_value","globalMargin"];
-              Object.keys(data).forEach(k => {
-                if (knownLsKeys.includes(k)) {
-                  let val = data[k];
-                  if (typeof val === "object") val = JSON.stringify(val);
-                  else val = String(val);
-                  localStorage.setItem(k, val);
-                  loadedCount++;
-                }
-              });
-              if (loadedCount > 0) loadedFormat = "flat-generic";
-            } else {
-              loadedFormat = "v1";
-            }
+            await showCustomAlert(`Data berhasil di-load (${count} entri).`, "Berhasil");
+            location.reload(); return;
           }
-
-          if (loadedCount === 0) {
-            await showCustomAlert("File tidak dikenali sebagai backup Comersio. Pastikan file .ayj dari aplikasi ini.", "File Tidak Dikenali");
-            return;
+          localStorage.setItem("customers", JSON.stringify(data.customers || []));
+          localStorage.setItem("debts", JSON.stringify(data.debts || {}));
+          localStorage.setItem("products", JSON.stringify(data.products || []));
+          localStorage.setItem("monthly", JSON.stringify(data.monthly || []));
+          if(data.monthlyLogs) localStorage.setItem("monthlyLogs", JSON.stringify(data.monthlyLogs));
+          if(data.active_board_note !== undefined) localStorage.setItem("comersio_active_board_note", data.active_board_note);
+          if(data.notes_archive) localStorage.setItem("comersio_notes_archive", JSON.stringify(data.notes_archive));
+          if(data.boards_config) localStorage.setItem("comersio_boards_config", JSON.stringify(data.boards_config));
+          if(data.base_saldo !== undefined) localStorage.setItem("comersio_base_saldo", data.base_saldo);
+          if(data.profit_start_date !== undefined) localStorage.setItem("comersio_profit_start_date", data.profit_start_date);
+          if(data.global_customer_limit !== undefined) localStorage.setItem("global_customer_limit", data.global_customer_limit);
+          if(data.profile) {
+            if(data.profile.username) localStorage.setItem("username", data.profile.username);
+            if(data.profile.email !== undefined) localStorage.setItem("email", data.profile.email);
+            if(data.profile.title !== undefined) localStorage.setItem("title", data.profile.title);
+            if(data.profile.profile_picture) { localStorage.setItem("profile_picture", data.profile.profile_picture); localStorage.setItem("user_avatar", data.profile.profile_picture); }
           }
-
-          await showCustomAlert(`Data berhasil di-load (${loadedCount} entri, format: ${loadedFormat}). Halaman akan refresh.`, "Berhasil");
-          setTimeout(() => location.reload(), 300);
-        } catch(err) {
-          console.error("Load error:", err);
-          await showCustomAlert("Gagal membaca file: " + err.message, "Kesalahan");
-        }
+          await showCustomAlert("Data berhasil di-load (format lama).", "Berhasil");
+          location.reload();
+        }catch(err){ await showCustomAlert("File bukan Comersio.json", "Kesalahan"); }
       };
       reader.readAsText(file);
     });

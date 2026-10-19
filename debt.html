@@ -185,7 +185,7 @@
   }
   .popupBox.active { display: flex; }
 
-  #customerPickerModal, #productPickerModal, #archivePopup { z-index: 9999999 !important; }
+  #customerPickerModal, #productPickerModal, #archivePopup, #paymentPopup, #amortPopup { z-index: 9999999 !important; }
 
   .popupContent {
     display: flex; flex-direction: column;
@@ -306,17 +306,27 @@
     flex-shrink: 0;
   }
 
-  .paymentMethod {
-    display: inline-flex; align-items: center; gap: 10px;
-    background: #121814;
-    border: 1.5px solid rgba(232, 177, 60, 0.4);
-    border-radius: 12px;
-    padding: 8px 12px;
-    margin-bottom: 8px;
-    color: white; cursor: pointer; font-size: 12px;
-    width: 100%; transition: border-color 0.2s;
+  /* Grid Payment Method - Tambahan Baru */
+  .payment-category-title {
+    font-family: 'FiraCondBold', sans-serif;
+    font-size: 0.8rem; color: var(--emas-terang);
+    margin: 14px 0 8px 0; text-align: left;
+    border-bottom: 1px dashed rgba(232, 177, 60, 0.3);
+    padding-bottom: 4px; letter-spacing: 0.5px;
   }
-  .paymentMethod:hover { border-color: var(--emas-terang); background: rgba(232, 177, 60, 0.1); }
+  .payment-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+  }
+  .payment-card {
+    display: flex; flex-direction: row; align-items: center; justify-content: flex-start; gap: 8px;
+    background: #121814; border: 1.5px solid rgba(232, 177, 60, 0.4); border-radius: 10px;
+    padding: 8px 10px; color: white; cursor: pointer; font-size: 0.8rem; transition: all 0.2s;
+  }
+  .payment-card:hover {
+    border-color: var(--emas-terang); background: rgba(232, 177, 60, 0.1); transform: translateY(-2px);
+  }
+  .payment-card img { width: 32px; height: 32px; object-fit: contain; }
+  .payment-card span { font-family: 'FiraCondBold', sans-serif; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
   .charge-preview-box {
     margin-top: 10px;
@@ -622,19 +632,46 @@
             <button type="button" id="btnTypeAmort" onclick="setPaymentType('amort')" style="flex:1; padding: 8px; border-radius: 8px; border: 1.5px solid var(--emas-terang); background: #111; color: var(--emas-terang); font-family: 'FiraCondBold', sans-serif; cursor: pointer; font-size: 0.8rem;">Amortisasi (Cicilan)</button>
         </div>
 
-        <p style="font-size: 0.8rem; color: var(--emas-terang); font-family: 'FiraCondBold', sans-serif; margin-bottom: 6px;">Pilih Channel Pembayaran:</p>
+        <div class="payment-category-title">E-WALLET</div>
+        <div class="payment-grid">
+            <div class="payment-card" onclick="openPaymentPage('gopay')"><img src="GoPay.png" alt="GoPay"><span>GoPay</span></div>
+            <div class="payment-card" onclick="openPaymentPage('dana')"><img src="DANA.png" alt="DANA"><span>DANA</span></div>
+            <div class="payment-card" onclick="openPaymentPage('shopeepay')"><img src="ShopeePay.png" alt="ShopeePay"><span>ShopeePay</span></div>
+        </div>
 
-        <div class="paymentMethod" onclick="openPaymentPage('qris')"><img src="QRIS Logo.png" style="width:40px;object-fit:contain;"><span>QRIS</span></div>
-        <div class="paymentMethod" onclick="openPaymentPage('gopay')"><img src="GoPay.png" style="width:40px;object-fit:contain;"><span>GoPay</span></div>
-        <div class="paymentMethod" onclick="openPaymentPage('dana')"><img src="DANA.png" style="width:40px;object-fit:contain;"><span>DANA</span></div>
-        <div class="paymentMethod" onclick="openPaymentPage('shopeepay')"><img src="ShopeePay.png" style="width:48px;object-fit:contain;"><span>ShopeePay</span></div>
-        <div class="paymentMethod" onclick="openPaymentPage('seabank')"><img src="SeaBank.png" style="width:48px;object-fit:contain;"><span>SeaBank</span></div>
-        <div class="paymentMethod" onclick="openPaymentPage('bri')"><img src="Bank BRI.png" style="width:36px;object-fit:contain;"><span>BRI</span></div>
-        <div class="paymentMethod" onclick="openPaymentPage('bankjago')"><img src="Bank Jago.png" style="width:48px;object-fit:contain;"><span>Bank Jago</span></div>
-        <div class="paymentMethod" onclick="openPaymentPage('krom')"><img src="Krom.png" style="width:36px;object-fit:contain;"><span>Krom</span></div>
+        <div class="payment-category-title">M-BANKING / QRIS</div>
+        <div class="payment-grid">
+            <div class="payment-card" onclick="openPaymentPage('qris')"><img src="QRIS Logo.png" alt="QRIS"><span>QRIS</span></div>
+            <div class="payment-card" onclick="openPaymentPage('seabank')"><img src="SeaBank.png" alt="SeaBank"><span>SeaBank</span></div>
+            <div class="payment-card" onclick="openPaymentPage('bri')"><img src="Bank BRI.png" alt="BRI"><span>BRI</span></div>
+            <div class="payment-card" onclick="openPaymentPage('bankjago')"><img src="Bank Jago.png" alt="Jago"><span>Bank Jago</span></div>
+            <div class="payment-card" onclick="openPaymentPage('krom')"><img src="Krom.png" alt="Krom"><span>Krom</span></div>
+            <div class="payment-card" onclick="openPaymentPage('superbank')"><img src="https://logo.clearbit.com/superbank.id" alt="SuperBank"><span>SuperBank</span></div>
+        </div>
 
         <div class="popupButtonGroup" style="margin-top: 12px;">
             <button class="cancelButton" onclick="closePaymentPopup()">Tutup</button>
+        </div>
+    </div>
+</div>
+
+<!-- POPUP AMORTISASI -->
+<div id="amortPopup" class="popupBox">
+    <div class="popupContent">
+        <h2>NOMINAL CICILAN</h2>
+        <p style="text-align:center; color:#aaa; font-size:0.8rem; margin-top:-4px; margin-bottom:12px;">Tentukan nominal yang dibayarkan saat ini.</p>
+
+        <div style="background: rgba(232, 177, 60, 0.1); border: 1px solid rgba(232, 177, 60, 0.3); border-radius: 10px; padding: 12px; margin-bottom: 16px; text-align: center;">
+            <span style="font-size: 0.75rem; color: #aaa; display: block; font-family: 'FiraCondBold', sans-serif; text-transform: uppercase;">Total Tagihan Aktif:</span>
+            <span id="amortTotalTagihanText" style="font-family: 'FiraCondBold', sans-serif; font-size: 1.25rem; color: var(--emas-terang); display: block; margin-top: 4px;">Rp 0</span>
+        </div>
+
+        <label style="text-align: center; margin-bottom: 6px; font-size: 0.8rem;">Jumlah Pembayaran:</label>
+        <input type="number" id="amortNominalInput" placeholder="Contoh: 50000" style="font-size: 1.1rem; text-align: center; font-family: 'FiraCondBold', sans-serif; height: 50px;">
+
+        <div class="popupButtonGroup" style="margin-top: 20px;">
+            <button class="cancelButton" onclick="closeAmortPopup()">Kembali</button>
+            <button class="addButton" onclick="confirmAmortPayment()">Lanjut Bayar</button>
         </div>
     </div>
 </div>
@@ -690,6 +727,7 @@ let monthlyLogs = JSON.parse(localStorage.getItem("monthlyLogs")) || [];
 
 let targetCustomerTotal = 0;
 let selectedPaymentMode = "full";
+let pendingPaymentMethod = "";
 
 let activeEditCustId = "";
 let activeEditIndex = -1;
@@ -1403,29 +1441,45 @@ function closePaymentPopup(){
 }
 
 function openPaymentPage(method){
-    let finalAmountToPay = targetCustomerTotal;
-
     if(selectedPaymentMode === 'amort'){
-        const inputCicilan = prompt(`Total sisa tagihan aktif: Rp ${targetCustomerTotal.toLocaleString("id-ID")}\nMasukkan nominal cicilan (Amortisasi) yang dibayar:`, targetCustomerTotal);
-        if(inputCicilan === null) return;
+        pendingPaymentMethod = method;
+        document.getElementById('amortTotalTagihanText').innerText = "Rp " + targetCustomerTotal.toLocaleString("id-ID");
+        document.getElementById('amortNominalInput').value = ""; // reset input
+        
+        closePaymentPopup();
+        document.getElementById('amortPopup').classList.add('active');
+    } else {
+        proceedToPaymentRedirect(method, targetCustomerTotal);
+    }
+}
 
-        const parsedCicilanNum = parseInt(inputCicilan);
-        if(isNaN(parsedCicilanNum) || parsedCicilanNum <= 0){
-            alert("Nominal pembayaran tidak valid!");
-            return;
-        }
-        if(parsedCicilanNum > targetCustomerTotal){
-            alert("Nominal cicilan tidak boleh melebihi sisa total tagihan aktif!");
-            return;
-        }
-        finalAmountToPay = parsedCicilanNum;
+function closeAmortPopup() {
+    document.getElementById('amortPopup').classList.remove('active');
+    document.getElementById('paymentPopup').classList.add('active'); 
+}
+
+function confirmAmortPayment() {
+    const inputVal = document.getElementById('amortNominalInput').value;
+    const parsedCicilanNum = parseInt(inputVal);
+
+    if(isNaN(parsedCicilanNum) || parsedCicilanNum <= 0){
+        alert("Nominal pembayaran tidak valid!");
+        return;
+    }
+    if(parsedCicilanNum > targetCustomerTotal){
+        alert("Nominal cicilan tidak boleh melebihi sisa total tagihan aktif!");
+        return;
     }
 
+    proceedToPaymentRedirect(pendingPaymentMethod, parsedCicilanNum);
+}
+
+function proceedToPaymentRedirect(method, amount) {
     localStorage.setItem("paymentCustomer", paymentTargetCustId);
-    localStorage.setItem("paymentTotal", finalAmountToPay);
+    localStorage.setItem("paymentTotal", amount);
     localStorage.setItem("paymentMethod", method);
     localStorage.setItem("paymentMode", selectedPaymentMode);
-
+    
     window.location.href = "payment.html";
 }
 
