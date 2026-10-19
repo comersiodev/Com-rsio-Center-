@@ -165,7 +165,7 @@
     position: relative;
     z-index: 5;
     padding: 76px 16px 100px 16px;
-    max-width: 650px;
+    max-width: 800px;
     margin: 0 auto;
   }
 
@@ -450,13 +450,15 @@
                             <th>ID Customer</th>
                             <th>Produk</th>
                             <th>Modal / Jual / Cuan</th>
+                            <th>Charge</th>
                             <th>Utang Sisa</th>
                             <th>Dibayar</th>
                             <th>Tip</th>
+                            <th>Status</th>
                         </tr>
                     </thead>
                     <tbody id="monthlyTable">
-                        <!-- Dinamis dari debts -->
+                        <!-- Dinamis dari debts & archivedDebts -->
                     </tbody>
                 </table>
             </div>
@@ -472,11 +474,15 @@
                     <span style="color: #4caf5e;">Rp <span id="totalBayar">0</span></span>
                 </div>
                 <div class="summary-row">
+                    <span style="color:#aaa;">Total Charge (Terhitung di Margin):</span>
+                    <span style="color: #ff9800;">Rp <span id="totalCharge">0</span></span>
+                </div>
+                <div class="summary-row">
                     <span style="color:#aaa;">Total Tip:</span>
                     <span style="color: var(--emas-terang);">Rp <span id="totalTip">0</span></span>
                 </div>
                 <div class="summary-row">
-                    <span style="color:#aaa;">Total Keuntungan (Margin):</span>
+                    <span style="color:#aaa;">Total Keuntungan (Margin & Charge):</span>
                     <span style="color: var(--emas-terang);">Rp <span id="totalMargin">0</span></span>
                 </div>
                 <div class="summary-row total-final">
@@ -569,19 +575,60 @@ function updateDateTime(){
 }
 
 /* =========================
-   PARSING DATA MURNI DARI DEBTS
+   PARSING TANGGAL & WAKTU
+========================= */
+function parseWaktu(str){
+    if(!str) return 0;
+    str = String(str).trim();
+    const m = str.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})[,\s]*(\d{1,2})[.:](\d{1,2})(?:[.:](\d{1,2}))?/);
+    if(m){
+        const d = parseInt(m[1], 10);
+        const mo = parseInt(m[2], 10) - 1;
+        const y = parseInt(m[3], 10);
+        const h = parseInt(m[4], 10) || 0;
+        const mi = parseInt(m[5], 10) || 0;
+        const s = parseInt(m[6], 10) || 0;
+        return new Date(y, mo, d, h, mi, s).getTime();
+    }
+    const t = new Date(str).getTime();
+    return isNaN(t) ? 0 : t;
+}
+
+function getItemTime(item){
+    return parseWaktu(item.waktu || item.tanggal || item.waktuArchive);
+}
+
+/* =========================
+   PARSING DATA (DEBTS + ARCHIVED DEBTS)
 ========================= */
 const debts = JSON.parse(localStorage.getItem("debts")) || {};
+const archivedDebts = JSON.parse(localStorage.getItem("archivedDebts")) || {};
 let allTransactions = [];
 
+// Muat transaksi yang Belum Lunas
 for(const customerId in debts){
     debts[customerId].forEach(item => {
         allTransactions.push({
             customerId: customerId,
+            _status: 'Belum Lunas',
             ...item
         });
     });
 }
+
+// Muat transaksi yang Lunas (Arsip)
+for(const customerId in archivedDebts){
+    archivedDebts[customerId].forEach(item => {
+        allTransactions.push({
+            customerId: customerId,
+            _status: 'Lunas',
+            ...item
+        });
+    });
+}
+
+// SORT DARI TERLAMA KE TERBARU (ATAS KE BAWAH)
+allTransactions.sort((a, b) => getItemTime(a) - getItemTime(b));
 
 function extractMonthKey(dateStr){
     if(!dateStr) return null;
@@ -601,7 +648,7 @@ function extractMonthKey(dateStr){
 let availableMonthsMap = {};
 
 allTransactions.forEach(item => {
-    let rawDate = item.waktu || item.tanggal || "";
+    let rawDate = item.waktu || item.tanggal || item.waktuArchive || "";
     let mKey = extractMonthKey(rawDate);
     if(mKey){
         availableMonthsMap[mKey] = true;
@@ -658,20 +705,24 @@ function renderMonthlyReport(){
     let totalBayar = 0;
     let totalTip = 0;
     let totalMargin = 0;
+    let totalCharge = 0;
     let filteredCount = 0;
 
     allTransactions.forEach(item => {
-        let rawDate = item.waktu || item.tanggal || "";
+        let rawDate = item.waktu || item.tanggal || item.waktuArchive || "";
         let itemMonthKey = extractMonthKey(rawDate);
 
         if(itemMonthKey === selectedMonthValue) {
             filteredCount++;
             const modal = item.modal || 0;
             const harga = item.harga || 0;
-            const profit = harga - modal;
+            const charge = item.charge || 0;
+            const profit = (harga - modal) + charge;
             const dibayar = item.dibayar || 0;
-            const sisaUtang = harga - dibayar;
+            const sisaUtang = (harga + charge) - dibayar;
             const tipItem = item.tip || 0;
+
+            const statusColor = item._status === 'Lunas' ? '#4caf5e' : '#ff5555';
 
             const row = document.createElement("tr");
             row.innerHTML = `
@@ -683,21 +734,24 @@ function renderMonthlyReport(){
                     <span style="color:var(--emas-terang);">Jual: Rp ${harga.toLocaleString("id-ID")}</span><br>
                     <small style="color:#4caf5e;">Cuan: Rp ${profit.toLocaleString("id-ID")}</small>
                 </td>
-                <td style="color: #ff5555;">Rp ${sisaUtang.toLocaleString("id-ID")}</td>
+                <td style="color: #ff9800; font-family: 'FiraCondBold', sans-serif;">Rp ${charge.toLocaleString("id-ID")}</td>
+                <td style="color: #ff5555;">Rp ${sisaUtang > 0 ? sisaUtang.toLocaleString("id-ID") : '0'}</td>
                 <td style="color: #4caf5e;">Rp ${dibayar.toLocaleString("id-ID")}</td>
                 <td style="color: var(--emas-terang);">Rp ${tipItem.toLocaleString("id-ID")}</td>
+                <td style="color:${statusColor}; font-family:'FiraCondBold',sans-serif;">${item._status}</td>
             `;
             table.appendChild(row);
 
-            totalUtang += sisaUtang;
+            totalUtang += (sisaUtang > 0 ? sisaUtang : 0);
             totalBayar += dibayar;
             totalTip += tipItem;
             totalMargin += profit;
+            totalCharge += charge;
         }
     });
 
     if(filteredCount === 0){
-        table.innerHTML = `<tr><td colspan="7" style="color:#777; padding: 20px;">Tidak ada transaksi pada bulan ini.</td></tr>`;
+        table.innerHTML = `<tr><td colspan="9" style="color:#777; padding: 20px;">Tidak ada transaksi pada bulan ini.</td></tr>`;
     }
 
     let [sYr, sMn] = selectedMonthValue.split("-");
@@ -710,6 +764,7 @@ function renderMonthlyReport(){
     document.getElementById("totalBayar").innerText = totalBayar.toLocaleString("id-ID");
     document.getElementById("totalTip").innerText = totalTip.toLocaleString("id-ID");
     document.getElementById("totalMargin").innerText = totalMargin.toLocaleString("id-ID");
+    document.getElementById("totalCharge").innerText = totalCharge.toLocaleString("id-ID");
 }
 </script>
 

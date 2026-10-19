@@ -7,175 +7,86 @@
 <title>Rekap Utang - Comersio Center</title>
 <link rel="stylesheet" href="style.css">
 <style>
-  @font-face{
-    font-family: 'OswaldBold';
-    src: url('oswald-bold.ttf') format('truetype');
-    font-weight: 700;
-    font-style: normal;
-  }
-  @font-face{
-    font-family: 'FiraCondBold';
-    src: url('firasanscondensed-bold.otf') format('opentype');
-    font-weight: 700;
-    font-style: normal;
-  }
-  @font-face{
-    font-family: 'FiraCondBook';
-    src: url('firasanscondensed-book.otf') format('opentype');
-    font-weight: 400;
-    font-style: normal;
-  }
+  @font-face{ font-family: 'OswaldBold'; src: url('oswald-bold.ttf') format('truetype'); font-weight: 700; }
+  @font-face{ font-family: 'FiraCondBold'; src: url('firasanscondensed-bold.otf') format('opentype'); font-weight: 700; }
+  @font-face{ font-family: 'FiraCondBook'; src: url('firasanscondensed-book.otf') format('opentype'); font-weight: 400; }
 
   :root{
     --hijau: #2f6b3a;
     --hijau-terang: #4caf5e;
     --emas: #e8b13c;
     --emas-terang: #ffd166;
+    --oranye: #ff9f1a;
     --gelap: #0a0a0a;
   }
 
-  *{
-    box-sizing: border-box;
-    -webkit-tap-highlight-color: transparent;
-  }
+  *{ box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
   html, body{
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    min-height: 100vh;
+    margin: 0; padding: 0; width: 100%; min-height: 100vh;
     font-family: 'FiraCondBook', sans-serif;
     background: #0a0a0a !important;
     color: #ffffff;
     overflow-x: hidden;
   }
 
-  /* BACKGROUND LAYER & DIM EFFECT */
-  .bg-layer{
-    position: fixed;
-    inset: 0;
-    background-image: url('background.jpg');
-    background-size: cover;
-    background-position: center center;
-    background-repeat: no-repeat;
-    z-index: 0;
-  }
+  .bg-layer{ position: fixed; inset: 0; background-image: url('background.jpg'); background-size: cover; background-position: center center; background-repeat: no-repeat; z-index: 0; }
+  .bg-dim{ position: fixed; inset: 0; background: rgba(6, 10, 7, 0.82); z-index: 1; }
 
-  .bg-dim{
-    position: fixed;
-    inset: 0;
-    background: rgba(6, 10, 7, 0.82);
-    z-index: 1;
-  }
-
-  /* TOP BAR M-BANKING (TANGGAL PINDAH KE SINI DI BAWAH REKAP UTANG) */
   .mbanking-topbar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 60px;
+    position: fixed; top: 0; left: 0; right: 0; height: 60px;
     background: rgba(10, 14, 11, 0.95);
     border-bottom: 1px solid rgba(232, 177, 60, 0.25);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 16px;
-    z-index: 20;
-    backdrop-filter: blur(8px);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 16px; z-index: 20; backdrop-filter: blur(8px);
   }
 
-  .mbanking-brand-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
+  .mbanking-brand-container { display: flex; flex-direction: column; justify-content: center; min-width: 0; }
+  .mbanking-brand { font-family: 'OswaldBold', sans-serif; font-size: 1.1rem; color: #ffffff; letter-spacing: 0.5px; line-height: 1.1; white-space: nowrap; }
+  .mbanking-brand span { color: var(--emas-terang); }
+  .mbanking-greeting-top { font-size: 0.7rem; color: var(--emas-terang); font-family: 'FiraCondBold', sans-serif; margin-top: 1px; line-height: 1; }
 
-  .mbanking-brand {
-    font-family: 'OswaldBold', sans-serif;
-    font-size: 1.1rem;
-    color: #ffffff;
-    letter-spacing: 0.5px;
-    line-height: 1.1;
-  }
-
-  .mbanking-brand span {
-    color: var(--emas-terang);
-  }
-
-  .mbanking-greeting-top {
-    font-size: 0.7rem;
-    color: var(--emas-terang);
-    font-family: 'FiraCondBold', sans-serif;
-    margin-top: 1px;
-    line-height: 1;
-  }
-
-  .topbar-right-box {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
+  .topbar-right-box { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
 
   .date-badge-top {
     font-family: 'FiraCondBold', sans-serif;
-    font-size: 0.8rem;
-    color: var(--emas-terang);
+    font-size: 0.8rem; color: var(--emas-terang);
     background: rgba(232, 177, 60, 0.1);
     border: 1px solid rgba(232, 177, 60, 0.3);
-    padding: 4px 8px;
-    border-radius: 8px;
+    padding: 4px 8px; border-radius: 8px; white-space: nowrap;
   }
+
+  .archive-topbar-btn {
+    width: 36px; height: 36px;
+    border-radius: 8px;
+    border: 1.5px solid rgba(232, 177, 60, 0.5);
+    background: rgba(232, 177, 60, 0.1);
+    color: var(--emas-terang);
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    transition: background 0.2s, box-shadow 0.2s, transform 0.15s;
+    flex-shrink: 0;
+  }
+  .archive-topbar-btn:hover { background: rgba(232, 177, 60, 0.25); box-shadow: 0 0 10px rgba(255, 209, 102, 0.35); }
+  .archive-topbar-btn:active { transform: scale(0.95); }
+  .archive-topbar-btn svg { width: 18px; height: 18px; fill: currentColor; }
 
   .profile-circle-btn {
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
+    width: 36px; height: 36px; border-radius: 50%;
     border: 2px solid var(--emas-terang);
-    background: #121814;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    text-decoration: none;
+    background: #121814; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; text-decoration: none;
     transition: transform 0.2s, box-shadow 0.2s;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.5); flex-shrink: 0;
   }
+  .profile-circle-btn:hover { transform: scale(1.08); box-shadow: 0 0 12px rgba(255, 209, 102, 0.4); }
+  .profile-circle-btn svg, .profile-circle-btn img { width: 100%; height: 100%; object-fit: cover; }
+  .profile-circle-btn svg { width: 20px; height: 20px; fill: var(--emas-terang); padding: 2px; }
 
-  .profile-circle-btn:hover {
-    transform: scale(1.08);
-    box-shadow: 0 0 12px rgba(255, 209, 102, 0.4);
-  }
+  .content-wrap { position: relative; z-index: 5; padding: 76px 16px 90px 16px; max-width: 600px; margin: 0 auto; }
 
-  .profile-circle-btn svg, .profile-circle-btn img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  .profile-circle-btn svg {
-    width: 20px;
-    height: 20px;
-    fill: var(--emas-terang);
-    padding: 2px;
-  }
-
-  /* CONTENT WRAP */
-  .content-wrap {
-    position: relative;
-    z-index: 5;
-    padding: 76px 16px 90px 16px;
-    max-width: 600px;
-    margin: 0 auto;
-  }
-
-  /* CUSTOMER ACCORDION CARDS */
-  .customer-list-container {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
+  .customer-list-container { display: flex; flex-direction: column; gap: 12px; }
 
   .customer-card {
     background: rgba(12, 17, 13, 0.92);
@@ -185,201 +96,100 @@
     box-shadow: 0 6px 20px rgba(0,0,0,0.6);
     transition: border-color 0.2s;
   }
-
-  .customer-card.active {
-    border-color: var(--emas-terang);
-    box-shadow: 0 0 15px rgba(255, 209, 102, 0.25);
-  }
+  .customer-card.active { border-color: var(--emas-terang); box-shadow: 0 0 15px rgba(255, 209, 102, 0.25); }
 
   .customer-header {
     padding: 16px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    display: flex; justify-content: space-between; align-items: center;
     cursor: pointer;
     background: rgba(16, 23, 18, 0.95);
   }
 
-  .customer-info h3 {
-    margin: 0 0 3px 0;
-    font-family: 'FiraCondBold', sans-serif;
-    font-size: 1.05rem;
-    color: var(--emas-terang);
-  }
-
-  .customer-info p {
-    margin: 0;
-    font-size: 0.8rem;
-    color: #bbb;
-  }
+  .customer-info h3 { margin: 0 0 3px 0; font-family: 'FiraCondBold', sans-serif; font-size: 1.05rem; color: var(--emas-terang); }
+  .customer-info p { margin: 0; font-size: 0.8rem; color: #bbb; }
 
   .arrow-icon {
-    width: 22px;
-    height: 22px;
-    stroke: var(--emas-terang);
-    fill: none;
-    stroke-width: 2.5;
-    stroke-linecap: round;
-    stroke-linejoin: round;
+    width: 22px; height: 22px;
+    stroke: var(--emas-terang); fill: none;
+    stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round;
     transition: transform 0.3s ease;
+    flex-shrink: 0;
   }
+  .customer-card.active .arrow-icon { transform: rotate(180deg); }
 
-  .customer-card.active .arrow-icon {
-    transform: rotate(180deg);
-  }
-
+  /* ============================================
+     FIX: Accordion smooth, maxHeight dipegang JS
+     Padding/border dipindah ke inner wrapper
+  ============================================ */
   .customer-body {
     max-height: 0;
     overflow: hidden;
-    transition: max-height 0.35s ease-out;
     background: #080c09;
+    transition: max-height 0.32s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: max-height;
   }
-
-  .customer-card.active .customer-body {
-    max-height: 1500px;
-    border-top: 1px solid rgba(232, 177, 60, 0.25);
+  .customer-body-content {
     padding: 14px 16px;
+    border-top: 1px solid rgba(232, 177, 60, 0.25);
   }
 
-  .table-responsive {
-    width: 100%;
-    overflow-x: auto;
-    scrollbar-width: thin;
-    scrollbar-color: var(--emas) #111;
-  }
+  .table-responsive { width: 100%; overflow-x: auto; scrollbar-width: thin; scrollbar-color: var(--emas) #111; }
 
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 0.8rem;
-    margin-bottom: 12px;
-    white-space: nowrap;
-  }
-
-  th, td {
-    padding: 8px 6px;
-    text-align: center;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-    vertical-align: middle;
-  }
-
+  table { width: 100%; border-collapse: collapse; font-size: 0.8rem; margin-bottom: 12px; white-space: nowrap; }
+  th, td { padding: 8px 6px; text-align: center; border-bottom: 1px solid rgba(255, 255, 255, 0.08); vertical-align: middle; }
   th {
-    font-family: 'FiraCondBold', sans-serif;
-    color: var(--emas-terang);
-    background: #0d120f;
-    border-bottom: 2px solid var(--emas);
-    font-size: 0.75rem;
-    text-transform: uppercase;
+    font-family: 'FiraCondBold', sans-serif; color: var(--emas-terang);
+    background: #0d120f; border-bottom: 2px solid var(--emas);
+    font-size: 0.75rem; text-transform: uppercase;
   }
 
   .custom-checkbox {
-    width: 22px;
-    height: 22px;
+    width: 22px; height: 22px;
     border: 2px solid var(--emas-terang);
     border-radius: 6px;
     background: #000;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
+    display: inline-flex; align-items: center; justify-content: center;
     cursor: pointer;
     transition: background 0.2s ease;
   }
+  .custom-checkbox svg { width: 12px; height: 12px; fill: none; stroke: #000; stroke-width: 3.5; stroke-linecap: round; stroke-linejoin: round; display: none; }
+  .custom-checkbox.checked { background: var(--emas-terang); }
+  .custom-checkbox.checked svg { display: block; }
 
-  .custom-checkbox svg {
-    width: 12px;
-    height: 12px;
-    fill: none;
-    stroke: #000;
-    stroke-width: 3.5;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-    display: none;
-  }
-
-  .custom-checkbox.checked {
-    background: var(--emas-terang);
-  }
-
-  .custom-checkbox.checked svg {
-    display: block;
-  }
-
-  .action-group {
-    display: flex;
-    gap: 8px;
-    margin-top: 8px;
-  }
+  .action-group { display: flex; gap: 8px; margin-top: 8px; }
 
   .btn-action {
-    flex: 1;
-    height: 42px;
-    border-radius: 10px;
+    flex: 1; height: 42px; border-radius: 10px;
     font-family: 'FiraCondBold', sans-serif;
-    font-size: 0.85rem;
-    cursor: pointer;
-    border: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
+    font-size: 0.85rem; cursor: pointer; border: none;
+    display: flex; align-items: center; justify-content: center; gap: 6px;
     transition: transform 0.2s, box-shadow 0.2s;
   }
-
-  .btn-action:active {
-    transform: scale(0.97);
-  }
-
-  .btn-add-debt {
-    background: #121814;
-    color: var(--emas-terang);
-    border: 1.5px solid var(--emas-terang);
-  }
-
-  .btn-pay-debt {
-    background: var(--emas-terang);
-    color: #000000;
-    box-shadow: 0 3px 10px rgba(255, 209, 102, 0.3);
-  }
+  .btn-action:active { transform: scale(0.97); }
+  .btn-add-debt { background: #121814; color: var(--emas-terang); border: 1.5px solid var(--emas-terang); }
+  .btn-pay-debt { background: var(--emas-terang); color: #000000; box-shadow: 0 3px 10px rgba(255, 209, 102, 0.3); }
 
   .card-total-box {
-    font-family: 'FiraCondBold', sans-serif;
-    font-size: 0.9rem;
-    color: #fff;
-    margin-bottom: 10px;
-    background: #000;
-    padding: 8px 12px;
-    border-radius: 8px;
-    display: flex;
-    justify-content: space-between;
+    font-family: 'FiraCondBold', sans-serif; font-size: 0.9rem; color: #fff;
+    margin-bottom: 10px; background: #000;
+    padding: 8px 12px; border-radius: 8px;
+    display: flex; justify-content: space-between;
     border: 1px solid rgba(232, 177, 60, 0.3);
   }
 
-  /* POPUP STYLES */
-  .popupBox{
-    position: fixed;
-    inset: 0;
+  .popupBox {
+    position: fixed; inset: 0;
     background: rgba(0,0,0,0.85);
-    display: none;
-    justify-content: center;
-    align-items: center;
-    z-index: 99999;
-    padding: 20px;
-    backdrop-filter: blur(5px);
+    display: none; justify-content: center; align-items: center;
+    z-index: 99999; padding: 20px; backdrop-filter: blur(5px);
   }
+  .popupBox.active { display: flex; }
 
-  .popupBox.active{
-    display: flex;
-  }
+  #customerPickerModal, #productPickerModal, #archivePopup { z-index: 9999999 !important; }
 
-  #customerPickerModal, #productPickerModal {
-    z-index: 9999999 !important;
-  }
-
-  .popupContent{
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    max-width: 360px;
+  .popupContent {
+    display: flex; flex-direction: column;
+    width: 100%; max-width: 360px;
     background: #0d120f;
     border: 2px solid var(--emas-terang);
     border-radius: 16px;
@@ -390,108 +200,70 @@
   }
 
   .popupContent h2 {
-    margin-top: 0;
-    margin-bottom: 12px;
+    margin-top: 0; margin-bottom: 12px;
     font-family: 'FiraCondBold', sans-serif;
-    color: var(--emas-terang);
-    text-align: center;
+    color: var(--emas-terang); text-align: center;
     font-size: 1.1rem;
   }
 
-  input{
-    width: 100%;
-    height: 44px;
+  input {
+    width: 100%; height: 44px;
     background: #000;
     border: 1.5px solid var(--emas);
     border-radius: 10px;
-    color: white;
-    padding: 0 12px;
-    box-sizing: border-box;
-    margin-top: 4px;
+    color: white; padding: 0 12px;
+    box-sizing: border-box; margin-top: 4px;
     font-family: 'FiraCondBook', sans-serif;
-    font-size: 0.95rem;
-    outline: none;
+    font-size: 0.95rem; outline: none;
   }
-
-  input:focus {
-    border-color: var(--emas-terang);
-    box-shadow: 0 0 8px rgba(255, 209, 102, 0.25);
-  }
+  input:focus { border-color: var(--emas-terang); box-shadow: 0 0 8px rgba(255, 209, 102, 0.25); }
 
   .popupContent label {
-    margin-top: 10px;
-    display: block;
-    font-size: 0.75rem;
-    color: var(--emas-terang);
-    font-family: 'FiraCondBold', sans-serif;
-    text-transform: uppercase;
+    margin-top: 10px; display: block;
+    font-size: 0.75rem; color: var(--emas-terang);
+    font-family: 'FiraCondBold', sans-serif; text-transform: uppercase;
   }
 
-  .popupButtonGroup{
-    display: flex;
-    gap: 8px;
-    margin-top: 16px;
-  }
-
-  .cancelButton,
-  .addButton{
-    flex: 1;
-    height: 42px;
-    border: none;
-    border-radius: 10px;
+  .popupButtonGroup { display: flex; gap: 8px; margin-top: 16px; }
+  .cancelButton, .addButton {
+    flex: 1; height: 42px;
+    border: none; border-radius: 10px;
     cursor: pointer;
     font-family: 'FiraCondBold', sans-serif;
     font-size: 0.9rem;
   }
-
-  .cancelButton{
-    background: #222;
-    color: #aaa;
-    border: 1px solid #444;
-  }
-
-  .addButton{
-    background: var(--emas-terang);
-    color: black;
-    box-shadow: 0 3px 10px rgba(255, 209, 102, 0.3);
-  }
-
-  .btn-delete-confirm {
-    background: #ff3b3b !important;
-    color: white !important;
-  }
+  .cancelButton { background: #222; color: #aaa; border: 1px solid #444; }
+  .addButton { background: var(--emas-terang); color: black; box-shadow: 0 3px 10px rgba(255, 209, 102, 0.3); }
+  .btn-delete-confirm { background: #ff3b3b !important; color: white !important; }
 
   .custom-select-trigger {
-    width: 100%;
-    height: 44px;
+    width: 100%; height: 44px;
     background: #000;
     border: 1.5px solid var(--emas);
     border-radius: 10px;
-    color: white;
-    padding: 0 12px;
+    color: white; padding: 0 12px;
     margin-top: 4px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    display: flex; align-items: center; justify-content: space-between;
     cursor: pointer;
     font-family: 'FiraCondBold', sans-serif;
     font-size: 0.9rem;
+  }
+  .custom-select-trigger svg {
+    width: 18px; height: 18px;
+    fill: var(--emas-terang);
+    flex-shrink: 0;
   }
 
   .select-option-item {
     background: #111;
     border: 1px solid rgba(232, 177, 60, 0.3);
-    color: #fff;
-    padding: 10px 12px;
-    border-radius: 8px;
-    text-align: left;
+    color: #fff; padding: 10px 12px;
+    border-radius: 8px; text-align: left;
     font-family: 'FiraCondBold', sans-serif;
-    font-size: 0.9rem;
-    margin-bottom: 8px;
+    font-size: 0.9rem; margin-bottom: 8px;
     cursor: pointer;
     transition: all 0.2s;
   }
-
   .select-option-item:hover {
     background: rgba(232, 177, 60, 0.2);
     border-color: var(--emas-terang);
@@ -499,40 +271,23 @@
   }
 
   .product-input-row {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    margin-top: 4px;
-    width: 100%;
-    height: 44px;
+    display: flex; align-items: center; gap: 6px;
+    margin-top: 4px; width: 100%; height: 44px;
   }
-
-  .product-input-row input {
-    margin: 0 !important;
-    flex: 1;
-    height: 44px !important;
-  }
+  .product-input-row input { margin: 0 !important; flex: 1; height: 44px !important; }
 
   .cart-icon-btn {
     margin: 0 !important;
-    width: 44px !important;
-    min-width: 44px !important;
-    height: 44px !important;
+    width: 44px !important; min-width: 44px !important; height: 44px !important;
     background: rgba(232, 177, 60, 0.15);
     border: 1.5px solid var(--emas-terang);
     color: var(--emas-terang);
     border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; flex-shrink: 0;
     transition: background 0.2s;
   }
-
-  .cart-icon-btn:hover {
-    background: rgba(232, 177, 60, 0.3);
-  }
+  .cart-icon-btn:hover { background: rgba(232, 177, 60, 0.3); }
 
   .product-picker-card {
     background: #111;
@@ -541,81 +296,175 @@
     padding: 10px 12px;
     margin-bottom: 8px;
     cursor: pointer;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    display: flex; justify-content: space-between; align-items: center;
     transition: all 0.2s;
   }
+  .product-picker-card:hover { border-color: var(--emas-terang); background: rgba(232, 177, 60, 0.1); }
+  .product-picker-card .picker-arrow {
+    width: 16px; height: 16px;
+    fill: var(--emas-terang);
+    flex-shrink: 0;
+  }
 
-  .product-picker-card:hover {
-    border-color: var(--emas-terang);
+  .paymentMethod {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: #121814;
+    border: 1.5px solid rgba(232, 177, 60, 0.4);
+    border-radius: 12px;
+    padding: 8px 12px;
+    margin-bottom: 8px;
+    color: white; cursor: pointer; font-size: 12px;
+    width: 100%; transition: border-color 0.2s;
+  }
+  .paymentMethod:hover { border-color: var(--emas-terang); background: rgba(232, 177, 60, 0.1); }
+
+  .charge-preview-box {
+    margin-top: 10px;
+    padding: 10px 12px;
+    background: rgba(255, 159, 26, 0.06);
+    border: 1.5px dashed rgba(255, 159, 26, 0.55);
+    border-radius: 10px;
+  }
+  .charge-preview-box .charge-head {
+    display: flex; justify-content: space-between; align-items: center;
+    gap: 8px;
+  }
+  .charge-preview-box .charge-head span:first-child {
+    color: var(--oranye);
+    font-family: 'FiraCondBold', sans-serif;
+    font-size: 0.78rem;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .charge-preview-box .charge-head svg {
+    width: 12px; height: 12px;
+    fill: var(--oranye);
+    filter: drop-shadow(0 0 4px rgba(255, 159, 26, 0.6));
+    flex-shrink: 0;
+  }
+  .charge-preview-box .charge-value {
+    color: var(--oranye);
+    font-family: 'FiraCondBold', sans-serif;
+    font-size: 0.85rem;
+  }
+  .charge-preview-box .charge-total-row {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-top: 8px; padding-top: 8px;
+    border-top: 1px dashed rgba(255, 159, 26, 0.3);
+  }
+  .charge-preview-box .charge-total-row span:first-child {
+    color: #aaa; font-size: 0.75rem;
+  }
+  .charge-preview-box .charge-total-row span:last-child {
+    color: var(--emas-terang);
+    font-family: 'FiraCondBold', sans-serif;
+    font-size: 0.9rem;
+  }
+  .charge-preview-box .charge-note {
+    font-size: 0.65rem;
+    color: #999;
+    margin-top: 6px;
+    font-family: 'FiraCondBold', sans-serif;
+    letter-spacing: 0.2px;
+  }
+
+  .archive-header-row {
+    display: flex; justify-content: space-between; align-items: center;
+    gap: 8px; margin-bottom: 12px;
+  }
+  .archive-header-row h2 { margin: 0; text-align: left; font-size: 1rem; }
+  .archive-back-btn {
+    display: none;
+    align-items: center; gap: 4px;
+    background: rgba(232, 177, 60, 0.12);
+    border: 1px solid rgba(232, 177, 60, 0.5);
+    color: var(--emas-terang);
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-family: 'FiraCondBold', sans-serif;
+    font-size: 0.72rem;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: background 0.2s;
+  }
+  .archive-back-btn:hover { background: rgba(232, 177, 60, 0.25); }
+  .archive-back-btn svg {
+    width: 14px; height: 14px;
+    fill: currentColor;
+  }
+
+  .archive-customer-info {
+    margin-bottom: 12px;
+    padding: 10px 12px;
+    background: #000;
+    border: 1px solid rgba(232, 177, 60, 0.3);
+    border-radius: 8px;
+  }
+
+  .archive-item {
+    background: #0a100c;
+    border: 1px solid rgba(232, 177, 60, 0.25);
+    border-radius: 10px;
+    padding: 10px 12px;
+    margin-bottom: 8px;
+  }
+  .archive-item .arc-title {
+    font-family: 'FiraCondBold', sans-serif;
+    color: var(--emas-terang);
+    font-size: 0.85rem;
+    word-break: break-word;
+  }
+  .archive-item .arc-waktu {
+    font-size: 0.65rem; color: #888; margin-top: 2px;
+  }
+  .archive-item .arc-meta {
+    display: flex; gap: 6px;
+    font-size: 0.7rem; color: #aaa;
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px dashed rgba(232, 177, 60, 0.2);
+    flex-wrap: wrap;
+  }
+  .archive-item .arc-sep { color: #555; }
+
+  .unarchive-btn {
+    margin-top: 8px; width: 100%;
+    padding: 6px 10px;
     background: rgba(232, 177, 60, 0.1);
+    border: 1px solid rgba(232, 177, 60, 0.4);
+    color: var(--emas-terang);
+    border-radius: 6px;
+    font-family: 'FiraCondBold', sans-serif;
+    font-size: 0.7rem;
+    cursor: pointer;
+    transition: background 0.2s;
   }
+  .unarchive-btn:hover { background: rgba(232, 177, 60, 0.25); }
 
-  .paymentMethod{
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    background:#121814;
-    border:1.5px solid rgba(232, 177, 60, 0.4);
-    border-radius:12px;
-    padding:8px 12px;
-    margin-bottom:8px;
-    color:white;
-    cursor:pointer;
-    font-size:12px;
-    width: 100%;
-    transition: border-color 0.2s;
-  }
-
-  .paymentMethod:hover{
-    border-color: var(--emas-terang);
-    background: rgba(232, 177, 60, 0.1);
-  }
-
-  /* BOTTOM NAVBAR M-BANKING (7 TOMBOL) */
   .mbanking-bottom-nav {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 64px;
+    position: fixed; bottom: 0; left: 0; right: 0; height: 64px;
     background: rgba(10, 14, 11, 0.96);
     border-top: 1px solid rgba(232, 177, 60, 0.3);
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    z-index: 99999;
-    backdrop-filter: blur(8px);
+    display: grid; grid-template-columns: repeat(7, 1fr);
+    z-index: 99999; backdrop-filter: blur(8px);
   }
-
   .nav-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none;
-    color: #888;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-decoration: none; color: #888;
     font-family: 'FiraCondBold', sans-serif;
-    font-size: 0.55rem;
-    gap: 3px;
-    padding: 4px 0;
+    font-size: 0.55rem; gap: 3px; padding: 4px 0;
     transition: color 0.2s;
   }
-
   .nav-item img {
-    width: 20px;
-    height: 20px;
-    object-fit: contain;
+    width: 20px; height: 20px; object-fit: contain;
     filter: grayscale(100%) opacity(0.6);
     transition: filter 0.2s;
   }
+  .nav-item.active, .nav-item:hover { color: var(--emas-terang); }
+  .nav-item.active img, .nav-item:hover img { filter: none; }
 
-  .nav-item.active, .nav-item:hover {
-    color: var(--emas-terang);
-  }
-
-  .nav-item.active img, .nav-item:hover img {
-    filter: none;
+  @media (max-width: 420px){
+    .date-badge-top { display: none; }
   }
 </style>
 </head>
@@ -625,7 +474,6 @@
   <div class="bg-layer"></div>
   <div class="bg-dim"></div>
 
-  <!-- TOP BAR M-BANKING (Comersio Center di atas, Rekap Utang di bawahnya, Tanggal di kanan) -->
   <div class="mbanking-topbar">
     <div class="mbanking-brand-container">
       <div class="mbanking-brand">Comersio <span>Center</span></div>
@@ -633,6 +481,11 @@
     </div>
     <div class="topbar-right-box">
       <div class="date-badge-top" id="dateText">01 Jan 2026</div>
+      <button class="archive-topbar-btn" onclick="openArchiveModal()" title="Arsip Transaksi">
+        <svg viewBox="0 0 24 24">
+          <path d="M20.54 5.23l-1.39-1.68C18.88 3.21 18.47 3 18 3H6c-.47 0-.88.21-1.16.55L3.46 5.23C3.17 5.57 3 6.02 3 6.5V19c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6.5c0-.48-.17-.93-.46-1.27zM12 17.5L6.5 12H10v-2h4v2h3.5L12 17.5zM5.12 5l.81-1h12l.94 1H5.12z"/>
+        </svg>
+      </button>
       <a href="profile.html" class="profile-circle-btn" id="topProfileBtn" title="Pengaturan Profile">
         <svg viewBox="0 0 24 24">
           <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
@@ -648,21 +501,19 @@
         </button>
     </div>
 
-    <div class="customer-list-container" id="customerAccordionList">
-        <!-- Dinamis accordion -->
-    </div>
+    <div class="customer-list-container" id="customerAccordionList"></div>
 </div>
 
-<!-- POPUP TAMBAH UTANG CUSTOM -->
+<!-- POPUP TAMBAH UTANG -->
 <div id="popupBox" class="popupBox">
     <div class="popupContent">
         <h2>TAMBAH UTANG</h2>
         <label>Pilih Customer:</label>
         <div class="custom-select-trigger" id="customerSelectTrigger" onclick="openCustomerPickerModal(event)">
             <span id="selectedCustomerLabel">Pilih Customer...</span>
-            <span></span>
+            <svg viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
         </div>
-        
+
         <label>Nama Produk:</label>
         <div class="product-input-row">
             <input type="text" id="produkInput" placeholder="Nama Produk / Layanan">
@@ -676,10 +527,25 @@
 
         <label>Harga Jual:</label>
         <input type="number" id="hargaInput" placeholder="Harga Jual (Rp)" oninput="calculateMargin()">
-        
+
         <div id="marginPreviewBox" style="margin-top: 10px; padding: 8px 10px; background: #000; border-radius: 8px; border: 1px dashed rgba(232, 177, 60, 0.4); font-size: 0.8rem; display: flex; justify-content: space-between; align-items: center;">
             <span style="color: #aaa;">Estimasi Keuntungan:</span>
             <span id="marginValueText" style="font-family: 'FiraCondBold', sans-serif; color: var(--emas-terang);">Rp 0</span>
+        </div>
+
+        <div id="chargePreviewBox" class="charge-preview-box" style="display: none;">
+            <div class="charge-head">
+                <span>
+                    <svg viewBox="0 0 24 24"><path d="M7 2v11h3v9l7-12h-4l4-8z"/></svg>
+                    Charge Over-Limit
+                </span>
+                <span class="charge-value" id="chargePreviewValue">Rp 0</span>
+            </div>
+            <div class="charge-total-row">
+                <span>Total Tagihan:</span>
+                <span id="totalPreviewValue">Rp 0</span>
+            </div>
+            <div class="charge-note">Otomatis dari limitasi customer &mdash; tidak dapat diubah</div>
         </div>
 
         <div class="popupButtonGroup">
@@ -689,7 +555,7 @@
     </div>
 </div>
 
-<!-- MODAL CUSTOM PILIH CUSTOMER -->
+<!-- MODAL PILIH CUSTOMER -->
 <div id="customerPickerModal" class="popupBox">
     <div class="popupContent">
         <h2>PILIH CUSTOMER</h2>
@@ -700,7 +566,7 @@
     </div>
 </div>
 
-<!-- MODAL CUSTOM PILIH MASTER PRODUK DENGAN SEARCH BAR -->
+<!-- MODAL PILIH PRODUK -->
 <div id="productPickerModal" class="popupBox">
     <div class="popupContent">
         <h2>PILIH PRODUK</h2>
@@ -715,15 +581,17 @@
 <!-- POPUP EDIT PEMBAYARAN -->
 <div id="editPopupBox" class="popupBox">
     <div class="popupContent">
-        <h2>INPUT PEMBAYARAN & TIP</h2>
+        <h2>INPUT PEMBAYARAN &amp; TIP</h2>
         <p id="editProductInfo" style="text-align:center; color:#aaa; font-size:0.8rem; margin-top:-4px; margin-bottom:8px;"></p>
-        
+
         <label>Jumlah Dibayar:</label>
         <input type="number" id="nominalBayarInput" placeholder="Masukkan nominal dibayar...">
 
         <label>Nominal Tip:</label>
         <input type="number" id="nominalTipInput" placeholder="Masukkan nominal tip...">
-        
+
+        <p style="font-size: 0.7rem; color: #4caf5e; margin: 8px 0 0 0; font-family: 'FiraCondBold', sans-serif;">Jika jumlah bayar sudah mencapai total tagihan, transaksi otomatis masuk ke Arsip.</p>
+
         <div class="popupButtonGroup">
             <button class="cancelButton" onclick="closeEditPopup()">Batal</button>
             <button class="addButton" onclick="saveEditDebt()">Simpan</button>
@@ -748,14 +616,14 @@
     <div class="popupContent" style="max-height: 85vh; overflow-y: auto;">
         <h2>METODE PEMBAYARAN</h2>
         <p style="text-align: center; font-size: 0.8rem; color: #aaa; margin-top: -4px; margin-bottom: 12px;">Pilih jenis pembayaran tagihan:</p>
-        
+
         <div style="display: flex; gap: 8px; margin-bottom: 12px;">
             <button type="button" id="btnTypeFull" onclick="setPaymentType('full')" style="flex:1; padding: 8px; border-radius: 8px; border: 1.5px solid var(--emas-terang); background: var(--emas-terang); color: #000; font-family: 'FiraCondBold', sans-serif; cursor: pointer; font-size: 0.8rem;">Penuh (Full)</button>
             <button type="button" id="btnTypeAmort" onclick="setPaymentType('amort')" style="flex:1; padding: 8px; border-radius: 8px; border: 1.5px solid var(--emas-terang); background: #111; color: var(--emas-terang); font-family: 'FiraCondBold', sans-serif; cursor: pointer; font-size: 0.8rem;">Amortisasi (Cicilan)</button>
         </div>
 
         <p style="font-size: 0.8rem; color: var(--emas-terang); font-family: 'FiraCondBold', sans-serif; margin-bottom: 6px;">Pilih Channel Pembayaran:</p>
-        
+
         <div class="paymentMethod" onclick="openPaymentPage('qris')"><img src="QRIS Logo.png" style="width:40px;object-fit:contain;"><span>QRIS</span></div>
         <div class="paymentMethod" onclick="openPaymentPage('gopay')"><img src="GoPay.png" style="width:40px;object-fit:contain;"><span>GoPay</span></div>
         <div class="paymentMethod" onclick="openPaymentPage('dana')"><img src="DANA.png" style="width:40px;object-fit:contain;"><span>DANA</span></div>
@@ -764,39 +632,45 @@
         <div class="paymentMethod" onclick="openPaymentPage('bri')"><img src="Bank BRI.png" style="width:36px;object-fit:contain;"><span>BRI</span></div>
         <div class="paymentMethod" onclick="openPaymentPage('bankjago')"><img src="Bank Jago.png" style="width:48px;object-fit:contain;"><span>Bank Jago</span></div>
         <div class="paymentMethod" onclick="openPaymentPage('krom')"><img src="Krom.png" style="width:36px;object-fit:contain;"><span>Krom</span></div>
-        
+
         <div class="popupButtonGroup" style="margin-top: 12px;">
             <button class="cancelButton" onclick="closePaymentPopup()">Tutup</button>
         </div>
     </div>
 </div>
 
-<!-- BOTTOM NAVBAR M-BANKING (7 TOMBOL) -->
+<!-- POPUP ARSIP TRANSAKSI -->
+<div id="archivePopup" class="popupBox">
+    <div class="popupContent" style="max-height: 85vh;">
+        <div class="archive-header-row">
+            <h2 id="archiveTitle">ARSIP TRANSAKSI</h2>
+            <button type="button" class="archive-back-btn" id="archiveBackBtn" onclick="archiveGoBack()">
+                <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+                Kembali
+            </button>
+        </div>
+
+        <div id="archiveListView"></div>
+
+        <div id="archiveDetailView" style="display: none;">
+            <div id="archiveCustomerInfo" class="archive-customer-info"></div>
+            <div id="archiveDetailList" style="max-height: 48vh; overflow-y: auto;"></div>
+        </div>
+
+        <div class="popupButtonGroup" style="margin-top: 14px;">
+            <button class="cancelButton" onclick="closeArchiveModal()">Tutup</button>
+        </div>
+    </div>
+</div>
+
+<!-- BOTTOM NAV -->
 <nav class="mbanking-bottom-nav">
-    <a href="index.html" class="nav-item">
-        <img src="icon.png" alt="Home">
-        <span>Home</span>
-    </a>
-    <a href="product.html" class="nav-item">
-        <img src="voucher.png" alt="Produk">
-        <span>Produk</span>
-    </a>
-    <a href="debt.html" class="nav-item active">
-        <img src="debt.png" alt="Utang">
-        <span>Utang</span>
-    </a>
-    <a href="customer.html" class="nav-item">
-        <img src="nama.png" alt="Customer">
-        <span>Customer</span>
-    </a>
-    <a href="recap.html" class="nav-item">
-        <img src="rekap.png" alt="Rekap">
-        <span>Rekap</span>
-    </a>
-    <a href="monthly.html" class="nav-item">
-        <img src="pembukuan.png" alt="Laporan">
-        <span>Laporan</span>
-    </a>
+    <a href="index.html" class="nav-item"><img src="icon.png" alt="Home"><span>Home</span></a>
+    <a href="product.html" class="nav-item"><img src="voucher.png" alt="Produk"><span>Produk</span></a>
+    <a href="debt.html" class="nav-item active"><img src="debt.png" alt="Utang"><span>Utang</span></a>
+    <a href="customer.html" class="nav-item"><img src="nama.png" alt="Customer"><span>Customer</span></a>
+    <a href="recap.html" class="nav-item"><img src="rekap.png" alt="Rekap"><span>Rekap</span></a>
+    <a href="monthly.html" class="nav-item"><img src="pembukuan.png" alt="Laporan"><span>Laporan</span></a>
     <a href="profile.html" class="nav-item" title="Pengaturan Profil">
         <svg viewBox="0 0 24 24" style="width:20px; height:20px; fill:currentColor; filter:none;"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>
         <span>Profil</span>
@@ -804,8 +678,16 @@
 </nav>
 
 <script>
-let debts = JSON.parse(localStorage.getItem("debts")) || {};
+/* =========================================================
+   STORAGE
+========================================================= */
+const KEY_DEBTS = "debts";
+const KEY_ARCHIVED = "archivedDebts";
+
+let debts = JSON.parse(localStorage.getItem(KEY_DEBTS)) || {};
+let archivedDebts = JSON.parse(localStorage.getItem(KEY_ARCHIVED)) || {};
 let monthlyLogs = JSON.parse(localStorage.getItem("monthlyLogs")) || [];
+
 let targetCustomerTotal = 0;
 let selectedPaymentMode = "full";
 
@@ -818,8 +700,120 @@ let selectedCustIdTemp = "";
 let openCustomerCards = {};
 let allMasterProductsTemp = [];
 
+let archiveMode = 'list';
+let archiveSelectedCust = '';
+let paymentTargetCustId = "";
+
+/* =========================================================
+   HELPER
+========================================================= */
+function getCustomersFromStorage(){
+    return JSON.parse(localStorage.getItem("customers")) || [];
+}
+
+function getGlobalCharge(){
+    const v = parseInt(localStorage.getItem("global_charge_value") || "0", 10);
+    return isNaN(v) ? 0 : v;
+}
+
+function rupiah(n){ return "Rp " + Number(n || 0).toLocaleString("id-ID"); }
+
+function saveDebts(){ localStorage.setItem(KEY_DEBTS, JSON.stringify(debts)); }
+function saveArchived(){ localStorage.setItem(KEY_ARCHIVED, JSON.stringify(archivedDebts)); }
+
+function isItemPaid(item){
+    const total = (item.harga || 0) + (item.charge || 0);
+    const dibayar = item.dibayar || 0;
+    return total > 0 && dibayar >= total;
+}
+
+/* =========================================================
+   MIGRASI: item lunas (data lama) -> arsip
+========================================================= */
+function migratePaidDebtsToArchive(){
+    let migratedCount = 0;
+    let changedDebts = false;
+
+    Object.keys(debts).forEach(custId => {
+        const list = debts[custId] || [];
+        if(list.length === 0) return;
+
+        const stillActive = [];
+        list.forEach(item => {
+            if(isItemPaid(item)){
+                if(!item.waktuArchive){
+                    item.waktuArchive = item.waktu || new Date().toLocaleString("id-ID");
+                }
+                if(!archivedDebts[custId]) archivedDebts[custId] = [];
+
+                const dup = archivedDebts[custId].some(a =>
+                    a.produk === item.produk &&
+                    a.waktu === item.waktu &&
+                    a.harga === item.harga
+                );
+                if(!dup){
+                    archivedDebts[custId].push(item);
+                }
+                migratedCount++;
+                changedDebts = true;
+            } else {
+                stillActive.push(item);
+            }
+        });
+
+        if(stillActive.length !== list.length){
+            debts[custId] = stillActive;
+            changedDebts = true;
+        }
+    });
+
+    if(changedDebts){
+        saveDebts();
+        saveArchived();
+    }
+
+    return migratedCount;
+}
+
+/* =========================================================
+   CHARGE RECOMPUTE
+========================================================= */
+function recomputeCharges(custId){
+    const customers = getCustomersFromStorage();
+    const cust = customers.find(c => c.id === custId);
+    if(!cust) return;
+
+    const custDebts = debts[custId] || [];
+    const limit = cust.limit || 0;
+    const chargeVal = getGlobalCharge();
+
+    if(!cust.chargeEnabled || chargeVal <= 0 || limit <= 0){
+        custDebts.forEach(d => { d.charge = 0; });
+    } else {
+        let cumulative = 0;
+        custDebts.forEach(d => {
+            const harga = d.harga || 0;
+            cumulative += harga;
+            d.charge = (cumulative > limit) ? chargeVal : 0;
+        });
+    }
+    debts[custId] = custDebts;
+}
+
+/* =========================================================
+   INIT
+========================================================= */
 window.onload = function(){
     updateDateOnly();
+
+    const migrated = migratePaidDebtsToArchive();
+
+    if(migrated > 0){
+        const customers = getCustomersFromStorage();
+        customers.forEach(c => recomputeCharges(c.id));
+        saveDebts();
+    }
+
     renderCustomerList();
 
     const savedPic = localStorage.getItem("profile_picture") || localStorage.getItem("user_avatar");
@@ -827,20 +821,25 @@ window.onload = function(){
       const topBtn = document.getElementById("topProfileBtn");
       topBtn.innerHTML = `<img src="${savedPic}" alt="Profile">`;
     }
-}
 
-/* HANYA TANGGAL TANPA JAM DI TOPBAR */
+    document.querySelectorAll(".popupBox").forEach(box => {
+        box.addEventListener("click", e => {
+            if(e.target === box) box.classList.remove("active");
+        });
+    });
+};
+
 function updateDateOnly(){
     const now = new Date();
     const optionsDate = { day: '2-digit', month: 'short', year: 'numeric' };
     document.getElementById("dateText").innerText = now.toLocaleDateString('id-ID', optionsDate);
 }
 
-/* =========================
-   RENDER CUSTOMER ACCORDION LIST
-========================= */
+/* =========================================================
+   RENDER LIST CUSTOMER
+========================================================= */
 function renderCustomerList(){
-    const customers = JSON.parse(localStorage.getItem("customers")) || [];
+    const customers = getCustomersFromStorage();
     const container = document.getElementById("customerAccordionList");
     container.innerHTML = "";
 
@@ -855,67 +854,79 @@ function renderCustomerList(){
         const customerDebtList = debts[custId] || [];
 
         let currentTotal = 0;
+        let totalCharge = 0;
         customerDebtList.forEach(item => {
             const harga = item.harga || 0;
+            const charge = item.charge || 0;
             const dibayar = item.dibayar || 0;
-            const sisa = harga - dibayar;
+            const sisa = (harga + charge) - dibayar;
             if(sisa > 0 && !item.excluded) {
                 currentTotal += sisa;
             }
+            totalCharge += charge;
         });
 
         const card = document.createElement("div");
         card.className = "customer-card";
         card.id = `card-${custId}`;
+        if(openCustomerCards[custId]) card.classList.add("active");
 
-        if(openCustomerCards[custId]){
-            card.classList.add("active");
-        }
+        const chargeHint = totalCharge > 0
+            ? `<span style="display:inline-block; margin-left:6px; padding:1px 6px; background:rgba(255,159,26,0.15); color:#ff9f1a; border-radius:4px; font-size:0.62rem; font-family:'FiraCondBold',sans-serif;">Charge aktif</span>`
+            : '';
 
         card.innerHTML = `
             <div class="customer-header" onclick="toggleAccordion('${custId}')">
                 <div class="customer-info">
-                    <h3>${custId} - ${custName}</h3>
+                    <h3>${custId} - ${custName}${chargeHint}</h3>
                     <p>Total Utang Aktif: Rp ${currentTotal.toLocaleString("id-ID")}</p>
                 </div>
                 <svg class="arrow-icon" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
             </div>
             <div class="customer-body" id="body-${custId}">
-                <div class="card-total-box">
-                    <span>TOTAL TAGIHAN (DITAGIH) :</span>
-                    <span>Rp ${currentTotal.toLocaleString("id-ID")}</span>
-                </div>
+                <div class="customer-body-content">
+                    <div class="card-total-box">
+                        <span>TOTAL TAGIHAN (DITAGIH) :</span>
+                        <span>Rp ${currentTotal.toLocaleString("id-ID")}</span>
+                    </div>
 
-                <div class="table-responsive">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Log</th>
-                                <th>Produk</th>
-                                <th>Modal / Jual</th>
-                                <th>Dibayar</th>
-                                <th>Tip</th>
-                                <th>Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody id="table-body-${custId}">
-                            ${renderDebtRows(customerDebtList, custId)}
-                        </tbody>
-                    </table>
-                </div>
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Log</th>
+                                    <th>Produk</th>
+                                    <th>Modal / Jual</th>
+                                    <th>Dibayar</th>
+                                    <th>Tip</th>
+                                    <th>Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody id="table-body-${custId}">
+                                ${renderDebtRows(customerDebtList, custId)}
+                            </tbody>
+                        </table>
+                    </div>
 
-                <div class="action-group">
-                    <button type="button" class="btn-action btn-add-debt" onclick="openPopupForCustomer('${custId}')">
-                        + Tambah Utang
-                    </button>
-                    <button type="button" class="btn-action btn-pay-debt" onclick="openPaymentPopup('${custId}', ${currentTotal})">
-                        Tagih Utang
-                    </button>
+                    <div class="action-group">
+                        <button type="button" class="btn-action btn-add-debt" onclick="openPopupForCustomer('${custId}')">
+                            + Tambah Utang
+                        </button>
+                        <button type="button" class="btn-action btn-pay-debt" onclick="openPaymentPopup('${custId}', ${currentTotal})">
+                            Tagih Utang
+                        </button>
+                    </div>
                 </div>
             </div>
         `;
 
         container.appendChild(card);
+
+        // Kalau card ini sebelumnya open, set maxHeight langsung tanpa animasi
+        if(openCustomerCards[custId]){
+            const bodyEl = card.querySelector('.customer-body');
+            if(bodyEl) bodyEl.style.maxHeight = "none";
+        }
     });
 }
 
@@ -925,14 +936,24 @@ function renderDebtRows(debtList, custId){
     }
 
     let html = "";
+    let renderedCount = 0;
+
     debtList.forEach((item, index) => {
+        if(isItemPaid(item)) return;
+        renderedCount++;
+
         const modal = item.modal || 0;
         const harga = item.harga || 0;
+        const charge = item.charge || 0;
         const profit = harga - modal;
         const dibayar = item.dibayar || 0;
-        const sisaItem = harga - dibayar;
+        const sisaItem = (harga + charge) - dibayar;
         const tipItem = item.tip || 0;
         const isChecked = item.excluded ? "checked" : "";
+
+        const chargeLine = charge > 0
+            ? `<br><small style="color:#ff9f1a; font-family:'FiraCondBold',sans-serif;">Charge: +Rp ${charge.toLocaleString("id-ID")}</small>`
+            : '';
 
         html += `
             <tr>
@@ -944,7 +965,8 @@ function renderDebtRows(debtList, custId){
                 <td>${item.produk}<br><small style="color:#888;">${item.waktu}</small></td>
                 <td>
                     <span style="color:#aaa;">Modal: Rp ${modal.toLocaleString("id-ID")}</span><br>
-                    <span style="color:var(--emas-terang);">Jual: Rp ${harga.toLocaleString("id-ID")}</span><br>
+                    <span style="color:var(--emas-terang);">Jual: Rp ${harga.toLocaleString("id-ID")}</span>
+                    ${chargeLine}<br>
                     <small style="color:#4caf5e;">Cuan: Rp ${profit.toLocaleString("id-ID")}</small>
                 </td>
                 <td onclick="openEditDebt('${custId}', ${index})" style="cursor:pointer; color: var(--emas-terang);" title="Klik untuk isi/ubah pembayaran">
@@ -962,30 +984,65 @@ function renderDebtRows(debtList, custId){
             </tr>
         `;
     });
+
+    if(renderedCount === 0){
+        return `<tr><td colspan="6" style="color:#777; padding: 15px;">Semua transaksi sudah lunas &amp; diarsipkan</td></tr>`;
+    }
+
     return html;
 }
 
+/* =========================================================
+   TOGGLE ACCORDION (SMOOTH)
+========================================================= */
 function toggleAccordion(custId){
     const card = document.getElementById(`card-${custId}`);
-    card.classList.toggle("active");
+    const body = document.getElementById(`body-${custId}`);
+    if(!card || !body) return;
+
+    const isOpen = card.classList.contains("active");
+
+    if(isOpen){
+        // ---- CLOSE ----
+        body.style.maxHeight = body.scrollHeight + "px";
+        void body.offsetHeight; // paksa reflow
+        card.classList.remove("active");
+        body.style.maxHeight = "0px";
+    } else {
+        // ---- OPEN ----
+        card.classList.add("active");
+        body.style.maxHeight = "none";
+        const targetH = body.scrollHeight;
+        body.style.maxHeight = "0px";
+        void body.offsetHeight;
+        body.style.maxHeight = targetH + "px";
+
+        // Setelah animasi selesai, lepas constraint
+        setTimeout(() => {
+            if(card.classList.contains("active")){
+                body.style.maxHeight = "none";
+            }
+        }, 340);
+    }
+
     openCustomerCards[custId] = card.classList.contains("active");
 }
 
-/* =========================
-   CHECKLIST (EXCLUDE & MONTHLY LOG)
-========================= */
+/* =========================================================
+   CHECKLIST EXCLUDE
+========================================================= */
 function toggleExcludeItem(custId, index){
     const item = debts[custId][index];
     item.excluded = !item.excluded;
 
     if(item.excluded && !item.isLogged){
         item.isLogged = true;
-        
         monthlyLogs.push({
             customer: custId,
             produk: item.produk,
             modal: item.modal || 0,
             harga: item.harga || 0,
+            charge: item.charge || 0,
             dibayar: item.dibayar || 0,
             tip: item.tip || 0,
             profit: ((item.dibayar || 0) + (item.tip || 0)) - (item.modal || 0),
@@ -995,17 +1052,17 @@ function toggleExcludeItem(custId, index){
         localStorage.setItem("monthlyLogs", JSON.stringify(monthlyLogs));
     }
 
-    localStorage.setItem("debts", JSON.stringify(debts));
+    saveDebts();
     openCustomerCards[custId] = true;
     renderCustomerList();
 }
 
-/* =========================
+/* =========================================================
    POPUP CUSTOMER & PRODUCT PICKER
-========================= */
+========================================================= */
 function openCustomerPickerModal(event){
     if(event) event.stopPropagation();
-    const customers = JSON.parse(localStorage.getItem("customers")) || [];
+    const customers = getCustomersFromStorage();
     const listContainer = document.getElementById("customerPickerList");
     listContainer.innerHTML = "";
 
@@ -1021,6 +1078,7 @@ function openCustomerPickerModal(event){
                 selectedCustIdTemp = cust.id;
                 document.getElementById("selectedCustomerLabel").innerText = `${cust.id} - ${cust.name}`;
                 closeCustomerPickerModal();
+                updateChargePreview();
             };
             listContainer.appendChild(div);
         });
@@ -1040,10 +1098,43 @@ function calculateMargin(){
     const profitText = document.getElementById("marginValueText");
     profitText.innerText = `Rp ${profit.toLocaleString("id-ID")}`;
     profitText.style.color = profit >= 0 ? "var(--emas-terang)" : "#ff3b3b";
+
+    updateChargePreview();
+}
+
+function updateChargePreview(){
+    const box = document.getElementById("chargePreviewBox");
+    box.style.display = "none";
+
+    const custId = selectedCustIdTemp;
+    if(!custId) return;
+
+    const customers = getCustomersFromStorage();
+    const cust = customers.find(c => c.id === custId);
+    if(!cust || !cust.chargeEnabled) return;
+
+    const limit = cust.limit || 0;
+    if(limit <= 0) return;
+
+    const chargeVal = getGlobalCharge();
+    if(chargeVal <= 0) return;
+
+    const newHarga = parseInt(document.getElementById("hargaInput").value) || 0;
+    if(newHarga <= 0) return;
+
+    const custDebts = debts[custId] || [];
+    let cumulative = 0;
+    custDebts.forEach(d => { cumulative += (d.harga || 0); });
+
+    if((cumulative + newHarga) > limit){
+        box.style.display = "block";
+        document.getElementById("chargePreviewValue").innerText = "Rp " + chargeVal.toLocaleString("id-ID");
+        document.getElementById("totalPreviewValue").innerText = "Rp " + (newHarga + chargeVal).toLocaleString("id-ID");
+    }
 }
 
 function openGlobalAddPopup(){
-    const customers = JSON.parse(localStorage.getItem("customers")) || [];
+    const customers = getCustomersFromStorage();
     if(customers.length > 0){
         selectedCustIdTemp = customers[0].id;
         document.getElementById("selectedCustomerLabel").innerText = `${customers[0].id} - ${customers[0].name}`;
@@ -1056,11 +1147,12 @@ function openGlobalAddPopup(){
     document.getElementById("modalInput").value = "";
     document.getElementById("hargaInput").value = "";
     document.getElementById("marginValueText").innerText = "Rp 0";
+    document.getElementById("chargePreviewBox").style.display = "none";
     document.getElementById("popupBox").classList.add("active");
 }
 
 function openPopupForCustomer(custId){
-    const customers = JSON.parse(localStorage.getItem("customers")) || [];
+    const customers = getCustomersFromStorage();
     const found = customers.find(c => c.id === custId);
     if(found){
         selectedCustIdTemp = found.id;
@@ -1071,6 +1163,7 @@ function openPopupForCustomer(custId){
     document.getElementById("modalInput").value = "";
     document.getElementById("hargaInput").value = "";
     document.getElementById("marginValueText").innerText = "Rp 0";
+    document.getElementById("chargePreviewBox").style.display = "none";
     document.getElementById("popupBox").classList.add("active");
 }
 
@@ -1089,14 +1182,13 @@ function addDebt(){
         return;
     }
 
-    if(!debts[chosenCustId]){
-        debts[chosenCustId] = [];
-    }
+    if(!debts[chosenCustId]) debts[chosenCustId] = [];
 
     debts[chosenCustId].push({
         produk: produk,
         modal: modal,
         harga: harga,
+        charge: 0,
         dibayar: 0,
         tip: 0,
         excluded: false,
@@ -1104,15 +1196,19 @@ function addDebt(){
         waktu: new Date().toLocaleString("id-ID")
     });
 
-    localStorage.setItem("debts", JSON.stringify(debts));
+    recomputeCharges(chosenCustId);
+    saveDebts();
     openCustomerCards[chosenCustId] = true;
     renderCustomerList();
     closePopup();
 }
 
+/* =========================================================
+   PRODUCT PICKER
+========================================================= */
 function openProductPickerModal(event){
     if(event) event.stopPropagation();
-    
+
     allMasterProductsTemp = [];
     const digitalCats = ["Pulsa", "DANA", "GoPay", "OVO", "SeaBank"];
     const nominals = [20000, 25000, 30000, 40000, 50000, 75000, 100000];
@@ -1159,7 +1255,7 @@ function renderProductPickerItems(items){
                 <div style="font-family:'FiraCondBold', sans-serif; color:var(--emas-terang); font-size:0.9rem;">${item.nama}</div>
                 <small style="color:#aaa;">Modal: Rp ${item.modal.toLocaleString("id-ID")} | Jual: Rp ${item.harga.toLocaleString("id-ID")}</small>
             </div>
-            <div style="color:var(--emas-terang); font-size:0.75rem; font-family:'FiraCondBold', sans-serif;">Pilih </div>
+            <svg class="picker-arrow" viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg>
         `;
         div.onclick = function(e){
             e.stopPropagation();
@@ -1183,15 +1279,19 @@ function closeProductPickerModal(){
     document.getElementById("productPickerModal").classList.remove("active");
 }
 
-/* =========================
-   EDIT & DELETE UTANG
-========================= */
+/* =========================================================
+   EDIT PEMBAYARAN (auto-arsip jika lunas)
+========================================================= */
 function openEditDebt(custId, index){
     activeEditCustId = custId;
     activeEditIndex = index;
     const item = debts[custId][index];
+    if(!item) return;
 
-    document.getElementById("editProductInfo").innerText = `Produk: ${item.produk} (Modal: Rp ${(item.modal || 0).toLocaleString("id-ID")} | Jual: Rp ${(item.harga || 0).toLocaleString("id-ID")})`;
+    const charge = item.charge || 0;
+    const chargeInfo = charge > 0 ? ` | Charge: +Rp ${charge.toLocaleString("id-ID")}` : '';
+    document.getElementById("editProductInfo").innerText =
+        `Produk: ${item.produk} (Modal: Rp ${(item.modal || 0).toLocaleString("id-ID")} | Jual: Rp ${(item.harga || 0).toLocaleString("id-ID")}${chargeInfo})`;
     document.getElementById("nominalBayarInput").value = item.dibayar || "";
     document.getElementById("nominalTipInput").value = item.tip || "";
     document.getElementById("editPopupBox").classList.add("active");
@@ -1216,16 +1316,32 @@ function saveEditDebt(){
     }
 
     const item = debts[activeEditCustId][activeEditIndex];
+    if(!item) { closeEditPopup(); return; }
+
     item.dibayar = bayar;
     item.tip = isNaN(tip) ? 0 : tip;
     item.waktu = new Date().toLocaleString("id-ID");
 
-    localStorage.setItem("debts", JSON.stringify(debts));
+    if(isItemPaid(item)){
+        item.waktuArchive = new Date().toLocaleString("id-ID");
+
+        if(!archivedDebts[activeEditCustId]) archivedDebts[activeEditCustId] = [];
+        archivedDebts[activeEditCustId].push(item);
+        debts[activeEditCustId].splice(activeEditIndex, 1);
+
+        saveArchived();
+        recomputeCharges(activeEditCustId);
+    }
+
+    saveDebts();
     openCustomerCards[activeEditCustId] = true;
     renderCustomerList();
     closeEditPopup();
 }
 
+/* =========================================================
+   HAPUS UTANG
+========================================================= */
 function promptDeleteDebt(custId, index){
     deleteTargetCustId = custId;
     deleteTargetIndex = index;
@@ -1241,16 +1357,17 @@ function closeDeletePopup(){
 function confirmDeleteDebt(){
     if(deleteTargetCustId !== "" && deleteTargetIndex !== -1){
         debts[deleteTargetCustId].splice(deleteTargetIndex, 1);
-        localStorage.setItem("debts", JSON.stringify(debts));
+        recomputeCharges(deleteTargetCustId);
+        saveDebts();
         openCustomerCards[deleteTargetCustId] = true;
         renderCustomerList();
     }
     closeDeletePopup();
 }
 
-/* =========================
+/* =========================================================
    PAYMENT POPUP
-========================= */
+========================================================= */
 function setPaymentType(type){
     selectedPaymentMode = type;
     const btnFull = document.getElementById("btnTypeFull");
@@ -1268,8 +1385,6 @@ function setPaymentType(type){
         btnFull.style.color = "var(--emas-terang)";
     }
 }
-
-let paymentTargetCustId = "";
 
 function openPaymentPopup(custId, total){
     if(total <= 0){
@@ -1294,7 +1409,6 @@ function openPaymentPage(method){
         const inputCicilan = prompt(`Total sisa tagihan aktif: Rp ${targetCustomerTotal.toLocaleString("id-ID")}\nMasukkan nominal cicilan (Amortisasi) yang dibayar:`, targetCustomerTotal);
         if(inputCicilan === null) return;
 
-        // FIXED TYPO BAWAAN AGAR TIDAK ERROR (Sebelumnya parseInt(inputCinan))
         const parsedCicilanNum = parseInt(inputCicilan);
         if(isNaN(parsedCicilanNum) || parsedCicilanNum <= 0){
             alert("Nominal pembayaran tidak valid!");
@@ -1311,8 +1425,159 @@ function openPaymentPage(method){
     localStorage.setItem("paymentTotal", finalAmountToPay);
     localStorage.setItem("paymentMethod", method);
     localStorage.setItem("paymentMode", selectedPaymentMode);
-    
+
     window.location.href = "payment.html";
+}
+
+/* =========================================================
+   ARSIP TRANSAKSI
+========================================================= */
+function openArchiveModal(){
+    archiveMode = 'list';
+    archiveSelectedCust = '';
+    document.getElementById("archiveListView").style.display = "block";
+    document.getElementById("archiveDetailView").style.display = "none";
+    document.getElementById("archiveBackBtn").style.display = "none";
+    document.getElementById("archiveTitle").innerText = "ARSIP TRANSAKSI";
+
+    renderArchiveCustomerList();
+    document.getElementById("archivePopup").classList.add("active");
+}
+
+function closeArchiveModal(){
+    document.getElementById("archivePopup").classList.remove("active");
+    archiveMode = 'list';
+    archiveSelectedCust = '';
+}
+
+function archiveGoBack(){
+    archiveMode = 'list';
+    archiveSelectedCust = '';
+    document.getElementById("archiveListView").style.display = "block";
+    document.getElementById("archiveDetailView").style.display = "none";
+    document.getElementById("archiveBackBtn").style.display = "none";
+    document.getElementById("archiveTitle").innerText = "ARSIP TRANSAKSI";
+    renderArchiveCustomerList();
+}
+
+function renderArchiveCustomerList(){
+    const listEl = document.getElementById("archiveListView");
+    listEl.innerHTML = "";
+
+    const customers = getCustomersFromStorage();
+    const withArchive = customers.filter(c => ((archivedDebts[c.id] || []).length > 0));
+
+    if(withArchive.length === 0){
+        listEl.innerHTML = `<p style="text-align:center; color:#777; padding: 20px;">Belum ada transaksi yang diarsipkan.</p>`;
+        return;
+    }
+
+    withArchive.forEach(cust => {
+        const items = archivedDebts[cust.id] || [];
+        const totalNominal = items.reduce((s, d) => s + ((d.harga || 0) + (d.charge || 0)), 0);
+
+        const div = document.createElement("div");
+        div.className = "select-option-item";
+        div.style.cssText = "display: flex; justify-content: space-between; align-items: center; gap: 8px;";
+        div.innerHTML = `
+            <div style="flex: 1; min-width: 0;">
+                <div style="font-family: 'FiraCondBold'; color: var(--emas-terang); font-size: 0.88rem; word-break: break-word;">${cust.id} - ${cust.name}</div>
+                <div style="font-size: 0.7rem; color: #aaa; margin-top: 2px;">${items.length} transaksi lunas</div>
+            </div>
+            <div style="text-align: right; font-family: 'FiraCondBold'; font-size: 0.85rem; color: #4caf5e; flex-shrink: 0;">
+                ${rupiah(totalNominal)}
+            </div>
+        `;
+        div.onclick = () => renderArchiveDetail(cust.id);
+        listEl.appendChild(div);
+    });
+}
+
+function renderArchiveDetail(custId){
+    const items = archivedDebts[custId] || [];
+    const customers = getCustomersFromStorage();
+    const cust = customers.find(c => c.id === custId);
+    if(!cust) return;
+
+    archiveMode = 'detail';
+    archiveSelectedCust = custId;
+
+    document.getElementById("archiveListView").style.display = "none";
+    document.getElementById("archiveDetailView").style.display = "block";
+    document.getElementById("archiveBackBtn").style.display = "inline-flex";
+    document.getElementById("archiveTitle").innerText = "ARSIP - " + cust.name;
+
+    const totalNominal = items.reduce((s, d) => s + ((d.harga || 0) + (d.charge || 0)), 0);
+    document.getElementById("archiveCustomerInfo").innerHTML = `
+        <div style="font-family: 'FiraCondBold'; color: var(--emas-terang); font-size: 0.95rem;">${cust.id} - ${cust.name}</div>
+        <div style="font-size: 0.75rem; color: #aaa; margin-top: 4px;">${items.length} transaksi lunas | Total: ${rupiah(totalNominal)}</div>
+    `;
+
+    const listEl = document.getElementById("archiveDetailList");
+    listEl.innerHTML = "";
+
+    if(items.length === 0){
+        listEl.innerHTML = `<p style="text-align:center; color:#777; padding: 20px;">Tidak ada arsip.</p>`;
+        return;
+    }
+
+    const sorted = items.map((item, idx) => ({...item, _origIdx: idx}))
+        .sort((a, b) => String(b.waktuArchive || '').localeCompare(String(a.waktuArchive || '')));
+
+    sorted.forEach(item => {
+        const harga = item.harga || 0;
+        const charge = item.charge || 0;
+        const modal = item.modal || 0;
+        const tip = item.tip || 0;
+        const total = harga + charge;
+
+        const card = document.createElement("div");
+        card.className = "archive-item";
+        card.innerHTML = `
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 8px;">
+                <div style="flex: 1; min-width: 0;">
+                    <div class="arc-title">${item.produk}</div>
+                    <div class="arc-waktu">${item.waktu || '-'}</div>
+                </div>
+                <div style="text-align: right; flex-shrink: 0;">
+                    <div style="font-family: 'FiraCondBold'; color: #4caf5e; font-size: 0.8rem;">LUNAS</div>
+                    <div style="font-size: 0.72rem; color: var(--emas-terang); font-family: 'FiraCondBold';">${rupiah(total)}</div>
+                </div>
+            </div>
+            <div class="arc-meta">
+                <span>Modal: ${rupiah(modal)}</span>
+                <span class="arc-sep">|</span>
+                <span>Jual: ${rupiah(harga)}</span>
+                ${charge > 0 ? `<span class="arc-sep">|</span><span style="color: #ff9f1a;">Charge: ${rupiah(charge)}</span>` : ''}
+                ${tip > 0 ? `<span class="arc-sep">|</span><span style="color: #4caf5e;">Tip: ${rupiah(tip)}</span>` : ''}
+            </div>
+            <button class="unarchive-btn" onclick="unarchiveItem('${custId}', ${item._origIdx})">Kembalikan ke Tagihan Aktif</button>
+        `;
+        listEl.appendChild(card);
+    });
+}
+
+function unarchiveItem(custId, idx){
+    const items = archivedDebts[custId] || [];
+    if(idx < 0 || idx >= items.length) return;
+
+    const item = items[idx];
+    if(!confirm(`Kembalikan "${item.produk}" ke tagihan aktif customer ${custId}?`)) return;
+
+    items.splice(idx, 1);
+    if(items.length === 0) delete archivedDebts[custId];
+    else archivedDebts[custId] = items;
+
+    if(!debts[custId]) debts[custId] = [];
+    debts[custId].push(item);
+
+    recomputeCharges(custId);
+
+    saveArchived();
+    saveDebts();
+    openCustomerCards[custId] = true;
+    renderCustomerList();
+    renderArchiveDetail(custId);
 }
 </script>
 

@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Rekap Total Comérsio</title>
 <link rel="stylesheet" href="style.css">
+<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <style>
   @font-face{
     font-family: 'OswaldBold';
@@ -47,7 +49,6 @@
     overflow-x: hidden;
   }
 
-  /* BACKGROUND LAYER & DIM EFFECT */
   .bg-layer{
     position: fixed;
     inset: 0;
@@ -65,7 +66,6 @@
     z-index: 1;
   }
 
-  /* TOP BAR M-BANKING */
   .mbanking-topbar {
     position: fixed;
     top: 0;
@@ -86,6 +86,7 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    min-width: 0;
   }
 
   .mbanking-brand {
@@ -94,6 +95,7 @@
     color: #ffffff;
     letter-spacing: 0.5px;
     line-height: 1.1;
+    white-space: nowrap;
   }
 
   .mbanking-brand span {
@@ -111,7 +113,8 @@
   .topbar-right-box {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 8px;
+    flex-shrink: 0;
   }
 
   .date-badge-top {
@@ -122,6 +125,34 @@
     border: 1px solid rgba(232, 177, 60, 0.3);
     padding: 4px 8px;
     border-radius: 8px;
+    white-space: nowrap;
+  }
+
+  .download-pdf-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    border: 1.5px solid rgba(232, 177, 60, 0.5);
+    background: rgba(232, 177, 60, 0.1);
+    color: var(--emas-terang);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.2s, box-shadow 0.2s, transform 0.15s;
+    flex-shrink: 0;
+    padding: 0;
+  }
+  .download-pdf-btn:hover {
+    background: rgba(232, 177, 60, 0.25);
+    box-shadow: 0 0 10px rgba(255, 209, 102, 0.35);
+  }
+  .download-pdf-btn:active { transform: scale(0.95); }
+  .download-pdf-btn:disabled { opacity: 0.5; cursor: wait; }
+  .download-pdf-btn svg {
+    width: 18px;
+    height: 18px;
+    fill: currentColor;
   }
 
   .profile-circle-btn {
@@ -138,6 +169,7 @@
     text-decoration: none;
     transition: transform 0.2s, box-shadow 0.2s;
     box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+    flex-shrink: 0;
   }
 
   .profile-circle-btn:hover {
@@ -158,18 +190,14 @@
     padding: 2px;
   }
 
-  /* =========================
-     CONTAINER UTAMA & HEADER
-  ========================= */
   .content-wrap {
     position: relative;
     z-index: 5;
     padding: 76px 16px 100px 16px;
-    max-width: 650px;
+    max-width: 800px;
     margin: 0 auto;
   }
 
-  /* SHEET FINANCIAL BOX */
   .sheet-card {
     background: rgba(12, 17, 13, 0.92);
     border: 2px solid var(--emas);
@@ -201,7 +229,6 @@
     color: #aaa;
   }
 
-  /* FINANCIAL TABLE STYLE */
   .table-responsive {
     width: 100%;
     overflow-x: auto;
@@ -227,7 +254,6 @@
     border-bottom: 2px solid var(--emas);
   }
 
-  /* FINANCIAL SUMMARY / TOTAL BOX */
   .financial-summary {
     background: #000;
     border: 1px solid rgba(232, 177, 60, 0.3);
@@ -257,7 +283,6 @@
     color: var(--emas-terang);
   }
 
-  /* BUTTON GRAFIK INDIKATOR PROGRES */
   .btn-chart-toggle {
     width: 100%;
     height: 46px;
@@ -281,7 +306,13 @@
     background: rgba(232, 177, 60, 0.3);
   }
 
-  /* MODAL / POPUP GRAFIK */
+  .btn-chart-toggle svg {
+    width: 18px;
+    height: 18px;
+    fill: currentColor;
+    flex-shrink: 0;
+  }
+
   .popupBox {
     position: fixed;
     inset: 0;
@@ -320,7 +351,6 @@
     font-size: 1.2rem;
   }
 
-  /* BAR GRAFIK PROGRES */
   .chart-bar-container {
     margin: 12px 0;
   }
@@ -349,7 +379,6 @@
     transition: width 0.6s ease;
   }
 
-  /* BOTTOM NAVBAR M-BANKING (7 TOMBOL) */
   .mbanking-bottom-nav {
     position: fixed;
     bottom: 0;
@@ -393,6 +422,114 @@
   .nav-item.active img, .nav-item:hover img {
     filter: none;
   }
+
+  /* =============================================
+     PDF CONTENT
+  ============================================= */
+  #pdfContent {
+    position: fixed;
+    left: -99999px;
+    top: 0;
+    width: 794px;
+    background: #0a0a0a;
+    padding: 28px 26px;
+    color: #ffffff;
+    font-family: 'FiraCondBook', sans-serif;
+  }
+
+  #pdfContent .pdf-header {
+    text-align: center;
+    border-bottom: 3px solid #e8b13c;
+    padding-bottom: 14px;
+    margin-bottom: 18px;
+  }
+  #pdfContent .pdf-brand {
+    font-family: 'OswaldBold', sans-serif;
+    font-size: 26px;
+    color: #ffd166;
+    letter-spacing: 4px;
+    line-height: 1.1;
+  }
+  #pdfContent .pdf-subtitle {
+    color: #cfd6d1;
+    font-size: 12px;
+    margin-top: 6px;
+    letter-spacing: 3px;
+    font-family: 'FiraCondBold', sans-serif;
+  }
+  #pdfContent .pdf-printed {
+    color: #777;
+    font-size: 10px;
+    margin-top: 6px;
+  }
+  #pdfContent .pdf-section-title {
+    font-family: 'FiraCondBold', sans-serif;
+    font-size: 15px;
+    color: #ffd166;
+    border-bottom: 2px solid #e8b13c;
+    padding-bottom: 6px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    letter-spacing: 1.5px;
+  }
+  #pdfContent .pdf-month-title {
+    font-family: 'FiraCondBold', sans-serif;
+    font-size: 13px;
+    color: #ffd166;
+    margin-top: 16px;
+    margin-bottom: 6px;
+    padding: 6px 10px;
+    background: rgba(232, 177, 60, 0.1);
+    border-left: 3px solid #e8b13c;
+    letter-spacing: 1px;
+  }
+  #pdfContent .pdf-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 9.5px;
+    color: #fff;
+    white-space: nowrap;
+  }
+  #pdfContent .pdf-table th,
+  #pdfContent .pdf-table td {
+    padding: 5px 4px;
+    text-align: center;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  #pdfContent .pdf-table th {
+    background: #0d120f;
+    color: #ffd166;
+    font-family: 'FiraCondBold', sans-serif;
+    border-bottom: 1.5px solid #e8b13c;
+    font-size: 9px;
+    text-transform: uppercase;
+  }
+  #pdfContent .pdf-summary-box {
+    background: #000;
+    border: 1px solid rgba(232, 177, 60, 0.3);
+    border-radius: 6px;
+    padding: 8px 12px;
+    margin-top: 8px;
+    font-size: 10px;
+  }
+  #pdfContent .pdf-summary-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 3px;
+    font-family: 'FiraCondBold', sans-serif;
+  }
+  #pdfContent .pdf-summary-row:last-child { margin-bottom: 0; }
+  #pdfContent .pdf-summary-row.final {
+    border-top: 1px solid rgba(255, 209, 102, 0.3);
+    padding-top: 5px;
+    margin-top: 5px;
+    color: #ffd166;
+    font-size: 11px;
+  }
+
+  @media (max-width: 420px){
+    .date-badge-top { display: none; }
+  }
 </style>
 </head>
 
@@ -401,7 +538,6 @@
   <div class="bg-layer"></div>
   <div class="bg-dim"></div>
 
-  <!-- TOP BAR M-BANKING -->
   <div class="mbanking-topbar">
     <div class="mbanking-brand-container">
       <div class="mbanking-brand">Comersio <span>Center</span></div>
@@ -409,6 +545,11 @@
     </div>
     <div class="topbar-right-box">
       <div class="date-badge-top" id="dateText">01 Jan 2026</div>
+
+      <button type="button" class="download-pdf-btn" id="downloadBtn" onclick="downloadPDF()" title="Download Laporan PDF">
+        <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+      </button>
+
       <a href="profile.html" class="profile-circle-btn" id="topProfileBtn" title="Pengaturan Profile">
         <svg viewBox="0 0 24 24">
           <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
@@ -417,11 +558,10 @@
     </div>
   </div>
 
-<!-- CONTENT WRAP -->
 <div class="content-wrap">
-    <!-- TOMBOL BUKA GRAFIK PROGRES -->
     <button type="button" class="btn-chart-toggle" onclick="openChartModal()">
-         Lihat Grafik Indikator Progres Keuangan  
+        <svg viewBox="0 0 24 24"><path d="M5 9.2h3V19H5zM10.6 5h2.8v14h-2.8zm5.6 8H19v6h-2.8z"/></svg>
+        Lihat Grafik Indikator Progres Keuangan
     </button>
 
     <div class="report-container" style="padding: 0; max-width: 100%;">
@@ -439,18 +579,17 @@
                             <th>ID Cust</th>
                             <th>Produk</th>
                             <th>Modal / Jual / Cuan</th>
+                            <th>Charge</th>
                             <th>Utang Sisa</th>
                             <th>Dibayar</th>
                             <th>Tip</th>
+                            <th>Status</th>
                         </tr>
                     </thead>
-                    <tbody id="rekapTable">
-                        <!-- Dinamis berdasarkan waktu (terbaru ke terlama) -->
-                    </tbody>
+                    <tbody id="rekapTable"></tbody>
                 </table>
             </div>
 
-            <!-- FINANCIAL SUMMARY / TOTAL BOX -->
             <div class="financial-summary">
                 <div class="summary-row">
                     <span style="color:#aaa;">Total Utang Sisa:</span>
@@ -461,11 +600,15 @@
                     <span style="color: #4caf5e;">Rp <span id="totalBayar">0</span></span>
                 </div>
                 <div class="summary-row">
+                    <span style="color:#aaa;">Total Charge :</span>
+                    <span style="color: #ff9800;">Rp <span id="totalCharge">0</span></span>
+                </div>
+                <div class="summary-row">
                     <span style="color:#aaa;">Total Tip:</span>
                     <span style="color: var(--emas-terang);">Rp <span id="totalTip">0</span></span>
                 </div>
                 <div class="summary-row">
-                    <span style="color:#aaa;">Total Keuntungan (Margin):</span>
+                    <span style="color:#aaa;">Total Keuntungan :</span>
                     <span style="color: var(--emas-terang);">Rp <span id="totalMargin">0</span></span>
                 </div>
                 <div class="summary-row total-final">
@@ -477,12 +620,11 @@
     </div>
 </div>
 
-<!-- POPUP GRAFIK INDIKATOR PROGRES -->
 <div id="chartModal" class="popupBox">
     <div class="popupContent">
         <h2>GRAFIK INDIKATOR PROGRES</h2>
         <p style="text-align: center; color: #aaa; font-size: 0.8rem; margin-top: -5px; margin-bottom: 15px;">Persentase komposisi keuangan keseluruhan transaksi</p>
-        
+
         <div class="chart-bar-container">
             <div class="chart-label-row">
                 <span style="color: #ff5555;">Utang Sisa</span>
@@ -513,7 +655,9 @@
     </div>
 </div>
 
-<!-- BOTTOM NAVBAR M-BANKING (7 TOMBOL) -->
+<div id="pdfContent"></div>
+
+<!-- BOTTOM NAVBAR M-BANKING (TOMBOL KEMBALI KE ICON LU) -->
 <nav class="mbanking-bottom-nav">
     <a href="index.html" class="nav-item">
         <img src="icon.png" alt="Home">
@@ -546,9 +690,9 @@
 </nav>
 
 <script>
-/* =========================
+/* =========================================================
    DATE & TITLE
-========================= */
+========================================================= */
 window.onload = function(){
     updateDateOnly();
     updateDateTime();
@@ -581,53 +725,84 @@ function updateDateTime(){
     document.getElementById("rekapTitle").innerText = `REKAP TOTAL ${fullYear}`;
 
     const namaBulan = [
-        "JANUARI", "FEBRUARI", "MARET", "APRIL", "MEI", "JUNI", 
+        "JANUARI", "FEBRUARI", "MARET", "APRIL", "MEI", "JUNI",
         "JULI", "AGUSTUS", "SEPTEMBER", "OKTOBER", "NOVEMBER", "DESEMBER"
     ];
 
     document.getElementById("bulanNow").innerText = namaBulan[now.getMonth()];
 }
 
-/* =========================
-   LOAD DATA, SORT BY TIME & LOOP
-========================= */
+/* =========================================================
+   PARSE WAKTU
+========================================================= */
+function parseWaktu(str){
+    if(!str) return 0;
+    str = String(str).trim();
+
+    const m = str.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})[,\s]*(\d{1,2})[.:](\d{1,2})(?:[.:](\d{1,2}))?/);
+    if(m){
+        const d = parseInt(m[1], 10);
+        const mo = parseInt(m[2], 10) - 1;
+        const y = parseInt(m[3], 10);
+        const h = parseInt(m[4], 10) || 0;
+        const mi = parseInt(m[5], 10) || 0;
+        const s = parseInt(m[6], 10) || 0;
+        return new Date(y, mo, d, h, mi, s).getTime();
+    }
+
+    const t = new Date(str).getTime();
+    return isNaN(t) ? 0 : t;
+}
+
+function getItemTime(item){
+    return parseWaktu(item.waktu || item.tanggal || item.waktuArchive);
+}
+
+/* =========================================================
+   LOAD DATA - GABUNGAN BELUM LUNAS & LUNAS
+========================================================= */
 const debts = JSON.parse(localStorage.getItem("debts")) || {};
+const archivedDebts = JSON.parse(localStorage.getItem("archivedDebts")) || {};
 const table = document.getElementById("rekapTable");
 
 let allTransactions = [];
 
+// Muat transaksi yang belum lunas
 for(const customerId in debts){
     debts[customerId].forEach(item => {
-        allTransactions.push({
-            customerId: customerId,
-            ...item
-        });
+        allTransactions.push({ customerId, _status: 'Belum Lunas', ...item });
+    });
+}
+// Muat transaksi yang sudah Lunas
+for(const customerId in archivedDebts){
+    archivedDebts[customerId].forEach(item => {
+        allTransactions.push({ customerId, _status: 'Lunas', ...item });
     });
 }
 
-// Urutkan berdasarkan waktu (terbaru ke terlama)
-allTransactions.sort((a, b) => {
-    let timeA = new Date(a.waktu || a.tanggal || 0).getTime();
-    let timeB = new Date(b.waktu || b.tanggal || 0).getTime();
-    return timeB - timeA;
-});
+// SORT DARI TERLAMA KE TERBARU (DARI ATAS KE BAWAH)
+allTransactions.sort((a, b) => getItemTime(a) - getItemTime(b));
 
 let totalUtang = 0;
 let totalBayar = 0;
 let totalTip = 0;
 let totalMargin = 0;
+let totalCharge = 0;
 
 allTransactions.forEach(item => {
     const modal = item.modal || 0;
     const harga = item.harga || 0;
-    const profit = harga - modal;
+    const charge = item.charge || 0;
+    const profit = (harga - modal) + charge; 
     const dibayar = item.dibayar || 0;
-    const sisaUtang = harga - dibayar;
+    const sisaUtang = (harga + charge) - dibayar;
     const tipItem = item.tip || 0;
+
+    const statusColor = item._status === 'Lunas' ? '#4caf5e' : '#ff5555';
 
     const row = document.createElement("tr");
     row.innerHTML = `
-        <td style="color: #aaa; font-size: 0.78rem;">${item.waktu || item.tanggal || "-"}</td>
+        <td style="color: #aaa; font-size: 0.78rem;">${item.waktu || item.tanggal || item.waktuArchive || "-"}</td>
         <td style="font-family: 'FiraCondBold', sans-serif; color: var(--emas-terang);">${item.customerId}</td>
         <td>${item.produk}</td>
         <td>
@@ -635,28 +810,31 @@ allTransactions.forEach(item => {
             <span style="color:var(--emas-terang);">Jual: Rp ${harga.toLocaleString("id-ID")}</span><br>
             <small style="color:#4caf5e;">Cuan: Rp ${profit.toLocaleString("id-ID")}</small>
         </td>
-        <td style="color: #ff5555;">Rp ${sisaUtang.toLocaleString("id-ID")}</td>
+        <td style="color: #ff9800; font-family: 'FiraCondBold', sans-serif;">Rp ${charge.toLocaleString("id-ID")}</td>
+        <td style="color: #ff5555;">Rp ${sisaUtang > 0 ? sisaUtang.toLocaleString("id-ID") : '0'}</td>
         <td style="color: #4caf5e;">Rp ${dibayar.toLocaleString("id-ID")}</td>
         <td style="color: var(--emas-terang);">Rp ${tipItem.toLocaleString("id-ID")}</td>
+        <td style="color:${statusColor}; font-family:'FiraCondBold',sans-serif;">${item._status}</td>
     `;
 
     table.appendChild(row);
 
-    totalUtang += sisaUtang;
+    totalUtang += (sisaUtang > 0 ? sisaUtang : 0);
     totalBayar += dibayar;
     totalTip += tipItem;
     totalMargin += profit;
+    totalCharge += charge;
 });
 
-// Render Total ke Summary Box
 document.getElementById("totalUtang").innerText = totalUtang.toLocaleString("id-ID");
 document.getElementById("totalBayar").innerText = totalBayar.toLocaleString("id-ID");
 document.getElementById("totalTip").innerText = totalTip.toLocaleString("id-ID");
 document.getElementById("totalMargin").innerText = totalMargin.toLocaleString("id-ID");
+document.getElementById("totalCharge").innerText = totalCharge.toLocaleString("id-ID");
 
-/* =========================
+/* =========================================================
    MODAL GRAFIK PROGRES
-========================= */
+========================================================= */
 function openChartModal(){
     document.getElementById("chartModal").classList.add("active");
 
@@ -684,7 +862,201 @@ function closeChartModal(){
     document.getElementById("barBayar").style.width = "0%";
     document.getElementById("barMargin").style.width = "0%";
 }
+
+/* =========================================================
+   PDF: BUILD CONTENT
+========================================================= */
+function buildPDFContent(){
+    const monthlyGroups = {};
+    
+    allTransactions.forEach(item => {
+        const ts = getItemTime(item);
+        if(!ts) return;
+        const d = new Date(ts);
+        const key = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`;
+        if(!monthlyGroups[key]){
+            monthlyGroups[key] = { year: d.getFullYear(), month: d.getMonth(), items: [] };
+        }
+        monthlyGroups[key].items.push(item);
+    });
+
+    const monthKeys = Object.keys(monthlyGroups).sort();
+    const namaBulan = ["JANUARI","FEBRUARI","MARET","APRIL","MEI","JUNI","JULI","AGUSTUS","SEPTEMBER","OKTOBER","NOVEMBER","DESEMBER"];
+    const tahun = new Date().getFullYear();
+
+    let html = `
+        <div class="pdf-header">
+            <div class="pdf-brand">COMÉRSIO CENTER</div>
+            <div class="pdf-subtitle">LAPORAN KEUANGAN</div>
+            <div class="pdf-printed">Dicetak: ${new Date().toLocaleString('id-ID')}</div>
+        </div>
+    `;
+
+    // ANNUAL section
+    html += `<div class="pdf-section-title">REKAP ANNUAL ${tahun}</div>`;
+    html += buildPDFTable(allTransactions);
+    html += buildPDFSummary(allTransactions);
+
+    // MONTHLY sections
+    if(monthKeys.length > 0){
+        html += `<div class="pdf-section-title" style="margin-top:26px;">RINCIAN BULANAN</div>`;
+        monthKeys.forEach(key => {
+            const g = monthlyGroups[key];
+            html += `<div class="pdf-month-title">${namaBulan[g.month]} ${g.year}</div>`;
+            html += buildPDFTable(g.items);
+            html += buildPDFSummary(g.items);
+        });
+    } else {
+        html += `<div style="text-align:center; color:#777; padding:20px; font-size:11px;">Belum ada data transaksi.</div>`;
+    }
+
+    document.getElementById("pdfContent").innerHTML = html;
+}
+
+function buildPDFTable(items){
+    if(items.length === 0){
+        return `<div style="text-align:center; color:#777; padding:10px; font-size:10px;">Tidak ada transaksi</div>`;
+    }
+
+    let rows = "";
+    items.forEach(item => {
+        const modal = item.modal || 0;
+        const harga = item.harga || 0;
+        const charge = item.charge || 0;
+        const profit = (harga - modal) + charge;
+        const dibayar = item.dibayar || 0;
+        const sisa = (harga + charge) - dibayar;
+        const tip = item.tip || 0;
+        const statusColor = item._status === 'Lunas' ? '#4caf5e' : '#ff5555';
+
+        rows += `
+            <tr>
+                <td style="color:#aaa; font-size:9px;">${item.waktu || item.tanggal || item.waktuArchive || '-'}</td>
+                <td style="color:#ffd166; font-family:'FiraCondBold',sans-serif;">${item.customerId}</td>
+                <td>${item.produk}</td>
+                <td>Rp ${modal.toLocaleString('id-ID')}</td>
+                <td>Rp ${harga.toLocaleString('id-ID')}</td>
+                <td style="color:#ff9800;">Rp ${charge.toLocaleString('id-ID')}</td>
+                <td style="color:#4caf5e;">Rp ${profit.toLocaleString('id-ID')}</td>
+                <td style="color:#ff5555;">Rp ${sisa > 0 ? sisa.toLocaleString('id-ID') : '0'}</td>
+                <td style="color:#4caf5e;">Rp ${dibayar.toLocaleString('id-ID')}</td>
+                <td style="color:#ffd166;">Rp ${tip.toLocaleString('id-ID')}</td>
+                <td style="color:${statusColor}; font-family:'FiraCondBold',sans-serif; font-size:8.5px;">${item._status || '-'}</td>
+            </tr>
+        `;
+    });
+
+    return `
+        <table class="pdf-table">
+            <thead>
+                <tr>
+                    <th>Tanggal</th>
+                    <th>Customer</th>
+                    <th>Produk</th>
+                    <th>Modal</th>
+                    <th>Jual</th>
+                    <th>Charge</th>
+                    <th>Cuan</th>
+                    <th>Sisa</th>
+                    <th>Dibayar</th>
+                    <th>Tip</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>${rows}</tbody>
+        </table>
+    `;
+}
+
+function buildPDFSummary(items){
+    let totalU = 0, totalB = 0, totalT = 0, totalM = 0, totalC = 0;
+    items.forEach(item => {
+        const harga = (item.harga || 0) + (item.charge || 0);
+        const dibayar = item.dibayar || 0;
+        totalU += Math.max(0, harga - dibayar);
+        totalB += dibayar;
+        totalT += item.tip || 0;
+        totalC += item.charge || 0;
+        totalM += (item.harga || 0) - (item.modal || 0) + (item.charge || 0);
+    });
+
+    return `
+        <div class="pdf-summary-box">
+            <div class="pdf-summary-row"><span style="color:#aaa;">Total Utang Sisa</span><span style="color:#ff5555;">Rp ${totalU.toLocaleString('id-ID')}</span></div>
+            <div class="pdf-summary-row"><span style="color:#aaa;">Total Dibayar</span><span style="color:#4caf5e;">Rp ${totalB.toLocaleString('id-ID')}</span></div>
+            <div class="pdf-summary-row"><span style="color:#aaa;">Total Charge</span><span style="color:#ff9800;">Rp ${totalC.toLocaleString('id-ID')}</span></div>
+            <div class="pdf-summary-row"><span style="color:#aaa;">Total Tip</span><span style="color:#ffd166;">Rp ${totalT.toLocaleString('id-ID')}</span></div>
+            <div class="pdf-summary-row final"><span>Total Keuntungan (Margin & Charge)</span><span>Rp ${totalM.toLocaleString('id-ID')}</span></div>
+        </div>
+    `;
+}
+
+/* =========================================================
+   PDF: DOWNLOAD
+========================================================= */
+async function downloadPDF(){
+    const btn = document.getElementById("downloadBtn");
+    if(btn.disabled) return;
+
+    btn.disabled = true;
+    btn.innerHTML = `<svg viewBox="0 0 24 24" style="animation: spin 1s linear infinite;"><path d="M12 4V2A10 10 0 0 0 2 12h2a8 8 0 0 1 8-8z"/></svg>`;
+
+    try {
+        buildPDFContent();
+
+        const target = document.getElementById("pdfContent");
+
+        const canvas = await html2canvas(target, {
+            scale: 2,
+            useCORS: true,
+            backgroundColor: "#0a0a0a",
+            logging: false,
+            windowWidth: 794
+        });
+
+        const imgData = canvas.toDataURL("image/png");
+
+        const { jsPDF } = window.jspdf;
+        const pdf = new jsPDF("p", "mm", "a4");
+        const pageWidth = pdf.internal.pageSize.getWidth();
+        const pageHeight = pdf.internal.pageSize.getHeight();
+
+        const imgWidth = pageWidth;
+        const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+        let heightLeft = imgHeight;
+        let position = 0;
+
+        pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
+        heightLeft -= pageHeight;
+
+        while(heightLeft > 0){
+            position = heightLeft - imgHeight;
+            pdf.addPage();
+            pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
+            heightLeft -= pageHeight;
+        }
+
+        const today = new Date();
+        const fname = `Laporan-Comersio-${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,'0')}-${String(today.getDate()).padStart(2,'0')}.pdf`;
+        pdf.save(fname);
+
+    } catch(err){
+        console.error(err);
+        alert("Gagal membuat PDF: " + err.message);
+    } finally {
+        btn.disabled = false;
+        btn.innerHTML = `<svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>`;
+    }
+}
 </script>
+
+<style>
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+</style>
 
 </body>
 </html>

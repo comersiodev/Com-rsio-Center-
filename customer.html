@@ -11,19 +11,16 @@
         font-family: 'OswaldBold';
         src: url('oswald-bold.ttf') format('truetype');
         font-weight: 700;
-        font-style: normal;
       }
       @font-face{
         font-family: 'FiraCondBold';
         src: url('firasanscondensed-bold.otf') format('opentype');
         font-weight: 700;
-        font-style: normal;
       }
       @font-face{
         font-family: 'FiraCondBook';
         src: url('firasanscondensed-book.otf') format('opentype');
         font-weight: 400;
-        font-style: normal;
       }
 
       :root{
@@ -36,546 +33,543 @@
         --merah: #ff4d4d;
       }
 
-      *{
-        box-sizing: border-box;
-        -webkit-tap-highlight-color: transparent;
-      }
+      *{ box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
       html, body{
-        margin: 0;
-        padding: 0;
-        width: 100%;
-        min-height: 100vh;
+        margin: 0; padding: 0; width: 100%; min-height: 100vh;
         font-family: 'FiraCondBook', sans-serif;
         background: #0a0a0a !important;
         color: #ffffff;
         overflow-x: hidden;
       }
 
-      /* BACKGROUND LAYER & DIM EFFECT */
       .bg-layer{
-        position: fixed;
-        inset: 0;
+        position: fixed; inset: 0;
         background-image: url('background.jpg');
-        background-size: cover;
-        background-position: center center;
-        background-repeat: no-repeat;
+        background-size: cover; background-position: center; background-repeat: no-repeat;
         z-index: 0;
       }
-
       .bg-dim{
-        position: fixed;
-        inset: 0;
+        position: fixed; inset: 0;
         background: rgba(6, 10, 7, 0.82);
         z-index: 1;
       }
 
-      /* TOP BAR M-BANKING */
       .mbanking-topbar {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 60px;
+        position: fixed; top: 0; left: 0; right: 0; height: 60px;
         background: rgba(10, 14, 11, 0.95);
         border-bottom: 1px solid rgba(232, 177, 60, 0.25);
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 0 16px;
-        z-index: 20;
-        backdrop-filter: blur(8px);
+        display: flex; align-items: center; justify-content: space-between;
+        padding: 0 16px; z-index: 20; backdrop-filter: blur(8px);
       }
-
       .mbanking-brand-container {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        min-width: 0;
+        display: flex; flex-direction: column; justify-content: center; min-width: 0;
       }
-
       .mbanking-brand {
         font-family: 'OswaldBold', sans-serif;
-        font-size: 1.1rem;
-        color: #ffffff;
-        letter-spacing: 0.5px;
-        line-height: 1.1;
-        white-space: nowrap;
+        font-size: 1.1rem; color: #ffffff; letter-spacing: 0.5px;
+        line-height: 1.1; white-space: nowrap;
       }
-
-      .mbanking-brand span {
-        color: var(--emas-terang);
-      }
-
-      .mbanking-greeting-top {
-        font-size: 0.7rem;
-        color: var(--emas-terang);
-        font-family: 'FiraCondBold', sans-serif;
-        margin-top: 1px;
-        line-height: 1;
+      .mbanking-brand span{ color: var(--emas-terang); }
+      .mbanking-greeting-top{
+        font-size: 0.7rem; color: var(--emas-terang);
+        font-family: 'FiraCondBold', sans-serif; margin-top: 1px; line-height: 1;
       }
 
       .topbar-right-box {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        flex-shrink: 0;
+        display: flex; align-items: center; gap: 8px; flex-shrink: 0;
       }
 
       .date-badge-top {
         font-family: 'FiraCondBold', sans-serif;
-        font-size: 0.8rem;
-        color: var(--emas-terang);
+        font-size: 0.8rem; color: var(--emas-terang);
         background: rgba(232, 177, 60, 0.1);
         border: 1px solid rgba(232, 177, 60, 0.3);
-        padding: 4px 8px;
-        border-radius: 8px;
-        white-space: nowrap;
+        padding: 4px 8px; border-radius: 8px; white-space: nowrap;
       }
 
-      /* TOMBOL LIMIT GLOBAL (di samping kalender) */
       .limit-global-btn {
-        display: flex;
-        align-items: center;
-        gap: 5px;
-        height: 32px;
-        padding: 0 10px;
-        border-radius: 8px;
+        display: flex; align-items: center; gap: 5px;
+        height: 32px; padding: 0 10px; border-radius: 8px;
         background: rgba(232, 177, 60, 0.12);
         border: 1.5px solid var(--emas);
         color: var(--emas-terang);
         font-family: 'FiraCondBold', sans-serif;
-        font-size: 0.72rem;
-        letter-spacing: 0.3px;
+        font-size: 0.72rem; letter-spacing: 0.3px;
         cursor: pointer;
         transition: background 0.2s, box-shadow 0.2s, transform 0.15s;
         white-space: nowrap;
       }
-
       .limit-global-btn:hover {
         background: rgba(232, 177, 60, 0.22);
         box-shadow: 0 0 12px rgba(255, 209, 102, 0.35);
       }
-
-      .limit-global-btn:active {
-        transform: scale(0.96);
-      }
-
+      .limit-global-btn:active { transform: scale(0.96); }
       .limit-global-btn svg {
-        width: 14px;
-        height: 14px;
-        fill: var(--emas-terang);
-        flex-shrink: 0;
+        width: 14px; height: 14px; fill: var(--emas-terang); flex-shrink: 0;
       }
+      .limit-global-btn .limit-btn-value { font-size: 0.68rem; color: #fff; opacity: 0.85; }
 
-      .limit-global-btn .limit-btn-value {
-        font-size: 0.68rem;
-        color: #fff;
-        opacity: 0.85;
+      .charge-global-btn {
+        display: flex; align-items: center; gap: 5px;
+        height: 32px; padding: 0 10px; border-radius: 8px;
+        background: rgba(255, 159, 26, 0.12);
+        border: 1.5px solid var(--oranye);
+        color: var(--oranye);
+        font-family: 'FiraCondBold', sans-serif;
+        font-size: 0.72rem; letter-spacing: 0.3px;
+        cursor: pointer;
+        transition: background 0.2s, box-shadow 0.2s, transform 0.15s;
+        white-space: nowrap;
       }
+      .charge-global-btn:hover {
+        background: rgba(255, 159, 26, 0.22);
+        box-shadow: 0 0 12px rgba(255, 159, 26, 0.4);
+      }
+      .charge-global-btn:active { transform: scale(0.96); }
+      .charge-global-btn svg {
+        width: 14px; height: 14px; fill: var(--oranye); flex-shrink: 0;
+      }
+      .charge-global-btn .charge-btn-value { font-size: 0.68rem; color: #fff; opacity: 0.85; }
 
       .profile-circle-btn {
-        width: 36px;
-        height: 36px;
-        border-radius: 50%;
+        width: 36px; height: 36px; border-radius: 50%;
         border: 2px solid var(--emas-terang);
-        background: #121814;
-        overflow: hidden;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        text-decoration: none;
+        background: #121814; overflow: hidden;
+        display: flex; align-items: center; justify-content: center;
+        cursor: pointer; text-decoration: none;
         transition: transform 0.2s, box-shadow 0.2s;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.5);
-        flex-shrink: 0;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.5); flex-shrink: 0;
       }
-
       .profile-circle-btn:hover {
-        transform: scale(1.08);
-        box-shadow: 0 0 12px rgba(255, 209, 102, 0.4);
+        transform: scale(1.08); box-shadow: 0 0 12px rgba(255, 209, 102, 0.4);
       }
-
       .profile-circle-btn svg, .profile-circle-btn img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
+        width: 100%; height: 100%; object-fit: cover;
       }
-
       .profile-circle-btn svg {
-        width: 20px;
-        height: 20px;
-        fill: var(--emas-terang);
-        padding: 2px;
+        width: 20px; height: 20px; fill: var(--emas-terang); padding: 2px;
       }
 
-      /* =========================
-         CONTENT WRAP
-      ========================= */
       .content-wrap {
-        position: relative;
-        z-index: 5;
+        position: relative; z-index: 5;
         padding: 76px 16px 100px 16px;
-        max-width: 600px;
-        margin: 0 auto;
+        max-width: 600px; margin: 0 auto;
       }
-
-      /* =========================
-         CUSTOMER LIST CONTAINER
-      ========================= */
-      .customer-list-container {
-        max-width: 600px;
-        margin: 0 auto;
-      }
+      .customer-list-container { max-width: 600px; margin: 0 auto; }
 
       .customer-card {
         background: rgba(12, 17, 13, 0.92);
         border: 2px solid var(--emas);
-        border-radius: 16px;
-        margin-bottom: 14px;
+        border-radius: 16px; margin-bottom: 14px;
         padding: 16px 18px;
         box-shadow: 0 4px 15px rgba(0,0,0,0.6);
         transition: border-color 0.2s;
       }
-
-      .customer-card:hover {
-        border-color: var(--emas-terang);
-      }
-
-      .customer-card.over-limit {
-        border-color: rgba(255, 77, 77, 0.75);
-      }
+      .customer-card:hover { border-color: var(--emas-terang); }
+      .customer-card.over-limit { border-color: rgba(255, 77, 77, 0.75); }
 
       .customer-top {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        gap: 10px;
+        display: flex; justify-content: space-between; align-items: center; gap: 10px;
       }
-
-      .customer-info {
-        min-width: 0;
-        flex: 1;
-      }
-
+      .customer-info { min-width: 0; flex: 1; }
       .customer-info h3 {
-        margin: 0 0 3px 0;
-        font-family: 'FiraCondBold', sans-serif;
-        font-size: 1.05rem;
-        color: var(--emas-terang);
+        margin: 0 0 3px 0; font-family: 'FiraCondBold', sans-serif;
+        font-size: 1.05rem; color: var(--emas-terang);
       }
-
       .customer-info p {
-        margin: 0 0 3px 0;
-        font-size: 0.9rem;
-        color: #fff;
-        overflow: hidden;
-        text-overflow: ellipsis;
+        margin: 0 0 3px 0; font-size: 0.9rem; color: #fff;
+        overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+      }
+      .customer-info small { color: #aaa; font-size: 0.75rem; }
+
+      .customer-meta-row {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 4px 12px;
+        margin-top: 2px;
+      }
+      .customer-meta-row small {
         white-space: nowrap;
       }
-
-      .customer-info small {
-        color: #aaa;
-        font-size: 0.75rem;
-      }
-
-      .customer-stats {
-        text-align: right;
-        font-family: 'FiraCondBold', sans-serif;
-        flex-shrink: 0;
-      }
-
-      .customer-stats .total-tx {
-        font-size: 0.75rem;
-        color: #aaa;
-        margin-bottom: 2px;
-      }
-
-      .customer-stats .total-val {
-        font-size: 0.9rem;
-        color: var(--emas-terang);
-      }
-
-      /* =========================
-         LIMIT BAR PER CUSTOMER
-      ========================= */
-      .customer-limit {
-        margin-top: 12px;
-        padding-top: 12px;
-        border-top: 1px dashed rgba(232, 177, 60, 0.22);
-        cursor: pointer;
-        border-radius: 8px;
-        transition: background 0.2s;
-      }
-
-      .customer-limit:active {
-        background: rgba(232, 177, 60, 0.06);
-      }
-
-      .limit-head {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        font-family: 'FiraCondBold', sans-serif;
-        font-size: 0.72rem;
-        color: #9aa39c;
-        letter-spacing: 0.3px;
-        margin-bottom: 6px;
-      }
-
-      .limit-head .limit-pct {
-        font-size: 0.78rem;
-      }
-
-      .limit-track {
-        position: relative;
-        width: 100%;
-        height: 9px;
-        border-radius: 99px;
-        background: #1b221c;
-        border: 1px solid rgba(232, 177, 60, 0.22);
-        overflow: hidden;
-      }
-
-      .limit-fill {
-        height: 100%;
-        border-radius: 99px;
-        width: 0%;
-        transition: width 0.45s cubic-bezier(.4,0,.2,1), background 0.3s;
-        box-shadow: 0 0 8px rgba(0,0,0,0.4);
-      }
-
-      .limit-nominal {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        gap: 8px;
-        margin-top: 6px;
-        font-family: 'FiraCondBold', sans-serif;
-        font-size: 0.72rem;
-        color: #ddd;
-      }
-
-      .limit-nominal .limit-used {
-        color: #fff;
-      }
-
-      .limit-nominal .limit-total {
-        color: #9aa39c;
-      }
-
-      .limit-hint {
-        margin-top: 6px;
-        font-size: 0.65rem;
-        color: #6e7a70;
+      .spending-badge {
+        color: var(--hijau) !important;
         font-family: 'FiraCondBold', sans-serif;
         letter-spacing: 0.2px;
       }
 
-      .limit-hint b {
-        color: var(--emas-terang);
+      .customer-stats {
+        text-align: right; font-family: 'FiraCondBold', sans-serif; flex-shrink: 0;
       }
+      .customer-stats .total-tx { font-size: 0.75rem; color: #aaa; margin-bottom: 2px; }
+      .customer-stats .total-val { font-size: 0.9rem; color: var(--emas-terang); }
+
+      .customer-limit {
+        margin-top: 12px; padding-top: 12px;
+        border-top: 1px dashed rgba(232, 177, 60, 0.22);
+        cursor: pointer; border-radius: 8px;
+        transition: background 0.2s;
+      }
+      .customer-limit:active { background: rgba(232, 177, 60, 0.06); }
+
+      .limit-head {
+        display: flex; justify-content: space-between; align-items: center;
+        font-family: 'FiraCondBold', sans-serif;
+        font-size: 0.72rem; color: #9aa39c;
+        letter-spacing: 0.3px; margin-bottom: 6px;
+      }
+      .limit-head .limit-pct { font-size: 0.78rem; }
+
+      .limit-track {
+        position: relative; width: 100%; height: 9px;
+        border-radius: 99px; background: #1b221c;
+        border: 1px solid rgba(232, 177, 60, 0.22);
+        overflow: hidden;
+      }
+      .limit-fill {
+        height: 100%; border-radius: 99px; width: 0%;
+        transition: width 0.45s cubic-bezier(.4,0,.2,1), background 0.3s;
+        box-shadow: 0 0 8px rgba(0,0,0,0.4);
+      }
+      .limit-nominal {
+        display: flex; justify-content: space-between; align-items: center;
+        gap: 8px; margin-top: 6px;
+        font-family: 'FiraCondBold', sans-serif;
+        font-size: 0.72rem; color: #ddd;
+      }
+      .limit-nominal .limit-used { color: #fff; }
+      .limit-nominal .limit-total { color: #9aa39c; }
+      .limit-hint {
+        margin-top: 6px; font-size: 0.65rem; color: #6e7a70;
+        font-family: 'FiraCondBold', sans-serif; letter-spacing: 0.2px;
+      }
+      .limit-hint b { color: var(--emas-terang); }
+
+      .customer-charge-row {
+        display: flex; justify-content: space-between; align-items: center;
+        margin-top: 8px; padding-top: 8px;
+        border-top: 1px dashed rgba(255, 159, 26, 0.2);
+        font-family: 'FiraCondBold', sans-serif;
+        font-size: 0.75rem;
+      }
+      .charge-label {
+        color: #9aa39c;
+        display: flex; align-items: center; gap: 6px;
+      }
+      .charge-label svg {
+        width: 12px; height: 12px; fill: var(--oranye);
+        filter: drop-shadow(0 0 4px rgba(255, 159, 26, 0.5));
+      }
+      .charge-label b { color: var(--oranye); font-size: 0.72rem; }
+
+      .charge-toggle {
+        background: rgba(255, 159, 26, 0.1);
+        border: 1px solid rgba(255, 159, 26, 0.4);
+        color: #ffb566;
+        padding: 4px 10px; border-radius: 6px;
+        font-family: 'FiraCondBold', sans-serif;
+        font-size: 0.7rem; letter-spacing: 0.3px;
+        cursor: pointer;
+        transition: background 0.2s, color 0.2s, box-shadow 0.2s, transform 0.15s;
+      }
+      .charge-toggle.active {
+        background: var(--oranye); color: #000;
+        border-color: var(--oranye);
+        box-shadow: 0 2px 10px rgba(255, 159, 26, 0.45);
+      }
+      .charge-toggle:active { transform: scale(0.95); }
+
+      .charge-info-text {
+        margin-top: 6px;
+        font-family: 'FiraCondBold', sans-serif;
+        font-size: 0.68rem;
+        color: #ffb566;
+        text-align: right;
+        letter-spacing: 0.2px;
+      }
+      .charge-info-text b { color: var(--oranye); }
 
       .add-customer-btn {
-        display: block;
-        width: 100%;
-        margin: 15px auto 20px auto;
+        display: block; width: 100%; margin: 15px auto 20px auto;
         height: 46px;
-        background: var(--emas-terang);
-        color: #000000;
+        background: var(--emas-terang); color: #000000;
         border: 2px solid var(--emas-terang);
         border-radius: 12px;
         font-family: 'FiraCondBold', sans-serif;
-        font-size: 0.95rem;
-        cursor: pointer;
-        text-align: center;
-        line-height: 42px;
+        font-size: 0.95rem; cursor: pointer;
+        text-align: center; line-height: 42px;
         box-shadow: 0 3px 10px rgba(255, 209, 102, 0.3);
       }
 
-      .popupBox{
-        position: fixed;
-        inset: 0;
+      .popupBox {
+        position: fixed; inset: 0;
         background: rgba(0,0,0,0.85);
-        display: none;
-        justify-content: center;
-        align-items: center;
-        z-index: 999999;
-        padding: 20px;
-        backdrop-filter: blur(5px);
+        display: none; justify-content: center; align-items: center;
+        z-index: 999999; padding: 20px; backdrop-filter: blur(5px);
       }
+      .popupBox.active { display: flex; }
 
-      .popupBox.active{
-        display: flex;
-      }
-
-      .popupContent{
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-        max-width: 360px;
+      .popupContent {
+        display: flex; flex-direction: column;
+        width: 100%; max-width: 360px;
         background: #0d120f;
         border: 2px solid var(--emas-terang);
         border-radius: 16px;
         padding: 20px;
         box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+        animation: popIn 0.2s ease-out;
+      }
+      .popupContent.charge-theme { border-color: var(--oranye); }
+
+      @keyframes popIn {
+        from { transform: scale(0.9); opacity: 0; }
+        to { transform: scale(1); opacity: 1; }
       }
 
       .popupContent h2 {
-        margin-top: 0;
-        margin-bottom: 6px;
+        margin-top: 0; margin-bottom: 6px;
         font-family: 'FiraCondBold', sans-serif;
         color: var(--emas-terang);
-        font-size: 0.85rem;
-        text-transform: uppercase;
+        font-size: 0.85rem; text-transform: uppercase;
+        display: flex; align-items: center; gap: 6px;
+      }
+      .popupContent.charge-theme h2 { color: var(--oranye); }
+
+      .charge-title-icon {
+        width: 14px; height: 14px;
+        fill: var(--oranye);
+        flex-shrink: 0;
+        filter: drop-shadow(0 0 4px rgba(255, 159, 26, 0.6));
       }
 
       .popup-note {
-        margin: 0 0 12px 0;
-        font-size: 0.75rem;
-        color: #9aa39c;
-        line-height: 1.35;
+        margin: 0 0 12px 0; font-size: 0.75rem;
+        color: #9aa39c; line-height: 1.35;
       }
-
-      .popup-note b {
-        color: #fff;
-      }
+      .popup-note b { color: #fff; }
 
       .preset-row {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 6px;
-        margin-bottom: 12px;
+        display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px;
       }
-
       .preset-chip {
-        flex: 1;
-        min-width: 64px;
-        height: 30px;
+        flex: 1; min-width: 64px; height: 30px;
         background: rgba(232, 177, 60, 0.1);
         border: 1px solid rgba(232, 177, 60, 0.4);
-        border-radius: 8px;
-        color: var(--emas-terang);
+        border-radius: 8px; color: var(--emas-terang);
         font-family: 'FiraCondBold', sans-serif;
-        font-size: 0.72rem;
-        cursor: pointer;
+        font-size: 0.72rem; cursor: pointer;
         transition: background 0.2s;
       }
-
-      .preset-chip:hover {
-        background: rgba(232, 177, 60, 0.25);
+      .preset-chip:hover { background: rgba(232, 177, 60, 0.25); }
+      .preset-chip.orange-chip {
+        background: rgba(255, 159, 26, 0.1);
+        border-color: rgba(255, 159, 26, 0.4);
+        color: #ffb566;
       }
+      .preset-chip.orange-chip:hover { background: rgba(255, 159, 26, 0.25); }
 
-      input{
-        width: 100%;
-        height: 44px;
-        background: #000;
-        border: 1.5px solid var(--emas);
-        border-radius: 10px;
-        color: white;
-        padding: 0 12px;
-        box-sizing: border-box;
+      input {
+        width: 100%; height: 44px;
+        background: #000; border: 1.5px solid var(--emas);
+        border-radius: 10px; color: white;
+        padding: 0 12px; box-sizing: border-box;
         margin-bottom: 12px;
         font-family: 'FiraCondBook', sans-serif;
-        font-size: 0.95rem;
-        outline: none;
+        font-size: 0.95rem; outline: none;
       }
-
       input:focus {
         border-color: var(--emas-terang);
         box-shadow: 0 0 8px rgba(255, 209, 102, 0.25);
       }
-
-      .popupButtonGroup{
-        display: flex;
-        gap: 8px;
-        margin-top: 8px;
+      input.orange-input:focus {
+        border-color: var(--oranye);
+        box-shadow: 0 0 8px rgba(255, 159, 26, 0.3);
       }
 
-      .cancelButton,
-      .addButton{
-        flex: 1;
-        height: 42px;
-        border: none;
-        border-radius: 10px;
-        cursor: pointer;
-        font-family: 'FiraCondBold', sans-serif;
+      .popupButtonGroup { display: flex; gap: 8px; margin-top: 8px; }
+      .cancelButton, .addButton {
+        flex: 1; height: 42px; border: none; border-radius: 10px;
+        cursor: pointer; font-family: 'FiraCondBold', sans-serif;
         font-size: 0.9rem;
       }
-
-      .cancelButton{
-        background: #222;
-        color: #aaa;
-        border: 1px solid #444;
-      }
-
-      .addButton{
-        background: var(--emas-terang);
-        color: black;
+      .cancelButton { background: #222; color: #aaa; border: 1px solid #444; }
+      .addButton {
+        background: var(--emas-terang); color: black;
         box-shadow: 0 3px 10px rgba(255, 209, 102, 0.3);
       }
-
-      .dangerButton {
-        flex: 1;
-        height: 42px;
-        border-radius: 10px;
-        cursor: pointer;
-        font-family: 'FiraCondBold', sans-serif;
-        font-size: 0.9rem;
-        background: rgba(255, 77, 77, 0.12);
-        color: #ff8080;
-        border: 1px solid rgba(255, 77, 77, 0.5);
+      .addButton.orange-btn {
+        background: var(--oranye); color: #000;
+        box-shadow: 0 3px 10px rgba(255, 159, 26, 0.35);
       }
 
-      /* BOTTOM NAVBAR M-BANKING (7 TOMBOL) */
+      .customModalBox {
+        position: fixed; inset: 0;
+        background: rgba(0,0,0,0.85);
+        display: none; justify-content: center; align-items: center;
+        z-index: 1000000; padding: 20px;
+        backdrop-filter: blur(6px);
+      }
+      .customModalBox.active { display: flex; }
+
+      .customModalContent {
+        display: flex; flex-direction: column; align-items: center;
+        width: 100%; max-width: 340px;
+        background: linear-gradient(180deg, #0d120f 0%, #090e0b 100%);
+        border: 2px solid var(--emas-terang);
+        border-radius: 18px;
+        padding: 22px 20px 18px;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.85), 0 0 30px rgba(255, 209, 102, 0.08);
+        text-align: center;
+        animation: modalIn 0.22s ease-out;
+      }
+      .customModalContent.warning {
+        border-color: var(--oranye);
+        box-shadow: 0 10px 40px rgba(0,0,0,0.85), 0 0 30px rgba(255, 159, 26, 0.12);
+      }
+      .customModalContent.danger {
+        border-color: var(--merah);
+        box-shadow: 0 10px 40px rgba(0,0,0,0.85), 0 0 30px rgba(255, 77, 77, 0.15);
+      }
+
+      @keyframes modalIn {
+        from { transform: scale(0.9) translateY(10px); opacity: 0; }
+        to { transform: scale(1) translateY(0); opacity: 1; }
+      }
+
+      .modalIcon {
+        width: 52px; height: 52px;
+        border-radius: 50%;
+        display: flex; align-items: center; justify-content: center;
+        margin-bottom: 12px;
+        border: 2px solid;
+      }
+      .modalIcon svg {
+        width: 26px; height: 26px;
+        fill: currentColor;
+      }
+      .modalIcon.info {
+        color: var(--emas-terang);
+        border-color: var(--emas-terang);
+        background: rgba(255, 209, 102, 0.1);
+        box-shadow: 0 0 22px rgba(255, 209, 102, 0.28);
+      }
+      .modalIcon.warning {
+        color: var(--oranye);
+        border-color: var(--oranye);
+        background: rgba(255, 159, 26, 0.1);
+        box-shadow: 0 0 22px rgba(255, 159, 26, 0.3);
+      }
+      .modalIcon.danger {
+        color: var(--merah);
+        border-color: var(--merah);
+        background: rgba(255, 77, 77, 0.1);
+        box-shadow: 0 0 22px rgba(255, 77, 77, 0.3);
+      }
+
+      .customModalContent h3 {
+        font-family: 'FiraCondBold', sans-serif;
+        color: var(--emas-terang);
+        font-size: 0.92rem;
+        margin: 0 0 8px 0;
+        letter-spacing: 0.6px;
+        text-transform: uppercase;
+      }
+      .customModalContent.warning h3 { color: var(--oranye); }
+      .customModalContent.danger h3 { color: var(--merah); }
+
+      .customModalContent p {
+        font-family: 'FiraCondBook', sans-serif;
+        color: #cfd6d1;
+        font-size: 0.85rem;
+        line-height: 1.55;
+        margin: 0 0 18px 0;
+        white-space: pre-line;
+        width: 100%;
+      }
+
+      .modalBtnGroup {
+        display: flex; gap: 8px; width: 100%;
+      }
+      .modalBtnGroup button {
+        flex: 1; height: 44px;
+        border: none; border-radius: 10px;
+        font-family: 'FiraCondBold', sans-serif;
+        font-size: 0.88rem;
+        cursor: pointer;
+        transition: transform 0.15s, box-shadow 0.2s, filter 0.2s;
+        letter-spacing: 0.4px;
+      }
+      .modalBtnGroup button:active { transform: scale(0.97); }
+
+      .modalOkBtn {
+        background: var(--emas-terang);
+        color: #000;
+        box-shadow: 0 3px 12px rgba(255, 209, 102, 0.35);
+      }
+      .modalOkBtn.warning {
+        background: var(--oranye);
+        box-shadow: 0 3px 12px rgba(255, 159, 26, 0.4);
+      }
+      .modalOkBtn.danger {
+        background: var(--merah);
+        color: #fff;
+        box-shadow: 0 3px 12px rgba(255, 77, 77, 0.4);
+      }
+      .modalCancelBtn {
+        background: #1c221e;
+        color: #aab2ab;
+        border: 1px solid #394039 !important;
+      }
+
+      .dot-sep {
+        display: inline-block;
+        width: 3px;
+        height: 3px;
+        background: currentColor;
+        border-radius: 50%;
+        vertical-align: middle;
+        margin: 0 6px;
+        opacity: 0.45;
+      }
+
+      .charge-tiny-icon {
+        width: 10px;
+        height: 10px;
+        fill: var(--oranye);
+        vertical-align: -1px;
+        margin-right: 4px;
+        filter: drop-shadow(0 0 3px rgba(255, 159, 26, 0.5));
+      }
+
       .mbanking-bottom-nav {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        height: 64px;
+        position: fixed; bottom: 0; left: 0; right: 0; height: 64px;
         background: rgba(10, 14, 11, 0.96);
         border-top: 1px solid rgba(232, 177, 60, 0.3);
-        display: grid;
-        grid-template-columns: repeat(7, 1fr);
-        z-index: 99999;
-        backdrop-filter: blur(8px);
+        display: grid; grid-template-columns: repeat(7, 1fr);
+        z-index: 99999; backdrop-filter: blur(8px);
       }
-
       .nav-item {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        text-decoration: none;
-        color: #888;
+        display: flex; flex-direction: column;
+        align-items: center; justify-content: center;
+        text-decoration: none; color: #888;
         font-family: 'FiraCondBold', sans-serif;
-        font-size: 0.55rem;
-        gap: 3px;
-        padding: 4px 0;
+        font-size: 0.55rem; gap: 3px; padding: 4px 0;
         transition: color 0.2s;
       }
-
       .nav-item img {
-        width: 20px;
-        height: 20px;
-        object-fit: contain;
+        width: 20px; height: 20px; object-fit: contain;
         filter: grayscale(100%) opacity(0.6);
         transition: filter 0.2s;
       }
+      .nav-item.active, .nav-item:hover { color: var(--emas-terang); }
+      .nav-item.active img, .nav-item:hover img { filter: none; }
 
-      .nav-item.active, .nav-item:hover {
-        color: var(--emas-terang);
-      }
-
-      .nav-item.active img, .nav-item:hover img {
-        filter: none;
-      }
-
-      @media (max-width: 400px){
+      @media (max-width: 420px){
         .date-badge-top { display: none; }
         .limit-global-btn .limit-btn-label { display: none; }
-        .limit-global-btn { padding: 0 9px; }
+        .charge-global-btn .charge-btn-label { display: none; }
+        .limit-global-btn, .charge-global-btn { padding: 0 9px; }
       }
     </style>
 </head>
@@ -585,7 +579,6 @@
   <div class="bg-layer"></div>
   <div class="bg-dim"></div>
 
-  <!-- TOP BAR M-BANKING -->
   <div class="mbanking-topbar">
     <div class="mbanking-brand-container">
       <div class="mbanking-brand">Comersio <span>Center</span></div>
@@ -594,13 +587,20 @@
     <div class="topbar-right-box">
       <div class="date-badge-top" id="dateText">01 Jan 2026</div>
 
-      <!-- TOMBOL SETTING LIMIT GLOBAL (SEMUA CUSTOMER) -->
       <button class="limit-global-btn" id="globalLimitBtn" onclick="openGlobalLimit()" title="Atur limitasi untuk semua customer">
         <svg viewBox="0 0 24 24">
           <path d="M21 18v1a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v1h-9a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h9zm-9-2h10V8H12v8zm4-2.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/>
         </svg>
         <span class="limit-btn-label">Limit</span>
         <span class="limit-btn-value" id="globalLimitValue">-</span>
+      </button>
+
+      <button class="charge-global-btn" id="globalChargeBtn" onclick="openGlobalCharge()" title="Atur biaya charge over-limit">
+        <svg viewBox="0 0 24 24">
+          <path d="M7 2v11h3v9l7-12h-4l4-8z"/>
+        </svg>
+        <span class="charge-btn-label">Charge</span>
+        <span class="charge-btn-value" id="globalChargeValue">-</span>
       </button>
 
       <a href="profile.html" class="profile-circle-btn" id="topProfileBtn" title="Pengaturan Profile">
@@ -621,9 +621,6 @@
     </div>
 </div>
 
-<!-- =========================
-     POPUP TAMBAH CUSTOMER
-========================= -->
 <div id="popupBox" class="popupBox">
     <div class="popupContent">
         <h2>ID CUSTOMER</h2>
@@ -641,15 +638,11 @@
     </div>
 </div>
 
-<!-- =========================
-     POPUP LIMIT GLOBAL (SEMUA CUSTOMER)
-========================= -->
 <div id="globalLimitPopup" class="popupBox">
     <div class="popupContent">
         <h2>Limitasi Global</h2>
         <p class="popup-note">
-            Nominal ini berlaku untuk <b>semua customer</b> (termasuk customer baru yang ditambahkan nanti).
-            Customer yang limitasinya sudah diatur sendiri akan ikut tersamakan.
+            Nominal ini berlaku untuk <b>semua customer</b>. Customer yang limitasinya sudah diatur sendiri akan ikut tersamakan.
         </p>
 
         <input type="text" id="globalLimitInput" inputmode="numeric" placeholder="Contoh: 500.000" oninput="this.value = formatRibuan(this.value)">
@@ -668,9 +661,34 @@
     </div>
 </div>
 
-<!-- =========================
-     POPUP LIMIT PER CUSTOMER
-========================= -->
+<div id="globalChargePopup" class="popupBox">
+    <div class="popupContent charge-theme">
+        <h2>
+            <svg class="charge-title-icon" viewBox="0 0 24 24"><path d="M7 2v11h3v9l7-12h-4l4-8z"/></svg>
+            Biaya Charge Over-Limit
+        </h2>
+        <p class="popup-note">
+            Nominal ini akan <b>otomatis ditambahkan</b> ke setiap transaksi customer
+            yang <b>melebihi limit</b>. Charge aktif otomatis untuk customer baru &amp;
+            lama, tapi tetap bisa di-on/off per customer. Isi <b>0</b> untuk menonaktifkan seluruh charge.
+        </p>
+
+        <input type="text" id="globalChargeInput" class="orange-input" inputmode="numeric" placeholder="Contoh: 5.000" oninput="this.value = formatRibuan(this.value)">
+
+        <div class="preset-row">
+            <button class="preset-chip orange-chip" onclick="setPreset('globalChargeInput', 1000)">1 Rb</button>
+            <button class="preset-chip orange-chip" onclick="setPreset('globalChargeInput', 5000)">5 Rb</button>
+            <button class="preset-chip orange-chip" onclick="setPreset('globalChargeInput', 10000)">10 Rb</button>
+            <button class="preset-chip orange-chip" onclick="setPreset('globalChargeInput', 25000)">25 Rb</button>
+        </div>
+
+        <div class="popupButtonGroup">
+            <button class="cancelButton" onclick="closeGlobalCharge()">Batal</button>
+            <button class="addButton orange-btn" onclick="saveGlobalCharge()">Simpan</button>
+        </div>
+    </div>
+</div>
+
 <div id="customerLimitPopup" class="popupBox">
     <div class="popupContent">
         <h2>Limitasi Customer</h2>
@@ -692,7 +710,15 @@
     </div>
 </div>
 
-<!-- BOTTOM NAVBAR M-BANKING (7 TOMBOL) -->
+<div id="customModal" class="customModalBox">
+    <div class="customModalContent" id="customModalContent">
+        <div class="modalIcon info" id="modalIcon"></div>
+        <h3 id="modalTitle">Informasi</h3>
+        <p id="modalMessage">-</p>
+        <div class="modalBtnGroup" id="modalBtnGroup"></div>
+    </div>
+</div>
+
 <nav class="mbanking-bottom-nav">
     <a href="index.html" class="nav-item">
         <img src="icon.png" alt="Home">
@@ -725,78 +751,136 @@
 </nav>
 
 <script>
-/* =========================================================
-   KONFIGURASI STORAGE
-   - customers            : [{ id, name, limit }]
-   - debts                : { [customerId]: [ {harga, dibayar, ...} ] }
-   - global_customer_limit: number (limit default semua customer)
-========================================================= */
-
-const KEY_CUSTOMERS   = "customers";
-const KEY_DEBTS       = "debts";
-const KEY_GLOBAL_LIMIT = "global_customer_limit";
+const KEY_CUSTOMERS     = "customers";
+const KEY_DEBTS         = "debts";
+const KEY_ARCHIVED      = "archivedDebts";
+const KEY_GLOBAL_LIMIT  = "global_customer_limit";
+const KEY_CHARGE_VALUE  = "global_charge_value";
+const KEY_CHARGE_MIGRATED = "charge_default_on_migrated_v1";
 
 let activeLimitCustomerId = null;
 
-/* ---------- HELPER FORMAT ---------- */
+const ICON_LIGHTNING = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 2v11h3v9l7-12h-4l4-8z"/></svg>';
+const ICON_INFO = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>';
+const ICON_WARNING = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/></svg>';
+const ICON_DANGER = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>';
+
+const DOT_SEP = '<span class="dot-sep"></span>';
+
 function formatRibuan(val){
     const digits = String(val).replace(/\D/g, "");
     if(!digits) return "";
     return Number(digits).toLocaleString("id-ID");
 }
-
 function parseRibuan(val){
     const digits = String(val).replace(/\D/g, "");
     return digits ? parseInt(digits, 10) : 0;
 }
-
-function rupiah(n){
-    return "Rp " + Number(n || 0).toLocaleString("id-ID");
-}
-
+function rupiah(n){ return "Rp " + Number(n || 0).toLocaleString("id-ID"); }
 function rupiahShort(n){
     n = Number(n || 0);
     if(n >= 1000000) return (n / 1000000).toLocaleString("id-ID", {maximumFractionDigits: 1}) + " Jt";
     if(n >= 1000)    return (n / 1000).toLocaleString("id-ID", {maximumFractionDigits: 0}) + " Rb";
     return n.toLocaleString("id-ID");
 }
-
 function setPreset(inputId, value){
     document.getElementById(inputId).value = Number(value).toLocaleString("id-ID");
 }
 
-/* ---------- STORAGE ACCESS ---------- */
-function getCustomers(){
-    return JSON.parse(localStorage.getItem(KEY_CUSTOMERS)) || [];
+function showAlert(message, title = "Informasi", type = "info"){
+    return new Promise(resolve => {
+        const modal   = document.getElementById("customModal");
+        const content = document.getElementById("customModalContent");
+        const icon    = document.getElementById("modalIcon");
+
+        content.className = "customModalContent";
+        if(type === "warning") content.classList.add("warning");
+        else if(type === "danger") content.classList.add("danger");
+
+        icon.className = "modalIcon " + type;
+        if(type === "danger")        icon.innerHTML = ICON_DANGER;
+        else if(type === "warning")  icon.innerHTML = ICON_WARNING;
+        else                         icon.innerHTML = ICON_INFO;
+
+        document.getElementById("modalTitle").innerText = title;
+        document.getElementById("modalMessage").innerText = message;
+
+        const okBtnClass = type === "danger" ? "modalOkBtn danger" : type === "warning" ? "modalOkBtn warning" : "modalOkBtn";
+        document.getElementById("modalBtnGroup").innerHTML =
+            `<button class="${okBtnClass}" id="modalOk">OK</button>`;
+
+        document.getElementById("modalOk").onclick = () => {
+            modal.classList.remove("active");
+            resolve(true);
+        };
+        modal.classList.add("active");
+    });
 }
 
-function saveCustomers(list){
-    localStorage.setItem(KEY_CUSTOMERS, JSON.stringify(list));
+function showConfirm(message, title = "Konfirmasi", type = "warning", okText = "Ya, Lanjut", cancelText = "Batal"){
+    return new Promise(resolve => {
+        const modal   = document.getElementById("customModal");
+        const content = document.getElementById("customModalContent");
+        const icon    = document.getElementById("modalIcon");
+
+        content.className = "customModalContent";
+        if(type === "danger") content.classList.add("danger");
+        else if(type === "warning") content.classList.add("warning");
+
+        icon.className = "modalIcon " + type;
+        if(type === "danger")        icon.innerHTML = ICON_DANGER;
+        else if(type === "warning")  icon.innerHTML = ICON_WARNING;
+        else                         icon.innerHTML = ICON_INFO;
+
+        document.getElementById("modalTitle").innerText = title;
+        document.getElementById("modalMessage").innerText = message;
+
+        const okBtnClass = type === "danger" ? "modalOkBtn danger" : type === "warning" ? "modalOkBtn warning" : "modalOkBtn";
+        document.getElementById("modalBtnGroup").innerHTML = `
+            <button class="modalCancelBtn" id="modalCancel">${cancelText}</button>
+            <button class="${okBtnClass}" id="modalOk">${okText}</button>
+        `;
+
+        document.getElementById("modalOk").onclick = () => {
+            modal.classList.remove("active");
+            resolve(true);
+        };
+        document.getElementById("modalCancel").onclick = () => {
+            modal.classList.remove("active");
+            resolve(false);
+        };
+        modal.classList.add("active");
+    });
 }
+
+function getCustomers(){ return JSON.parse(localStorage.getItem(KEY_CUSTOMERS)) || []; }
+function saveCustomers(list){ localStorage.setItem(KEY_CUSTOMERS, JSON.stringify(list)); }
 
 function getGlobalLimit(){
     const v = parseInt(localStorage.getItem(KEY_GLOBAL_LIMIT) || "0", 10);
     return isNaN(v) ? 0 : v;
 }
+function setGlobalLimit(val){ localStorage.setItem(KEY_GLOBAL_LIMIT, String(val)); }
 
-function setGlobalLimit(val){
-    localStorage.setItem(KEY_GLOBAL_LIMIT, String(val));
+function getGlobalCharge(){
+    const v = parseInt(localStorage.getItem(KEY_CHARGE_VALUE) || "0", 10);
+    return isNaN(v) ? 0 : v;
 }
+function setGlobalCharge(val){ localStorage.setItem(KEY_CHARGE_VALUE, String(val)); }
 
-/* ---------- INIT ---------- */
 window.onload = function(){
     updateDateOnly();
-    migrateLimits();
+    migrateData();
     renderCustomerList();
     renderGlobalLimitBadge();
+    renderGlobalChargeBadge();
 
     const savedPic = localStorage.getItem("profile_picture") || localStorage.getItem("user_avatar");
-    if(savedPic) {
+    if(savedPic){
       const topBtn = document.getElementById("topProfileBtn");
       topBtn.innerHTML = `<img src="${savedPic}" alt="Profile">`;
     }
 
-    // tutup popup kalau klik area gelap
     document.querySelectorAll(".popupBox").forEach(box => {
         box.addEventListener("click", e => {
             if(e.target === box) box.classList.remove("active");
@@ -810,10 +894,10 @@ function updateDateOnly(){
     document.getElementById("dateText").innerText = now.toLocaleDateString('id-ID', optionsDate);
 }
 
-/* Pastikan semua customer punya field limit (data lama ikut disamakan) */
-function migrateLimits(){
+function migrateData(){
     const customers = getCustomers();
     const globalLimit = getGlobalLimit();
+    const alreadyMigrated = localStorage.getItem(KEY_CHARGE_MIGRATED) === "1";
     let changed = false;
 
     customers.forEach(c => {
@@ -821,9 +905,30 @@ function migrateLimits(){
             c.limit = globalLimit;
             changed = true;
         }
+        if(!alreadyMigrated){
+            c.chargeEnabled = true;
+            changed = true;
+        }
+        if(typeof c.chargeEnabled !== "boolean"){
+            c.chargeEnabled = true;
+            changed = true;
+        }
     });
 
     if(changed) saveCustomers(customers);
+    if(!alreadyMigrated) localStorage.setItem(KEY_CHARGE_MIGRATED, "1");
+
+    const debts = JSON.parse(localStorage.getItem(KEY_DEBTS)) || {};
+    let debtChanged = false;
+    Object.keys(debts).forEach(custId => {
+        debts[custId].forEach(d => {
+            if(typeof d.charge !== "number"){
+                d.charge = 0;
+                debtChanged = true;
+            }
+        });
+    });
+    if(debtChanged) localStorage.setItem(KEY_DEBTS, JSON.stringify(debts));
 }
 
 function renderGlobalLimitBadge(){
@@ -831,17 +936,46 @@ function renderGlobalLimitBadge(){
     document.getElementById("globalLimitValue").innerText = val > 0 ? rupiahShort(val) : "Atur";
     document.getElementById("addCustomerNote").innerHTML =
         val > 0
-        ? `Limitasi otomatis mengikuti limit global: <b>${rupiah(val)}</b>.`
-        : `Belum ada limit global. Customer baru akan dibuat tanpa limitasi.`;
+        ? `Limitasi otomatis mengikuti limit global: <b>${rupiah(val)}</b>. Charge over-limit default <b>AKTIF</b>.`
+        : `Belum ada limit global. Customer baru dibuat tanpa limitasi (charge default tetap <b>AKTIF</b> jika limit diisi nanti).`;
 }
 
-/* =========================================================
-   RENDER LIST CUSTOMER
-========================================================= */
+function renderGlobalChargeBadge(){
+    const val = getGlobalCharge();
+    document.getElementById("globalChargeValue").innerText = val > 0 ? rupiahShort(val) : "Atur";
+}
+
+function recomputeCharges(custId){
+    const customers = getCustomers();
+    const cust = customers.find(c => c.id === custId);
+    if(!cust) return;
+
+    const debts = JSON.parse(localStorage.getItem(KEY_DEBTS)) || {};
+    const custDebts = debts[custId] || [];
+    const limit = cust.limit || 0;
+    const chargeVal = getGlobalCharge();
+
+    if(!cust.chargeEnabled || chargeVal <= 0 || limit <= 0){
+        custDebts.forEach(d => { d.charge = 0; });
+    } else {
+        let cumulative = 0;
+        custDebts.forEach(d => {
+            const harga = d.harga || 0;
+            cumulative += harga;
+            d.charge = (cumulative > limit) ? chargeVal : 0;
+        });
+    }
+
+    debts[custId] = custDebts;
+    localStorage.setItem(KEY_DEBTS, JSON.stringify(debts));
+}
+
 function renderCustomerList(){
     const customers = getCustomers();
     const debts = JSON.parse(localStorage.getItem(KEY_DEBTS)) || {};
+    const archivedDebts = JSON.parse(localStorage.getItem(KEY_ARCHIVED)) || {};
     const globalLimit = getGlobalLimit();
+    const chargeVal = getGlobalCharge();
     const list = document.getElementById("customerList");
     list.innerHTML = "";
 
@@ -854,19 +988,33 @@ function renderCustomerList(){
         const custId = data.id;
         const custName = data.name;
         const limit = (typeof data.limit === "number" && !isNaN(data.limit)) ? data.limit : globalLimit;
+        const chargeEnabled = !!data.chargeEnabled;
         const custDebts = debts[custId] || [];
+        const archivedCustDebts = archivedDebts[custId] || [];
 
-        const totalTxCount = custDebts.length;
+        const totalTxCount = custDebts.length + archivedCustDebts.length;
+
         let totalDebtAmount = 0;
+        let totalChargeApplied = 0;
+        let chargedTxCount = 0;
+        let totalSpent = 0;
 
         custDebts.forEach(item => {
             const harga = item.harga || 0;
+            const charge = item.charge || 0;
             const dibayar = item.dibayar || 0;
-            const sisa = harga - dibayar;
+            const tip = item.tip || 0;
+            const total = harga + charge;
+            const sisa = total - dibayar;
             if(sisa > 0) totalDebtAmount += sisa;
+            if(charge > 0){ totalChargeApplied += charge; chargedTxCount++; }
+            totalSpent += dibayar + tip;
         });
 
-        /* --- hitung limitasi --- */
+        archivedCustDebts.forEach(item => {
+            totalSpent += (item.dibayar || 0) + (item.tip || 0);
+        });
+
         let pct = 0;
         if(limit > 0) pct = (totalDebtAmount / limit) * 100;
         const pctRounded = Math.round(pct * 10) / 10;
@@ -884,13 +1032,12 @@ function renderCustomerList(){
         if(limit === 0){
             pctLabel = `<span class="limit-pct" style="color:#7c877e;">Limit belum diatur</span>`;
         } else {
-            pctLabel = `<span class="limit-pct" style="color:${barColor};">${pctRounded}%${over ? " • OVER" : ""}</span>`;
+            pctLabel = `<span class="limit-pct" style="color:${barColor};">${pctRounded}%${over ? DOT_SEP + "OVER" : ""}</span>`;
         }
 
         const nominalKiri = limit === 0
             ? `<span class="limit-used">${rupiah(totalDebtAmount)} terpakai</span>`
             : `<span class="limit-used">${rupiah(totalDebtAmount)}</span>`;
-
         const nominalKanan = limit === 0
             ? `<span class="limit-total">Tanpa limit</span>`
             : `<span class="limit-total">dari ${rupiah(limit)}</span>`;
@@ -899,12 +1046,23 @@ function renderCustomerList(){
         card.classList.add("customer-card");
         if(over) card.classList.add("over-limit");
 
+        const chargeLabelText = chargeVal > 0
+            ? `Over-Limit <b>(x ${rupiah(chargeVal)})</b>`
+            : `Over-Limit <b>(belum diset)</b>`;
+
+        const chargeInfoHtml = totalChargeApplied > 0
+            ? `<div class="charge-info-text">${ICON_LIGHTNING.replace('<svg ', '<svg class="charge-tiny-icon" ')}Total charge diterapkan: <b>${rupiah(totalChargeApplied)}</b>${DOT_SEP}${chargedTxCount} transaksi</div>`
+            : "";
+
         card.innerHTML = `
             <div class="customer-top">
                 <div class="customer-info">
                     <h3>ID : ${custId}</h3>
                     <p>${custName}</p>
-                    <small>Jumlah Transaksi: ${totalTxCount} item</small>
+                    <div class="customer-meta-row">
+                        <small>Jumlah Transaksi: ${totalTxCount} item</small>
+                        <small class="spending-badge">Total Spending: ${rupiah(totalSpent)}</small>
+                    </div>
                 </div>
                 <div class="customer-stats">
                     <div class="total-tx">Total Tagihan</div>
@@ -926,43 +1084,47 @@ function renderCustomerList(){
                 </div>
                 <div class="limit-hint">Ketuk untuk <b>edit limitasi</b> customer ini</div>
             </div>
+
+            <div class="customer-charge-row">
+                <div class="charge-label">
+                    ${ICON_LIGHTNING.replace('<svg ', '<svg style="width:12px;height:12px;fill:var(--oranye);" ')}
+                    <span>${chargeLabelText}</span>
+                </div>
+                <button class="charge-toggle ${chargeEnabled ? 'active' : ''}"
+                        onclick="event.stopPropagation(); toggleCharge('${custId}')">
+                    ${chargeEnabled ? 'AKTIF' : 'NONAKTIF'}
+                </button>
+            </div>
+
+            ${chargeInfoHtml}
         `;
 
         list.appendChild(card);
     });
 }
 
-/* =========================================================
-   POPUP TAMBAH CUSTOMER
-========================================================= */
 function openPopup(){
     renderGlobalLimitBadge();
     document.getElementById("popupBox").classList.add("active");
 }
-
 function closePopup(){
     document.getElementById("popupBox").classList.remove("active");
 }
-
-function addCustomer(){
+async function addCustomer(){
     const id = document.getElementById("customerId").value.trim();
     const name = document.getElementById("customerName").value.trim();
 
     if(id === "" || name === ""){
-        alert("Lengkapi ID dan Nama Customer!");
+        await showAlert("Lengkapi ID dan Nama Customer terlebih dahulu.", "Data Belum Lengkap", "warning");
         return;
     }
-
     const customers = getCustomers();
-
     if(customers.some(c => c.id === id)){
-        alert("ID Customer sudah terdaftar!");
+        await showAlert("ID Customer tersebut sudah terdaftar. Gunakan ID lain.", "ID Duplikat", "danger");
         return;
     }
 
-    // customer baru otomatis memakai limit global
-    customers.push({ id: id, name: name, limit: getGlobalLimit() });
-
+    customers.push({ id, name, limit: getGlobalLimit(), chargeEnabled: true });
     saveCustomers(customers);
 
     document.getElementById("customerId").value = "";
@@ -972,94 +1134,159 @@ function addCustomer(){
     renderCustomerList();
 }
 
-/* =========================================================
-   POPUP LIMIT GLOBAL (SEMUA CUSTOMER)
-========================================================= */
 function openGlobalLimit(){
     const val = getGlobalLimit();
     document.getElementById("globalLimitInput").value = val > 0 ? val.toLocaleString("id-ID") : "";
     document.getElementById("globalLimitPopup").classList.add("active");
 }
-
 function closeGlobalLimit(){
     document.getElementById("globalLimitPopup").classList.remove("active");
 }
-
-function saveGlobalLimit(){
+async function saveGlobalLimit(){
     const val = parseRibuan(document.getElementById("globalLimitInput").value);
-
     if(val <= 0){
-        alert("Masukkan nominal limit yang valid!");
+        await showAlert("Masukkan nominal limit yang valid (lebih dari 0).", "Nominal Tidak Valid", "warning");
         return;
     }
-
     const customers = getCustomers();
-
     if(customers.length > 0){
-        const ok = confirm(
-            "Limitasi " + customers.length + " customer akan disamakan menjadi " + rupiah(val) + ".\n" +
-            "Limitasi custom per customer akan tertimpa. Lanjutkan?"
+        const ok = await showConfirm(
+            `Limitasi ${customers.length} customer akan disamakan menjadi ${rupiah(val)}.\n\n` +
+            `Limitasi custom per customer akan tertimpa. Lanjutkan?`,
+            "Samakan Limit Semua Customer",
+            "warning",
+            "Ya, Terapkan",
+            "Batal"
         );
         if(!ok) return;
     }
-
     setGlobalLimit(val);
-
-    // terapkan ke SEMUA customer (termasuk yang sudah ada)
     customers.forEach(c => { c.limit = val; });
     saveCustomers(customers);
+
+    customers.forEach(c => { if(c.chargeEnabled) recomputeCharges(c.id); });
 
     closeGlobalLimit();
     renderGlobalLimitBadge();
     renderCustomerList();
 }
 
-/* =========================================================
-   POPUP LIMIT PER CUSTOMER (SATU-SATU)
-========================================================= */
+function openGlobalCharge(){
+    const val = getGlobalCharge();
+    document.getElementById("globalChargeInput").value = val > 0 ? val.toLocaleString("id-ID") : "";
+    document.getElementById("globalChargePopup").classList.add("active");
+}
+function closeGlobalCharge(){
+    document.getElementById("globalChargePopup").classList.remove("active");
+}
+async function saveGlobalCharge(){
+    const val = parseRibuan(document.getElementById("globalChargeInput").value);
+    if(val < 0){
+        await showAlert("Nominal charge tidak valid.", "Nominal Tidak Valid", "warning");
+        return;
+    }
+    setGlobalCharge(val);
+
+    const customers = getCustomers();
+    customers.forEach(c => { if(c.chargeEnabled) recomputeCharges(c.id); });
+
+    closeGlobalCharge();
+    renderGlobalChargeBadge();
+    renderCustomerList();
+}
+
+async function toggleCharge(custId){
+    const customers = getCustomers();
+    const cust = customers.find(c => c.id === custId);
+    if(!cust) return;
+
+    const debts = JSON.parse(localStorage.getItem(KEY_DEBTS)) || {};
+    const custDebts = debts[custId] || [];
+    const hasActiveDebts = custDebts.some(d => ((d.harga || 0) - (d.dibayar || 0)) > 0);
+
+    const chargeVal = getGlobalCharge();
+    const willEnable = !cust.chargeEnabled;
+
+    if(willEnable){
+        if(chargeVal <= 0){
+            await showAlert("Atur dulu nominal biaya charge lewat ikon petir di topbar.", "Charge Belum Diset", "warning");
+            return;
+        }
+        if(!cust.limit || cust.limit <= 0){
+            await showAlert("Customer ini belum punya limitasi. Atur limit dulu sebelum mengaktifkan charge.", "Limit Belum Diset", "warning");
+            return;
+        }
+        if(hasActiveDebts){
+            const ok = await showConfirm(
+                `Aktifkan charge ${rupiah(chargeVal)}?\n\n` +
+                `Setiap transaksi yang melebihi limit ${rupiah(cust.limit)} akan otomatis kena charge. Total tagihan akan bertambah.`,
+                "Aktifkan Charge",
+                "warning",
+                "Ya, Aktifkan",
+                "Batal"
+            );
+            if(!ok) return;
+        }
+    } else {
+        if(custDebts.some(d => (d.charge || 0) > 0)){
+            const ok = await showConfirm(
+                "Nonaktifkan charge untuk customer ini?\n\n" +
+                "Semua transaksi akan kembali ke harga normal (tanpa charge).",
+                "Nonaktifkan Charge",
+                "danger",
+                "Ya, Nonaktifkan",
+                "Batal"
+            );
+            if(!ok) return;
+        }
+    }
+
+    cust.chargeEnabled = willEnable;
+    saveCustomers(customers);
+
+    recomputeCharges(custId);
+    renderCustomerList();
+}
+
 function openCustomerLimit(custId){
     const customers = getCustomers();
     const cust = customers.find(c => c.id === custId);
     if(!cust) return;
 
     activeLimitCustomerId = custId;
-
     const limit = (typeof cust.limit === "number") ? cust.limit : 0;
 
     document.getElementById("custLimitName").innerHTML =
-        `<b>${cust.name}</b> • ID: ${cust.id}<br>Limit saat ini: <b>${limit > 0 ? rupiah(limit) : "belum diatur"}</b>`;
+        `<b>${cust.name}</b>${DOT_SEP}ID: ${cust.id}<br>Limit saat ini: <b>${limit > 0 ? rupiah(limit) : "belum diatur"}</b>`;
     document.getElementById("customerLimitInput").value = limit > 0 ? limit.toLocaleString("id-ID") : "";
 
     document.getElementById("customerLimitPopup").classList.add("active");
 }
-
 function closeCustomerLimit(){
     document.getElementById("customerLimitPopup").classList.remove("active");
     activeLimitCustomerId = null;
 }
-
-function saveCustomerLimit(){
+async function saveCustomerLimit(){
     if(!activeLimitCustomerId){
-        alert("Customer tidak ditemukan!");
+        await showAlert("Customer tidak ditemukan.", "Error", "danger");
         return;
     }
-
     const val = parseRibuan(document.getElementById("customerLimitInput").value);
     if(val <= 0){
-        alert("Masukkan nominal limit yang valid!");
+        await showAlert("Masukkan nominal limit yang valid (lebih dari 0).", "Nominal Tidak Valid", "warning");
         return;
     }
-
     const customers = getCustomers();
     const cust = customers.find(c => c.id === activeLimitCustomerId);
     if(!cust){
-        alert("Customer tidak ditemukan!");
+        await showAlert("Customer tidak ditemukan.", "Error", "danger");
         return;
     }
 
-    // hanya customer ini yang berubah
     cust.limit = val;
     saveCustomers(customers);
+
+    if(cust.chargeEnabled) recomputeCharges(cust.id);
 
     closeCustomerLimit();
     renderCustomerList();
