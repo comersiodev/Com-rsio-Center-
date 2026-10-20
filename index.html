@@ -580,6 +580,10 @@ function bulanKeIndex(bulanVal) {
   return -1;
 }
 function namaBulanIndonesia(idx) { const NAMA = ["Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"]; return NAMA[idx] || "-"; }
+
+/* =========================================================
+   FIXED: loadDashboardFinance sekarang baca DEBTS + ARCHIVED_DEBTS
+========================================================= */
 function loadDashboardFinance() {
   let baseSaldoRaw = localStorage.getItem("comersio_base_saldo");
   let baseSaldo = (baseSaldoRaw !== null && baseSaldoRaw !== "") ? parseFloat(baseSaldoRaw) : 0;
@@ -587,14 +591,33 @@ function loadDashboardFinance() {
   const now = new Date(), currentMonth = now.getMonth(), currentYear = now.getFullYear();
   let startDateStr = localStorage.getItem("comersio_profit_start_date") || "";
   let startYear = null, startMonth = null;
-  if (startDateStr) { let m = startDateStr.match(/^(\d{4})[\/\-](\d{1,2})/); if (m) { startYear = parseInt(m[1],10); startMonth = parseInt(m[2],10)-1; } }
-  function isSameMonth(dateVal) { let d = parseTgl(dateVal); if (!d) return false; return d.getMonth() === currentMonth && d.getFullYear() === currentYear; }
-  function cekProfitMasuk(tahunItem, bulanItem) { if (startYear === null || startMonth === null) return true; if (tahunItem > startYear) return true; if (tahunItem < startYear) return false; return bulanItem >= startMonth; }
-  function isAfterStartMonth(dateVal) { if (startYear === null || startMonth === null) return true; let d = parseTgl(dateVal); if (!d) return true; return cekProfitMasuk(d.getFullYear(), d.getMonth()); }
-  try {
-    let debtsData = JSON.parse(localStorage.getItem("debts")) || {};
-    for (let custId in debtsData) {
-      let items = debtsData[custId];
+  
+  if (startDateStr) { 
+    let m = startDateStr.match(/^(\d{4})[\/\-](\d{1,2})/); 
+    if (m) { startYear = parseInt(m[1],10); startMonth = parseInt(m[2],10)-1; } 
+  }
+  
+  function isSameMonth(dateVal) { 
+    let d = parseTgl(dateVal); if (!d) return false; 
+    return d.getMonth() === currentMonth && d.getFullYear() === currentYear; 
+  }
+  function cekProfitMasuk(tahunItem, bulanItem) { 
+    if (startYear === null || startMonth === null) return true; 
+    if (tahunItem > startYear) return true; 
+    if (tahunItem < startYear) return false; 
+    return bulanItem >= startMonth; 
+  }
+  function isAfterStartMonth(dateVal) { 
+    if (startYear === null || startMonth === null) return true; 
+    let d = parseTgl(dateVal); if (!d) return true; 
+    return cekProfitMasuk(d.getFullYear(), d.getMonth()); 
+  }
+
+  // Fungsi helper untuk proses data dari object (debts atau archivedDebts)
+  function processTransactionData(dataSet) {
+    if (!dataSet) return;
+    for (let custId in dataSet) {
+      let items = dataSet[custId];
       if (!Array.isArray(items)) continue;
       items.forEach(item => {
         if (item.excluded) return;
@@ -603,15 +626,32 @@ function loadDashboardFinance() {
         let dibayar = numField(item,"dibayar","bayar","paid","amount");
         let tip = numField(item,"tip","tips");
         let waktu = getWaktuField(item);
+        
         let masuk = dibayar + tip;
         totalIncomeAllTime += masuk;
         if (isSameMonth(waktu)) totalIncomeThisMonth += masuk;
+        
         totalModalOut += modal;
+        
         let itemProfit = (harga - modal) + tip;
         if (isAfterStartMonth(waktu)) totalProfit += itemProfit;
       });
     }
-  } catch(e) {}
+  }
+
+  // 1. Proses transaksi aktif
+  try {
+    let debtsData = JSON.parse(localStorage.getItem("debts")) || {};
+    processTransactionData(debtsData);
+  } catch(e) { console.error("Error reading debts:", e); }
+
+  // 2. Proses transaksi arsip (lunas)
+  try {
+    let archivedData = JSON.parse(localStorage.getItem("archivedDebts")) || {};
+    processTransactionData(archivedData);
+  } catch(e) { console.error("Error reading archivedDebts:", e); }
+
+  // 3. Proses log bulanan manual (jika ada)
   try {
     let monthlyData = JSON.parse(localStorage.getItem("monthlyLogs")) || JSON.parse(localStorage.getItem("monthly")) || [];
     if (Array.isArray(monthlyData)) {
@@ -650,6 +690,7 @@ function loadDashboardFinance() {
       });
     }
   } catch(e) {}
+
   let finalSaldo = baseSaldo - totalModalOut + totalIncomeAllTime;
   const formatIDR = (n) => { if (isNaN(n)) n = 0; if (n < 0) return "-Rp " + Math.abs(Math.round(n)).toLocaleString('id-ID'); return "Rp " + Math.round(n).toLocaleString('id-ID'); };
   document.getElementById("display-saldo").innerText = formatIDR(finalSaldo);
@@ -1033,10 +1074,6 @@ document.querySelectorAll('.menu-grid-item').forEach(item => {
     });
   }
 });
-/* =====================================================
-   SAVE / LOAD DATA — FIXED VERSION
-   Menerima: format lama (flat), wrapper {data}, format baru {storage}
-   ===================================================== */
 const BACKUP_FORMAT = "comersio-json";
 const BACKUP_VERSION = 2;
 const BACKUP_SKIP_KEYS = new Set(["ilya_greet_date"]);
@@ -1049,121 +1086,47 @@ const BACKUP_KEY_ALIASES = {
 };
 const BACKUP_JSON_KEYS = ["customers","debts","products","monthly","monthlyLogs","comersio_notes_archive","comersio_boards_config","comersio_active_board_note_v2"];
 const BACKUP_CORE_DEFAULTS = { customers: "[]", debts: "{}", products: "[]", monthly: "[]" };
-
 function normalizeBackup(raw){
-  if(!raw || typeof raw !== "object" || Array.isArray(raw))
-    throw new Error("Format tidak dikenali (root bukan object)");
-
+  if(!raw || typeof raw !== "object" || Array.isArray(raw)) throw new Error("Format tidak dikenali (root bukan object)");
   const out = {};
-  const put = (k, v) => {
-    if(v === undefined || v === null) return;
-    out[k] = (typeof v === "string") ? v : JSON.stringify(v);
-  };
-
+  const put = (k, v) => { if(v === undefined || v === null) return; out[k] = (typeof v === "string") ? v : JSON.stringify(v); };
   const hasStorage = raw.storage && typeof raw.storage === "object" && !Array.isArray(raw.storage);
   const hasData    = raw.data    && typeof raw.data    === "object" && !Array.isArray(raw.data);
-
-  // 1) FLAT keys (format lama / campuran) — proses SEMUA key selain meta
-  const flatKeys = Object.keys(raw).filter(k =>
-    !BACKUP_SKIP_KEYS.has(k) &&
-    k !== "__format" && k !== "__version" && k !== "__savedAt" &&
-    k !== "storage" && k !== "profile" && k !== "data"
-  );
-  flatKeys.sort((a, b) => {
-    const aAlias = BACKUP_KEY_ALIASES[a] !== undefined ? 0 : 1;
-    const bAlias = BACKUP_KEY_ALIASES[b] !== undefined ? 0 : 1;
-    return aAlias - bAlias;
-  });
+  const flatKeys = Object.keys(raw).filter(k => !BACKUP_SKIP_KEYS.has(k) && k !== "__format" && k !== "__version" && k !== "__savedAt" && k !== "storage" && k !== "profile" && k !== "data");
+  flatKeys.sort((a, b) => { const aAlias = BACKUP_KEY_ALIASES[a] !== undefined ? 0 : 1; const bAlias = BACKUP_KEY_ALIASES[b] !== undefined ? 0 : 1; return aAlias - bAlias; });
   flatKeys.forEach(k => put(BACKUP_KEY_ALIASES[k] || k, raw[k]));
-
-  // 2) Wrapper {data: {...}}
-  if(hasData){
-    Object.keys(raw.data).forEach(k => {
-      if(BACKUP_SKIP_KEYS.has(k)) return;
-      put(BACKUP_KEY_ALIASES[k] || k, raw.data[k]);
-    });
-  }
-
-  // 3) Profile object
+  if(hasData){ Object.keys(raw.data).forEach(k => { if(BACKUP_SKIP_KEYS.has(k)) return; put(BACKUP_KEY_ALIASES[k] || k, raw.data[k]); }); }
   if(raw.profile && typeof raw.profile === "object" && !Array.isArray(raw.profile)){
-    put("username", raw.profile.username);
-    put("email", raw.profile.email);
-    put("title", raw.profile.title);
+    put("username", raw.profile.username); put("email", raw.profile.email); put("title", raw.profile.title);
     const pic = raw.profile.profile_picture || raw.profile.user_avatar;
     if(pic) put("profile_picture", pic);
   }
-
-  // 4) STORAGE (format baru) — prioritas tertinggi
   if(hasStorage){
     const storageKeys = Object.keys(raw.storage).filter(k => !BACKUP_SKIP_KEYS.has(k));
-    storageKeys.sort((a, b) => {
-      const aAlias = BACKUP_KEY_ALIASES[a] !== undefined ? 0 : 1;
-      const bAlias = BACKUP_KEY_ALIASES[b] !== undefined ? 0 : 1;
-      return aAlias - bAlias;
-    });
+    storageKeys.sort((a, b) => { const aAlias = BACKUP_KEY_ALIASES[a] !== undefined ? 0 : 1; const bAlias = BACKUP_KEY_ALIASES[b] !== undefined ? 0 : 1; return aAlias - bAlias; });
     storageKeys.forEach(k => put(BACKUP_KEY_ALIASES[k] || k, raw.storage[k]));
   }
-
-  // 5) Validasi JSON keys
-  BACKUP_JSON_KEYS.forEach(k => {
-    if(!(k in out)) return;
-    try {
-      const parsed = JSON.parse(out[k]);
-      if(parsed === null) delete out[k];
-      else out[k] = JSON.stringify(parsed);
-    } catch(e){ delete out[k]; }
-  });
-
-  // 6) Sinkron note lama <-> baru
-  if(out.comersio_active_board_note !== undefined && out.comersio_active_board_note_v2 === undefined){
-    out.comersio_active_board_note_v2 = JSON.stringify({ title: "", content: out.comersio_active_board_note });
-  } else if(out.comersio_active_board_note_v2 !== undefined && out.comersio_active_board_note === undefined){
-    try {
-      const parsed = JSON.parse(out.comersio_active_board_note_v2);
-      out.comersio_active_board_note = String(parsed.content || "");
-    } catch(e){}
-  }
-
-  // 7) Saldo harus angka
-  if(out.comersio_base_saldo !== undefined && isNaN(parseFloat(out.comersio_base_saldo)))
-    delete out.comersio_base_saldo;
-
-  // 8) Foto profil disamakan
+  BACKUP_JSON_KEYS.forEach(k => { if(!(k in out)) return; try { const parsed = JSON.parse(out[k]); if(parsed === null) delete out[k]; else out[k] = JSON.stringify(parsed); } catch(e){ delete out[k]; } });
+  if(out.comersio_active_board_note !== undefined && out.comersio_active_board_note_v2 === undefined){ out.comersio_active_board_note_v2 = JSON.stringify({ title: "", content: out.comersio_active_board_note }); }
+  else if(out.comersio_active_board_note_v2 !== undefined && out.comersio_active_board_note === undefined){ try { const parsed = JSON.parse(out.comersio_active_board_note_v2); out.comersio_active_board_note = String(parsed.content || ""); } catch(e){} }
+  if(out.comersio_base_saldo !== undefined && isNaN(parseFloat(out.comersio_base_saldo))) delete out.comersio_base_saldo;
   const pic = out.profile_picture || out.user_avatar;
   if(pic){ out.profile_picture = pic; out.user_avatar = pic; }
-
-  const sorted = {};
-  Object.keys(out).sort().forEach(k => { sorted[k] = out[k]; });
+  const sorted = {}; Object.keys(out).sort().forEach(k => { sorted[k] = out[k]; });
   return sorted;
 }
-
 function buildBackup(){
   const storage = {};
-  for(let i = 0; i < localStorage.length; i++){
-    const k = localStorage.key(i);
-    if(!k || BACKUP_SKIP_KEYS.has(k)) continue;
-    try { storage[k] = localStorage.getItem(k); } catch(e){}
-  }
-  return {
-    __format: BACKUP_FORMAT,
-    __version: BACKUP_VERSION,
-    __savedAt: new Date().toISOString(),
-    storage: normalizeBackup({ storage })
-  };
+  for(let i = 0; i < localStorage.length; i++){ const k = localStorage.key(i); if(!k || BACKUP_SKIP_KEYS.has(k)) continue; try { storage[k] = localStorage.getItem(k); } catch(e){} }
+  return { __format: BACKUP_FORMAT, __version: BACKUP_VERSION, __savedAt: new Date().toISOString(), storage: normalizeBackup({ storage }) };
 }
-
 function applyBackup(raw){
   const storage = normalizeBackup(raw);
   let count = 0;
-  Object.keys(storage).forEach(k => {
-    try { localStorage.setItem(k, storage[k]); count++; } catch(e){}
-  });
-  Object.keys(BACKUP_CORE_DEFAULTS).forEach(k => {
-    if(localStorage.getItem(k) === null) localStorage.setItem(k, BACKUP_CORE_DEFAULTS[k]);
-  });
+  Object.keys(storage).forEach(k => { try { localStorage.setItem(k, storage[k]); count++; } catch(e){} });
+  Object.keys(BACKUP_CORE_DEFAULTS).forEach(k => { if(localStorage.getItem(k) === null) localStorage.setItem(k, BACKUP_CORE_DEFAULTS[k]); });
   return count;
 }
-
 function saveComersioData(){
   const blob = new Blob([JSON.stringify(buildBackup(), null, 2)], { type: "application/json" });
   const link = document.createElement("a");
@@ -1171,7 +1134,6 @@ function saveComersioData(){
   link.download = "Comersio.json";
   link.click();
 }
-
 document.getElementById("loadFile").addEventListener("change", function(e){
   const input = e.target;
   const file = input.files[0];
@@ -1180,45 +1142,22 @@ document.getElementById("loadFile").addEventListener("change", function(e){
   reader.onload = async function(event){
     input.value = "";
     let data;
-    try {
-      data = JSON.parse(event.target.result);
-    } catch(parseErr) {
-      await showCustomAlert(
-        "File tidak bisa dibaca sebagai JSON.\n\nPastikan file berekstensi .json dan tidak korup.\n\nDetail: " + parseErr.message,
-        "Kesalahan Baca File"
-      );
-      return;
-    }
+    try { data = JSON.parse(event.target.result); } catch(parseErr) { await showCustomAlert("File tidak bisa dibaca sebagai JSON.\n\nPastikan file berekstensi .json dan tidak korup.\n\nDetail: " + parseErr.message, "Kesalahan Baca File"); return; }
     try {
       const wasOld = !(data && data.__format === BACKUP_FORMAT);
       const count = applyBackup(data);
-      if(count === 0) {
-        await showCustomAlert(
-          "File terbaca tapi TIDAK ADA data yang bisa disimpan.\n\nKemungkinan file kosong atau formatnya tidak dikenali.",
-          "Peringatan"
-        );
-        return;
-      }
-      await showCustomAlert(
-        `Data berhasil di-load (${count} entri)${wasOld ? " dan dikonversi ke format baru" : ""}.\n\nHalaman akan dimuat ulang.`,
-        "Berhasil"
-      );
+      if(count === 0) { await showCustomAlert("File terbaca tapi TIDAK ADA data yang bisa disimpan.\n\nKemungkinan file kosong atau formatnya tidak dikenali.", "Peringatan"); return; }
+      await showCustomAlert(`Data berhasil di-load (${count} entri)${wasOld ? " dan dikonversi ke format baru" : ""}.\n\nHalaman akan dimuat ulang.`, "Berhasil");
       location.reload();
-    } catch(err) {
-      await showCustomAlert("Gagal load data: " + (err.message || err), "Kesalahan Load");
-    }
+    } catch(err) { await showCustomAlert("Gagal load data: " + (err.message || err), "Kesalahan Load"); }
   };
   reader.readAsText(file);
 });
-
 async function logoutComersio(){
   let conf = await showCustomConfirm("Yakin ingin keluar?", "Konfirmasi Logout");
   if(conf) {
-    localStorage.removeItem("username");
-    localStorage.removeItem("email");
-    localStorage.removeItem("title");
-    localStorage.removeItem("profile_picture");
-    localStorage.removeItem("user_avatar");
+    localStorage.removeItem("username"); localStorage.removeItem("email"); localStorage.removeItem("title");
+    localStorage.removeItem("profile_picture"); localStorage.removeItem("user_avatar");
     window.location.href = "login.html";
   }
 }
