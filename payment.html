@@ -302,24 +302,19 @@ customerDebt.forEach(item => {
     
     if(sisa > 0){
         productNames.push(item.produk);
-        totalHutangGabungan += harga; // Total hutang murni (tanpa charge)
+        
+        // FIX: Total Hutang langsung digabung dengan Charge
+        totalHutangGabungan += (harga + charge); 
+        
         totalDibayarGabungan += dibayar;
         totalDiskonGabungan += diskon;
     }
 });
 
-// Gabungan charge dilebur masuk ke sini
-let totalChargeAll = 0;
-customerDebt.forEach(item => {
-    if(((item.harga || 0) + (item.charge || 0) - (item.dibayar || 0)) > 0) {
-        totalChargeAll += (item.charge || 0);
-    }
-});
-
 const gabunganProdukStr = productNames.length > 0 ? productNames.join(", ") : "-";
 
-// SISA TAGIHAN UDAH TERMASUK CHARGE
-const sisaTagihanGabungan = (totalHutangGabungan + totalChargeAll) - totalDibayarGabungan;
+// Sisa Tagihan = Total Hutang (yg udah include charge) - Dibayar
+const sisaTagihanGabungan = totalHutangGabungan - totalDibayarGabungan;
 const totalAkhirGabungan = Math.max(0, sisaTagihanGabungan - totalDiskonGabungan);
 
 const statusPembayaran = (paymentMode === 'amort') ? "Amortisasi" : "Full";
