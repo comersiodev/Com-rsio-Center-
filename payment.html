@@ -54,9 +54,6 @@
 
   /* ============================================
      NOTA BILLING — ZIGZAG (CSS + div, tanpa SVG)
-     Ujung zigzag = belah ketupat bergaris emas,
-     separuh atas/bawah saja yang kelihatan,
-     lalu nyambung ke border kiri/kanan body.
   ============================================ */
   .notaBill{
     background:transparent;
@@ -93,6 +90,7 @@
   .notaValue{color:#fff;font-family:'FiraCondBold',sans-serif;text-align:right;word-break:break-word;max-width:62%;}
   .notaGold{color:var(--emas-terang) !important;}
   .notaRed{color:#ff5555 !important;}
+  .notaGreen{color:#4caf5e !important;}
   .notaTotalBox{display:flex;justify-content:space-between;align-items:center;background:var(--emas-terang);color:#000;padding:10px 14px;font-family:'FiraCondBold',sans-serif;font-size:0.95rem;letter-spacing:0.5px;border-radius:4px;}
   .notaSectionTitle{font-family:'FiraCondBold',sans-serif;font-size:0.7rem;color:var(--emas-terang);letter-spacing:1.5px;text-align:center;margin-bottom:8px;}
   .notaFooter{text-align:center;padding-top:4px;}
@@ -221,6 +219,13 @@
           <span class="notaLabel">Sisa Tagihan</span>
           <span class="notaValue notaRed" id="notaSisa">Rp 0</span>
         </div>
+        
+        <!-- ROW DISKON -->
+        <div class="notaRow" id="notaDiskonRow" style="display:none;">
+          <span class="notaLabel">Diskon</span>
+          <span class="notaValue notaGreen" id="notaDiskon">- Rp 0</span>
+        </div>
+
         <div class="notaRow">
           <span class="notaLabel">Status</span>
           <span class="notaValue" id="notaStatus">-</span>
@@ -257,7 +262,6 @@
 
 <script>
 const customer = localStorage.getItem("paymentCustomer") || "-";
-const total = localStorage.getItem("paymentTotal") || "0";
 const method = localStorage.getItem("paymentMethod") || "qris";
 const paymentMode = localStorage.getItem("paymentMode") || "full";
 const debts = JSON.parse(localStorage.getItem("debts")) || {};
@@ -279,32 +283,61 @@ function updateLivePaymentTime(){
 updateLivePaymentTime();
 setInterval(updateLivePaymentTime, 1000);
 
-document.getElementById("paymentTotal").innerText = parseInt(total || 0).toLocaleString("id-ID");
-
 const list = document.getElementById("paymentListSimple");
 const customerDebt = debts[customer] || [];
 
 let productNames = [];
 let totalHutangGabungan = 0;
 let totalDibayarGabungan = 0;
+let totalDiskonGabungan = 0;
 
 customerDebt.forEach(item => {
     const harga = item.harga || 0;
+    const charge = item.charge || 0;
     const dibayar = item.dibayar || 0;
-    const sisa = harga - dibayar;
+    const diskon = item.diskon || 0;
+    
+    // Sisa tagihan sejati = Harga + Charge - Dibayar
+    const sisa = (harga + charge) - dibayar;
+    
     if(sisa > 0){
         productNames.push(item.produk);
-        totalHutangGabungan += harga;
+        totalHutangGabungan += harga; // Total hutang murni (tanpa charge)
         totalDibayarGabungan += dibayar;
+        totalDiskonGabungan += diskon;
+    }
+});
+
+// Gabungan charge dilebur masuk ke sini
+let totalChargeAll = 0;
+customerDebt.forEach(item => {
+    if(((item.harga || 0) + (item.charge || 0) - (item.dibayar || 0)) > 0) {
+        totalChargeAll += (item.charge || 0);
     }
 });
 
 const gabunganProdukStr = productNames.length > 0 ? productNames.join(", ") : "-";
-const sisaTagihanGabungan = totalHutangGabungan - totalDibayarGabungan;
+
+// SISA TAGIHAN UDAH TERMASUK CHARGE
+const sisaTagihanGabungan = (totalHutangGabungan + totalChargeAll) - totalDibayarGabungan;
+const totalAkhirGabungan = Math.max(0, sisaTagihanGabungan - totalDiskonGabungan);
+
 const statusPembayaran = (paymentMode === 'amort') ? "Amortisasi" : "Full";
 const statusColor = (paymentMode === 'amort') ? "#ffb703" : "#4caf5e";
 
+// Update Total Akhir di Mode Normal
+document.getElementById("paymentTotal").innerText = totalAkhirGabungan.toLocaleString("id-ID");
+
 if(productNames.length > 0){
+    let diskonRowHtml = "";
+    if(totalDiskonGabungan > 0){
+        diskonRowHtml = `
+        <div class="receiptRow">
+            <span style="color:#aaa;">Diskon</span>
+            <span style="color: #4caf5e;">- Rp ${totalDiskonGabungan.toLocaleString("id-ID")}</span>
+        </div>`;
+    }
+
     list.innerHTML = `
         <div class="receiptRow">
             <span style="color:#aaa;">Produk</span>
@@ -327,6 +360,7 @@ if(productNames.length > 0){
             <span style="font-family: 'FiraCondBold', sans-serif;">Sisa Tagihan</span>
             <span style="font-family: 'FiraCondBold', sans-serif; color: #ff5555;">Rp ${sisaTagihanGabungan.toLocaleString("id-ID")}</span>
         </div>
+        ${diskonRowHtml}
     `;
 } else {
     list.innerHTML = `<p style="text-align:center; color:#777; padding: 10px; margin:0;">Tidak ada rincian utang aktif.</p>`;
@@ -398,9 +432,18 @@ function renderNota(){
     document.getElementById('notaDibayar').innerText = 'Rp ' + totalDibayarGabungan.toLocaleString('id-ID');
     document.getElementById('notaSisa').innerText = 'Rp ' + sisaTagihanGabungan.toLocaleString('id-ID');
     document.getElementById('notaStatus').innerText = statusPembayaran;
-    document.getElementById('notaTotalAkhir').innerText = 'Rp ' + parseInt(total || 0).toLocaleString('id-ID');
+    document.getElementById('notaTotalAkhir').innerText = 'Rp ' + totalAkhirGabungan.toLocaleString('id-ID');
 
-    const itemsFiltered = customerDebt.filter(item => ((item.harga || 0) - (item.dibayar || 0)) > 0);
+    // Handle Diskon Row
+    const notaDiskonRow = document.getElementById('notaDiskonRow');
+    if(totalDiskonGabungan > 0){
+        notaDiskonRow.style.display = 'flex';
+        document.getElementById('notaDiskon').innerText = '- Rp ' + totalDiskonGabungan.toLocaleString('id-ID');
+    } else {
+        notaDiskonRow.style.display = 'none';
+    }
+
+    const itemsFiltered = customerDebt.filter(item => ((item.harga || 0) + (item.charge || 0) - (item.dibayar || 0)) > 0);
     const produkListHtml = itemsFiltered.length > 0
         ? itemsFiltered.map(item => {
             const nama = item.produk || '-';
@@ -439,14 +482,13 @@ function renderNota(){
 }
 
 /* ===== SOBEKAN KERTAS (canvas, halus, stroke nyatu sama border samping) ===== */
-const STRIP_H = 30;   // tinggi area sobekan
-const EDGE = 2;       // tebal border samping (sama dgn .notaBody)
+const STRIP_H = 30;   
+const EDGE = 2;       
 const FILL = '#0d0d0d';
 const GOLD = '#e8b13c';
 
 function rand(a, b){ return a + Math.random() * (b - a); }
 
-// titik-titik zigzag acak: puncak & lembah selang-seling
 function tornPoints(w){
     const pts = [];
     const x0 = EDGE / 2, x1 = w - EDGE / 2;
@@ -475,23 +517,19 @@ function buildTorn(stripId, isTop){
     const ctx = cv.getContext('2d');
     ctx.scale(dpr, dpr);
 
-    // bawah = cermin dari atas
     const pts = tornPoints(w).map(p => ({ x: p.x, y: isTop ? p.y : STRIP_H - p.y }));
     const xL = EDGE / 2, xR = w - EDGE / 2;
-    const yBase = isTop ? STRIP_H : 0;   // sisi yg nyambung ke body
+    const yBase = isTop ? STRIP_H : 0;   
 
-    // satu jalur: garis samping kiri -> zigzag -> garis samping kanan
     ctx.beginPath();
     ctx.moveTo(xL, yBase);
     ctx.lineTo(xL, pts[0].y);
     pts.forEach(p => ctx.lineTo(p.x, p.y));
     ctx.lineTo(xR, yBase);
 
-    // isi gelap (tutup jalur lewat sisi body)
     ctx.fillStyle = FILL;
     ctx.fill();
 
-    // stroke emas: nyatu dari border samping ke sobekan
     ctx.lineWidth = EDGE;
     ctx.strokeStyle = GOLD;
     ctx.lineJoin = 'miter';
