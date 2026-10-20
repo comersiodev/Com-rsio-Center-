@@ -51,36 +51,9 @@
   .paymentCard{background:#000;padding:14px;border-radius:10px;border:1px solid var(--emas);text-align:center;color:#fff;font-family:'FiraCondBold',sans-serif;}
   .qrisContainer{display:flex;flex-direction:column;align-items:center;background:#fff;padding:8px;border-radius:0 !important;border:none !important;max-width:176px;margin:0 auto;}
   .qrisImage{width:160px;height:160px;object-fit:contain;border-radius:0 !important;display:block;}
-
-  /* ============================================
-     NOTA BILLING — ZIGZAG (CSS + div, tanpa SVG)
-  ============================================ */
-  .notaBill{
-    background:transparent;
-    border:none;
-    padding:0;
-    width:400px;
-    max-width:100%;
-    margin:0 auto;
-    position:relative;
-  }
-
-  .tornStrip{
-    position:relative;
-    width:100%;
-    height:30px;
-    overflow:hidden;
-    display:block;
-  }
-
-  .notaBody{
-    background:#0d0d0d;
-    border-left:2px solid var(--emas);
-    border-right:2px solid var(--emas);
-    padding:8px 16px 14px 16px;
-    position:relative;
-  }
-
+  .notaBill{background:transparent;border:none;padding:0;width:400px;max-width:100%;margin:0 auto;position:relative;}
+  .tornStrip{position:relative;width:100%;height:30px;overflow:hidden;display:block;}
+  .notaBody{background:#0d0d0d;border-left:2px solid var(--emas);border-right:2px solid var(--emas);padding:8px 16px 14px 16px;position:relative;}
   .notaHeader{text-align:center;}
   .notaBrand{font-family:'OswaldBold',sans-serif;font-size:1.6rem;color:var(--emas-terang);letter-spacing:4px;line-height:1;}
   .notaTagline{font-family:'FiraCondBold',sans-serif;font-size:0.7rem;color:#888;letter-spacing:3px;margin-top:6px;}
@@ -96,20 +69,10 @@
   .notaFooter{text-align:center;padding-top:4px;}
   .notaFooter div:first-child{font-family:'FiraCondBold',sans-serif;font-size:0.85rem;color:var(--emas-terang);}
   .notaFooterSmall{font-size:0.65rem;color:#666;margin-top:4px;}
-
   .notaProdukList{padding:2px 0 4px;}
-  .notaProdukItem{
-    padding:7px 0;
-    border-bottom:1px dotted rgba(232,177,60,0.18);
-    font-size:0.85rem;
-    color:#ffffff;
-    font-family:'FiraCondBold',sans-serif;
-    word-break:break-word;
-    line-height:1.35;
-  }
+  .notaProdukItem{padding:7px 0;border-bottom:1px dotted rgba(232,177,60,0.18);font-size:0.85rem;color:#ffffff;font-family:'FiraCondBold',sans-serif;word-break:break-word;line-height:1.35;}
   .notaProdukItem:last-child{border-bottom:none;}
   .notaProdukEmpty{text-align:center;color:#666;padding:8px;font-size:0.85rem;font-style:italic;}
-
   .notaMethodHeader{display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:10px;}
   .notaMethodHeader img{width:60px;height:32px;object-fit:contain;border-radius:4px;background:#fff;padding:2px 6px;}
   .notaMethodHeader span{font-family:'FiraCondBold',sans-serif;color:var(--emas-terang);font-size:0.95rem;}
@@ -119,17 +82,19 @@
   .notaTransferNumber{font-family:'FiraCondBold',sans-serif;font-size:1.1rem;color:var(--emas-terang);letter-spacing:1px;}
   .notaTransferOwner{font-size:0.75rem;color:#999;margin-top:4px;}
   .notaScanHint{font-size:0.7rem;color:#aaa;margin-top:8px;}
-
+  .copy-btn{background:rgba(255,209,102,0.15);border:1px solid rgba(255,209,102,0.3);color:var(--emas-terang);border-radius:6px;padding:4px 8px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;transition:all 0.2s;vertical-align:middle;font-family:'FiraCondBold',sans-serif;font-size:0.75rem;letter-spacing:0.5px;}
+  .copy-btn:hover{background:rgba(255,209,102,0.3);}
+  .copy-btn.copied{background:#4caf5e;border-color:#4caf5e;color:#fff;}
+  .copy-btn svg{width:14px;height:14px;fill:currentColor;margin-right:4px;}
+  .copy-btn.icon-only svg{margin-right:0;}
   .saveButton{width:100%;height:48px;border:none;border-radius:12px;margin-top:20px;background:var(--emas-terang);color:#000;font-size:0.95rem;font-family:'FiraCondBold',sans-serif;cursor:pointer;box-shadow:0 4px 15px rgba(255,209,102,0.3);transition:transform 0.2s;}
   .saveButton:active{transform:scale(0.98);}
   .noCapture{z-index:99;}
 </style>
 </head>
 <body>
-
   <div class="bg-layer"></div>
   <div class="bg-dim"></div>
-
   <div class="mbanking-topbar">
     <div class="mbanking-brand-container">
       <div class="mbanking-brand">Comersio <span>Center</span></div>
@@ -139,132 +104,163 @@
   </div>
 
   <div class="content-wrap" style="padding-top: 70px;">
-
     <div class="modeToggleWrap noCapture">
       <button class="modeBtn active" data-mode="normal" onclick="switchMode('normal')">Mode Normal</button>
       <button class="modeBtn" data-mode="nota" onclick="switchMode('nota')">Nota Billing</button>
     </div>
 
-    <!-- MODE NORMAL -->
     <div id="captureArea">
       <div class="headerBox">
         <div class="headerTopRow">
           <img src="icon.png" class="mainLogo" alt="Logo">
-          <div class="headerRight">
-            <h1>COMÉRSIO <span>CENTER</span></h1>
-          </div>
+          <div class="headerRight"><h1>COMÉRSIO <span>CENTER</span></h1></div>
         </div>
         <div class="headerBillingSub">Billing</div>
       </div>
-
       <div class="customerListBox">
-        <h2 style="font-family: 'FiraCondBold', sans-serif; color: var(--emas-terang); font-size: 1.1rem; margin-bottom: 8px;">
-          STRUK PEMBAYARAN
-        </h2>
-
+        <h2 style="font-family: 'FiraCondBold', sans-serif; color: var(--emas-terang); font-size: 1.1rem; margin-bottom: 8px;">STRUK PEMBAYARAN</h2>
         <div class="paymentInfo">
           <div><p id="paymentCustomerId"></p></div>
           <div class="paymentInfoRight"><p id="livePaymentTime"></p></div>
         </div>
-
         <div class="receiptBox" id="paymentListSimple"></div>
-
-        <div class="totalDebtBox">
-          <span>TOTAL AKHIR :</span>
-          <span>Rp <span id="paymentTotal">0</span></span>
-        </div>
-
+        <div class="totalDebtBox"><span>TOTAL AKHIR :</span><span>Rp <span id="paymentTotal">0</span></span></div>
         <div id="paymentContent"></div>
       </div>
     </div>
 
-    <!-- MODE NOTA BILLING -->
     <div id="notaCaptureArea" class="notaBill" style="display:none;">
-
       <div class="tornStrip" id="tornTop"></div>
-
       <div class="notaBody">
         <div class="notaHeader">
           <div class="notaBrand">COMÉRSIO</div>
           <div class="notaTagline">NOTA PEMBAYARAN</div>
         </div>
-
         <div class="notaDivider"></div>
-
-        <div class="notaRow">
-          <span class="notaLabel">No. ID</span>
-          <span class="notaValue" id="notaCustomerId">-</span>
-        </div>
-        <div class="notaRow">
-          <span class="notaLabel">Tanggal</span>
-          <span class="notaValue" id="notaDate">-</span>
-        </div>
-
+        <div class="notaRow"><span class="notaLabel">No. ID</span><span class="notaValue" id="notaCustomerId">-</span></div>
+        <div class="notaRow"><span class="notaLabel">Tanggal</span><span class="notaValue" id="notaDate">-</span></div>
         <div class="notaDivider"></div>
-
         <div class="notaSectionTitle">DAFTAR PRODUK</div>
         <div class="notaProdukList" id="notaProdukList"></div>
-
         <div class="notaDivider"></div>
-
-        <div class="notaRow">
-          <span class="notaLabel">Total Hutang</span>
-          <span class="notaValue" id="notaTotalHutang">Rp 0</span>
-        </div>
-        <div class="notaRow">
-          <span class="notaLabel">Sudah Dibayar</span>
-          <span class="notaValue notaGold" id="notaDibayar">Rp 0</span>
-        </div>
-        <div class="notaRow">
-          <span class="notaLabel">Sisa Tagihan</span>
-          <span class="notaValue notaRed" id="notaSisa">Rp 0</span>
-        </div>
-        
-        <!-- ROW DISKON -->
-        <div class="notaRow" id="notaDiskonRow" style="display:none;">
-          <span class="notaLabel">Diskon</span>
-          <span class="notaValue notaGreen" id="notaDiskon">- Rp 0</span>
-        </div>
-
-        <div class="notaRow">
-          <span class="notaLabel">Status</span>
-          <span class="notaValue" id="notaStatus">-</span>
-        </div>
-
+        <div class="notaRow"><span class="notaLabel">Total Hutang</span><span class="notaValue" id="notaTotalHutang">Rp 0</span></div>
+        <div class="notaRow"><span class="notaLabel">Sudah Dibayar</span><span class="notaValue notaGold" id="notaDibayar">Rp 0</span></div>
+        <div class="notaRow"><span class="notaLabel">Sisa Tagihan</span><span class="notaValue notaRed" id="notaSisa">Rp 0</span></div>
+        <div class="notaRow" id="notaDiskonRow" style="display:none;"><span class="notaLabel">Diskon</span><span class="notaValue notaGreen" id="notaDiskon">- Rp 0</span></div>
+        <div class="notaRow"><span class="notaLabel">Status</span><span class="notaValue" id="notaStatus">-</span></div>
         <div class="notaDivider"></div>
-
-        <div class="notaTotalBox">
-          <span>TOTAL AKHIR</span>
-          <span id="notaTotalAkhir">Rp 0</span>
-        </div>
-
+        <div class="notaTotalBox"><span>TOTAL AKHIR</span><span id="notaTotalAkhir">Rp 0</span></div>
         <div class="notaDivider"></div>
-
         <div class="notaSectionTitle">METODE PEMBAYARAN</div>
         <div id="notaPaymentContent"></div>
-
         <div class="notaDivider"></div>
-
         <div class="notaFooter">
           <div>~ Terima Kasih ~</div>
           <div class="notaFooterSmall">Nota ini sebagai bukti pembayaran yang sah</div>
         </div>
       </div>
-
       <div class="tornStrip" id="tornBottom"></div>
-
     </div>
 
-    <button class="saveButton noCapture" onclick="saveAsImage()">
-      SIMPAN BILL PEMBAYARAN
-    </button>
+    <button class="saveButton noCapture" onclick="saveAsImage()">SIMPAN BILL PEMBAYARAN</button>
   </div>
 
 <script>
+/* =========================================================
+   WALLET METADATA
+   - localLogo  : file PNG lokal (PRIORITAS UTAMA)
+   - urlLogo    : URL online (fallback jika gak ada lokal)
+   - color      : warna brand (buat fallback SVG inisial)
+========================================================= */
+const WALLET_META = {
+    qris:      { name: 'QRIS',       type: 'qris',    localLogo: 'QRIS Logo.png', urlLogo: '', color: 'E31E24' },
+    bca:       { name: 'BCA',        type: 'bank',    localLogo: '',              urlLogo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Bank_Central_Asia.svg/240px-Bank_Central_Asia.svg.png', color: '0060AE' },
+    bri:       { name: 'BRI',        type: 'bank',    localLogo: 'Bank BRI.png',  urlLogo: '', color: '00529C' },
+    bni:       { name: 'BNI',        type: 'bank',    localLogo: '',              urlLogo: 'https://upload.wikimedia.org/wikipedia/id/thumb/5/55/BNI_logo.svg/240px-BNI_logo.svg.png', color: 'F15A23' },
+    ina:       { name: 'Bank INA',   type: 'bank',    localLogo: '',              urlLogo: 'https://www.google.com/s2/favicons?domain=bankina.co.id&sz=128', color: '1B4F72' },
+    seabank:   { name: 'SeaBank',    type: 'bank',    localLogo: 'SeaBank.png',   urlLogo: '', color: 'F97316' },
+    krom:      { name: 'Krom',       type: 'bank',    localLogo: 'Krom.png',      urlLogo: '', color: '111111' },
+    jago:      { name: 'Bank Jago',  type: 'bank',    localLogo: 'Bank Jago.png', urlLogo: '', color: '1A6AF0' },
+    superbank: { name: 'SuperBank',  type: 'bank',    localLogo: '',              urlLogo: 'https://upload.wikimedia.org/wikipedia/commons/c/c6/Superbank_Indonesia.png', color: '0060E0' },
+    mandiri:   { name: 'Mandiri',    type: 'bank',    localLogo: '',              urlLogo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Bank_Mandiri_logo_2016.svg/240px-Bank_Mandiri_logo_2016.svg.png', color: '003D79' },
+    ovo:       { name: 'OVO',        type: 'ewallet', localLogo: '',              urlLogo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/OVO_logo.svg/240px-OVO_logo.svg.png', color: '4C3494' },
+    gopay:     { name: 'GoPay',      type: 'ewallet', localLogo: 'GoPay.png',     urlLogo: '', color: '00AED6' },
+    dana:      { name: 'DANA',       type: 'ewallet', localLogo: 'DANA.png',      urlLogo: '', color: '118EEA' },
+    shopeepay: { name: 'ShopeePay',  type: 'ewallet', localLogo: 'ShopeePay.png', urlLogo: '', color: 'EE4D2D' },
+    speedcash: { name: 'Speedcash',  type: 'ewallet', localLogo: '',              urlLogo: 'https://www.google.com/s2/favicons?domain=speedcash.co.id&sz=128', color: 'FF6B00' },
+    octopay:   { name: 'OctoPay',    type: 'ewallet', localLogo: '',              urlLogo: 'https://www.google.com/s2/favicons?domain=octopay.id&sz=128', color: 'FF4757' }
+};
+
+/* Prioritas: local PNG > URL online */
+function getWalletLogo(key) {
+    const meta = WALLET_META[key];
+    if (!meta) return '';
+    return meta.localLogo || meta.urlLogo || '';
+}
+
+/* Fallback terakhir: SVG inisial + warna brand */
+function getFallbackLogo(key) {
+    const meta = WALLET_META[key];
+    if (!meta) return '';
+    const initial = meta.name.charAt(0).toUpperCase();
+    const color = meta.color || 'E8B13C';
+    return `data:image/svg+xml;charset=utf-8,${encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" rx="20" fill="#${color}"/><text x="50" y="70" font-family="Arial,sans-serif" font-size="56" font-weight="900" fill="#FFFFFF" text-anchor="middle">${initial}</text></svg>`)}`;
+}
+
 const customer = localStorage.getItem("paymentCustomer") || "-";
 const method = localStorage.getItem("paymentMethod") || "qris";
 const paymentMode = localStorage.getItem("paymentMode") || "full";
 const debts = JSON.parse(localStorage.getItem("debts")) || {};
+const walletsData = JSON.parse(localStorage.getItem("comersio_wallets")) || {};
+
+const wData = walletsData[method];
+const meta = WALLET_META[method];
+
+let pay = { type: 'qris', name: 'QRIS', logo: getWalletLogo('qris'), number: '-', owner: '-', qrisImage: 'QRIS.png' };
+
+if (method === 'cash') {
+    pay.type = 'cash';
+    pay.name = 'Tunai / Cash';
+    pay.logo = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" rx="20" fill="#4caf5e"/><text x="50" y="68" font-family="Arial,sans-serif" font-size="52" font-weight="900" fill="#FFFFFF" text-anchor="middle">Rp</text></svg>`);
+} else if (meta) {
+    pay.type = meta.type;
+    pay.name = meta.name;
+    pay.logo = getWalletLogo(method);
+    pay.logoFallback = getFallbackLogo(method);
+    if (wData) {
+        if (pay.type === 'qris') {
+            if (wData.image) pay.qrisImage = wData.image;
+        } else {
+            pay.number = wData.number || '-';
+            pay.owner = wData.name || '-';
+        }
+    }
+}
+
+function copyToClipboard(text, btn) {
+    const doCopy = () => {
+        const originalHTML = btn.innerHTML;
+        const isTextBtn = btn.innerText.trim().length > 0;
+        btn.innerHTML = `<svg viewBox="0 0 24 24" style="margin-right: ${isTextBtn ? '4px' : '0'};"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>`;
+        if (isTextBtn) btn.innerHTML += ' Tersalin';
+        btn.classList.add('copied');
+        setTimeout(() => { btn.innerHTML = originalHTML; btn.classList.remove('copied'); }, 2000);
+    };
+    if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text).then(doCopy).catch(() => fallbackCopy(text, doCopy));
+    } else { fallbackCopy(text, doCopy); }
+}
+
+function fallbackCopy(text, callback) {
+    const textArea = document.createElement("textarea");
+    textArea.value = text;
+    textArea.style.position = "fixed";
+    textArea.style.left = "-999999px";
+    document.body.appendChild(textArea);
+    textArea.focus(); textArea.select();
+    try { document.execCommand('copy'); callback(); } catch (err) { console.error(err); }
+    textArea.remove();
+}
 
 document.getElementById("paymentCustomerId").innerText = `ID : ${customer}`;
 
@@ -287,141 +283,82 @@ const list = document.getElementById("paymentListSimple");
 const customerDebt = debts[customer] || [];
 
 let productNames = [];
-let totalHutangGabungan = 0;
-let totalDibayarGabungan = 0;
-let totalDiskonGabungan = 0;
+let totalHutangGabungan = 0, totalDibayarGabungan = 0, totalDiskonGabungan = 0;
 
 customerDebt.forEach(item => {
-    const harga = item.harga || 0;
-    const charge = item.charge || 0;
-    const dibayar = item.dibayar || 0;
-    const diskon = item.diskon || 0;
-    
-    // Sisa tagihan sejati = Harga + Charge - Dibayar
+    const harga = item.harga || 0, charge = item.charge || 0, dibayar = item.dibayar || 0, diskon = item.diskon || 0;
     const sisa = (harga + charge) - dibayar;
-    
     if(sisa > 0){
         productNames.push(item.produk);
-        
-        // FIX: Total Hutang langsung digabung dengan Charge
-        totalHutangGabungan += (harga + charge); 
-        
+        totalHutangGabungan += (harga + charge);
         totalDibayarGabungan += dibayar;
         totalDiskonGabungan += diskon;
     }
 });
 
 const gabunganProdukStr = productNames.length > 0 ? productNames.join(", ") : "-";
-
-// Sisa Tagihan = Total Hutang (yg udah include charge) - Dibayar
 const sisaTagihanGabungan = totalHutangGabungan - totalDibayarGabungan;
 const totalAkhirGabungan = Math.max(0, sisaTagihanGabungan - totalDiskonGabungan);
-
 const statusPembayaran = (paymentMode === 'amort') ? "Amortisasi" : "Full";
 const statusColor = (paymentMode === 'amort') ? "#ffb703" : "#4caf5e";
 
-// Update Total Akhir di Mode Normal
 document.getElementById("paymentTotal").innerText = totalAkhirGabungan.toLocaleString("id-ID");
 
 if(productNames.length > 0){
     let diskonRowHtml = "";
     if(totalDiskonGabungan > 0){
-        diskonRowHtml = `
-        <div class="receiptRow">
-            <span style="color:#aaa;">Diskon</span>
-            <span style="color: #4caf5e;">- Rp ${totalDiskonGabungan.toLocaleString("id-ID")}</span>
-        </div>`;
+        diskonRowHtml = `<div class="receiptRow"><span style="color:#aaa;">Diskon</span><span style="color: #4caf5e;">- Rp ${totalDiskonGabungan.toLocaleString("id-ID")}</span></div>`;
     }
-
     list.innerHTML = `
-        <div class="receiptRow">
-            <span style="color:#aaa;">Produk</span>
-            <span style="font-family: 'FiraCondBold', sans-serif; text-align: right; max-width: 60%;">${gabunganProdukStr}</span>
-        </div>
-        <div class="receiptRow">
-            <span style="color:#aaa;">Total Hutang</span>
-            <span>Rp ${totalHutangGabungan.toLocaleString("id-ID")}</span>
-        </div>
-        <div class="receiptRow">
-            <span style="color:#aaa;">Sudah Dibayar</span>
-            <div style="text-align: right;">
-                <span style="color: var(--emas-terang);">Rp ${totalDibayarGabungan.toLocaleString("id-ID")}</span>
-                <div style="margin-top: 2px;">
-                    <span style="background: ${statusColor}; color: #000; padding: 1px 6px; border-radius: 4px; font-size: 0.7rem; font-weight: bold; display: inline-block;">Status: ${statusPembayaran}</span>
-                </div>
-            </div>
-        </div>
-        <div class="receiptRow" style="border-top: 1px solid rgba(255,209,102,0.2); margin-top: 4px; padding-top: 8px;">
-            <span style="font-family: 'FiraCondBold', sans-serif;">Sisa Tagihan</span>
-            <span style="font-family: 'FiraCondBold', sans-serif; color: #ff5555;">Rp ${sisaTagihanGabungan.toLocaleString("id-ID")}</span>
-        </div>
+        <div class="receiptRow"><span style="color:#aaa;">Produk</span><span style="font-family: 'FiraCondBold', sans-serif; text-align: right; max-width: 60%;">${gabunganProdukStr}</span></div>
+        <div class="receiptRow"><span style="color:#aaa;">Total Hutang</span><span>Rp ${totalHutangGabungan.toLocaleString("id-ID")}</span></div>
+        <div class="receiptRow"><span style="color:#aaa;">Sudah Dibayar</span><div style="text-align: right;"><span style="color: var(--emas-terang);">Rp ${totalDibayarGabungan.toLocaleString("id-ID")}</span><div style="margin-top: 2px;"><span style="background: ${statusColor}; color: #000; padding: 1px 6px; border-radius: 4px; font-size: 0.7rem; font-weight: bold; display: inline-block;">Status: ${statusPembayaran}</span></div></div></div>
+        <div class="receiptRow" style="border-top: 1px solid rgba(255,209,102,0.2); margin-top: 4px; padding-top: 8px;"><span style="font-family: 'FiraCondBold', sans-serif;">Sisa Tagihan</span><span style="font-family: 'FiraCondBold', sans-serif; color: #ff5555;">Rp ${sisaTagihanGabungan.toLocaleString("id-ID")}</span></div>
         ${diskonRowHtml}
     `;
 } else {
     list.innerHTML = `<p style="text-align:center; color:#777; padding: 10px; margin:0;">Tidak ada rincian utang aktif.</p>`;
 }
 
-const paymentData = {
-    qris:{ logo:"QRIS Logo.png", name:"QRIS", type:"qris" },
-    gopay:{ logo:"GoPay.png", name:"GoPay", type:"ewallet", number:"083874854586", owner:"An E•• P••••••" },
-    dana:{ logo:"DANA.png", name:"DANA", type:"ewallet", number:"081226672073", owner:"An E•• P••••••" },
-    shopeepay:{ logo:"ShopeePay.png", name:"ShopeePay", type:"ewallet", number:"083874854586", owner:"An E•• P••••••" },
-    seabank:{ logo:"SeaBank.png", name:"SeaBank", type:"bank", number:"901677273030", owner:"An E•• P••••••" },
-    bri:{ logo:"Bank BRI.png", name:"BRI", type:"bank", number:"696101033719531", owner:"An E•• P••••••" },
-    bankjago:{ logo:"Bank Jago.png", name:"Bank Jago", type:"bank", number:"100626307457", owner:"An E•• P••••••" },
-    krom:{ logo:"Krom.png", name:"Krom", type:"bank", number:"770015012050", owner:"An E•• P••••••" },
-    superbank:{ logo:"https://upload.wikimedia.org/wikipedia/commons/c/c6/Superbank_Indonesia.png", name:"SuperBank", type:"bank", number:"000045742939", owner:"An E•• P••••••" }
-};
-
-const pay = paymentData[method] || paymentData["qris"];
-const infoText = pay.type === "qris"
-    ? "Scan QR Code di bawah ini untuk melakukan pembayaran"
-    : "Salin nomor di bawah ini untuk melakukan pembayaran";
+const infoText = pay.type === "qris" ? "Scan QR Code di bawah ini untuk melakukan pembayaran" : (pay.type === "cash" ? "Silakan lakukan pembayaran secara tunai (cash) ke kasir." : "Salin nomor di bawah ini untuk melakukan pembayaran");
 
 const content = document.getElementById("paymentContent");
 
 if(pay.type === "qris"){
     content.innerHTML = `
     <div class="paymentList">
-        <div class="paymentHeader">
-            <div class="paymentHeaderLeft">Metode Pembayaran</div>
-            <div class="paymentHeaderRight">
-                <img src="${pay.logo}" alt="QRIS">
-                <span>${pay.name}</span>
-            </div>
-        </div>
+        <div class="paymentHeader"><div class="paymentHeaderLeft">Metode Pembayaran</div><div class="paymentHeaderRight"><img src="${pay.logo}" alt="QRIS" onerror="this.onerror=null; this.src='${pay.logoFallback}'"><span>${pay.name}</span></div></div>
         <div class="paymentInfoText">${infoText}</div>
-        <div class="paymentCard">
-            <div class="qrisContainer">
-                <img src="QRIS.png" class="qrisImage" alt="QR Code">
-            </div>
-            <p style="margin: 10px 0 0 0; font-size: 0.8rem; color: #ccc;">Scan Menggunakan QRIS (All Banking & E-Wallet)</p>
+        <div class="paymentCard"><div class="qrisContainer"><img src="${pay.qrisImage}" class="qrisImage" alt="QR Code"></div><p style="margin: 10px 0 0 0; font-size: 0.8rem; color: #ccc;">Scan Menggunakan QRIS (All Banking & E-Wallet)</p></div>
+    </div>`;
+} else if(pay.type === "cash"){
+    content.innerHTML = `
+    <div class="paymentList">
+        <div class="paymentHeader"><div class="paymentHeaderLeft">Metode Pembayaran</div><div class="paymentHeaderRight"><img src="${pay.logo}" alt="Cash" style="background:transparent; padding:0;"><span>${pay.name}</span></div></div>
+        <div class="paymentInfoText">${infoText}</div>
+        <div class="paymentCard" style="display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 20px;">
+            <svg viewBox="0 0 24 24" style="width: 50px; height: 50px; fill: #4caf5e;"><path d="M20 6H4V4h16v2zm0 3H4c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V11c0-1.1-.9-2-2-2zm-2 8c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm-4-2c0 1.66-1.34 3-3 3s-3-1.34-3-3 1.34-3 3-3 3 1.34 3 3z"/></svg>
+            <span style="font-size: 1.1rem; color: var(--emas-terang); margin-top: 8px;">Pembayaran Tunai</span>
+            <span style="font-size: 0.8rem; color: #aaa; text-align: center;">Harap siapkan uang pas atau beritahu kasir jika butuh kembalian.</span>
         </div>
-    </div>
-    `;
+    </div>`;
 } else {
     content.innerHTML = `
     <div class="paymentList">
-        <div class="paymentHeader">
-            <div class="paymentHeaderLeft">Metode Pembayaran</div>
-            <div class="paymentHeaderRight">
-                <img src="${pay.logo}" alt="${pay.name}">
-                <span>${pay.name}</span>
-            </div>
-        </div>
+        <div class="paymentHeader"><div class="paymentHeaderLeft">Metode Pembayaran</div><div class="paymentHeaderRight"><img src="${pay.logo}" alt="${pay.name}" onerror="this.onerror=null; this.src='${pay.logoFallback}'"><span>${pay.name}</span></div></div>
         <div class="paymentInfoText">${infoText}</div>
-        <div class="paymentCard">
-            <span style="font-size: 1.1rem; color: var(--emas-terang);">${pay.number}</span>
-            <br>
-            <span style="font-size: 0.8rem; color: #aaa;">a.n. ${pay.owner}</span>
+        <div class="paymentCard" style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+                <span style="font-size: 1.2rem; color: var(--emas-terang);">${pay.number}</span>
+                <button class="copy-btn icon-only" style="padding: 6px;" onclick="copyToClipboard('${pay.number}', this)"><svg viewBox="0 0 24 24" style="margin:0;"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg></button>
+            </div>
+            <span style="font-size: 0.85rem; color: #aaa;">a.n. ${pay.owner}</span>
         </div>
-    </div>
-    `;
+    </div>`;
 }
 
 function renderNota(){
     updateLivePaymentTime();
-
     document.getElementById('notaCustomerId').innerText = customer;
     document.getElementById('notaTotalHutang').innerText = 'Rp ' + totalHutangGabungan.toLocaleString('id-ID');
     document.getElementById('notaDibayar').innerText = 'Rp ' + totalDibayarGabungan.toLocaleString('id-ID');
@@ -429,165 +366,89 @@ function renderNota(){
     document.getElementById('notaStatus').innerText = statusPembayaran;
     document.getElementById('notaTotalAkhir').innerText = 'Rp ' + totalAkhirGabungan.toLocaleString('id-ID');
 
-    // Handle Diskon Row
     const notaDiskonRow = document.getElementById('notaDiskonRow');
-    if(totalDiskonGabungan > 0){
-        notaDiskonRow.style.display = 'flex';
-        document.getElementById('notaDiskon').innerText = '- Rp ' + totalDiskonGabungan.toLocaleString('id-ID');
-    } else {
-        notaDiskonRow.style.display = 'none';
-    }
+    if(totalDiskonGabungan > 0){ notaDiskonRow.style.display = 'flex'; document.getElementById('notaDiskon').innerText = '- Rp ' + totalDiskonGabungan.toLocaleString('id-ID'); }
+    else { notaDiskonRow.style.display = 'none'; }
 
     const itemsFiltered = customerDebt.filter(item => ((item.harga || 0) + (item.charge || 0) - (item.dibayar || 0)) > 0);
-    const produkListHtml = itemsFiltered.length > 0
-        ? itemsFiltered.map(item => {
-            const nama = item.produk || '-';
-            return `<div class="notaProdukItem">${nama}</div>`;
-        }).join('')
+    document.getElementById('notaProdukList').innerHTML = itemsFiltered.length > 0
+        ? itemsFiltered.map(item => `<div class="notaProdukItem">${item.produk || '-'}</div>`).join('')
         : '<div class="notaProdukEmpty">Tidak ada produk aktif</div>';
-    document.getElementById('notaProdukList').innerHTML = produkListHtml;
 
     const notaPay = document.getElementById('notaPaymentContent');
-
     if(pay.type === 'qris'){
         notaPay.innerHTML = `
-            <div class="notaMethodHeader">
-                <img src="${pay.logo}" alt="QRIS">
-                <span>${pay.name}</span>
-            </div>
-            <div class="notaPaymentBox">
-                <div class="notaQrisContainer">
-                    <img src="QRIS.png" class="notaQrisImage" alt="QR Code">
-                </div>
-                <div class="notaScanHint">Scan Menggunakan QRIS (All Banking & E-Wallet)</div>
-            </div>
-        `;
+            <div class="notaMethodHeader"><img src="${pay.logo}" alt="QRIS" onerror="this.onerror=null; this.src='${pay.logoFallback}'"><span>${pay.name}</span></div>
+            <div class="notaPaymentBox"><div class="notaQrisContainer"><img src="${pay.qrisImage}" class="notaQrisImage" alt="QR Code"></div><div class="notaScanHint">Scan Menggunakan QRIS (All Banking & E-Wallet)</div></div>`;
+    } else if(pay.type === 'cash') {
+        notaPay.innerHTML = `
+            <div class="notaMethodHeader"><img src="${pay.logo}" alt="Cash" style="background:transparent; padding:0;"><span>${pay.name}</span></div>
+            <div class="notaPaymentBox" style="padding: 20px;"><svg viewBox="0 0 24 24" style="width: 40px; height: 40px; fill: #4caf5e; margin-bottom: 8px;"><path d="M20 6H4V4h16v2zm0 3H4c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V11c0-1.1-.9-2-2-2zm-2 8c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm-4-2c0 1.66-1.34 3-3 3s-3-1.34-3-3 1.34-3 3-3 3 1.34 3 3z"/></svg><div class="notaTransferNumber" style="font-size: 1rem;">Pembayaran Tunai</div><div class="notaTransferOwner" style="margin-top: 6px;">Silakan bayar langsung ke kasir.</div></div>`;
     } else {
         notaPay.innerHTML = `
-            <div class="notaMethodHeader">
-                <img src="${pay.logo}" alt="${pay.name}">
-                <span>${pay.name}</span>
-            </div>
-            <div class="notaPaymentBox">
-                <div class="notaTransferNumber">${pay.number}</div>
-                <div class="notaTransferOwner">a.n. ${pay.owner}</div>
-            </div>
-        `;
+            <div class="notaMethodHeader"><img src="${pay.logo}" alt="${pay.name}" onerror="this.onerror=null; this.src='${pay.logoFallback}'"><span>${pay.name}</span></div>
+            <div class="notaPaymentBox"><div class="notaTransferNumber">${pay.number}</div><button class="copy-btn" style="margin-top: 6px;" onclick="copyToClipboard('${pay.number}', this)"><svg viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg> Salin</button><div class="notaTransferOwner" style="margin-top: 8px;">a.n. ${pay.owner}</div></div>`;
     }
 }
 
-/* ===== SOBEKAN KERTAS (canvas, halus, stroke nyatu sama border samping) ===== */
-const STRIP_H = 30;   
-const EDGE = 2;       
-const FILL = '#0d0d0d';
-const GOLD = '#e8b13c';
-
+const STRIP_H = 30, EDGE = 2, FILL = '#0d0d0d', GOLD = '#e8b13c';
 function rand(a, b){ return a + Math.random() * (b - a); }
-
 function tornPoints(w){
-    const pts = [];
-    const x0 = EDGE / 2, x1 = w - EDGE / 2;
+    const pts = []; const x0 = EDGE / 2, x1 = w - EDGE / 2;
     let x = x0, up = Math.random() < 0.5;
-    while(x < x1 - 4){
-        pts.push({ x: x, y: up ? rand(4, 12) : rand(16, STRIP_H - 4) });
-        x += rand(7, 15);
-        up = !up;
-    }
+    while(x < x1 - 4){ pts.push({ x: x, y: up ? rand(4, 12) : rand(16, STRIP_H - 4) }); x += rand(7, 15); up = !up; }
     pts.push({ x: x1, y: up ? rand(4, 12) : rand(16, STRIP_H - 4) });
     return pts;
 }
-
 function buildTorn(stripId, isTop){
     const strip = document.getElementById(stripId);
     const w = parseInt(document.getElementById('notaCaptureArea').style.width) || 400;
     const dpr = Math.max(window.devicePixelRatio || 1, 3);
-
     strip.innerHTML = '';
     const cv = document.createElement('canvas');
-    cv.width = w * dpr;
-    cv.height = STRIP_H * dpr;
+    cv.width = w * dpr; cv.height = STRIP_H * dpr;
     cv.style.cssText = `display:block;width:${w}px;height:${STRIP_H}px;`;
     strip.appendChild(cv);
-
-    const ctx = cv.getContext('2d');
-    ctx.scale(dpr, dpr);
-
+    const ctx = cv.getContext('2d'); ctx.scale(dpr, dpr);
     const pts = tornPoints(w).map(p => ({ x: p.x, y: isTop ? p.y : STRIP_H - p.y }));
-    const xL = EDGE / 2, xR = w - EDGE / 2;
-    const yBase = isTop ? STRIP_H : 0;   
-
-    ctx.beginPath();
-    ctx.moveTo(xL, yBase);
-    ctx.lineTo(xL, pts[0].y);
-    pts.forEach(p => ctx.lineTo(p.x, p.y));
-    ctx.lineTo(xR, yBase);
-
-    ctx.fillStyle = FILL;
-    ctx.fill();
-
-    ctx.lineWidth = EDGE;
-    ctx.strokeStyle = GOLD;
-    ctx.lineJoin = 'miter';
-    ctx.miterLimit = 2.5;
-    ctx.lineCap = 'butt';
-    ctx.stroke();
+    const xL = EDGE / 2, xR = w - EDGE / 2, yBase = isTop ? STRIP_H : 0;
+    ctx.beginPath(); ctx.moveTo(xL, yBase); ctx.lineTo(xL, pts[0].y);
+    pts.forEach(p => ctx.lineTo(p.x, p.y)); ctx.lineTo(xR, yBase);
+    ctx.fillStyle = FILL; ctx.fill();
+    ctx.lineWidth = EDGE; ctx.strokeStyle = GOLD;
+    ctx.lineJoin = 'miter'; ctx.miterLimit = 2.5; ctx.lineCap = 'butt'; ctx.stroke();
 }
-
 function fitNota(){
     const wrap = document.querySelector('.content-wrap');
     const avail = wrap.clientWidth - 32;
     const w = Math.max(200, Math.min(400, Math.floor(avail / 20) * 20));
     document.getElementById('notaCaptureArea').style.width = w + 'px';
-    buildTorn('tornTop', true);
-    buildTorn('tornBottom', false);
+    buildTorn('tornTop', true); buildTorn('tornBottom', false);
 }
 window.addEventListener('resize', () => { if(currentMode === 'nota') fitNota(); });
 
 let currentMode = localStorage.getItem('billDisplayMode') || 'normal';
-
 function switchMode(mode){
     currentMode = mode;
     localStorage.setItem('billDisplayMode', mode);
-
-    document.querySelectorAll('.modeBtn').forEach(btn => {
-        btn.classList.toggle('active', btn.dataset.mode === mode);
-    });
-
+    document.querySelectorAll('.modeBtn').forEach(btn => { btn.classList.toggle('active', btn.dataset.mode === mode); });
     document.getElementById('captureArea').style.display = (mode === 'normal') ? 'block' : 'none';
     document.getElementById('notaCaptureArea').style.display = (mode === 'nota') ? 'block' : 'none';
-
     if(mode === 'nota'){ fitNota(); renderNota(); }
 }
-
 switchMode(currentMode);
 
 function saveAsImage(){
     const button = document.querySelector(".saveButton");
     const originalText = button.innerText;
-    button.innerText = "Memproses Gambar...";
-    button.disabled = true;
-
-    const targetEl = (currentMode === 'nota')
-        ? document.getElementById('notaCaptureArea')
-        : document.getElementById('captureArea');
-
-    html2canvas(targetEl, {
-        scale: 3,
-        useCORS: true,
-        backgroundColor: "#0a0a0a",
-        logging: false
-    }).then(canvas => {
+    button.innerText = "Memproses Gambar..."; button.disabled = true;
+    const targetEl = (currentMode === 'nota') ? document.getElementById('notaCaptureArea') : document.getElementById('captureArea');
+    html2canvas(targetEl, { scale: 3, useCORS: true, backgroundColor: "#0a0a0a", logging: false }).then(canvas => {
         const link = document.createElement("a");
         link.download = `Bill-Comersio-${customer}-${currentMode}.png`;
-        link.href = canvas.toDataURL("image/png");
-        link.click();
-        button.innerText = originalText;
-        button.disabled = false;
-    }).catch(err => {
-        alert("Gagal menyimpan gambar.");
-        button.innerText = originalText;
-        button.disabled = false;
-    });
+        link.href = canvas.toDataURL("image/png"); link.click();
+        button.innerText = originalText; button.disabled = false;
+    }).catch(err => { alert("Gagal menyimpan gambar."); button.innerText = originalText; button.disabled = false; });
 }
 </script>
 </body>

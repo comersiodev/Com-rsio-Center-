@@ -208,6 +208,25 @@ body{ position: relative; width: 100%; height: 100vh; background: #0a0a0a; }
 .patch-feature-text { flex: 1; min-width: 0; }
 .patch-feature-text b { color: var(--emas-terang); font-family: 'FiraCondBold', sans-serif; font-size: 0.82rem; display: block; margin-bottom: 2px; line-height: 1.3; }
 .patch-feature-text div { color: #aaa; font-size: 0.75rem; line-height: 1.4; word-wrap: break-word; }
+
+/* WALLET STYLES */
+.wallet-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+.wallet-card {
+    background: #121814;
+    border: 1.5px solid rgba(232, 177, 60, 0.3);
+    border-radius: 12px;
+    padding: 12px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 8px; cursor: pointer; transition: all 0.2s; position: relative;
+}
+.wallet-card:hover { border-color: var(--emas-terang); background: rgba(232,177,60,0.1); transform: translateY(-2px); }
+.wallet-card img { width: 32px; height: 32px; object-fit: contain; border-radius: 6px; background: #fff; padding: 2px; }
+.wallet-card span { font-family: 'FiraCondBold', sans-serif; font-size: 0.8rem; color: #fff; text-align: center; }
+.wallet-card.configured { border-color: var(--hijau-terang); }
+.wallet-badge { position: absolute; top: 4px; right: 4px; background: var(--hijau-terang); color: #000; font-size: 0.5rem; padding: 1px 4px; border-radius: 4px; font-weight: bold; }
+.qris-upload-box { border: 2px dashed rgba(232,177,60,0.5); border-radius: 10px; padding: 20px; text-align: center; cursor: pointer; transition: 0.2s; margin-bottom: 10px; position: relative; overflow: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 150px; }
+.qris-upload-box:hover { border-color: var(--emas-terang); background: rgba(232,177,60,0.05); }
+.qris-upload-box img { max-width: 100%; max-height: 200px; border-radius: 8px; object-fit: contain; }
 </style>
 </head>
 <body>
@@ -278,11 +297,13 @@ body{ position: relative; width: 100%; height: 100vh; background: #0a0a0a; }
 <a href="debt.html" class="menu-grid-item"><img src="debt.png" alt=""><span>Utang</span></a>
 <a href="monthly.html" class="menu-grid-item"><img src="pembukuan.png" alt=""><span>Pembukuan</span></a>
 <a href="recap.html" class="menu-grid-item"><img src="rekap.png" alt=""><span>Rekap Total</span></a>
-<a href="javascript:void(0)" onclick="showCustomAlert('Fitur pembayaran & integrasi Midtrans sedang dalam tahap pengembangan (Coming Soon).', 'Midtrans Coming Soon')" class="menu-grid-item" style="border-color: rgba(255,255,255,0.2); opacity: 0.85;">
-<div class="coming-soon-badge">SOON</div>
-<img src="https://www.google.com/s2/favicons?domain=midtrans.com&sz=128" alt="Midtrans" style="background:#fff; padding:3px; border-radius:6px; filter:grayscale(30%);" onerror="this.onerror=null; this.src='https://midtrans.com/favicon.ico';">
-<span>Midtrans</span>
+
+<!-- GANTI MIDTRANS JADI WALLET -->
+<a href="javascript:void(0)" onclick="openWalletList()" class="menu-grid-item" style="border-color: rgba(232, 177, 60, 0.4);">
+    <svg viewBox="0 0 24 24" style="width:26px; height:26px; fill:var(--emas-terang); margin-bottom:6px;"><path d="M21 18v1a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v1h-9a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h9zm-9-2h10V8H12v8zm4-2.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/></svg>
+    <span>Wallet</span>
 </a>
+
 </div>
 <div id="modularBoardsContainer"></div>
 </div>
@@ -298,6 +319,32 @@ body{ position: relative; width: 100%; height: 100vh; background: #0a0a0a; }
 <span>Profil</span>
 </a>
 </nav>
+
+<!-- WALLET LIST MODAL -->
+<div id="walletListModal" class="popupBox">
+    <div class="popupContent" style="max-width: 400px;">
+        <h2>Pengaturan Wallet & Bank</h2>
+        <p style="text-align:center; font-size:0.75rem; color:#aaa; margin-top:-6px; margin-bottom:15px;">Konfigurasi tujuan pembayaran Anda</p>
+        <div id="walletGrid" class="wallet-grid"></div>
+        <button type="button" class="cancelButton" onclick="closeWalletList()" style="margin-top:15px;">Tutup</button>
+    </div>
+</div>
+
+<!-- EDIT WALLET MODAL -->
+<div id="walletEditModal" class="popupBox">
+    <div class="popupContent">
+        <h2 id="walletEditTitle">Edit Wallet</h2>
+        <div id="walletEditBody" style="display:flex; flex-direction:column; gap:10px;">
+            <!-- Dynamic content -->
+        </div>
+        <div class="popupButtonGroup" style="margin-top: 15px;">
+            <button type="button" class="cancelButton" onclick="closeWalletEdit()">Batal</button>
+            <button type="button" class="addButton" id="btnSaveWallet" onclick="saveWalletConfig()">Simpan</button>
+        </div>
+        <button type="button" class="btn-delete-confirm" id="btnDeleteWallet" style="display:none; width:100%; height:40px; border:none; border-radius:10px; margin-top:10px; font-family:'FiraCondBold'; font-size:0.85rem; cursor:pointer;" onclick="deleteWalletConfig()">Hapus Pengaturan</button>
+    </div>
+</div>
+
 <div id="inAppBrowser" class="in-app-browser">
 <div class="iab-bar">
 <button type="button" class="iab-btn iab-close" onclick="closeInAppBrowser()" title="Tutup">
@@ -399,6 +446,179 @@ const SVG = {
   bug: '<svg viewBox="0 0 24 24"><path d="M20 8h-2.81a5.985 5.985 0 0 0-1.82-1.96L17 4.41 15.59 3l-2.17 2.17C12.96 5.06 12.49 5 12 5s-.96.06-1.41.17L8.41 3 7 4.41l1.62 1.63C7.88 6.55 7.26 7.22 6.81 8H4v2h2.09c-.05.33-.09.66-.09 1v1H4v2h2v1c0 .34.04.67.09 1H4v2h2.81c1.04 1.79 2.97 3 5.19 3s4.15-1.21 5.19-3H20v-2h-2.09c.05-.33.09-.66.09-1v-1h2v-2h-2v-1c0-.34-.04-.67-.09-1H20V8z"/></svg>',
   chevronDown: '<svg viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6z"/></svg>'
 };
+
+const WALLET_LIST = [
+    { id: 'qris', name: 'QRIS', type: 'qris', domain: 'qris.id' },
+    { id: 'bca', name: 'BCA', type: 'bank', domain: 'bca.co.id' },
+    { id: 'bri', name: 'BRI', type: 'bank', domain: 'bri.co.id' },
+    { id: 'bni', name: 'BNI', type: 'bank', domain: 'bni.co.id' },
+    { id: 'ina', name: 'Bank INA', type: 'bank', domain: 'bankina.co.id' },
+    { id: 'seabank', name: 'SeaBank', type: 'bank', domain: 'seabank.co.id' },
+    { id: 'krom', name: 'Krom', type: 'bank', domain: 'krom.id' },
+    { id: 'jago', name: 'Bank Jago', type: 'bank', domain: 'bankjago.com' },
+    { id: 'superbank', name: 'SuperBank', type: 'bank', domain: 'superbank.id' },
+    { id: 'mandiri', name: 'Mandiri', type: 'bank', domain: 'bankmandiri.co.id' },
+    { id: 'ovo', name: 'OVO', type: 'ewallet', domain: 'ovo.id' },
+    { id: 'gopay', name: 'GoPay', type: 'ewallet', domain: 'gopay.co.id' },
+    { id: 'dana', name: 'DANA', type: 'ewallet', domain: 'dana.id' },
+    { id: 'shopeepay', name: 'ShopeePay', type: 'ewallet', domain: 'shopeepay.co.id' },
+    { id: 'speedcash', name: 'Speedcash', type: 'ewallet', domain: 'speedcash.co.id' },
+    { id: 'octopay', name: 'OctoPay', type: 'ewallet', domain: 'octopay.id' }
+];
+
+let currentWalletEditId = null;
+let qrisTempImage = null;
+
+function getWalletsData() {
+    return JSON.parse(localStorage.getItem("comersio_wallets")) || {};
+}
+
+function openWalletList() {
+    const wallets = getWalletsData();
+    const grid = document.getElementById("walletGrid");
+    grid.innerHTML = "";
+
+    WALLET_LIST.forEach(w => {
+        const isConfigured = !!wallets[w.id];
+        let iconUrl = `https://www.google.com/s2/favicons?domain=${w.domain}&sz=128`;
+        
+        // Fallback khusus SuperBank karena logo Google kadang ga ada
+        if (w.id === 'superbank') {
+            iconUrl = 'https://upload.wikimedia.org/wikipedia/commons/c/c6/Superbank_Indonesia.png';
+        }
+
+        const card = document.createElement("div");
+        card.className = "wallet-card" + (isConfigured ? " configured" : "");
+        card.innerHTML = `
+            ${isConfigured ? `<div class="wallet-badge">Aktif</div>` : ''}
+            <img src="${iconUrl}" alt="${w.name}" onerror="this.src='https://ui-avatars.com/api/?name=${w.name.charAt(0)}&background=000&color=fff&size=128&font-size=0.5&bold=true'">
+            <span>${w.name}</span>
+        `;
+        card.onclick = () => openWalletEdit(w.id);
+        grid.appendChild(card);
+    });
+
+    document.getElementById("walletListModal").classList.add("active");
+}
+
+function closeWalletList() {
+    document.getElementById("walletListModal").classList.remove("active");
+}
+
+function openWalletEdit(id) {
+    currentWalletEditId = id;
+    qrisTempImage = null;
+    const w = WALLET_LIST.find(x => x.id === id);
+    const wallets = getWalletsData();
+    const existing = wallets[id];
+
+    document.getElementById("walletEditTitle").innerText = `Atur ${w.name}`;
+    const body = document.getElementById("walletEditBody");
+    body.innerHTML = "";
+    
+    document.getElementById("btnDeleteWallet").style.display = existing ? "block" : "none";
+
+    if (w.type === 'qris') {
+        qrisTempImage = existing ? existing.image : null;
+        body.innerHTML = `
+            <p style="font-size:0.75rem; color:#aaa; margin-bottom:10px;">Upload foto QRIS Anda. Foto akan dipotong otomatis menjadi rasio 1:1 (kotak) jika belum kotak.</p>
+            <div class="qris-upload-box" onclick="document.getElementById('qrisInput').click()">
+                ${qrisTempImage ? `<img src="${qrisTempImage}" id="qrisPreview">` : `
+                    <svg viewBox="0 0 24 24" style="width:40px; height:40px; fill:#888; margin-bottom:10px;"><path d="M9 3L7.17 5H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2h-3.17L15 3H9zm3 15c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z"/><circle cx="12" cy="13" r="3"/></svg>
+                    <span style="color:#888; font-family:'FiraCondBold'; font-size:0.8rem;">Klik untuk Upload QRIS</span>
+                `}
+            </div>
+            <input type="file" id="qrisInput" accept="image/*" style="display:none;" onchange="handleQrisUpload(event)">
+        `;
+    } else {
+        const labelNo = w.type === 'bank' ? 'No Rekening' : 'No E-Wallet';
+        body.innerHTML = `
+            <label>Nama Pemilik:</label>
+            <input type="text" id="walletNameInput" placeholder="Contoh: Budi Santoso" value="${existing ? existing.name : ''}">
+            <label>${labelNo}:</label>
+            <input type="text" id="walletNumberInput" placeholder="Contoh: 1234567890" value="${existing ? existing.number : ''}">
+        `;
+    }
+
+    document.getElementById("walletEditModal").classList.add("active");
+}
+
+function closeWalletEdit() {
+    document.getElementById("walletEditModal").classList.remove("active");
+    currentWalletEditId = null;
+    qrisTempImage = null;
+}
+
+function handleQrisUpload(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+        const img = new Image();
+        img.onload = () => {
+            const canvas = document.createElement('canvas');
+            const size = Math.min(img.width, img.height); // Ambil sisi terpendek untuk 1:1
+            canvas.width = size;
+            canvas.height = size;
+            const ctx = canvas.getContext('2d');
+            
+            // Crop tengah
+            const sx = (img.width - size) / 2;
+            const sy = (img.height - size) / 2;
+            ctx.drawImage(img, sx, sy, size, size, 0, 0, size, size);
+            
+            qrisTempImage = canvas.toDataURL('image/jpeg', 0.8);
+            
+            // Update preview
+            const box = document.querySelector('.qris-upload-box');
+            box.innerHTML = `<img src="${qrisTempImage}" id="qrisPreview">`;
+        };
+        img.src = event.target.result;
+    };
+    reader.readAsDataURL(file);
+}
+
+function saveWalletConfig() {
+    if (!currentWalletEditId) return;
+    const w = WALLET_LIST.find(x => x.id === currentWalletEditId);
+    const wallets = getWalletsData();
+
+    if (w.type === 'qris') {
+        if (!qrisTempImage) {
+            showCustomAlert("Silakan upload foto QRIS terlebih dahulu!", "Peringatan");
+            return;
+        }
+        wallets[w.id] = { image: qrisTempImage };
+    } else {
+        const name = document.getElementById("walletNameInput").value.trim();
+        const number = document.getElementById("walletNumberInput").value.trim();
+        if (!name || !number) {
+            showCustomAlert("Lengkapi Nama dan Nomor terlebih dahulu!", "Peringatan");
+            return;
+        }
+        wallets[w.id] = { name: name, number: number };
+    }
+
+    localStorage.setItem("comersio_wallets", JSON.stringify(wallets));
+    closeWalletEdit();
+    openWalletList(); // Refresh list
+    showCustomAlert("Pengaturan berhasil disimpan!", "Berhasil");
+}
+
+function deleteWalletConfig() {
+    if (!currentWalletEditId) return;
+    showCustomConfirm("Hapus pengaturan ini?", "Konfirmasi Hapus").then(res => {
+        if (res) {
+            const wallets = getWalletsData();
+            delete wallets[currentWalletEditId];
+            localStorage.setItem("comersio_wallets", JSON.stringify(wallets));
+            closeWalletEdit();
+            openWalletList(); // Refresh list
+        }
+    });
+}
+
 let openPatchIndex = 0;
 let modalCallback = null;
 function renderPatchAccordion(){
@@ -581,9 +801,6 @@ function bulanKeIndex(bulanVal) {
 }
 function namaBulanIndonesia(idx) { const NAMA = ["Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"]; return NAMA[idx] || "-"; }
 
-/* =========================================================
-   FIXED: loadDashboardFinance sekarang baca DEBTS + ARCHIVED_DEBTS
-========================================================= */
 function loadDashboardFinance() {
   let baseSaldoRaw = localStorage.getItem("comersio_base_saldo");
   let baseSaldo = (baseSaldoRaw !== null && baseSaldoRaw !== "") ? parseFloat(baseSaldoRaw) : 0;
@@ -613,7 +830,6 @@ function loadDashboardFinance() {
     return cekProfitMasuk(d.getFullYear(), d.getMonth()); 
   }
 
-  // Fungsi helper untuk proses data dari object (debts atau archivedDebts)
   function processTransactionData(dataSet) {
     if (!dataSet) return;
     for (let custId in dataSet) {
@@ -639,19 +855,16 @@ function loadDashboardFinance() {
     }
   }
 
-  // 1. Proses transaksi aktif
   try {
     let debtsData = JSON.parse(localStorage.getItem("debts")) || {};
     processTransactionData(debtsData);
   } catch(e) { console.error("Error reading debts:", e); }
 
-  // 2. Proses transaksi arsip (lunas)
   try {
     let archivedData = JSON.parse(localStorage.getItem("archivedDebts")) || {};
     processTransactionData(archivedData);
   } catch(e) { console.error("Error reading archivedDebts:", e); }
 
-  // 3. Proses log bulanan manual (jika ada)
   try {
     let monthlyData = JSON.parse(localStorage.getItem("monthlyLogs")) || JSON.parse(localStorage.getItem("monthly")) || [];
     if (Array.isArray(monthlyData)) {

@@ -117,10 +117,6 @@
   }
   .customer-card.active .arrow-icon { transform: rotate(180deg); }
 
-  /* ============================================
-     FIX: Accordion smooth, maxHeight dipegang JS
-     Padding/border dipindah ke inner wrapper
-  ============================================ */
   .customer-body {
     max-height: 0;
     overflow: hidden;
@@ -306,7 +302,7 @@
     flex-shrink: 0;
   }
 
-  /* Grid Payment Method - Tambahan Baru */
+  /* Grid Payment Method - Dynamic */
   .payment-category-title {
     font-family: 'FiraCondBold', sans-serif;
     font-size: 0.8rem; color: var(--emas-terang);
@@ -325,7 +321,7 @@
   .payment-card:hover {
     border-color: var(--emas-terang); background: rgba(232, 177, 60, 0.1); transform: translateY(-2px);
   }
-  .payment-card img { width: 32px; height: 32px; object-fit: contain; }
+  .payment-card img { width: 32px; height: 32px; object-fit: contain; background: #fff; border-radius: 4px; padding: 2px; }
   .payment-card span { font-family: 'FiraCondBold', sans-serif; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
   .charge-preview-box {
@@ -621,7 +617,7 @@
     </div>
 </div>
 
-<!-- POPUP METODE PEMBAYARAN -->
+<!-- POPUP METODE PEMBAYARAN (DYNAMIC) -->
 <div id="paymentPopup" class="popupBox">
     <div class="popupContent" style="max-height: 85vh; overflow-y: auto;">
         <h2>METODE PEMBAYARAN</h2>
@@ -632,21 +628,22 @@
             <button type="button" id="btnTypeAmort" onclick="setPaymentType('amort')" style="flex:1; padding: 8px; border-radius: 8px; border: 1.5px solid var(--emas-terang); background: #111; color: var(--emas-terang); font-family: 'FiraCondBold', sans-serif; cursor: pointer; font-size: 0.8rem;">Amortisasi (Cicilan)</button>
         </div>
 
-        <div class="payment-category-title">E-WALLET</div>
-        <div class="payment-grid">
-            <div class="payment-card" onclick="openPaymentPage('gopay')"><img src="GoPay.png" alt="GoPay"><span>GoPay</span></div>
-            <div class="payment-card" onclick="openPaymentPage('dana')"><img src="DANA.png" alt="DANA"><span>DANA</span></div>
-            <div class="payment-card" onclick="openPaymentPage('shopeepay')"><img src="ShopeePay.png" alt="ShopeePay"><span>ShopeePay</span></div>
+        <!-- Container Cash (Default) -->
+        <div id="cashSection" style="display: block;">
+            <div class="payment-category-title">TUNAI / CASH</div>
+            <div class="payment-grid" id="cashGrid"></div>
         </div>
 
-        <div class="payment-category-title">M-BANKING / QRIS</div>
-        <div class="payment-grid">
-            <div class="payment-card" onclick="openPaymentPage('qris')"><img src="QRIS Logo.png" alt="QRIS"><span>QRIS</span></div>
-            <div class="payment-card" onclick="openPaymentPage('seabank')"><img src="SeaBank.png" alt="SeaBank"><span>SeaBank</span></div>
-            <div class="payment-card" onclick="openPaymentPage('bri')"><img src="Bank BRI.png" alt="BRI"><span>BRI</span></div>
-            <div class="payment-card" onclick="openPaymentPage('bankjago')"><img src="Bank Jago.png" alt="Jago"><span>Bank Jago</span></div>
-            <div class="payment-card" onclick="openPaymentPage('krom')"><img src="Krom.png" alt="Krom"><span>Krom</span></div>
-            <div class="payment-card" onclick="openPaymentPage('superbank')"><img src="https://logo.clearbit.com/superbank.id" alt="SuperBank"><span>SuperBank</span></div>
+        <!-- Container E-Wallet -->
+        <div id="ewalletSection" style="display: none;">
+            <div class="payment-category-title">E-WALLET</div>
+            <div class="payment-grid" id="ewalletGrid"></div>
+        </div>
+
+        <!-- Container Bank/QRIS -->
+        <div id="bankSection" style="display: none;">
+            <div class="payment-category-title">M-BANKING / QRIS</div>
+            <div class="payment-grid" id="bankGrid"></div>
         </div>
 
         <div class="popupButtonGroup" style="margin-top: 12px;">
@@ -741,6 +738,28 @@ let allMasterProductsTemp = [];
 let archiveMode = 'list';
 let archiveSelectedCust = '';
 let paymentTargetCustId = "";
+
+/* =========================================================
+   WALLET METADATA (Sinkron dengan index.html)
+========================================================= */
+const WALLET_META = {
+    qris: { name: 'QRIS', type: 'qris', domain: 'qris.id' },
+    bca: { name: 'BCA', type: 'bank', domain: 'bca.co.id' },
+    bri: { name: 'BRI', type: 'bank', domain: 'bri.co.id' },
+    bni: { name: 'BNI', type: 'bank', domain: 'bni.co.id' },
+    ina: { name: 'Bank INA', type: 'bank', domain: 'bankina.co.id' },
+    seabank: { name: 'SeaBank', type: 'bank', domain: 'seabank.co.id' },
+    krom: { name: 'Krom', type: 'bank', domain: 'krom.id' },
+    jago: { name: 'Bank Jago', type: 'bank', domain: 'bankjago.com' },
+    superbank: { name: 'SuperBank', type: 'bank', domain: 'superbank.id' },
+    mandiri: { name: 'Mandiri', type: 'bank', domain: 'bankmandiri.co.id' },
+    ovo: { name: 'OVO', type: 'ewallet', domain: 'ovo.id' },
+    gopay: { name: 'GoPay', type: 'ewallet', domain: 'gopay.co.id' },
+    dana: { name: 'DANA', type: 'ewallet', domain: 'dana.id' },
+    shopeepay: { name: 'ShopeePay', type: 'ewallet', domain: 'shopeepay.co.id' },
+    speedcash: { name: 'Speedcash', type: 'ewallet', domain: 'speedcash.co.id' },
+    octopay: { name: 'OctoPay', type: 'ewallet', domain: 'octopay.id' }
+};
 
 /* =========================================================
    HELPER
@@ -960,7 +979,6 @@ function renderCustomerList(){
 
         container.appendChild(card);
 
-        // Kalau card ini sebelumnya open, set maxHeight langsung tanpa animasi
         if(openCustomerCards[custId]){
             const bodyEl = card.querySelector('.customer-body');
             if(bodyEl) bodyEl.style.maxHeight = "none";
@@ -1030,9 +1048,6 @@ function renderDebtRows(debtList, custId){
     return html;
 }
 
-/* =========================================================
-   TOGGLE ACCORDION (SMOOTH)
-========================================================= */
 function toggleAccordion(custId){
     const card = document.getElementById(`card-${custId}`);
     const body = document.getElementById(`body-${custId}`);
@@ -1041,13 +1056,11 @@ function toggleAccordion(custId){
     const isOpen = card.classList.contains("active");
 
     if(isOpen){
-        // ---- CLOSE ----
         body.style.maxHeight = body.scrollHeight + "px";
-        void body.offsetHeight; // paksa reflow
+        void body.offsetHeight; 
         card.classList.remove("active");
         body.style.maxHeight = "0px";
     } else {
-        // ---- OPEN ----
         card.classList.add("active");
         body.style.maxHeight = "none";
         const targetH = body.scrollHeight;
@@ -1055,7 +1068,6 @@ function toggleAccordion(custId){
         void body.offsetHeight;
         body.style.maxHeight = targetH + "px";
 
-        // Setelah animasi selesai, lepas constraint
         setTimeout(() => {
             if(card.classList.contains("active")){
                 body.style.maxHeight = "none";
@@ -1066,9 +1078,6 @@ function toggleAccordion(custId){
     openCustomerCards[custId] = card.classList.contains("active");
 }
 
-/* =========================================================
-   CHECKLIST EXCLUDE
-========================================================= */
 function toggleExcludeItem(custId, index){
     const item = debts[custId][index];
     item.excluded = !item.excluded;
@@ -1095,9 +1104,6 @@ function toggleExcludeItem(custId, index){
     renderCustomerList();
 }
 
-/* =========================================================
-   POPUP CUSTOMER & PRODUCT PICKER
-========================================================= */
 function openCustomerPickerModal(event){
     if(event) event.stopPropagation();
     const customers = getCustomersFromStorage();
@@ -1241,9 +1247,6 @@ function addDebt(){
     closePopup();
 }
 
-/* =========================================================
-   PRODUCT PICKER
-========================================================= */
 function openProductPickerModal(event){
     if(event) event.stopPropagation();
 
@@ -1317,9 +1320,6 @@ function closeProductPickerModal(){
     document.getElementById("productPickerModal").classList.remove("active");
 }
 
-/* =========================================================
-   EDIT PEMBAYARAN (auto-arsip jika lunas)
-========================================================= */
 function openEditDebt(custId, index){
     activeEditCustId = custId;
     activeEditIndex = index;
@@ -1377,9 +1377,6 @@ function saveEditDebt(){
     closeEditPopup();
 }
 
-/* =========================================================
-   HAPUS UTANG
-========================================================= */
 function promptDeleteDebt(custId, index){
     deleteTargetCustId = custId;
     deleteTargetIndex = index;
@@ -1404,7 +1401,7 @@ function confirmDeleteDebt(){
 }
 
 /* =========================================================
-   PAYMENT POPUP
+   PAYMENT POPUP (DYNAMIC WALLET + CASH)
 ========================================================= */
 function setPaymentType(type){
     selectedPaymentMode = type;
@@ -1433,7 +1430,70 @@ function openPaymentPopup(custId, total){
     targetCustomerTotal = total;
     selectedPaymentMode = "full";
     setPaymentType("full");
+    
+    renderPaymentMethods(); 
     document.getElementById("paymentPopup").classList.add("active");
+}
+
+function renderPaymentMethods() {
+    const wallets = JSON.parse(localStorage.getItem("comersio_wallets")) || {};
+    const keys = Object.keys(wallets);
+
+    const cashContainer = document.getElementById("cashGrid");
+    const ewalletContainer = document.getElementById("ewalletGrid");
+    const bankContainer = document.getElementById("bankGrid");
+    
+    cashContainer.innerHTML = "";
+    ewalletContainer.innerHTML = "";
+    bankContainer.innerHTML = "";
+
+    let hasEwallet = false;
+    let hasBank = false;
+
+    // 1. Render Cash Terlebih Dahulu (Selalu Tampil)
+    const cashIcon = `data:image/svg+xml;utf8,${encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#4caf5e"><path d="M20 6H4V4h16v2zm0 3H4c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V11c0-1.1-.9-2-2-2zm-2 8c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm-4-2c0 1.66-1.34 3-3 3s-3-1.34-3-3 1.34-3 3-3 3 1.34 3 3z"/></svg>`)}`;
+    
+    cashContainer.innerHTML = `
+        <div class="payment-card" onclick="openPaymentPage('cash')">
+            <img src="${cashIcon}" alt="Cash" style="background:transparent; padding:0;">
+            <span>Tunai / Cash</span>
+        </div>
+    `;
+
+    // 2. Render Wallets (E-Wallet & Bank)
+    if(keys.length === 0) {
+        document.getElementById("ewalletSection").style.display = "none";
+        document.getElementById("bankSection").style.display = "none";
+        return;
+    }
+
+    keys.forEach(key => {
+        const meta = WALLET_META[key];
+        if(!meta) return; 
+
+        let iconUrl = `https://www.google.com/s2/favicons?domain=${meta.domain}&sz=128`;
+        if (key === 'superbank') {
+            iconUrl = 'https://upload.wikimedia.org/wikipedia/commons/c/c6/Superbank_Indonesia.png';
+        }
+
+        const cardHTML = `
+            <div class="payment-card" onclick="openPaymentPage('${key}')">
+                <img src="${iconUrl}" alt="${meta.name}" onerror="this.src='https://ui-avatars.com/api/?name=${meta.name.charAt(0)}&background=000&color=fff'">
+                <span>${meta.name}</span>
+            </div>
+        `;
+
+        if (meta.type === 'ewallet') {
+            ewalletContainer.innerHTML += cardHTML;
+            hasEwallet = true;
+        } else {
+            bankContainer.innerHTML += cardHTML;
+            hasBank = true;
+        }
+    });
+
+    document.getElementById("ewalletSection").style.display = hasEwallet ? "block" : "none";
+    document.getElementById("bankSection").style.display = hasBank ? "block" : "none";
 }
 
 function closePaymentPopup(){
@@ -1444,7 +1504,7 @@ function openPaymentPage(method){
     if(selectedPaymentMode === 'amort'){
         pendingPaymentMethod = method;
         document.getElementById('amortTotalTagihanText').innerText = "Rp " + targetCustomerTotal.toLocaleString("id-ID");
-        document.getElementById('amortNominalInput').value = ""; // reset input
+        document.getElementById('amortNominalInput').value = ""; 
         
         closePaymentPopup();
         document.getElementById('amortPopup').classList.add('active');

@@ -14,7 +14,14 @@ const PATCH_NOTES_DATA = [
       { icon: SVG.currency, title: "Merge Charge & Fitur Diskon Nota", desc: "Halaman pembayaran kini mendukung pemotongan Diskon. Nominal Charge (jika ada) otomatis digabung langsung ke dalam Total Hutang dan Sisa Tagihan agar struk lebih ringkas." },
       { icon: SVG.rocket, title: "Smart Archive System (debt.html)", desc: "Transaksi yang lunas otomatis dipindah ke Arsip, tidak menumpuk di tagihan aktif. Ditambah fitur un-archive untuk mengembalikan transaksi jika salah masuk." },
       { icon: SVG.user, title: "Customer Page: Spending & Charge", desc: "Halaman Customer kini menampilkan total Spending di samping jumlah transaksi. Fitur Charge Over-Limit (default AKTIF) juga dipasang di tiap card." },
-      { icon: SVG.save, title: "Perbaikan Sistem Backup (Save/Load)", desc: "Validasi file JSON diperketat. Sistem bisa mendeteksi dan memuat backup dari berbagai versi (format flat lama maupun baru) tanpa takut data corrupt." }
+      { icon: SVG.save, title: "Perbaikan Sistem Backup (Save/Load)", desc: "Validasi file JSON diperketat. Sistem bisa mendeteksi dan memuat backup dari berbagai versi (format flat lama maupun baru) tanpa takut data corrupt." },
+      { icon: SVG.pin, title: "Wallet System (Pengganti Midtrans)", desc: "Fitur Wallet baru menggantikan tombol Midtrans. Mendukung 16 metode pembayaran (QRIS, BCA, BRI, BNI, Bank INA, SeaBank, Krom, Bank Jago, SuperBank, Mandiri, OVO, GoPay, DANA, ShopeePay, Speedcash, OctoPay) dengan pengaturan nama & nomor rekening custom per user." },
+      { icon: SVG.inbox, title: "Upload QRIS dengan Auto-Crop 1:1", desc: "Khusus metode QRIS, pengguna bisa upload foto QR Code sendiri. Sistem otomatis memotong ke rasio 1:1 (persegi sempurna) sebelum disimpan agar tampil rapi di struk." },
+      { icon: SVG.currency, title: "Metode Pembayaran Cash (Tunai)", desc: "Opsi baru Tunai/Cash yang selalu tersedia secara default di konfirmasi pembayaran, terpisah dari E-Wallet dan Bank. Cocok untuk pembayaran langsung ke kasir." },
+      { icon: SVG.bookmark, title: "Integrasi Wallet ke Debt & Payment", desc: "Halaman konfirmasi pembayaran (debt.html) dan halaman struk (payment.html) kini otomatis sinkron dengan pengaturan Wallet. Hanya metode yang sudah di-setup user yang muncul sebagai opsi." },
+      { icon: SVG.note, title: "Tombol Salin (Copy) Nomor Rekening", desc: "Setiap nomor rekening atau nomor e-wallet di halaman pembayaran dilengkapi tombol salin dengan animasi feedback hijau dan teks 'Tersalin' sebagai konfirmasi visual." },
+      { icon: SVG.star, title: "Fix Icon Bank & E-Wallet Anti-Blank", desc: "Sistem logo 3 lapis: PNG lokal (prioritas) → URL online (Wikimedia/Google Favicon) → fallback SVG inisial warna brand. Tidak ada lagi icon kosong atau broken image." },
+      { icon: SVG.save, title: "Backup Wallet & QRIS ke File JSON", desc: "Seluruh data Wallet termasuk gambar QRIS yang di-upload (Base64) ikut tersimpan di file backup JSON. Saat load data, semua setting pembayaran otomatis pulih seperti semula." }
     ]
   },
   {
