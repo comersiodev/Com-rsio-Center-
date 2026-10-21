@@ -530,6 +530,39 @@
   @media (max-width: 420px){
     .date-badge-top { display: none; }
   }
+
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  /* ================= PAGE LOADING OVERLAY (RINGAN) ================= */
+  .page-loading-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(5, 8, 6, 0.92);
+    z-index: 2147483647;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    pointer-events: all;
+  }
+  .page-loading-overlay.active { display: flex; }
+  .page-loading-overlay img {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+  }
+  .page-loading-overlay .loading-text {
+    color: var(--emas-terang);
+    font-family: 'FiraCondBold', sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    opacity: 0.85;
+  }
 </style>
 </head>
 
@@ -657,7 +690,7 @@
 
 <div id="pdfContent"></div>
 
-<!-- BOTTOM NAVBAR M-BANKING (TOMBOL KEMBALI KE ICON LU) -->
+<!-- BOTTOM NAVBAR M-BANKING -->
 <nav class="mbanking-bottom-nav">
     <a href="index.html" class="nav-item">
         <img src="icon.png" alt="Home">
@@ -689,7 +722,60 @@
     </a>
 </nav>
 
+<!-- ================= PAGE LOADING OVERLAY ================= -->
+<div id="pageLoadingOverlay" class="page-loading-overlay">
+    <img src="loading.webp" alt="Loading...">
+    <div class="loading-text">Memuat Halaman...</div>
+</div>
+
 <script>
+/* =========================================================
+   PAGE LOADING OVERLAY
+========================================================= */
+(function preloadLoadingGif(){
+    const img = new Image();
+    img.src = 'loading.webp';
+})();
+
+function showPageLoading(){
+    const ov = document.getElementById('pageLoadingOverlay');
+    if (ov) ov.classList.add('active');
+}
+
+function navigateWithLoading(url){
+    if (!url) return;
+    showPageLoading();
+    setTimeout(() => { window.location.href = url; }, 450);
+}
+
+/* Handler global untuk semua <a href="*.html"> */
+document.addEventListener('click', function(e){
+    const link = e.target.closest('a[href]');
+    if (!link) return;
+    if (link.classList.contains('nav-item')) return;
+
+    const href = link.getAttribute('href');
+    if (!href) return;
+    if (href.startsWith('http') || href.startsWith('javascript') ||
+        href.startsWith('#') || href.startsWith('mailto') ||
+        href.startsWith('tel') || href.startsWith('blob')) return;
+    if (!href.endsWith('.html')) return;
+
+    e.preventDefault();
+    navigateWithLoading(href);
+});
+
+/* Bottom nav: loading */
+document.querySelectorAll('.nav-item').forEach(item => {
+  const href = item.getAttribute('href');
+  if (item.tagName === 'A' && href && href.endsWith('.html')){
+    item.addEventListener('click', function(e){
+      e.preventDefault();
+      navigateWithLoading(href);
+    });
+  }
+});
+
 /* =========================================================
    DATE & TITLE
 ========================================================= */
@@ -1050,13 +1136,6 @@ async function downloadPDF(){
     }
 }
 </script>
-
-<style>
-  @keyframes spin {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
-  }
-</style>
 
 </body>
 </html>

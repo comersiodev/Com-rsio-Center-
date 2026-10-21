@@ -90,6 +90,34 @@
   .saveButton{width:100%;height:48px;border:none;border-radius:12px;margin-top:20px;background:var(--emas-terang);color:#000;font-size:0.95rem;font-family:'FiraCondBold',sans-serif;cursor:pointer;box-shadow:0 4px 15px rgba(255,209,102,0.3);transition:transform 0.2s;}
   .saveButton:active{transform:scale(0.98);}
   .noCapture{z-index:99;}
+
+  /* ================= PAGE LOADING OVERLAY (RINGAN) ================= */
+  .page-loading-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(5, 8, 6, 0.92);
+    z-index: 2147483647;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    pointer-events: all;
+  }
+  .page-loading-overlay.active { display: flex; }
+  .page-loading-overlay img {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+  }
+  .page-loading-overlay .loading-text {
+    color: var(--emas-terang);
+    font-family: 'FiraCondBold', sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    opacity: 0.85;
+  }
 </style>
 </head>
 <body>
@@ -100,7 +128,7 @@
       <div class="mbanking-brand">Comersio <span>Center</span></div>
       <div class="mbanking-greeting-top">Detail Pembayaran</div>
     </div>
-    <button class="backBtn noCapture" onclick="window.location.href='index.html'">← Kembali</button>
+    <button class="backBtn noCapture" onclick="navigateWithLoading('index.html')">← Kembali</button>
   </div>
 
   <div class="content-wrap" style="padding-top: 70px;">
@@ -165,7 +193,32 @@
     <button class="saveButton noCapture" onclick="saveAsImage()">SIMPAN BILL PEMBAYARAN</button>
   </div>
 
+<!-- ================= PAGE LOADING OVERLAY ================= -->
+<div id="pageLoadingOverlay" class="page-loading-overlay">
+    <img src="loading.webp" alt="Loading...">
+    <div class="loading-text">Memuat Halaman...</div>
+</div>
+
 <script>
+/* =========================================================
+   PAGE LOADING OVERLAY
+========================================================= */
+(function preloadLoadingGif(){
+    const img = new Image();
+    img.src = 'loading.webp';
+})();
+
+function showPageLoading(){
+    const ov = document.getElementById('pageLoadingOverlay');
+    if (ov) ov.classList.add('active');
+}
+
+function navigateWithLoading(url){
+    if (!url) return;
+    showPageLoading();
+    setTimeout(() => { window.location.href = url; }, 450);
+}
+
 /* =========================================================
    WALLET METADATA
    - localLogo  : file PNG lokal (PRIORITAS UTAMA)

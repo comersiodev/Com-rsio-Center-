@@ -472,6 +472,34 @@
   @media (max-width: 420px){
     .date-badge-top { display: none; }
   }
+
+  /* ================= PAGE LOADING OVERLAY (RINGAN) ================= */
+  .page-loading-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(5, 8, 6, 0.92);
+    z-index: 2147483647;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    pointer-events: all;
+  }
+  .page-loading-overlay.active { display: flex; }
+  .page-loading-overlay img {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+  }
+  .page-loading-overlay .loading-text {
+    color: var(--emas-terang);
+    font-family: 'FiraCondBold', sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    opacity: 0.85;
+  }
 </style>
 </head>
 
@@ -711,7 +739,60 @@
     </a>
 </nav>
 
+<!-- ================= PAGE LOADING OVERLAY ================= -->
+<div id="pageLoadingOverlay" class="page-loading-overlay">
+    <img src="loading.webp" alt="Loading...">
+    <div class="loading-text">Memuat Halaman...</div>
+</div>
+
 <script>
+/* =========================================================
+   PAGE LOADING OVERLAY
+========================================================= */
+(function preloadLoadingGif(){
+    const img = new Image();
+    img.src = 'loading.webp';
+})();
+
+function showPageLoading(){
+    const ov = document.getElementById('pageLoadingOverlay');
+    if (ov) ov.classList.add('active');
+}
+
+function navigateWithLoading(url){
+    if (!url) return;
+    showPageLoading();
+    setTimeout(() => { window.location.href = url; }, 450);
+}
+
+/* Handler global untuk semua <a href="*.html"> */
+document.addEventListener('click', function(e){
+    const link = e.target.closest('a[href]');
+    if (!link) return;
+    if (link.classList.contains('nav-item')) return;
+
+    const href = link.getAttribute('href');
+    if (!href) return;
+    if (href.startsWith('http') || href.startsWith('javascript') ||
+        href.startsWith('#') || href.startsWith('mailto') ||
+        href.startsWith('tel') || href.startsWith('blob')) return;
+    if (!href.endsWith('.html')) return;
+
+    e.preventDefault();
+    navigateWithLoading(href);
+});
+
+/* Bottom nav: loading */
+document.querySelectorAll('.nav-item').forEach(item => {
+  const href = item.getAttribute('href');
+  if (item.tagName === 'A' && href && href.endsWith('.html')){
+    item.addEventListener('click', function(e){
+      e.preventDefault();
+      navigateWithLoading(href);
+    });
+  }
+});
+
 /* =========================================================
    STORAGE
 ========================================================= */
@@ -741,24 +822,27 @@ let paymentTargetCustId = "";
 
 /* =========================================================
    WALLET METADATA (Sinkron dengan index.html)
+   - localLogo  : file PNG lokal (PRIORITAS UTAMA)
+   - urlLogo    : URL online (KHUSUS SuperBank, OVO, OctoPay)
+   - domain     : fallback favicon google
 ========================================================= */
 const WALLET_META = {
-    qris: { name: 'QRIS', type: 'qris', domain: 'qris.id' },
-    bca: { name: 'BCA', type: 'bank', domain: 'bca.co.id' },
-    bri: { name: 'BRI', type: 'bank', domain: 'bri.co.id' },
-    bni: { name: 'BNI', type: 'bank', domain: 'bni.co.id' },
-    ina: { name: 'Bank INA', type: 'bank', domain: 'bankina.co.id' },
-    seabank: { name: 'SeaBank', type: 'bank', domain: 'seabank.co.id' },
-    krom: { name: 'Krom', type: 'bank', domain: 'krom.id' },
-    jago: { name: 'Bank Jago', type: 'bank', domain: 'bankjago.com' },
-    superbank: { name: 'SuperBank', type: 'bank', domain: 'superbank.id' },
-    mandiri: { name: 'Mandiri', type: 'bank', domain: 'bankmandiri.co.id' },
-    ovo: { name: 'OVO', type: 'ewallet', domain: 'ovo.id' },
-    gopay: { name: 'GoPay', type: 'ewallet', domain: 'gopay.co.id' },
-    dana: { name: 'DANA', type: 'ewallet', domain: 'dana.id' },
-    shopeepay: { name: 'ShopeePay', type: 'ewallet', domain: 'shopeepay.co.id' },
-    speedcash: { name: 'Speedcash', type: 'ewallet', domain: 'speedcash.co.id' },
-    octopay: { name: 'OctoPay', type: 'ewallet', domain: 'octopay.id' }
+    qris:      { name: 'QRIS',       type: 'qris',    localLogo: 'QRIS Logo.png', urlLogo: '', domain: 'qris.id' },
+    bca:       { name: 'BCA',        type: 'bank',    localLogo: 'BCA.png',       urlLogo: '', domain: 'bca.co.id' },
+    bri:       { name: 'BRI',        type: 'bank',    localLogo: 'Bank BRI.png',  urlLogo: '', domain: 'bri.co.id' },
+    bni:       { name: 'BNI',        type: 'bank',    localLogo: 'BNI.png',       urlLogo: '', domain: 'bni.co.id' },
+    ina:       { name: 'Bank INA',   type: 'bank',    localLogo: 'Bank INA.png',  urlLogo: '', domain: 'bankina.co.id' },
+    seabank:   { name: 'SeaBank',    type: 'bank',    localLogo: 'SeaBank.png',   urlLogo: '', domain: 'seabank.co.id' },
+    krom:      { name: 'Krom',       type: 'bank',    localLogo: 'Krom.png',      urlLogo: '', domain: 'krom.id' },
+    jago:      { name: 'Bank Jago',  type: 'bank',    localLogo: 'Bank Jago.png', urlLogo: '', domain: 'bankjago.com' },
+    superbank: { name: 'SuperBank',  type: 'bank',    localLogo: '', urlLogo: 'https://upload.wikimedia.org/wikipedia/commons/c/c6/Superbank_Indonesia.png', domain: 'superbank.id' },
+    mandiri:   { name: 'Mandiri',    type: 'bank',    localLogo: 'Mandiri.png',   urlLogo: '', domain: 'bankmandiri.co.id' },
+    ovo:       { name: 'OVO',        type: 'ewallet', localLogo: '', urlLogo: 'https://www.google.com/s2/favicons?domain=ovo.id&sz=128', domain: 'ovo.id' },
+    gopay:     { name: 'GoPay',      type: 'ewallet', localLogo: 'GoPay.png',     urlLogo: '', domain: 'gopay.co.id' },
+    dana:      { name: 'DANA',       type: 'ewallet', localLogo: 'DANA.png',      urlLogo: '', domain: 'dana.id' },
+    shopeepay: { name: 'ShopeePay',  type: 'ewallet', localLogo: 'ShopeePay.png', urlLogo: '', domain: 'shopeepay.co.id' },
+    speedcash: { name: 'Speedcash',  type: 'ewallet', localLogo: 'Speedcash.png', urlLogo: '', domain: 'speedcash.co.id' },
+    octopay:   { name: 'OctoPay',    type: 'ewallet', localLogo: '', urlLogo: 'https://www.google.com/s2/favicons?domain=octopay.id&sz=128', domain: 'octopay.id' }
 };
 
 /* =========================================================
@@ -1469,16 +1553,15 @@ function renderPaymentMethods() {
 
     keys.forEach(key => {
         const meta = WALLET_META[key];
-        if(!meta) return; 
+        if(!meta) return;
 
-        let iconUrl = `https://www.google.com/s2/favicons?domain=${meta.domain}&sz=128`;
-        if (key === 'superbank') {
-            iconUrl = 'https://upload.wikimedia.org/wikipedia/commons/c/c6/Superbank_Indonesia.png';
-        }
+        const faviconUrl = `https://www.google.com/s2/favicons?domain=${meta.domain}&sz=128`;
+        const iconUrl = meta.localLogo || meta.urlLogo || faviconUrl;
+        const fallbackUrl = meta.urlLogo || faviconUrl;
 
         const cardHTML = `
             <div class="payment-card" onclick="openPaymentPage('${key}')">
-                <img src="${iconUrl}" alt="${meta.name}" onerror="this.src='https://ui-avatars.com/api/?name=${meta.name.charAt(0)}&background=000&color=fff'">
+                <img src="${iconUrl}" alt="${meta.name}" onerror="this.onerror=null; this.src='${fallbackUrl}'">
                 <span>${meta.name}</span>
             </div>
         `;
@@ -1540,7 +1623,7 @@ function proceedToPaymentRedirect(method, amount) {
     localStorage.setItem("paymentMethod", method);
     localStorage.setItem("paymentMode", selectedPaymentMode);
     
-    window.location.href = "payment.html";
+    navigateWithLoading("payment.html");
 }
 
 /* =========================================================

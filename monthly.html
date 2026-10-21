@@ -47,7 +47,6 @@
     overflow-x: hidden;
   }
 
-  /* BACKGROUND LAYER & DIM EFFECT */
   .bg-layer{
     position: fixed;
     inset: 0;
@@ -65,7 +64,6 @@
     z-index: 1;
   }
 
-  /* TOP BAR M-BANKING */
   .mbanking-topbar {
     position: fixed;
     top: 0;
@@ -158,9 +156,6 @@
     padding: 2px;
   }
 
-  /* =========================
-     CONTENT WRAP
-  ========================= */
   .content-wrap {
     position: relative;
     z-index: 5;
@@ -169,7 +164,6 @@
     margin: 0 auto;
   }
 
-  /* CUSTOM SELECTOR BULAN STYLING */
   .filter-bulan-wrap {
     margin-bottom: 15px;
     background: rgba(12, 17, 13, 0.85);
@@ -201,7 +195,6 @@
     gap: 8px;
   }
 
-  /* MODAL PILIH BULAN CUSTOM */
   .popupBox {
     position: fixed;
     inset: 0;
@@ -261,14 +254,12 @@
     color: var(--emas-terang);
   }
 
-  /* CONTAINER UTAMA */
   .report-container {
     padding: 0;
     max-width: 100%;
     margin: 0 auto;
   }
 
-  /* SHEET FINANCIAL BOX */
   .sheet-card {
     background: rgba(12, 17, 13, 0.92);
     border: 2px solid var(--emas);
@@ -300,7 +291,6 @@
     color: #aaa;
   }
 
-  /* FINANCIAL TABLE STYLE */
   .table-responsive {
     width: 100%;
     overflow-x: auto;
@@ -326,7 +316,6 @@
     border-bottom: 2px solid var(--emas);
   }
 
-  /* FINANCIAL SUMMARY / TOTAL BOX */
   .financial-summary {
     background: #000;
     border: 1px solid rgba(232, 177, 60, 0.3);
@@ -356,7 +345,6 @@
     color: var(--emas-terang);
   }
 
-  /* BOTTOM NAVBAR M-BANKING (7 TOMBOL) */
   .mbanking-bottom-nav {
     position: fixed;
     bottom: 0;
@@ -400,6 +388,34 @@
   .nav-item.active img, .nav-item:hover img {
     filter: none;
   }
+
+  /* ================= PAGE LOADING OVERLAY (RINGAN) ================= */
+  .page-loading-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(5, 8, 6, 0.92);
+    z-index: 2147483647;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    pointer-events: all;
+  }
+  .page-loading-overlay.active { display: flex; }
+  .page-loading-overlay img {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+  }
+  .page-loading-overlay .loading-text {
+    color: var(--emas-terang);
+    font-family: 'FiraCondBold', sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    opacity: 0.85;
+  }
 </style>
 </head>
 
@@ -408,7 +424,6 @@
   <div class="bg-layer"></div>
   <div class="bg-dim"></div>
 
-  <!-- TOP BAR M-BANKING -->
   <div class="mbanking-topbar">
     <div class="mbanking-brand-container">
       <div class="mbanking-brand">Comersio <span>Center</span></div>
@@ -424,9 +439,7 @@
     </div>
   </div>
 
-<!-- CONTENT WRAP -->
 <div class="content-wrap">
-    <!-- CUSTOM SELECTOR BULAN -->
     <div class="filter-bulan-wrap">
         <span class="filter-label">Filter Bulan Laporan:</span>
         <button type="button" class="custom-dropdown-btn" id="currentMonthLabel" onclick="openMonthModal()">
@@ -434,7 +447,6 @@
         </button>
     </div>
 
-    <!-- REPORT CONTENT -->
     <div class="report-container">
         <div class="sheet-card">
             <div class="sheet-header">
@@ -457,13 +469,10 @@
                             <th>Status</th>
                         </tr>
                     </thead>
-                    <tbody id="monthlyTable">
-                        <!-- Dinamis dari debts & archivedDebts -->
-                    </tbody>
+                    <tbody id="monthlyTable"></tbody>
                 </table>
             </div>
 
-            <!-- FINANCIAL SUMMARY BOX -->
             <div class="financial-summary">
                 <div class="summary-row">
                     <span style="color:#aaa;">Total Utang Sisa:</span>
@@ -494,20 +503,16 @@
     </div>
 </div>
 
-<!-- MODAL PILIH BULAN CUSTOM -->
 <div id="monthModal" class="popupBox">
     <div class="popupContent">
         <h2>PILIH BULAN LAPORAN</h2>
-        <div id="monthOptionsContainer">
-            <!-- Diisi dinamis via JS -->
-        </div>
+        <div id="monthOptionsContainer"></div>
         <div style="margin-top: 15px;">
             <button type="button" style="width: 100%; height: 42px; background: #222; color: white; border: 1px solid #444; border-radius: 10px; font-family: 'FiraCondBold', sans-serif; cursor: pointer;" onclick="closeMonthModal()">Batal</button>
         </div>
     </div>
 </div>
 
-<!-- BOTTOM NAVBAR M-BANKING (7 TOMBOL) -->
 <nav class="mbanking-bottom-nav">
     <a href="index.html" class="nav-item">
         <img src="icon.png" alt="Home">
@@ -539,7 +544,60 @@
     </a>
 </nav>
 
+<!-- ================= PAGE LOADING OVERLAY ================= -->
+<div id="pageLoadingOverlay" class="page-loading-overlay">
+    <img src="loading.webp" alt="Loading...">
+    <div class="loading-text">Memuat Halaman...</div>
+</div>
+
 <script>
+/* =========================================================
+   PAGE LOADING OVERLAY
+========================================================= */
+(function preloadLoadingGif(){
+    const img = new Image();
+    img.src = 'loading.webp';
+})();
+
+function showPageLoading(){
+    const ov = document.getElementById('pageLoadingOverlay');
+    if (ov) ov.classList.add('active');
+}
+
+function navigateWithLoading(url){
+    if (!url) return;
+    showPageLoading();
+    setTimeout(() => { window.location.href = url; }, 450);
+}
+
+/* Handler global untuk semua <a href="*.html"> */
+document.addEventListener('click', function(e){
+    const link = e.target.closest('a[href]');
+    if (!link) return;
+    if (link.classList.contains('nav-item')) return;
+
+    const href = link.getAttribute('href');
+    if (!href) return;
+    if (href.startsWith('http') || href.startsWith('javascript') ||
+        href.startsWith('#') || href.startsWith('mailto') ||
+        href.startsWith('tel') || href.startsWith('blob')) return;
+    if (!href.endsWith('.html')) return;
+
+    e.preventDefault();
+    navigateWithLoading(href);
+});
+
+/* Bottom nav: loading */
+document.querySelectorAll('.nav-item').forEach(item => {
+  const href = item.getAttribute('href');
+  if (item.tagName === 'A' && href && href.endsWith('.html')){
+    item.addEventListener('click', function(e){
+      e.preventDefault();
+      navigateWithLoading(href);
+    });
+  }
+});
+
 /* =========================
    DATE & TIME
 ========================= */
@@ -605,7 +663,6 @@ const debts = JSON.parse(localStorage.getItem("debts")) || {};
 const archivedDebts = JSON.parse(localStorage.getItem("archivedDebts")) || {};
 let allTransactions = [];
 
-// Muat transaksi yang Belum Lunas
 for(const customerId in debts){
     debts[customerId].forEach(item => {
         allTransactions.push({
@@ -616,7 +673,6 @@ for(const customerId in debts){
     });
 }
 
-// Muat transaksi yang Lunas (Arsip)
 for(const customerId in archivedDebts){
     archivedDebts[customerId].forEach(item => {
         allTransactions.push({
@@ -627,7 +683,6 @@ for(const customerId in archivedDebts){
     });
 }
 
-// SORT DARI TERLAMA KE TERBARU (ATAS KE BAWAH)
 allTransactions.sort((a, b) => getItemTime(a) - getItemTime(b));
 
 function extractMonthKey(dateStr){

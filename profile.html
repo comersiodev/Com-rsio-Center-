@@ -73,6 +73,13 @@
     z-index: 1;
   }
 
+  /* KELAS UNTUK EFEK BLUR SAAT LOADING */
+  .blur-active {
+    filter: blur(6px);
+    pointer-events: none;
+    transition: filter 0.3s ease;
+  }
+
   /* TOP BAR M-BANKING */
   .mbanking-topbar {
     position: fixed;
@@ -116,7 +123,6 @@
     line-height: 1;
   }
 
-  /* KEMBALI KE HOME BUTTON DI KANAN ATAS */
   .back-home-btn {
     width: 36px;
     height: 36px;
@@ -156,7 +162,6 @@
     overflow-y: auto;
   }
 
-  /* KARTU KONTainer PROFILE */
   .profile-card-container {
     width: 92%;
     max-width: 360px;
@@ -253,6 +258,90 @@
     box-shadow: 0 0 8px rgba(255, 209, 102, 0.25);
   }
 
+  /* --- CUSTOM SELECT (PENGGANTI DROPDOWN GINGERBREAD JADUL) --- */
+  .custom-select-container {
+    position: relative;
+    width: 100%;
+    user-select: none;
+  }
+
+  .custom-select-trigger {
+    width: 100%;
+    height: 40px;
+    background: #000;
+    border: 1px solid rgba(232, 177, 60, 0.4);
+    border-radius: 10px;
+    color: #fff;
+    padding: 0 12px;
+    font-family: 'FiraCondBook', sans-serif;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+
+  .custom-select-trigger:focus, .custom-select-trigger.active {
+    border-color: var(--emas-terang);
+    box-shadow: 0 0 8px rgba(255, 209, 102, 0.25);
+  }
+
+  .custom-select-icon {
+    width: 18px;
+    height: 18px;
+    fill: var(--emas-terang);
+    transition: transform 0.3s ease;
+  }
+
+  .custom-select-trigger.active .custom-select-icon {
+    transform: rotate(180deg);
+  }
+
+  .custom-select-options {
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0;
+    right: 0;
+    background: #0d120f;
+    border: 1px solid var(--emas-terang);
+    border-radius: 10px;
+    z-index: 100;
+    display: none;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.8);
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+  }
+
+  .custom-select-options.show {
+    display: flex;
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .custom-select-option {
+    padding: 12px;
+    color: #ddd;
+    font-family: 'FiraCondBook', sans-serif;
+    font-size: 0.95rem;
+    cursor: pointer;
+    border-bottom: 1px solid rgba(232, 177, 60, 0.15);
+    transition: background 0.2s, color 0.2s, padding-left 0.2s;
+  }
+
+  .custom-select-option:last-child {
+    border-bottom: none;
+  }
+
+  .custom-select-option:hover, .custom-select-option.selected {
+    background: rgba(232, 177, 60, 0.2);
+    color: var(--emas-terang);
+    padding-left: 18px; /* Animasi geser dikit pas dihover/dipilih */
+  }
+
   .profile-save-btn {
     width: 100%;
     background: var(--emas-terang);
@@ -273,7 +362,7 @@
     box-shadow: 0 0 15px rgba(255, 209, 102, 0.5);
   }
 
-  /* BOTTOM NAVBAR M-BANKING (7 TOMBOL) */
+  /* BOTTOM NAVBAR */
   .mbanking-bottom-nav {
     position: fixed;
     bottom: 0;
@@ -321,7 +410,7 @@
     filter: none;
   }
 
-  /* MODAL CROP & ALERT */
+  /* MODAL ALERT & PASSWORD & LOADING */
   .popupBox {
     position: fixed;
     inset: 0;
@@ -337,16 +426,25 @@
     display: flex;
   }
 
-  .popupContent {
+  /* Loading GIF Styling */
+  .loading-gif {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+    filter: drop-shadow(0 0 10px rgba(255, 209, 102, 0.5));
+  }
+
+  .popupContent, .custom-modal-box {
     display: flex;
     flex-direction: column;
     width: 100%;
     max-width: 320px;
-    background: #000;
+    background: #0d120f;
     border: 2px solid var(--emas-terang);
-    border-radius: 20px;
-    padding: 16px;
+    border-radius: 16px;
+    padding: 20px;
     text-align: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.8);
   }
 
   .popupContent h2 {
@@ -373,17 +471,6 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-  }
-
-  .custom-modal-box {
-    background: #0d120f;
-    border: 2px solid var(--emas-terang);
-    border-radius: 16px;
-    padding: 20px;
-    width: 100%;
-    max-width: 320px;
-    text-align: center;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.8);
   }
 
   .custom-modal-title {
@@ -416,11 +503,11 @@
 </head>
 <body>
 
-  <div class="bg-layer"></div>
-  <div class="bg-dim"></div>
+  <div class="bg-layer" id="bg-layer-el"></div>
+  <div class="bg-dim" id="bg-dim-el"></div>
 
   <!-- TOP BAR M-BANKING -->
-  <div class="mbanking-topbar">
+  <div class="mbanking-topbar" id="topbar-el">
     <div class="mbanking-brand-container">
       <div class="mbanking-brand">Comersio <span>Center</span></div>
       <div class="mbanking-greeting-top">Pengaturan Akun</div>
@@ -455,45 +542,35 @@
       </div>
 
       <div class="profile-form-group">
-        <label class="profile-label">Email:</label>
+        <label class="profile-label">Email: </label>
         <input type="email" id="profileEmailInput" class="profile-input" placeholder="Masukkan email lu...">
       </div>
 
       <div class="profile-form-group">
         <label class="profile-label">Jabatan / Gelar (Title):</label>
-        <input type="text" id="profileTitleInput" class="profile-input" placeholder="Misal: Administrator / Owner...">
+        
+        <!-- CUSTOM SELECT DROPDOWN -->
+        <div class="custom-select-container">
+          <div class="custom-select-trigger" id="titleSelectTrigger" onclick="toggleCustomSelect()">
+            <span id="titleSelectDisplay">Staff</span>
+            <svg viewBox="0 0 24 24" class="custom-select-icon"><path d="M7 10l5 5 5-5z"/></svg>
+          </div>
+          <div class="custom-select-options" id="titleSelectOptions">
+            <div class="custom-select-option" onclick="selectTitle('Staff')">Staff</div>
+            <div class="custom-select-option" onclick="selectTitle('Employee')">Employee</div>
+            <div class="custom-select-option" onclick="selectTitle('Owner')">Owner</div>
+          </div>
+        </div>
+        <!-- Input disembunyikan buat nyimpan data untuk JS -->
+        <input type="hidden" id="profileTitleInput" value="Staff">
       </div>
 
       <button type="button" class="profile-save-btn" onclick="saveProfileData()">Simpan Perubahan</button>
     </div>
   </div>
 
-  <!-- MODAL CROP 1:1 PREVIEW -->
-  <div id="cropModalOverlay" class="popupBox">
-    <div class="popupContent">
-      <h2>CROP FOTO 1:1</h2>
-      <div style="font-size:0.75rem; color:#aaa; margin-bottom:10px;">Pratinjau bulat (Otomatis menyesuaikan rasio 1:1).</div>
-      <div class="crop-preview-box">
-        <img id="cropPreviewImg" src="" alt="Crop Preview">
-      </div>
-      <div style="display:flex; gap:8px;">
-        <button type="button" class="profile-save-btn" onclick="confirmCropAvatar()" style="margin:0; background:var(--hijau-terang); color:#000;">Gunakan Foto</button>
-        <button type="button" class="profile-save-btn" onclick="closeCropModal()" style="margin:0; background:#2a2a2a; color:#fff;">Batal</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- MODAL CUSTOM ALERT -->
-  <div id="customModalOverlay" class="popupBox">
-    <div class="custom-modal-box">
-      <div class="custom-modal-title" id="customModalTitle">Informasi</div>
-      <div class="custom-modal-msg" id="customModalMsg">Pesan...</div>
-      <button type="button" class="custom-modal-btn" onclick="closeCustomModal()">OK</button>
-    </div>
-  </div>
-
   <!-- BOTTOM NAVBAR M-BANKING (7 TOMBOL) -->
-  <nav class="mbanking-bottom-nav">
+  <nav class="mbanking-bottom-nav" id="bottom-nav-el">
       <a href="index.html" class="nav-item">
           <img src="icon.png" alt="Home">
           <span>Home</span>
@@ -524,7 +601,106 @@
       </a>
   </nav>
 
+  <!-- ================= MODALS ================= -->
+
+  <!-- LOADING OVERLAY -->
+  <div id="loadingOverlay" class="popupBox" style="background: rgba(0,0,0,0.6);">
+    <img src="loading.webp" class="loading-gif" alt="Loading...">
+  </div>
+
+  <!-- MODAL CROP 1:1 PREVIEW -->
+  <div id="cropModalOverlay" class="popupBox">
+    <div class="popupContent">
+      <h2>CROP FOTO 1:1</h2>
+      <div style="font-size:0.75rem; color:#aaa; margin-bottom:10px;">Pratinjau bulat (Otomatis menyesuaikan rasio 1:1).</div>
+      <div class="crop-preview-box">
+        <img id="cropPreviewImg" src="" alt="Crop Preview">
+      </div>
+      <div style="display:flex; gap:8px;">
+        <button type="button" class="profile-save-btn" onclick="confirmCropAvatar()" style="margin:0; background:var(--hijau-terang); color:#000;">Gunakan Foto</button>
+        <button type="button" class="profile-save-btn" onclick="closeCropModal()" style="margin:0; background:#2a2a2a; color:#fff;">Batal</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL CUSTOM ALERT -->
+  <div id="customModalOverlay" class="popupBox">
+    <div class="custom-modal-box">
+      <div class="custom-modal-title" id="customModalTitle">Informasi</div>
+      <div class="custom-modal-msg" id="customModalMsg">Pesan...</div>
+      <button type="button" class="custom-modal-btn" onclick="closeCustomModal()">OK</button>
+    </div>
+  </div>
+
+  <!-- MODAL PASSWORD KHUSUS OWNER -->
+  <div id="passwordModalOverlay" class="popupBox">
+    <div class="custom-modal-box">
+      <div class="custom-modal-title">Otorisasi Owner</div>
+      <div class="custom-modal-msg">Masukkan password untuk memverifikasi jabatan Owner.</div>
+      <input type="password" id="ownerPasswordInput" class="profile-input" placeholder="Password..." style="margin-bottom: 16px; text-align: center; letter-spacing: 2px;">
+      <div style="display:flex; gap:8px;">
+        <button type="button" class="custom-modal-btn" onclick="submitPassword()" style="background:var(--hijau-terang)">Konfirmasi</button>
+        <button type="button" class="custom-modal-btn" onclick="cancelPassword()" style="background:#2a2a2a; color:#fff;">Batal</button>
+      </div>
+    </div>
+  </div>
+
   <script>
+    // --- CUSTOM DROPDOWN LOGIC ---
+    function toggleCustomSelect() {
+      const trigger = document.getElementById("titleSelectTrigger");
+      const options = document.getElementById("titleSelectOptions");
+      trigger.classList.toggle("active");
+      
+      if (options.classList.contains("show")) {
+        // Hilangkan perlahan
+        setTimeout(() => options.classList.remove("show"), 200);
+        options.style.opacity = "0";
+        options.style.transform = "translateY(-10px)";
+      } else {
+        options.classList.add("show");
+        // Tunggu bentar buat trigger transisi opacity/transform
+        setTimeout(() => {
+          options.style.opacity = "1";
+          options.style.transform = "translateY(0)";
+        }, 10);
+      }
+    }
+
+    function selectTitle(value) {
+      document.getElementById("profileTitleInput").value = value;
+      document.getElementById("titleSelectDisplay").innerText = value;
+      
+      // Update class selected di opsinya
+      const opts = document.querySelectorAll(".custom-select-option");
+      opts.forEach(opt => {
+        if(opt.innerText === value) opt.classList.add("selected");
+        else opt.classList.remove("selected");
+      });
+
+      // Tutup Dropdown
+      document.getElementById("titleSelectTrigger").classList.remove("active");
+      const options = document.getElementById("titleSelectOptions");
+      options.style.opacity = "0";
+      options.style.transform = "translateY(-10px)";
+      setTimeout(() => options.classList.remove("show"), 200);
+    }
+
+    // Klik di luar buat nutup dropdown
+    document.addEventListener("click", function(e) {
+      const container = document.querySelector(".custom-select-container");
+      if (container && !container.contains(e.target)) {
+        document.getElementById("titleSelectTrigger").classList.remove("active");
+        const options = document.getElementById("titleSelectOptions");
+        if(options.classList.contains("show")) {
+          options.style.opacity = "0";
+          options.style.transform = "translateY(-10px)";
+          setTimeout(() => options.classList.remove("show"), 200);
+        }
+      }
+    });
+
+    // --- CUSTOM ALERTS ---
     function showCustomAlert(message, title = "Informasi") {
       return new Promise((resolve) => {
         document.getElementById("customModalTitle").innerText = title;
@@ -539,17 +715,62 @@
       if(window.modalResolve) window.modalResolve();
     }
 
+    // --- CUSTOM PASSWORD PROMPT UNTUK OWNER ---
+    function showPasswordPrompt() {
+      return new Promise((resolve) => {
+        document.getElementById("ownerPasswordInput").value = "";
+        document.getElementById("passwordModalOverlay").classList.add("active");
+        window.passwordResolve = resolve;
+      });
+    }
+
+    function submitPassword() {
+      const pwd = document.getElementById("ownerPasswordInput").value;
+      document.getElementById("passwordModalOverlay").classList.remove("active");
+      if (window.passwordResolve) window.passwordResolve(pwd);
+    }
+
+    function cancelPassword() {
+      document.getElementById("passwordModalOverlay").classList.remove("active");
+      if (window.passwordResolve) window.passwordResolve(null);
+    }
+
+    // --- BLUR HANDLER (LOADING) ---
+    function toggleLoadingState(isActive) {
+      const elementsToBlur = ["bg-layer-el", "bg-dim-el", "topbar-el", "screen-profile", "bottom-nav-el"];
+      
+      if(isActive) {
+        document.getElementById("loadingOverlay").classList.add("active");
+        elementsToBlur.forEach(id => {
+          document.getElementById(id).classList.add("blur-active");
+        });
+      } else {
+        document.getElementById("loadingOverlay").classList.remove("active");
+        elementsToBlur.forEach(id => {
+          document.getElementById(id).classList.remove("blur-active");
+        });
+      }
+    }
+
+
     let tempCroppedBase64 = "";
 
     window.addEventListener("DOMContentLoaded", () => {
       const username = localStorage.getItem("username") || "";
       const email = localStorage.getItem("email") || "";
-      const title = localStorage.getItem("title") || "";
+      const savedTitleFull = localStorage.getItem("title") || "Staff •"; 
       const savedPic = localStorage.getItem("profile_picture") || localStorage.getItem("user_avatar");
 
       document.getElementById("profileUsernameInput").value = username;
       document.getElementById("profileEmailInput").value = email;
-      document.getElementById("profileTitleInput").value = title;
+      
+      // Sinkronisasi Data UI Custom Select
+      let baseTitle = savedTitleFull.replace(" ✔", "").replace(" •", "");
+      if(["Owner", "Staff", "Employee"].includes(baseTitle)) {
+        selectTitle(baseTitle); // Otomatis nge-set tulisan dan state-nya
+      } else {
+        selectTitle("Staff"); 
+      }
 
       if(savedPic) {
         const container = document.getElementById("profileAvatarContainer");
@@ -566,7 +787,6 @@
       reader.onload = function(e) {
         const img = new Image();
         img.onload = function() {
-          // Canvas otomatis crop 1:1 persegi tengah
           const canvas = document.createElement("canvas");
           const size = Math.min(img.width, img.height);
           canvas.width = 300;
@@ -600,23 +820,61 @@
     async function saveProfileData() {
       const newUsername = document.getElementById("profileUsernameInput").value.trim();
       const newEmail = document.getElementById("profileEmailInput").value.trim();
-      const newTitle = document.getElementById("profileTitleInput").value.trim();
+      const selectedTitle = document.getElementById("profileTitleInput").value;
 
       if(!newUsername) {
         await showCustomAlert("Nama pengguna tidak boleh kosong!", "Peringatan");
         return;
       }
 
-      localStorage.setItem("username", newUsername);
-      localStorage.setItem("email", newEmail);
-      localStorage.setItem("title", newTitle);
-      if(tempCroppedBase64) {
-        localStorage.setItem("profile_picture", tempCroppedBase64);
-        localStorage.setItem("user_avatar", tempCroppedBase64);
+      // Validasi wajib isi email sesuai permintaan
+      if(!newEmail) {
+        await showCustomAlert("Email wajib diisi coy! Kalo kaga ga bisa di save.", "Peringatan");
+        return;
       }
 
-      await showCustomAlert("Profil dan foto berhasil diperbarui!", "Berhasil");
-      window.location.href = "index.html";
+      let finalTitleToSave = "";
+
+      // Validasi Khusus Owner
+      if (selectedTitle === "Owner") {
+        const passAttempt = await showPasswordPrompt();
+        
+        // Jika dibatalkan
+        if (passAttempt === null) {
+          return; 
+        }
+
+        if (passAttempt !== "cocenter1") {
+          await showCustomAlert("Password salah! Lu bukan Owner asli ya 🤨", "Akses Ditolak");
+          return;
+        }
+        
+        // Format dengan logo verified khusus owner
+        finalTitleToSave = "Owner ✔";
+      } else {
+        // Format non-owner dengan titik (dot)
+        finalTitleToSave = selectedTitle + " •";
+      }
+
+      // Aktifkan Efek Loading (Gambar Loading & Latar Blur)
+      toggleLoadingState(true);
+
+      // Simulasi proses delay
+      setTimeout(async () => {
+        localStorage.setItem("username", newUsername);
+        localStorage.setItem("email", newEmail);
+        localStorage.setItem("title", finalTitleToSave);
+        
+        if(tempCroppedBase64) {
+          localStorage.setItem("profile_picture", tempCroppedBase64);
+          localStorage.setItem("user_avatar", tempCroppedBase64);
+        }
+
+        toggleLoadingState(false);
+        
+        await showCustomAlert("Profil berhasil diperbarui!", "Berhasil");
+        window.location.href = "index.html";
+      }, 1500);
     }
   </script>
 

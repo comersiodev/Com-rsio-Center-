@@ -571,6 +571,34 @@
         .charge-global-btn .charge-btn-label { display: none; }
         .limit-global-btn, .charge-global-btn { padding: 0 9px; }
       }
+
+      /* ================= PAGE LOADING OVERLAY (RINGAN) ================= */
+      .page-loading-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(5, 8, 6, 0.92);
+        z-index: 2147483647;
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 14px;
+        pointer-events: all;
+      }
+      .page-loading-overlay.active { display: flex; }
+      .page-loading-overlay img {
+        width: 80px;
+        height: 80px;
+        object-fit: contain;
+      }
+      .page-loading-overlay .loading-text {
+        color: var(--emas-terang);
+        font-family: 'FiraCondBold', sans-serif;
+        font-size: 0.8rem;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        opacity: 0.85;
+      }
     </style>
 </head>
 
@@ -750,6 +778,12 @@
     </a>
 </nav>
 
+<!-- ================= PAGE LOADING OVERLAY ================= -->
+<div id="pageLoadingOverlay" class="page-loading-overlay">
+    <img src="loading.webp" alt="Loading...">
+    <div class="loading-text">Memuat Halaman...</div>
+</div>
+
 <script>
 const KEY_CUSTOMERS     = "customers";
 const KEY_DEBTS         = "debts";
@@ -766,6 +800,51 @@ const ICON_WARNING = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M1 2
 const ICON_DANGER = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>';
 
 const DOT_SEP = '<span class="dot-sep"></span>';
+
+/* ================= PAGE LOADING OVERLAY ================= */
+(function preloadLoadingGif(){
+    const img = new Image();
+    img.src = 'loading.webp';
+})();
+
+function showPageLoading(){
+    const ov = document.getElementById('pageLoadingOverlay');
+    if (ov) ov.classList.add('active');
+}
+
+function navigateWithLoading(url){
+    if (!url) return;
+    showPageLoading();
+    setTimeout(() => { window.location.href = url; }, 450);
+}
+
+/* Handler global untuk semua <a href="*.html"> */
+document.addEventListener('click', function(e){
+    const link = e.target.closest('a[href]');
+    if (!link) return;
+    if (link.classList.contains('nav-item')) return;
+
+    const href = link.getAttribute('href');
+    if (!href) return;
+    if (href.startsWith('http') || href.startsWith('javascript') ||
+        href.startsWith('#') || href.startsWith('mailto') ||
+        href.startsWith('tel') || href.startsWith('blob')) return;
+    if (!href.endsWith('.html')) return;
+
+    e.preventDefault();
+    navigateWithLoading(href);
+});
+
+/* Bottom nav: loading */
+document.querySelectorAll('.nav-item').forEach(item => {
+  const href = item.getAttribute('href');
+  if (item.tagName === 'A' && href && href.endsWith('.html')){
+    item.addEventListener('click', function(e){
+      e.preventDefault();
+      navigateWithLoading(href);
+    });
+  }
+});
 
 function formatRibuan(val){
     const digits = String(val).replace(/\D/g, "");
