@@ -26,7 +26,27 @@
   .modeToggleWrap{display:flex;background:rgba(10,14,11,0.9);border:1px solid rgba(232,177,60,0.3);border-radius:24px;padding:4px;max-width:320px;margin:0 auto 16px;gap:4px;}
   .modeBtn{flex:1;background:transparent;border:none;color:#999;padding:8px 10px;border-radius:20px;font-family:'FiraCondBold',sans-serif;font-size:0.82rem;cursor:pointer;transition:all 0.2s;letter-spacing:0.5px;}
   .modeBtn.active{background:var(--emas-terang);color:#000;}
+  
+  /* WATERMARK & CAPTURE AREA */
+  #captureArea, #notaCaptureArea{position:relative;overflow:hidden;}
   #captureArea{background:rgba(12,17,13,0.95);border:2px solid var(--emas);border-radius:16px;padding:20px;box-shadow:0 6px 25px rgba(0,0,0,0.7);}
+  
+  /* WATERMARK BARU: 180px, Opacity 15%, Geser kanan -40px */
+  .billing-watermark{
+    position:absolute;
+    top:50%;
+    right:-40px;
+    transform:translateY(-50%) rotate(-15deg);
+    width:180px;
+    height:180px;
+    object-fit:contain;
+    opacity:0.15;
+    pointer-events:none;
+    z-index:0;
+  }
+  
+  #captureArea > *:not(.billing-watermark), .notaBody > *:not(.billing-watermark){position:relative;z-index:1;}
+  
   div.headerBox{all:unset !important;display:flex !important;flex-direction:column !important;align-items:center !important;text-align:center !important;width:100% !important;border-bottom:1px solid rgba(255,209,102,0.2) !important;padding-bottom:15px !important;margin-bottom:15px !important;background:transparent !important;box-shadow:none !important;}
   .headerTopRow{display:flex;align-items:center;gap:12px;justify-content:center;}
   .mainLogo{width:40px !important;height:40px !important;object-fit:contain !important;border-radius:50% !important;border:1px solid var(--emas-terang) !important;margin:0 !important;background:#0a0a0a !important;cursor:default;}
@@ -51,9 +71,10 @@
   .paymentCard{background:#000;padding:14px;border-radius:10px;border:1px solid var(--emas);text-align:center;color:#fff;font-family:'FiraCondBold',sans-serif;}
   .qrisContainer{display:flex;flex-direction:column;align-items:center;background:#fff;padding:8px;border-radius:0 !important;border:none !important;max-width:176px;margin:0 auto;}
   .qrisImage{width:160px;height:160px;object-fit:contain;border-radius:0 !important;display:block;}
+  
   .notaBill{background:transparent;border:none;padding:0;width:400px;max-width:100%;margin:0 auto;position:relative;}
   .tornStrip{position:relative;width:100%;height:30px;overflow:hidden;display:block;}
-  .notaBody{background:#0d0d0d;border-left:2px solid var(--emas);border-right:2px solid var(--emas);padding:8px 16px 14px 16px;position:relative;}
+  .notaBody{background:#0d0d0d;border-left:2px solid var(--emas);border-right:2px solid var(--emas);padding:8px 16px 14px 16px;position:relative;overflow:hidden;}
   .notaHeader{text-align:center;}
   .notaBrand{font-family:'OswaldBold',sans-serif;font-size:1.6rem;color:var(--emas-terang);letter-spacing:4px;line-height:1;}
   .notaTagline{font-family:'FiraCondBold',sans-serif;font-size:0.7rem;color:#888;letter-spacing:3px;margin-top:6px;}
@@ -137,7 +158,9 @@
       <button class="modeBtn" data-mode="nota" onclick="switchMode('nota')">Nota Billing</button>
     </div>
 
+    <!-- MODE NORMAL / SIMPLE -->
     <div id="captureArea">
+      <img src="icon.png" alt="Watermark" class="billing-watermark">
       <div class="headerBox">
         <div class="headerTopRow">
           <img src="icon.png" class="mainLogo" alt="Logo">
@@ -157,9 +180,11 @@
       </div>
     </div>
 
+    <!-- MODE NOTA BILLING -->
     <div id="notaCaptureArea" class="notaBill" style="display:none;">
       <div class="tornStrip" id="tornTop"></div>
       <div class="notaBody">
+        <img src="icon.png" alt="Watermark" class="billing-watermark">
         <div class="notaHeader">
           <div class="notaBrand">COMÉRSIO</div>
           <div class="notaTagline">NOTA PEMBAYARAN</div>
@@ -221,9 +246,6 @@ function navigateWithLoading(url){
 
 /* =========================================================
    WALLET METADATA
-   - localLogo  : file PNG lokal (PRIORITAS UTAMA)
-   - urlLogo    : URL online (fallback jika gak ada lokal)
-   - color      : warna brand (buat fallback SVG inisial)
 ========================================================= */
 const WALLET_META = {
     qris:      { name: 'QRIS',       type: 'qris',    localLogo: 'QRIS Logo.png', urlLogo: '', color: 'E31E24' },
@@ -244,14 +266,12 @@ const WALLET_META = {
     octopay:   { name: 'OctoPay',    type: 'ewallet', localLogo: '',              urlLogo: 'https://www.google.com/s2/favicons?domain=octopay.id&sz=128', color: 'FF4757' }
 };
 
-/* Prioritas: local PNG > URL online */
 function getWalletLogo(key) {
     const meta = WALLET_META[key];
     if (!meta) return '';
     return meta.localLogo || meta.urlLogo || '';
 }
 
-/* Fallback terakhir: SVG inisial + warna brand */
 function getFallbackLogo(key) {
     const meta = WALLET_META[key];
     if (!meta) return '';
@@ -398,11 +418,12 @@ if(pay.type === "qris"){
 } else {
     content.innerHTML = `
     <div class="paymentList">
-        <div class="paymentHeader"><div class="paymentHeaderLeft">Metode Pembayaran</div><div class="paymentHeaderRight"><img src="${pay.logo}" alt="${pay.name}" onerror="this.onerror=null; this.src='${pay.logoFallback}'"><span>${pay.name}</span></div></div>
+        <div class="paymentHeader"><div class="paymentHeaderLeft">Metode Pembayaran</div><div class="paymentHeaderRight"><img src="${pay.logo}" alt="${pay.name}" onerror="this.onerror=null; this.src='${pay.logoFallback}'"><span id="walletHeaderName">${pay.name}</span></div></div>
         <div class="paymentInfoText">${infoText}</div>
         <div class="paymentCard" style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
             <div style="display: flex; align-items: center; gap: 8px;">
-                <span style="font-size: 1.2rem; color: var(--emas-terang);">${pay.number}</span>
+                <!-- ID di sini -->
+                <span id="walletNumberText" style="font-size: 1.2rem; color: var(--emas-terang);">${pay.number}</span>
                 <button class="copy-btn icon-only" style="padding: 6px;" onclick="copyToClipboard('${pay.number}', this)"><svg viewBox="0 0 24 24" style="margin:0;"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg></button>
             </div>
             <span style="font-size: 0.85rem; color: #aaa;">a.n. ${pay.owner}</span>
@@ -439,8 +460,13 @@ function renderNota(){
             <div class="notaPaymentBox" style="padding: 20px;"><svg viewBox="0 0 24 24" style="width: 40px; height: 40px; fill: #4caf5e; margin-bottom: 8px;"><path d="M20 6H4V4h16v2zm0 3H4c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V11c0-1.1-.9-2-2-2zm-2 8c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm-4-2c0 1.66-1.34 3-3 3s-3-1.34-3-3 1.34-3 3-3 3 1.34 3 3z"/></svg><div class="notaTransferNumber" style="font-size: 1rem;">Pembayaran Tunai</div><div class="notaTransferOwner" style="margin-top: 6px;">Silakan bayar langsung ke kasir.</div></div>`;
     } else {
         notaPay.innerHTML = `
-            <div class="notaMethodHeader"><img src="${pay.logo}" alt="${pay.name}" onerror="this.onerror=null; this.src='${pay.logoFallback}'"><span>${pay.name}</span></div>
-            <div class="notaPaymentBox"><div class="notaTransferNumber">${pay.number}</div><button class="copy-btn" style="margin-top: 6px;" onclick="copyToClipboard('${pay.number}', this)"><svg viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg> Salin</button><div class="notaTransferOwner" style="margin-top: 8px;">a.n. ${pay.owner}</div></div>`;
+            <div class="notaMethodHeader"><img src="${pay.logo}" alt="${pay.name}" onerror="this.onerror=null; this.src='${pay.logoFallback}'"><span id="walletHeaderNameNota">${pay.name}</span></div>
+            <div class="notaPaymentBox">
+                <!-- ID di sini -->
+                <div class="notaTransferNumber" id="walletNumberTextNota">${pay.number}</div>
+                <button class="copy-btn" style="margin-top: 6px;" onclick="copyToClipboard('${pay.number}', this)"><svg viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg> Salin</button>
+                <div class="notaTransferOwner" style="margin-top: 8px;">a.n. ${pay.owner}</div>
+            </div>`;
     }
 }
 
@@ -496,12 +522,42 @@ function saveAsImage(){
     const originalText = button.innerText;
     button.innerText = "Memproses Gambar..."; button.disabled = true;
     const targetEl = (currentMode === 'nota') ? document.getElementById('notaCaptureArea') : document.getElementById('captureArea');
-    html2canvas(targetEl, { scale: 3, useCORS: true, backgroundColor: "#0a0a0a", logging: false }).then(canvas => {
+    
+    html2canvas(targetEl, { 
+        scale: 3, 
+        useCORS: true, 
+        backgroundColor: "#0a0a0a", 
+        logging: false,
+        onclone: (clonedDoc) => {
+            // LOGIKA DOWNLOAD: Hilangkan nomor, Ganti jadi nama bank
+            const numNormal = clonedDoc.getElementById('walletNumberText');
+            const numNota = clonedDoc.getElementById('walletNumberTextNota');
+            const headNormal = clonedDoc.getElementById('walletHeaderName');
+            const headNota = clonedDoc.getElementById('walletHeaderNameNota');
+
+            // Ganti text no rekening jadi nama bank
+            if (numNormal) numNormal.innerText = pay.name;
+            if (numNota) numNota.innerText = pay.name;
+
+            // Sembunyikan nama bank di header biar ga dobel
+            if (headNormal) headNormal.style.visibility = 'hidden';
+            if (headNota) headNota.style.visibility = 'hidden';
+            
+            // Sembunyikan tombol salin jika ada
+            const copyBtnNormal = numNormal ? numNormal.parentElement.querySelector('.copy-btn') : null;
+            if (copyBtnNormal) copyBtnNormal.style.display = 'none';
+            const copyBtnNota = numNota ? numNota.parentElement.querySelector('.copy-btn') : null;
+            if (copyBtnNota) copyBtnNota.style.display = 'none';
+        }
+    }).then(canvas => {
         const link = document.createElement("a");
         link.download = `Bill-Comersio-${customer}-${currentMode}.png`;
         link.href = canvas.toDataURL("image/png"); link.click();
         button.innerText = originalText; button.disabled = false;
-    }).catch(err => { alert("Gagal menyimpan gambar."); button.innerText = originalText; button.disabled = false; });
+    }).catch(err => { 
+        alert("Gagal menyimpan gambar."); 
+        button.innerText = originalText; button.disabled = false; 
+    });
 }
 </script>
 </body>

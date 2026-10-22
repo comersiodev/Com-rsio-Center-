@@ -1,36 +1,18 @@
 <!DOCTYPE html>
 <html lang="id">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Customer Comérsio</title>
     <link rel="stylesheet" href="style.css">
     <style>
-      @font-face{
-        font-family: 'OswaldBold';
-        src: url('oswald-bold.ttf') format('truetype');
-        font-weight: 700;
-      }
-      @font-face{
-        font-family: 'FiraCondBold';
-        src: url('firasanscondensed-bold.otf') format('opentype');
-        font-weight: 700;
-      }
-      @font-face{
-        font-family: 'FiraCondBook';
-        src: url('firasanscondensed-book.otf') format('opentype');
-        font-weight: 400;
-      }
+      @font-face{ font-family: 'OswaldBold'; src: url('oswald-bold.ttf') format('truetype'); font-weight: 700; }
+      @font-face{ font-family: 'FiraCondBold'; src: url('firasanscondensed-bold.otf') format('opentype'); font-weight: 700; }
+      @font-face{ font-family: 'FiraCondBook'; src: url('firasanscondensed-book.otf') format('opentype'); font-weight: 400; }
 
       :root{
-        --emas: #e8b13c;
-        --emas-terang: #ffd166;
-        --gelap: #0a0a0a;
-        --hijau: #3ddc84;
-        --kuning: #ffd166;
-        --oranye: #ff9f1a;
-        --merah: #ff4d4d;
+        --emas: #e8b13c; --emas-terang: #ffd166; --gelap: #0a0a0a;
+        --hijau: #3ddc84; --kuning: #ffd166; --oranye: #ff9f1a; --merah: #ff4d4d;
       }
 
       *{ box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -38,22 +20,11 @@
       html, body{
         margin: 0; padding: 0; width: 100%; min-height: 100vh;
         font-family: 'FiraCondBook', sans-serif;
-        background: #0a0a0a !important;
-        color: #ffffff;
-        overflow-x: hidden;
+        background: #0a0a0a !important; color: #ffffff; overflow-x: hidden;
       }
 
-      .bg-layer{
-        position: fixed; inset: 0;
-        background-image: url('background.jpg');
-        background-size: cover; background-position: center; background-repeat: no-repeat;
-        z-index: 0;
-      }
-      .bg-dim{
-        position: fixed; inset: 0;
-        background: rgba(6, 10, 7, 0.82);
-        z-index: 1;
-      }
+      .bg-layer{ position: fixed; inset: 0; background-image: url('background.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat; z-index: 0; }
+      .bg-dim{ position: fixed; inset: 0; background: rgba(6, 10, 7, 0.82); z-index: 1; }
 
       .mbanking-topbar {
         position: fixed; top: 0; left: 0; right: 0; height: 60px;
@@ -62,249 +33,230 @@
         display: flex; align-items: center; justify-content: space-between;
         padding: 0 16px; z-index: 20; backdrop-filter: blur(8px);
       }
-      .mbanking-brand-container {
-        display: flex; flex-direction: column; justify-content: center; min-width: 0;
-      }
-      .mbanking-brand {
-        font-family: 'OswaldBold', sans-serif;
-        font-size: 1.1rem; color: #ffffff; letter-spacing: 0.5px;
-        line-height: 1.1; white-space: nowrap;
-      }
+      .mbanking-brand-container { display: flex; flex-direction: column; justify-content: center; min-width: 0; }
+      .mbanking-brand { font-family: 'OswaldBold', sans-serif; font-size: 1.1rem; color: #ffffff; letter-spacing: 0.5px; line-height: 1.1; white-space: nowrap; }
       .mbanking-brand span{ color: var(--emas-terang); }
-      .mbanking-greeting-top{
-        font-size: 0.7rem; color: var(--emas-terang);
-        font-family: 'FiraCondBold', sans-serif; margin-top: 1px; line-height: 1;
-      }
+      .mbanking-greeting-top{ font-size: 0.7rem; color: var(--emas-terang); font-family: 'FiraCondBold', sans-serif; margin-top: 1px; line-height: 1; }
 
-      .topbar-right-box {
-        display: flex; align-items: center; gap: 8px; flex-shrink: 0;
-      }
+      .topbar-right-box { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
 
       .date-badge-top {
-        font-family: 'FiraCondBold', sans-serif;
-        font-size: 0.8rem; color: var(--emas-terang);
-        background: rgba(232, 177, 60, 0.1);
-        border: 1px solid rgba(232, 177, 60, 0.3);
+        font-family: 'FiraCondBold', sans-serif; font-size: 0.8rem; color: var(--emas-terang);
+        background: rgba(232, 177, 60, 0.1); border: 1px solid rgba(232, 177, 60, 0.3);
         padding: 4px 8px; border-radius: 8px; white-space: nowrap;
       }
 
       .limit-global-btn {
         display: flex; align-items: center; gap: 5px;
         height: 32px; padding: 0 10px; border-radius: 8px;
-        background: rgba(232, 177, 60, 0.12);
-        border: 1.5px solid var(--emas);
-        color: var(--emas-terang);
-        font-family: 'FiraCondBold', sans-serif;
-        font-size: 0.72rem; letter-spacing: 0.3px;
-        cursor: pointer;
-        transition: background 0.2s, box-shadow 0.2s, transform 0.15s;
-        white-space: nowrap;
+        background: rgba(232, 177, 60, 0.12); border: 1.5px solid var(--emas);
+        color: var(--emas-terang); font-family: 'FiraCondBold', sans-serif;
+        font-size: 0.72rem; letter-spacing: 0.3px; cursor: pointer;
+        transition: background 0.2s, box-shadow 0.2s, transform 0.15s; white-space: nowrap;
       }
-      .limit-global-btn:hover {
-        background: rgba(232, 177, 60, 0.22);
-        box-shadow: 0 0 12px rgba(255, 209, 102, 0.35);
-      }
+      .limit-global-btn:hover { background: rgba(232, 177, 60, 0.22); box-shadow: 0 0 12px rgba(255, 209, 102, 0.35); }
       .limit-global-btn:active { transform: scale(0.96); }
-      .limit-global-btn svg {
-        width: 14px; height: 14px; fill: var(--emas-terang); flex-shrink: 0;
-      }
+      .limit-global-btn svg { width: 14px; height: 14px; fill: var(--emas-terang); flex-shrink: 0; }
       .limit-global-btn .limit-btn-value { font-size: 0.68rem; color: #fff; opacity: 0.85; }
 
       .charge-global-btn {
         display: flex; align-items: center; gap: 5px;
         height: 32px; padding: 0 10px; border-radius: 8px;
-        background: rgba(255, 159, 26, 0.12);
-        border: 1.5px solid var(--oranye);
-        color: var(--oranye);
-        font-family: 'FiraCondBold', sans-serif;
-        font-size: 0.72rem; letter-spacing: 0.3px;
-        cursor: pointer;
-        transition: background 0.2s, box-shadow 0.2s, transform 0.15s;
-        white-space: nowrap;
+        background: rgba(255, 159, 26, 0.12); border: 1.5px solid var(--oranye);
+        color: var(--oranye); font-family: 'FiraCondBold', sans-serif;
+        font-size: 0.72rem; letter-spacing: 0.3px; cursor: pointer;
+        transition: background 0.2s, box-shadow 0.2s, transform 0.15s; white-space: nowrap;
       }
-      .charge-global-btn:hover {
-        background: rgba(255, 159, 26, 0.22);
-        box-shadow: 0 0 12px rgba(255, 159, 26, 0.4);
-      }
+      .charge-global-btn:hover { background: rgba(255, 159, 26, 0.22); box-shadow: 0 0 12px rgba(255, 159, 26, 0.4); }
       .charge-global-btn:active { transform: scale(0.96); }
-      .charge-global-btn svg {
-        width: 14px; height: 14px; fill: var(--oranye); flex-shrink: 0;
-      }
+      .charge-global-btn svg { width: 14px; height: 14px; fill: var(--oranye); flex-shrink: 0; }
       .charge-global-btn .charge-btn-value { font-size: 0.68rem; color: #fff; opacity: 0.85; }
 
       .profile-circle-btn {
         width: 36px; height: 36px; border-radius: 50%;
-        border: 2px solid var(--emas-terang);
-        background: #121814; overflow: hidden;
-        display: flex; align-items: center; justify-content: center;
-        cursor: pointer; text-decoration: none;
-        transition: transform 0.2s, box-shadow 0.2s;
+        border: 2px solid var(--emas-terang); background: #121814;
+        overflow: hidden; display: flex; align-items: center; justify-content: center;
+        cursor: pointer; text-decoration: none; transition: transform 0.2s, box-shadow 0.2s;
         box-shadow: 0 2px 8px rgba(0,0,0,0.5); flex-shrink: 0;
       }
-      .profile-circle-btn:hover {
-        transform: scale(1.08); box-shadow: 0 0 12px rgba(255, 209, 102, 0.4);
-      }
-      .profile-circle-btn svg, .profile-circle-btn img {
-        width: 100%; height: 100%; object-fit: cover;
-      }
-      .profile-circle-btn svg {
-        width: 20px; height: 20px; fill: var(--emas-terang); padding: 2px;
-      }
+      .profile-circle-btn:hover { transform: scale(1.08); box-shadow: 0 0 12px rgba(255, 209, 102, 0.4); }
+      .profile-circle-btn svg, .profile-circle-btn img { width: 100%; height: 100%; object-fit: cover; }
+      .profile-circle-btn svg { width: 20px; height: 20px; fill: var(--emas-terang); padding: 2px; }
 
-      .content-wrap {
-        position: relative; z-index: 5;
-        padding: 76px 16px 100px 16px;
-        max-width: 600px; margin: 0 auto;
-      }
+      .content-wrap { position: relative; z-index: 5; padding: 76px 16px 100px 16px; max-width: 600px; margin: 0 auto; }
       .customer-list-container { max-width: 600px; margin: 0 auto; }
 
-      .customer-card {
-        background: rgba(12, 17, 13, 0.92);
-        border: 2px solid var(--emas);
-        border-radius: 16px; margin-bottom: 14px;
-        padding: 16px 18px;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.6);
-        transition: border-color 0.2s;
+      /* ================= DASHBOARD STATS ================= */
+      .dashboard-stat-wrap { margin-bottom: 16px; }
+      .dashboard-stat-row { display: flex; gap: 8px; align-items: stretch; }
+      .dash-stat-box {
+        flex: 1; background: rgba(12, 17, 13, 0.92);
+        border: 2px solid var(--emas); border-radius: 12px;
+        padding: 12px; display: flex; align-items: center; gap: 10px; min-width: 0;
       }
-      .customer-card:hover { border-color: var(--emas-terang); }
-      .customer-card.over-limit { border-color: rgba(255, 77, 77, 0.75); }
+      .dash-stat-icon {
+        width: 38px; height: 38px; border-radius: 10px;
+        display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+        background: rgba(255, 209, 102, 0.12); border: 1.5px solid rgba(255, 209, 102, 0.4);
+        color: var(--emas-terang);
+      }
+      .dash-stat-icon svg { width: 20px; height: 20px; fill: currentColor; }
+      .dash-stat-info { min-width: 0; flex: 1; }
+      .dash-stat-label {
+        font-family: 'FiraCondBold', sans-serif; font-size: 0.62rem; color: #9aa39c;
+        text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 2px;
+      }
+      .dash-stat-value {
+        font-family: 'FiraCondBold', sans-serif; font-size: 0.95rem; color: var(--emas-terang);
+        white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+      }
+      .dash-stat-btn {
+        width: 52px; flex-shrink: 0; background: rgba(232, 177, 60, 0.12);
+        border: 2px solid var(--emas); border-radius: 12px;
+        color: var(--emas-terang); cursor: pointer;
+        display: flex; align-items: center; justify-content: center; transition: all 0.2s;
+      }
+      .dash-stat-btn:hover { background: rgba(232, 177, 60, 0.25); box-shadow: 0 0 12px rgba(255, 209, 102, 0.35); transform: scale(1.03); }
+      .dash-stat-btn:active { transform: scale(0.96); }
+      .dash-stat-btn svg { width: 22px; height: 22px; fill: currentColor; }
 
-      .customer-top {
-        display: flex; justify-content: space-between; align-items: center; gap: 10px;
+      /* ================= STATS MODAL ================= */
+      .stats-section-title {
+        font-family: 'FiraCondBold', sans-serif; font-size: 0.78rem; color: var(--emas-terang);
+        text-transform: uppercase; letter-spacing: 1px;
+        padding-bottom: 8px; margin-bottom: 10px;
+        border-bottom: 1px dashed rgba(232, 177, 60, 0.3);
+        display: flex; align-items: center; gap: 6px;
       }
-      .customer-info { min-width: 0; flex: 1; }
-      .customer-info h3 {
-        margin: 0 0 3px 0; font-family: 'FiraCondBold', sans-serif;
-        font-size: 1.05rem; color: var(--emas-terang);
+      .stats-section-title svg { width: 14px; height: 14px; fill: currentColor; }
+      .stats-product-item {
+        display: flex; align-items: center; gap: 10px;
+        padding: 8px 10px; background: #0a100c;
+        border: 1px solid rgba(232, 177, 60, 0.2);
+        border-radius: 8px; margin-bottom: 6px;
       }
-      .customer-info p {
-        margin: 0 0 3px 0; font-size: 0.9rem; color: #fff;
+      .stats-rank {
+        font-family: 'OswaldBold', sans-serif; font-size: 0.9rem; color: var(--emas-terang);
+        width: 28px; flex-shrink: 0; text-align: center;
+      }
+      .stats-product-name {
+        flex: 1; font-family: 'FiraCondBold', sans-serif; font-size: 0.82rem; color: #fff;
         overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
       }
+      .stats-product-count {
+        font-family: 'FiraCondBold', sans-serif; font-size: 0.75rem; color: var(--emas-terang);
+        background: rgba(232, 177, 60, 0.15); padding: 2px 8px; border-radius: 4px; flex-shrink: 0;
+      }
+      .stats-cust-item {
+        background: #0a100c; border: 1px solid rgba(232, 177, 60, 0.2);
+        border-radius: 8px; padding: 10px 12px; margin-bottom: 8px;
+      }
+      .stats-cust-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
+      .stats-cust-name { font-family: 'FiraCondBold', sans-serif; font-size: 0.85rem; color: var(--emas-terang); margin-bottom: 2px; }
+      .stats-cust-id { font-family: 'FiraCondBold', sans-serif; font-size: 0.68rem; color: #888; }
+      .stats-cust-tx {
+        font-family: 'FiraCondBold', sans-serif; font-size: 0.72rem; color: #4caf5e;
+        background: rgba(76, 175, 94, 0.12); padding: 2px 8px; border-radius: 4px; flex-shrink: 0;
+      }
+      .stats-cust-products {
+        display: flex; flex-wrap: wrap; gap: 4px;
+        margin-top: 8px; padding-top: 8px;
+        border-top: 1px dashed rgba(232, 177, 60, 0.15);
+      }
+      .stats-cust-product-tag {
+        display: inline-flex; align-items: center; gap: 5px;
+        background: rgba(232, 177, 60, 0.08); border: 1px solid rgba(232, 177, 60, 0.25);
+        padding: 3px 8px; border-radius: 4px;
+        font-family: 'FiraCondBold', sans-serif; font-size: 0.68rem; color: #ddd;
+      }
+      .stats-cust-product-tag b { color: var(--emas-terang); margin-left: 2px; }
+
+      /* ================= CUSTOMER CARD ================= */
+      .customer-card {
+        background: rgba(12, 17, 13, 0.92);
+        border: 2px solid var(--emas); border-radius: 16px;
+        margin-bottom: 14px; padding: 16px 18px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.6); transition: border-color 0.2s, transform 0.2s;
+        cursor: pointer;
+      }
+      .customer-card:hover { border-color: var(--emas-terang); transform: translateY(-2px); }
+      .customer-card.over-limit { border-color: rgba(255, 77, 77, 0.75); }
+
+      .customer-top { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+      .customer-info { min-width: 0; flex: 1; }
+      .customer-info h3 { margin: 0 0 3px 0; font-family: 'FiraCondBold', sans-serif; font-size: 1.05rem; color: var(--emas-terang); }
+      .customer-info p { margin: 0 0 3px 0; font-size: 0.9rem; color: #fff; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
       .customer-info small { color: #aaa; font-size: 0.75rem; }
 
-      .customer-meta-row {
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-        gap: 4px 12px;
-        margin-top: 2px;
-      }
-      .customer-meta-row small {
-        white-space: nowrap;
-      }
-      .spending-badge {
-        color: var(--hijau) !important;
-        font-family: 'FiraCondBold', sans-serif;
-        letter-spacing: 0.2px;
-      }
+      .customer-meta-row { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 12px; margin-top: 2px; }
+      .customer-meta-row small { white-space: nowrap; }
+      .spending-badge { color: var(--hijau) !important; font-family: 'FiraCondBold', sans-serif; letter-spacing: 0.2px; }
 
-      .customer-stats {
-        text-align: right; font-family: 'FiraCondBold', sans-serif; flex-shrink: 0;
+      /* STYLE NOMOR TELEPON */
+      .phone-badge {
+        display: inline-flex; align-items: center; gap: 4px;
+        background: rgba(232, 177, 60, 0.1); border: 1px solid rgba(232, 177, 60, 0.3);
+        padding: 2px 6px; border-radius: 4px; cursor: pointer; color: var(--emas-terang);
+        font-family: 'FiraCondBold', sans-serif; font-size: 0.7rem; transition: background 0.2s;
       }
+      .phone-badge:hover { background: rgba(232, 177, 60, 0.25); }
+      .phone-badge svg { width: 10px; height: 10px; fill: currentColor; }
+
+      .customer-stats { text-align: right; font-family: 'FiraCondBold', sans-serif; flex-shrink: 0; }
       .customer-stats .total-tx { font-size: 0.75rem; color: #aaa; margin-bottom: 2px; }
       .customer-stats .total-val { font-size: 0.9rem; color: var(--emas-terang); }
 
       .customer-limit {
         margin-top: 12px; padding-top: 12px;
         border-top: 1px dashed rgba(232, 177, 60, 0.22);
-        cursor: pointer; border-radius: 8px;
-        transition: background 0.2s;
+        cursor: pointer; border-radius: 8px; transition: background 0.2s;
       }
       .customer-limit:active { background: rgba(232, 177, 60, 0.06); }
 
-      .limit-head {
-        display: flex; justify-content: space-between; align-items: center;
-        font-family: 'FiraCondBold', sans-serif;
-        font-size: 0.72rem; color: #9aa39c;
-        letter-spacing: 0.3px; margin-bottom: 6px;
-      }
+      .limit-head { display: flex; justify-content: space-between; align-items: center; font-family: 'FiraCondBold', sans-serif; font-size: 0.72rem; color: #9aa39c; letter-spacing: 0.3px; margin-bottom: 6px; }
       .limit-head .limit-pct { font-size: 0.78rem; }
 
-      .limit-track {
-        position: relative; width: 100%; height: 9px;
-        border-radius: 99px; background: #1b221c;
-        border: 1px solid rgba(232, 177, 60, 0.22);
-        overflow: hidden;
-      }
-      .limit-fill {
-        height: 100%; border-radius: 99px; width: 0%;
-        transition: width 0.45s cubic-bezier(.4,0,.2,1), background 0.3s;
-        box-shadow: 0 0 8px rgba(0,0,0,0.4);
-      }
-      .limit-nominal {
-        display: flex; justify-content: space-between; align-items: center;
-        gap: 8px; margin-top: 6px;
-        font-family: 'FiraCondBold', sans-serif;
-        font-size: 0.72rem; color: #ddd;
-      }
+      .limit-track { position: relative; width: 100%; height: 9px; border-radius: 99px; background: #1b221c; border: 1px solid rgba(232, 177, 60, 0.22); overflow: hidden; }
+      .limit-fill { height: 100%; border-radius: 99px; width: 0%; transition: width 0.45s cubic-bezier(.4,0,.2,1), background 0.3s; box-shadow: 0 0 8px rgba(0,0,0,0.4); }
+      .limit-nominal { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-top: 6px; font-family: 'FiraCondBold', sans-serif; font-size: 0.72rem; color: #ddd; }
       .limit-nominal .limit-used { color: #fff; }
       .limit-nominal .limit-total { color: #9aa39c; }
-      .limit-hint {
-        margin-top: 6px; font-size: 0.65rem; color: #6e7a70;
-        font-family: 'FiraCondBold', sans-serif; letter-spacing: 0.2px;
-      }
+      .limit-hint { margin-top: 6px; font-size: 0.65rem; color: #6e7a70; font-family: 'FiraCondBold', sans-serif; letter-spacing: 0.2px; }
       .limit-hint b { color: var(--emas-terang); }
 
       .customer-charge-row {
         display: flex; justify-content: space-between; align-items: center;
         margin-top: 8px; padding-top: 8px;
         border-top: 1px dashed rgba(255, 159, 26, 0.2);
-        font-family: 'FiraCondBold', sans-serif;
-        font-size: 0.75rem;
+        font-family: 'FiraCondBold', sans-serif; font-size: 0.75rem;
       }
-      .charge-label {
-        color: #9aa39c;
-        display: flex; align-items: center; gap: 6px;
-      }
-      .charge-label svg {
-        width: 12px; height: 12px; fill: var(--oranye);
-        filter: drop-shadow(0 0 4px rgba(255, 159, 26, 0.5));
-      }
+      .charge-label { color: #9aa39c; display: flex; align-items: center; gap: 6px; }
+      .charge-label svg { width: 12px; height: 12px; fill: var(--oranye); filter: drop-shadow(0 0 4px rgba(255, 159, 26, 0.5)); }
       .charge-label b { color: var(--oranye); font-size: 0.72rem; }
 
       .charge-toggle {
-        background: rgba(255, 159, 26, 0.1);
-        border: 1px solid rgba(255, 159, 26, 0.4);
-        color: #ffb566;
-        padding: 4px 10px; border-radius: 6px;
-        font-family: 'FiraCondBold', sans-serif;
-        font-size: 0.7rem; letter-spacing: 0.3px;
-        cursor: pointer;
-        transition: background 0.2s, color 0.2s, box-shadow 0.2s, transform 0.15s;
+        background: rgba(255, 159, 26, 0.1); border: 1px solid rgba(255, 159, 26, 0.4);
+        color: #ffb566; padding: 4px 10px; border-radius: 6px;
+        font-family: 'FiraCondBold', sans-serif; font-size: 0.7rem; letter-spacing: 0.3px;
+        cursor: pointer; transition: background 0.2s, color 0.2s, box-shadow 0.2s, transform 0.15s;
       }
-      .charge-toggle.active {
-        background: var(--oranye); color: #000;
-        border-color: var(--oranye);
-        box-shadow: 0 2px 10px rgba(255, 159, 26, 0.45);
-      }
+      .charge-toggle.active { background: var(--oranye); color: #000; border-color: var(--oranye); box-shadow: 0 2px 10px rgba(255, 159, 26, 0.45); }
       .charge-toggle:active { transform: scale(0.95); }
 
-      .charge-info-text {
-        margin-top: 6px;
-        font-family: 'FiraCondBold', sans-serif;
-        font-size: 0.68rem;
-        color: #ffb566;
-        text-align: right;
-        letter-spacing: 0.2px;
-      }
+      .charge-info-text { margin-top: 6px; font-family: 'FiraCondBold', sans-serif; font-size: 0.68rem; color: #ffb566; text-align: right; letter-spacing: 0.2px; }
       .charge-info-text b { color: var(--oranye); }
 
       .add-customer-btn {
-        display: block; width: 100%; margin: 15px auto 20px auto;
-        height: 46px;
+        display: block; width: 100%; margin: 15px auto 20px auto; height: 46px;
         background: var(--emas-terang); color: #000000;
-        border: 2px solid var(--emas-terang);
-        border-radius: 12px;
-        font-family: 'FiraCondBold', sans-serif;
-        font-size: 0.95rem; cursor: pointer;
-        text-align: center; line-height: 42px;
+        border: 2px solid var(--emas-terang); border-radius: 12px;
+        font-family: 'FiraCondBold', sans-serif; font-size: 0.95rem;
+        cursor: pointer; text-align: center; line-height: 42px;
         box-shadow: 0 3px 10px rgba(255, 209, 102, 0.3);
       }
 
       .popupBox {
-        position: fixed; inset: 0;
-        background: rgba(0,0,0,0.85);
+        position: fixed; inset: 0; background: rgba(0,0,0,0.85);
         display: none; justify-content: center; align-items: center;
         z-index: 999999; padding: 20px; backdrop-filter: blur(5px);
       }
@@ -312,103 +264,88 @@
 
       .popupContent {
         display: flex; flex-direction: column;
-        width: 100%; max-width: 360px;
-        background: #0d120f;
-        border: 2px solid var(--emas-terang);
-        border-radius: 16px;
-        padding: 20px;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.8);
-        animation: popIn 0.2s ease-out;
+        width: 100%; max-width: 360px; background: #0d120f;
+        border: 2px solid var(--emas-terang); border-radius: 16px;
+        padding: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+        animation: popIn 0.2s ease-out; max-height: 90vh; overflow-y: auto;
       }
       .popupContent.charge-theme { border-color: var(--oranye); }
 
-      @keyframes popIn {
-        from { transform: scale(0.9); opacity: 0; }
-        to { transform: scale(1); opacity: 1; }
-      }
+      @keyframes popIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
 
       .popupContent h2 {
         margin-top: 0; margin-bottom: 6px;
-        font-family: 'FiraCondBold', sans-serif;
-        color: var(--emas-terang);
+        font-family: 'FiraCondBold', sans-serif; color: var(--emas-terang);
         font-size: 0.85rem; text-transform: uppercase;
         display: flex; align-items: center; gap: 6px;
       }
       .popupContent.charge-theme h2 { color: var(--oranye); }
 
-      .charge-title-icon {
-        width: 14px; height: 14px;
-        fill: var(--oranye);
-        flex-shrink: 0;
-        filter: drop-shadow(0 0 4px rgba(255, 159, 26, 0.6));
-      }
+      .charge-title-icon { width: 14px; height: 14px; fill: var(--oranye); flex-shrink: 0; filter: drop-shadow(0 0 4px rgba(255, 159, 26, 0.6)); }
 
-      .popup-note {
-        margin: 0 0 12px 0; font-size: 0.75rem;
-        color: #9aa39c; line-height: 1.35;
-      }
+      .popup-note { margin: 0 0 12px 0; font-size: 0.75rem; color: #9aa39c; line-height: 1.35; }
       .popup-note b { color: #fff; }
 
-      .preset-row {
-        display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px;
-      }
+      .preset-row { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
       .preset-chip {
         flex: 1; min-width: 64px; height: 30px;
-        background: rgba(232, 177, 60, 0.1);
-        border: 1px solid rgba(232, 177, 60, 0.4);
+        background: rgba(232, 177, 60, 0.1); border: 1px solid rgba(232, 177, 60, 0.4);
         border-radius: 8px; color: var(--emas-terang);
-        font-family: 'FiraCondBold', sans-serif;
-        font-size: 0.72rem; cursor: pointer;
-        transition: background 0.2s;
+        font-family: 'FiraCondBold', sans-serif; font-size: 0.72rem;
+        cursor: pointer; transition: background 0.2s;
       }
       .preset-chip:hover { background: rgba(232, 177, 60, 0.25); }
-      .preset-chip.orange-chip {
-        background: rgba(255, 159, 26, 0.1);
-        border-color: rgba(255, 159, 26, 0.4);
-        color: #ffb566;
-      }
+      .preset-chip.orange-chip { background: rgba(255, 159, 26, 0.1); border-color: rgba(255, 159, 26, 0.4); color: #ffb566; }
       .preset-chip.orange-chip:hover { background: rgba(255, 159, 26, 0.25); }
 
       input {
-        width: 100%; height: 44px;
-        background: #000; border: 1.5px solid var(--emas);
-        border-radius: 10px; color: white;
-        padding: 0 12px; box-sizing: border-box;
-        margin-bottom: 12px;
-        font-family: 'FiraCondBook', sans-serif;
-        font-size: 0.95rem; outline: none;
+        width: 100%; height: 44px; background: #000;
+        border: 1.5px solid var(--emas); border-radius: 10px; color: white;
+        padding: 0 12px; box-sizing: border-box; margin-bottom: 12px;
+        font-family: 'FiraCondBook', sans-serif; font-size: 0.95rem; outline: none;
       }
-      input:focus {
-        border-color: var(--emas-terang);
-        box-shadow: 0 0 8px rgba(255, 209, 102, 0.25);
-      }
-      input.orange-input:focus {
-        border-color: var(--oranye);
-        box-shadow: 0 0 8px rgba(255, 159, 26, 0.3);
-      }
+      input:focus { border-color: var(--emas-terang); box-shadow: 0 0 8px rgba(255, 209, 102, 0.25); }
+      input.orange-input:focus { border-color: var(--oranye); box-shadow: 0 0 8px rgba(255, 159, 26, 0.3); }
 
       .popupButtonGroup { display: flex; gap: 8px; margin-top: 8px; }
       .cancelButton, .addButton {
         flex: 1; height: 42px; border: none; border-radius: 10px;
-        cursor: pointer; font-family: 'FiraCondBold', sans-serif;
-        font-size: 0.9rem;
+        cursor: pointer; font-family: 'FiraCondBold', sans-serif; font-size: 0.9rem;
       }
       .cancelButton { background: #222; color: #aaa; border: 1px solid #444; }
-      .addButton {
-        background: var(--emas-terang); color: black;
-        box-shadow: 0 3px 10px rgba(255, 209, 102, 0.3);
+      .addButton { background: var(--emas-terang); color: black; box-shadow: 0 3px 10px rgba(255, 209, 102, 0.3); }
+      .addButton.orange-btn { background: var(--oranye); color: #000; box-shadow: 0 3px 10px rgba(255, 159, 26, 0.35); }
+
+      /* PHONE INPUT & DELETE STYLES */
+      .phone-row { display: flex; gap: 8px; margin-bottom: 8px; }
+      .phone-row input { margin-bottom: 0; flex: 1; }
+      .btn-remove-phone { 
+        width: 44px; height: 44px; background: rgba(255, 77, 77, 0.15); 
+        border: 1px solid #ff4d4d; color: #ff4d4d; border-radius: 10px; 
+        cursor: pointer; display: flex; align-items: center; justify-content: center; 
+        flex-shrink: 0; transition: all 0.2s;
       }
-      .addButton.orange-btn {
-        background: var(--oranye); color: #000;
-        box-shadow: 0 3px 10px rgba(255, 159, 26, 0.35);
+      .btn-remove-phone:hover { background: rgba(255, 77, 77, 0.3); }
+      .btn-add-phone { 
+        width: 100%; height: 38px; background: rgba(232, 177, 60, 0.1); 
+        border: 1px dashed var(--emas); color: var(--emas-terang); 
+        border-radius: 8px; cursor: pointer; font-family: 'FiraCondBold', sans-serif; 
+        margin-bottom: 12px; transition: background 0.2s;
       }
+      .btn-add-phone:hover { background: rgba(232, 177, 60, 0.2); }
+      .btn-delete-cust { 
+        width: 100%; height: 42px; background: rgba(255, 77, 77, 0.15); 
+        border: 1.5px solid #ff4d4d; color: #ff4d4d; 
+        border-radius: 10px; cursor: pointer; font-family: 'FiraCondBold', sans-serif; 
+        margin-top: 10px; display: flex; align-items: center; justify-content: center; gap: 6px;
+        transition: background 0.2s;
+      }
+      .btn-delete-cust:hover { background: rgba(255, 77, 77, 0.3); }
 
       .customModalBox {
-        position: fixed; inset: 0;
-        background: rgba(0,0,0,0.85);
+        position: fixed; inset: 0; background: rgba(0,0,0,0.85);
         display: none; justify-content: center; align-items: center;
-        z-index: 1000000; padding: 20px;
-        backdrop-filter: blur(6px);
+        z-index: 1000000; padding: 20px; backdrop-filter: blur(6px);
       }
       .customModalBox.active { display: flex; }
 
@@ -416,131 +353,53 @@
         display: flex; flex-direction: column; align-items: center;
         width: 100%; max-width: 340px;
         background: linear-gradient(180deg, #0d120f 0%, #090e0b 100%);
-        border: 2px solid var(--emas-terang);
-        border-radius: 18px;
+        border: 2px solid var(--emas-terang); border-radius: 18px;
         padding: 22px 20px 18px;
         box-shadow: 0 10px 40px rgba(0,0,0,0.85), 0 0 30px rgba(255, 209, 102, 0.08);
-        text-align: center;
-        animation: modalIn 0.22s ease-out;
+        text-align: center; animation: modalIn 0.22s ease-out;
       }
-      .customModalContent.warning {
-        border-color: var(--oranye);
-        box-shadow: 0 10px 40px rgba(0,0,0,0.85), 0 0 30px rgba(255, 159, 26, 0.12);
-      }
-      .customModalContent.danger {
-        border-color: var(--merah);
-        box-shadow: 0 10px 40px rgba(0,0,0,0.85), 0 0 30px rgba(255, 77, 77, 0.15);
-      }
+      .customModalContent.warning { border-color: var(--oranye); box-shadow: 0 10px 40px rgba(0,0,0,0.85), 0 0 30px rgba(255, 159, 26, 0.12); }
+      .customModalContent.danger { border-color: var(--merah); box-shadow: 0 10px 40px rgba(0,0,0,0.85), 0 0 30px rgba(255, 77, 77, 0.15); }
 
-      @keyframes modalIn {
-        from { transform: scale(0.9) translateY(10px); opacity: 0; }
-        to { transform: scale(1) translateY(0); opacity: 1; }
-      }
+      @keyframes modalIn { from { transform: scale(0.9) translateY(10px); opacity: 0; } to { transform: scale(1) translateY(0); opacity: 1; } }
 
       .modalIcon {
-        width: 52px; height: 52px;
-        border-radius: 50%;
+        width: 52px; height: 52px; border-radius: 50%;
         display: flex; align-items: center; justify-content: center;
-        margin-bottom: 12px;
-        border: 2px solid;
+        margin-bottom: 12px; border: 2px solid;
       }
-      .modalIcon svg {
-        width: 26px; height: 26px;
-        fill: currentColor;
-      }
-      .modalIcon.info {
-        color: var(--emas-terang);
-        border-color: var(--emas-terang);
-        background: rgba(255, 209, 102, 0.1);
-        box-shadow: 0 0 22px rgba(255, 209, 102, 0.28);
-      }
-      .modalIcon.warning {
-        color: var(--oranye);
-        border-color: var(--oranye);
-        background: rgba(255, 159, 26, 0.1);
-        box-shadow: 0 0 22px rgba(255, 159, 26, 0.3);
-      }
-      .modalIcon.danger {
-        color: var(--merah);
-        border-color: var(--merah);
-        background: rgba(255, 77, 77, 0.1);
-        box-shadow: 0 0 22px rgba(255, 77, 77, 0.3);
-      }
+      .modalIcon svg { width: 26px; height: 26px; fill: currentColor; }
+      .modalIcon.info { color: var(--emas-terang); border-color: var(--emas-terang); background: rgba(255, 209, 102, 0.1); box-shadow: 0 0 22px rgba(255, 209, 102, 0.28); }
+      .modalIcon.warning { color: var(--oranye); border-color: var(--oranye); background: rgba(255, 159, 26, 0.1); box-shadow: 0 0 22px rgba(255, 159, 26, 0.3); }
+      .modalIcon.danger { color: var(--merah); border-color: var(--merah); background: rgba(255, 77, 77, 0.1); box-shadow: 0 0 22px rgba(255, 77, 77, 0.3); }
 
-      .customModalContent h3 {
-        font-family: 'FiraCondBold', sans-serif;
-        color: var(--emas-terang);
-        font-size: 0.92rem;
-        margin: 0 0 8px 0;
-        letter-spacing: 0.6px;
-        text-transform: uppercase;
-      }
+      .customModalContent h3 { font-family: 'FiraCondBold', sans-serif; color: var(--emas-terang); font-size: 0.92rem; margin: 0 0 8px 0; letter-spacing: 0.6px; text-transform: uppercase; }
       .customModalContent.warning h3 { color: var(--oranye); }
       .customModalContent.danger h3 { color: var(--merah); }
 
       .customModalContent p {
-        font-family: 'FiraCondBook', sans-serif;
-        color: #cfd6d1;
-        font-size: 0.85rem;
-        line-height: 1.55;
-        margin: 0 0 18px 0;
-        white-space: pre-line;
-        width: 100%;
+        font-family: 'FiraCondBook', sans-serif; color: #cfd6d1;
+        font-size: 0.85rem; line-height: 1.55;
+        margin: 0 0 18px 0; white-space: pre-line; width: 100%;
       }
 
-      .modalBtnGroup {
-        display: flex; gap: 8px; width: 100%;
-      }
+      .modalBtnGroup { display: flex; gap: 8px; width: 100%; }
       .modalBtnGroup button {
-        flex: 1; height: 44px;
-        border: none; border-radius: 10px;
-        font-family: 'FiraCondBold', sans-serif;
-        font-size: 0.88rem;
-        cursor: pointer;
-        transition: transform 0.15s, box-shadow 0.2s, filter 0.2s;
+        flex: 1; height: 44px; border: none; border-radius: 10px;
+        font-family: 'FiraCondBold', sans-serif; font-size: 0.88rem;
+        cursor: pointer; transition: transform 0.15s, box-shadow 0.2s, filter 0.2s;
         letter-spacing: 0.4px;
       }
       .modalBtnGroup button:active { transform: scale(0.97); }
 
-      .modalOkBtn {
-        background: var(--emas-terang);
-        color: #000;
-        box-shadow: 0 3px 12px rgba(255, 209, 102, 0.35);
-      }
-      .modalOkBtn.warning {
-        background: var(--oranye);
-        box-shadow: 0 3px 12px rgba(255, 159, 26, 0.4);
-      }
-      .modalOkBtn.danger {
-        background: var(--merah);
-        color: #fff;
-        box-shadow: 0 3px 12px rgba(255, 77, 77, 0.4);
-      }
-      .modalCancelBtn {
-        background: #1c221e;
-        color: #aab2ab;
-        border: 1px solid #394039 !important;
-      }
+      .modalOkBtn { background: var(--emas-terang); color: #000; box-shadow: 0 3px 12px rgba(255, 209, 102, 0.35); }
+      .modalOkBtn.warning { background: var(--oranye); box-shadow: 0 3px 12px rgba(255, 159, 26, 0.4); }
+      .modalOkBtn.danger { background: var(--merah); color: #fff; box-shadow: 0 3px 12px rgba(255, 77, 77, 0.4); }
+      .modalCancelBtn { background: #1c221e; color: #aab2ab; border: 1px solid #394039 !important; }
 
-      .dot-sep {
-        display: inline-block;
-        width: 3px;
-        height: 3px;
-        background: currentColor;
-        border-radius: 50%;
-        vertical-align: middle;
-        margin: 0 6px;
-        opacity: 0.45;
-      }
+      .dot-sep { display: inline-block; width: 3px; height: 3px; background: currentColor; border-radius: 50%; vertical-align: middle; margin: 0 6px; opacity: 0.45; }
 
-      .charge-tiny-icon {
-        width: 10px;
-        height: 10px;
-        fill: var(--oranye);
-        vertical-align: -1px;
-        margin-right: 4px;
-        filter: drop-shadow(0 0 3px rgba(255, 159, 26, 0.5));
-      }
+      .charge-tiny-icon { width: 10px; height: 10px; fill: var(--oranye); vertical-align: -1px; margin-right: 4px; filter: drop-shadow(0 0 3px rgba(255, 159, 26, 0.5)); }
 
       .mbanking-bottom-nav {
         position: fixed; bottom: 0; left: 0; right: 0; height: 64px;
@@ -549,19 +408,8 @@
         display: grid; grid-template-columns: repeat(7, 1fr);
         z-index: 99999; backdrop-filter: blur(8px);
       }
-      .nav-item {
-        display: flex; flex-direction: column;
-        align-items: center; justify-content: center;
-        text-decoration: none; color: #888;
-        font-family: 'FiraCondBold', sans-serif;
-        font-size: 0.55rem; gap: 3px; padding: 4px 0;
-        transition: color 0.2s;
-      }
-      .nav-item img {
-        width: 20px; height: 20px; object-fit: contain;
-        filter: grayscale(100%) opacity(0.6);
-        transition: filter 0.2s;
-      }
+      .nav-item { display: flex; flex-direction: column; align-items: center; justify-content: center; text-decoration: none; color: #888; font-family: 'FiraCondBold', sans-serif; font-size: 0.55rem; gap: 3px; padding: 4px 0; transition: color 0.2s; }
+      .nav-item img { width: 20px; height: 20px; object-fit: contain; filter: grayscale(100%) opacity(0.6); transition: filter 0.2s; }
       .nav-item.active, .nav-item:hover { color: var(--emas-terang); }
       .nav-item.active img, .nav-item:hover img { filter: none; }
 
@@ -572,33 +420,10 @@
         .limit-global-btn, .charge-global-btn { padding: 0 9px; }
       }
 
-      /* ================= PAGE LOADING OVERLAY (RINGAN) ================= */
-      .page-loading-overlay {
-        position: fixed;
-        inset: 0;
-        background: rgba(5, 8, 6, 0.92);
-        z-index: 2147483647;
-        display: none;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        gap: 14px;
-        pointer-events: all;
-      }
+      .page-loading-overlay { position: fixed; inset: 0; background: rgba(5, 8, 6, 0.92); z-index: 2147483647; display: none; flex-direction: column; align-items: center; justify-content: center; gap: 14px; pointer-events: all; }
       .page-loading-overlay.active { display: flex; }
-      .page-loading-overlay img {
-        width: 80px;
-        height: 80px;
-        object-fit: contain;
-      }
-      .page-loading-overlay .loading-text {
-        color: var(--emas-terang);
-        font-family: 'FiraCondBold', sans-serif;
-        font-size: 0.8rem;
-        letter-spacing: 1px;
-        text-transform: uppercase;
-        opacity: 0.85;
-      }
+      .page-loading-overlay img { width: 80px; height: 80px; object-fit: contain; }
+      .page-loading-overlay .loading-text { color: var(--emas-terang); font-family: 'FiraCondBold', sans-serif; font-size: 0.8rem; letter-spacing: 1px; text-transform: uppercase; opacity: 0.85; }
     </style>
 </head>
 
@@ -616,31 +441,53 @@
       <div class="date-badge-top" id="dateText">01 Jan 2026</div>
 
       <button class="limit-global-btn" id="globalLimitBtn" onclick="openGlobalLimit()" title="Atur limitasi untuk semua customer">
-        <svg viewBox="0 0 24 24">
-          <path d="M21 18v1a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v1h-9a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h9zm-9-2h10V8H12v8zm4-2.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/>
-        </svg>
+        <svg viewBox="0 0 24 24"><path d="M21 18v1a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v1h-9a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h9zm-9-2h10V8H12v8zm4-2.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/></svg>
         <span class="limit-btn-label">Limit</span>
         <span class="limit-btn-value" id="globalLimitValue">-</span>
       </button>
 
       <button class="charge-global-btn" id="globalChargeBtn" onclick="openGlobalCharge()" title="Atur biaya charge over-limit">
-        <svg viewBox="0 0 24 24">
-          <path d="M7 2v11h3v9l7-12h-4l4-8z"/>
-        </svg>
+        <svg viewBox="0 0 24 24"><path d="M7 2v11h3v9l7-12h-4l4-8z"/></svg>
         <span class="charge-btn-label">Charge</span>
         <span class="charge-btn-value" id="globalChargeValue">-</span>
       </button>
 
       <a href="profile.html" class="profile-circle-btn" id="topProfileBtn" title="Pengaturan Profile">
-        <svg viewBox="0 0 24 24">
-          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
-        </svg>
+        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>
       </a>
     </div>
   </div>
 
 <div class="content-wrap">
     <div class="customer-list-container">
+
+        <!-- ============ DASHBOARD STATS ============ -->
+        <div class="dashboard-stat-wrap">
+            <div class="dashboard-stat-row">
+                <div class="dash-stat-box">
+                    <div class="dash-stat-icon">
+                        <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg>
+                    </div>
+                    <div class="dash-stat-info">
+                        <div class="dash-stat-label">Total Transaksi</div>
+                        <div class="dash-stat-value" id="dashTotalTx">0 Kali</div>
+                    </div>
+                </div>
+                <div class="dash-stat-box">
+                    <div class="dash-stat-icon" style="background:rgba(255,85,85,0.12);border-color:rgba(255,85,85,0.4);color:#ff5555;">
+                        <svg viewBox="0 0 24 24"><path d="M11 15h2v2h-2zm0-8h2v6h-2zm.99-5C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"/></svg>
+                    </div>
+                    <div class="dash-stat-info">
+                        <div class="dash-stat-label">Sisa Utang</div>
+                        <div class="dash-stat-value" id="dashTotalDebt" style="color:#ff5555">Rp 0</div>
+                    </div>
+                </div>
+                <button class="dash-stat-btn" onclick="openStatsModal()" title="Statistik & Top Selling">
+                    <svg viewBox="0 0 24 24"><path d="M5 9.2h3V19H5zM10.6 5h2.8v14h-2.8zm5.6 8H19v6h-2.8z"/></svg>
+                </button>
+            </div>
+        </div>
+
         <div id="customerList"></div>
 
         <button class="add-customer-btn" onclick="openPopup()">
@@ -649,16 +496,14 @@
     </div>
 </div>
 
+<!-- POPUP TAMBAH CUSTOMER -->
 <div id="popupBox" class="popupBox">
     <div class="popupContent">
         <h2>ID CUSTOMER</h2>
         <input type="text" id="customerId" placeholder="Masukkan ID Customer mu disini...">
-
         <h2>NAMA CUSTOMER</h2>
         <input type="text" id="customerName" placeholder="Masukkan nama customer disini...">
-
         <p class="popup-note" id="addCustomerNote">Limitasi otomatis mengikuti limit global.</p>
-
         <div class="popupButtonGroup">
             <button class="cancelButton" onclick="closePopup()">Batal</button>
             <button class="addButton" onclick="addCustomer()">Tambahkan</button>
@@ -666,22 +511,45 @@
     </div>
 </div>
 
+<!-- POPUP EDIT CUSTOMER -->
+<div id="editCustomerPopup" class="popupBox">
+    <div class="popupContent">
+        <h2>EDIT CUSTOMER</h2>
+        
+        <h2>ID CUSTOMER</h2>
+        <input type="text" id="editCustIdInput" placeholder="ID Customer...">
+        
+        <h2>NAMA CUSTOMER</h2>
+        <input type="text" id="editCustName" placeholder="Nama Customer...">
+        
+        <h2>NOMOR TELEPON</h2>
+        <div id="phoneInputsContainer"></div>
+        <button type="button" class="btn-add-phone" onclick="addPhoneInput()">+ Tambah Nomor Telepon</button>
+        
+        <div class="popupButtonGroup">
+            <button class="cancelButton" onclick="closeEditCustomer()">Batal</button>
+            <button class="addButton" onclick="saveEditCustomer()">Konfirmasi</button>
+        </div>
+        
+        <button type="button" class="btn-delete-cust" onclick="confirmDeleteCustomer()">
+            <svg viewBox="0 0 24 24" style="width:16px; height:16px; fill:currentColor;"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
+            Hapus Customer
+        </button>
+    </div>
+</div>
+
+<!-- POPUP LIMIT GLOBAL -->
 <div id="globalLimitPopup" class="popupBox">
     <div class="popupContent">
         <h2>Limitasi Global</h2>
-        <p class="popup-note">
-            Nominal ini berlaku untuk <b>semua customer</b>. Customer yang limitasinya sudah diatur sendiri akan ikut tersamakan.
-        </p>
-
+        <p class="popup-note">Nominal ini berlaku untuk <b>semua customer</b>. Customer yang limitasinya sudah diatur sendiri akan ikut tersamakan.</p>
         <input type="text" id="globalLimitInput" inputmode="numeric" placeholder="Contoh: 500.000" oninput="this.value = formatRibuan(this.value)">
-
         <div class="preset-row">
             <button class="preset-chip" onclick="setPreset('globalLimitInput', 100000)">100 Rb</button>
             <button class="preset-chip" onclick="setPreset('globalLimitInput', 250000)">250 Rb</button>
             <button class="preset-chip" onclick="setPreset('globalLimitInput', 500000)">500 Rb</button>
             <button class="preset-chip" onclick="setPreset('globalLimitInput', 1000000)">1 Jt</button>
         </div>
-
         <div class="popupButtonGroup">
             <button class="cancelButton" onclick="closeGlobalLimit()">Batal</button>
             <button class="addButton" onclick="saveGlobalLimit()">Simpan</button>
@@ -689,27 +557,21 @@
     </div>
 </div>
 
+<!-- POPUP CHARGE GLOBAL -->
 <div id="globalChargePopup" class="popupBox">
     <div class="popupContent charge-theme">
         <h2>
             <svg class="charge-title-icon" viewBox="0 0 24 24"><path d="M7 2v11h3v9l7-12h-4l4-8z"/></svg>
             Biaya Charge Over-Limit
         </h2>
-        <p class="popup-note">
-            Nominal ini akan <b>otomatis ditambahkan</b> ke setiap transaksi customer
-            yang <b>melebihi limit</b>. Charge aktif otomatis untuk customer baru &amp;
-            lama, tapi tetap bisa di-on/off per customer. Isi <b>0</b> untuk menonaktifkan seluruh charge.
-        </p>
-
+        <p class="popup-note">Nominal ini akan <b>otomatis ditambahkan</b> ke setiap transaksi customer yang <b>melebihi limit</b>. Isi <b>0</b> untuk menonaktifkan seluruh charge.</p>
         <input type="text" id="globalChargeInput" class="orange-input" inputmode="numeric" placeholder="Contoh: 5.000" oninput="this.value = formatRibuan(this.value)">
-
         <div class="preset-row">
             <button class="preset-chip orange-chip" onclick="setPreset('globalChargeInput', 1000)">1 Rb</button>
             <button class="preset-chip orange-chip" onclick="setPreset('globalChargeInput', 5000)">5 Rb</button>
             <button class="preset-chip orange-chip" onclick="setPreset('globalChargeInput', 10000)">10 Rb</button>
             <button class="preset-chip orange-chip" onclick="setPreset('globalChargeInput', 25000)">25 Rb</button>
         </div>
-
         <div class="popupButtonGroup">
             <button class="cancelButton" onclick="closeGlobalCharge()">Batal</button>
             <button class="addButton orange-btn" onclick="saveGlobalCharge()">Simpan</button>
@@ -717,20 +579,18 @@
     </div>
 </div>
 
+<!-- POPUP LIMIT PER CUSTOMER -->
 <div id="customerLimitPopup" class="popupBox">
     <div class="popupContent">
         <h2>Limitasi Customer</h2>
         <p class="popup-note" id="custLimitName">-</p>
-
         <input type="text" id="customerLimitInput" inputmode="numeric" placeholder="Contoh: 500.000" oninput="this.value = formatRibuan(this.value)">
-
         <div class="preset-row">
             <button class="preset-chip" onclick="setPreset('customerLimitInput', 100000)">100 Rb</button>
             <button class="preset-chip" onclick="setPreset('customerLimitInput', 250000)">250 Rb</button>
             <button class="preset-chip" onclick="setPreset('customerLimitInput', 500000)">500 Rb</button>
             <button class="preset-chip" onclick="setPreset('customerLimitInput', 1000000)">1 Jt</button>
         </div>
-
         <div class="popupButtonGroup">
             <button class="cancelButton" onclick="closeCustomerLimit()">Batal</button>
             <button class="addButton" onclick="saveCustomerLimit()">Simpan</button>
@@ -738,6 +598,30 @@
     </div>
 </div>
 
+<!-- POPUP STATISTIK -->
+<div id="statsModal" class="popupBox">
+    <div class="popupContent" style="max-height: 85vh;">
+        <h2>STATISTIK CUSTOMER</h2>
+
+        <div class="stats-section-title">
+            <svg viewBox="0 0 24 24"><path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z"/></svg>
+            Top 5 Produk Terlaris
+        </div>
+        <div id="statsProductsList" style="margin-bottom: 16px;"></div>
+
+        <div class="stats-section-title">
+            <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+            Detail per Customer
+        </div>
+        <div id="statsCustomerList" style="max-height: 34vh; overflow-y: auto; padding-right: 2px;"></div>
+
+        <div class="popupButtonGroup" style="margin-top: 12px;">
+            <button class="cancelButton" onclick="closeStatsModal()">Tutup</button>
+        </div>
+    </div>
+</div>
+
+<!-- CUSTOM MODAL -->
 <div id="customModal" class="customModalBox">
     <div class="customModalContent" id="customModalContent">
         <div class="modalIcon info" id="modalIcon"></div>
@@ -748,37 +632,18 @@
 </div>
 
 <nav class="mbanking-bottom-nav">
-    <a href="index.html" class="nav-item">
-        <img src="icon.png" alt="Home">
-        <span>Home</span>
-    </a>
-    <a href="product.html" class="nav-item">
-        <img src="voucher.png" alt="Produk">
-        <span>Produk</span>
-    </a>
-    <a href="debt.html" class="nav-item">
-        <img src="debt.png" alt="Utang">
-        <span>Utang</span>
-    </a>
-    <a href="customer.html" class="nav-item active">
-        <img src="nama.png" alt="Customer">
-        <span>Customer</span>
-    </a>
-    <a href="recap.html" class="nav-item">
-        <img src="rekap.png" alt="Rekap">
-        <span>Rekap</span>
-    </a>
-    <a href="monthly.html" class="nav-item">
-        <img src="pembukuan.png" alt="Laporan">
-        <span>Laporan</span>
-    </a>
+    <a href="index.html" class="nav-item"><img src="icon.png" alt="Home"><span>Home</span></a>
+    <a href="product.html" class="nav-item"><img src="voucher.png" alt="Produk"><span>Produk</span></a>
+    <a href="debt.html" class="nav-item"><img src="debt.png" alt="Utang"><span>Utang</span></a>
+    <a href="customer.html" class="nav-item active"><img src="nama.png" alt="Customer"><span>Customer</span></a>
+    <a href="recap.html" class="nav-item"><img src="rekap.png" alt="Rekap"><span>Rekap</span></a>
+    <a href="monthly.html" class="nav-item"><img src="pembukuan.png" alt="Laporan"><span>Laporan</span></a>
     <a href="profile.html" class="nav-item" title="Pengaturan Profil">
         <svg viewBox="0 0 24 24" style="width:20px; height:20px; fill:currentColor; filter:none;"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>
         <span>Profil</span>
     </a>
 </nav>
 
-<!-- ================= PAGE LOADING OVERLAY ================= -->
 <div id="pageLoadingOverlay" class="page-loading-overlay">
     <img src="loading.webp" alt="Loading...">
     <div class="loading-text">Memuat Halaman...</div>
@@ -793,6 +658,7 @@ const KEY_CHARGE_VALUE  = "global_charge_value";
 const KEY_CHARGE_MIGRATED = "charge_default_on_migrated_v1";
 
 let activeLimitCustomerId = null;
+let activeEditCustomerId = null; // Buat nyimpen ID pas lagi ngedit
 
 const ICON_LIGHTNING = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 2v11h3v9l7-12h-4l4-8z"/></svg>';
 const ICON_INFO = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>';
@@ -801,60 +667,32 @@ const ICON_DANGER = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 6
 
 const DOT_SEP = '<span class="dot-sep"></span>';
 
-/* ================= PAGE LOADING OVERLAY ================= */
-(function preloadLoadingGif(){
-    const img = new Image();
-    img.src = 'loading.webp';
-})();
+(function preloadLoadingGif(){ const img = new Image(); img.src = 'loading.webp'; })();
 
-function showPageLoading(){
-    const ov = document.getElementById('pageLoadingOverlay');
-    if (ov) ov.classList.add('active');
-}
+function showPageLoading(){ const ov = document.getElementById('pageLoadingOverlay'); if (ov) ov.classList.add('active'); }
+function navigateWithLoading(url){ if (!url) return; showPageLoading(); setTimeout(() => { window.location.href = url; }, 450); }
 
-function navigateWithLoading(url){
-    if (!url) return;
-    showPageLoading();
-    setTimeout(() => { window.location.href = url; }, 450);
-}
-
-/* Handler global untuk semua <a href="*.html"> */
 document.addEventListener('click', function(e){
     const link = e.target.closest('a[href]');
     if (!link) return;
     if (link.classList.contains('nav-item')) return;
-
     const href = link.getAttribute('href');
     if (!href) return;
-    if (href.startsWith('http') || href.startsWith('javascript') ||
-        href.startsWith('#') || href.startsWith('mailto') ||
-        href.startsWith('tel') || href.startsWith('blob')) return;
+    if (href.startsWith('http') || href.startsWith('javascript') || href.startsWith('#') || href.startsWith('mailto') || href.startsWith('tel') || href.startsWith('blob')) return;
     if (!href.endsWith('.html')) return;
-
     e.preventDefault();
     navigateWithLoading(href);
 });
 
-/* Bottom nav: loading */
 document.querySelectorAll('.nav-item').forEach(item => {
   const href = item.getAttribute('href');
   if (item.tagName === 'A' && href && href.endsWith('.html')){
-    item.addEventListener('click', function(e){
-      e.preventDefault();
-      navigateWithLoading(href);
-    });
+    item.addEventListener('click', function(e){ e.preventDefault(); navigateWithLoading(href); });
   }
 });
 
-function formatRibuan(val){
-    const digits = String(val).replace(/\D/g, "");
-    if(!digits) return "";
-    return Number(digits).toLocaleString("id-ID");
-}
-function parseRibuan(val){
-    const digits = String(val).replace(/\D/g, "");
-    return digits ? parseInt(digits, 10) : 0;
-}
+function formatRibuan(val){ const d = String(val).replace(/\D/g, ""); return d ? Number(d).toLocaleString("id-ID") : ""; }
+function parseRibuan(val){ const d = String(val).replace(/\D/g, ""); return d ? parseInt(d, 10) : 0; }
 function rupiah(n){ return "Rp " + Number(n || 0).toLocaleString("id-ID"); }
 function rupiahShort(n){
     n = Number(n || 0);
@@ -862,36 +700,25 @@ function rupiahShort(n){
     if(n >= 1000)    return (n / 1000).toLocaleString("id-ID", {maximumFractionDigits: 0}) + " Rb";
     return n.toLocaleString("id-ID");
 }
-function setPreset(inputId, value){
-    document.getElementById(inputId).value = Number(value).toLocaleString("id-ID");
-}
+function setPreset(inputId, value){ document.getElementById(inputId).value = Number(value).toLocaleString("id-ID"); }
 
 function showAlert(message, title = "Informasi", type = "info"){
     return new Promise(resolve => {
         const modal   = document.getElementById("customModal");
         const content = document.getElementById("customModalContent");
         const icon    = document.getElementById("modalIcon");
-
         content.className = "customModalContent";
         if(type === "warning") content.classList.add("warning");
         else if(type === "danger") content.classList.add("danger");
-
         icon.className = "modalIcon " + type;
-        if(type === "danger")        icon.innerHTML = ICON_DANGER;
-        else if(type === "warning")  icon.innerHTML = ICON_WARNING;
-        else                         icon.innerHTML = ICON_INFO;
-
+        if(type === "danger") icon.innerHTML = ICON_DANGER;
+        else if(type === "warning") icon.innerHTML = ICON_WARNING;
+        else icon.innerHTML = ICON_INFO;
         document.getElementById("modalTitle").innerText = title;
         document.getElementById("modalMessage").innerText = message;
-
         const okBtnClass = type === "danger" ? "modalOkBtn danger" : type === "warning" ? "modalOkBtn warning" : "modalOkBtn";
-        document.getElementById("modalBtnGroup").innerHTML =
-            `<button class="${okBtnClass}" id="modalOk">OK</button>`;
-
-        document.getElementById("modalOk").onclick = () => {
-            modal.classList.remove("active");
-            resolve(true);
-        };
+        document.getElementById("modalBtnGroup").innerHTML = `<button class="${okBtnClass}" id="modalOk">OK</button>`;
+        document.getElementById("modalOk").onclick = () => { modal.classList.remove("active"); resolve(true); };
         modal.classList.add("active");
     });
 }
@@ -901,50 +728,31 @@ function showConfirm(message, title = "Konfirmasi", type = "warning", okText = "
         const modal   = document.getElementById("customModal");
         const content = document.getElementById("customModalContent");
         const icon    = document.getElementById("modalIcon");
-
         content.className = "customModalContent";
         if(type === "danger") content.classList.add("danger");
         else if(type === "warning") content.classList.add("warning");
-
         icon.className = "modalIcon " + type;
-        if(type === "danger")        icon.innerHTML = ICON_DANGER;
-        else if(type === "warning")  icon.innerHTML = ICON_WARNING;
-        else                         icon.innerHTML = ICON_INFO;
-
+        if(type === "danger") icon.innerHTML = ICON_DANGER;
+        else if(type === "warning") icon.innerHTML = ICON_WARNING;
+        else icon.innerHTML = ICON_INFO;
         document.getElementById("modalTitle").innerText = title;
         document.getElementById("modalMessage").innerText = message;
-
         const okBtnClass = type === "danger" ? "modalOkBtn danger" : type === "warning" ? "modalOkBtn warning" : "modalOkBtn";
         document.getElementById("modalBtnGroup").innerHTML = `
             <button class="modalCancelBtn" id="modalCancel">${cancelText}</button>
             <button class="${okBtnClass}" id="modalOk">${okText}</button>
         `;
-
-        document.getElementById("modalOk").onclick = () => {
-            modal.classList.remove("active");
-            resolve(true);
-        };
-        document.getElementById("modalCancel").onclick = () => {
-            modal.classList.remove("active");
-            resolve(false);
-        };
+        document.getElementById("modalOk").onclick = () => { modal.classList.remove("active"); resolve(true); };
+        document.getElementById("modalCancel").onclick = () => { modal.classList.remove("active"); resolve(false); };
         modal.classList.add("active");
     });
 }
 
 function getCustomers(){ return JSON.parse(localStorage.getItem(KEY_CUSTOMERS)) || []; }
 function saveCustomers(list){ localStorage.setItem(KEY_CUSTOMERS, JSON.stringify(list)); }
-
-function getGlobalLimit(){
-    const v = parseInt(localStorage.getItem(KEY_GLOBAL_LIMIT) || "0", 10);
-    return isNaN(v) ? 0 : v;
-}
+function getGlobalLimit(){ const v = parseInt(localStorage.getItem(KEY_GLOBAL_LIMIT) || "0", 10); return isNaN(v) ? 0 : v; }
 function setGlobalLimit(val){ localStorage.setItem(KEY_GLOBAL_LIMIT, String(val)); }
-
-function getGlobalCharge(){
-    const v = parseInt(localStorage.getItem(KEY_CHARGE_VALUE) || "0", 10);
-    return isNaN(v) ? 0 : v;
-}
+function getGlobalCharge(){ const v = parseInt(localStorage.getItem(KEY_CHARGE_VALUE) || "0", 10); return isNaN(v) ? 0 : v; }
 function setGlobalCharge(val){ localStorage.setItem(KEY_CHARGE_VALUE, String(val)); }
 
 window.onload = function(){
@@ -961,9 +769,7 @@ window.onload = function(){
     }
 
     document.querySelectorAll(".popupBox").forEach(box => {
-        box.addEventListener("click", e => {
-            if(e.target === box) box.classList.remove("active");
-        });
+        box.addEventListener("click", e => { if(e.target === box) box.classList.remove("active"); });
     });
 };
 
@@ -980,18 +786,10 @@ function migrateData(){
     let changed = false;
 
     customers.forEach(c => {
-        if(typeof c.limit !== "number" || isNaN(c.limit)){
-            c.limit = globalLimit;
-            changed = true;
-        }
-        if(!alreadyMigrated){
-            c.chargeEnabled = true;
-            changed = true;
-        }
-        if(typeof c.chargeEnabled !== "boolean"){
-            c.chargeEnabled = true;
-            changed = true;
-        }
+        if(typeof c.limit !== "number" || isNaN(c.limit)){ c.limit = globalLimit; changed = true; }
+        if(!alreadyMigrated){ c.chargeEnabled = true; changed = true; }
+        if(typeof c.chargeEnabled !== "boolean"){ c.chargeEnabled = true; changed = true; }
+        if(!c.phones){ c.phones = []; changed = true; }
     });
 
     if(changed) saveCustomers(customers);
@@ -1001,10 +799,7 @@ function migrateData(){
     let debtChanged = false;
     Object.keys(debts).forEach(custId => {
         debts[custId].forEach(d => {
-            if(typeof d.charge !== "number"){
-                d.charge = 0;
-                debtChanged = true;
-            }
+            if(typeof d.charge !== "number"){ d.charge = 0; debtChanged = true; }
         });
     });
     if(debtChanged) localStorage.setItem(KEY_DEBTS, JSON.stringify(debts));
@@ -1028,12 +823,10 @@ function recomputeCharges(custId){
     const customers = getCustomers();
     const cust = customers.find(c => c.id === custId);
     if(!cust) return;
-
     const debts = JSON.parse(localStorage.getItem(KEY_DEBTS)) || {};
     const custDebts = debts[custId] || [];
     const limit = cust.limit || 0;
     const chargeVal = getGlobalCharge();
-
     if(!cust.chargeEnabled || chargeVal <= 0 || limit <= 0){
         custDebts.forEach(d => { d.charge = 0; });
     } else {
@@ -1044,11 +837,118 @@ function recomputeCharges(custId){
             d.charge = (cumulative > limit) ? chargeVal : 0;
         });
     }
-
     debts[custId] = custDebts;
     localStorage.setItem(KEY_DEBTS, JSON.stringify(debts));
 }
 
+/* ================= DASHBOARD STATS ================= */
+function computeDashboardStats(){
+    const debts = JSON.parse(localStorage.getItem(KEY_DEBTS)) || {};
+    const archived = JSON.parse(localStorage.getItem(KEY_ARCHIVED)) || {};
+    let totalTx = 0;
+    let totalDebt = 0;
+
+    Object.keys(debts).forEach(custId => {
+        (debts[custId] || []).forEach(d => {
+            totalTx++;
+            const harga = d.harga || 0;
+            const charge = d.charge || 0;
+            const dibayar = d.dibayar || 0;
+            const sisa = (harga + charge) - dibayar;
+            if(sisa > 0) totalDebt += sisa;
+        });
+    });
+    Object.keys(archived).forEach(custId => {
+        (archived[custId] || []).forEach(() => { totalTx++; });
+    });
+
+    document.getElementById('dashTotalTx').innerText = totalTx + " Kali";
+    document.getElementById('dashTotalDebt').innerText = rupiah(totalDebt);
+}
+
+/* ================= STATS MODAL ================= */
+function openStatsModal(){
+    const debts = JSON.parse(localStorage.getItem(KEY_DEBTS)) || {};
+    const archived = JSON.parse(localStorage.getItem(KEY_ARCHIVED)) || {};
+    const customers = getCustomers();
+
+    const productCount = {};
+    Object.keys(debts).forEach(custId => {
+        (debts[custId] || []).forEach(d => {
+            const p = (d.produk || '').trim();
+            if(!p) return;
+            productCount[p] = (productCount[p] || 0) + 1;
+        });
+    });
+    Object.keys(archived).forEach(custId => {
+        (archived[custId] || []).forEach(d => {
+            const p = (d.produk || '').trim();
+            if(!p) return;
+            productCount[p] = (productCount[p] || 0) + 1;
+        });
+    });
+
+    const topProducts = Object.entries(productCount).sort((a,b) => b[1]-a[1]).slice(0, 5);
+    const listEl = document.getElementById('statsProductsList');
+    if(topProducts.length === 0){
+        listEl.innerHTML = `<p style="text-align:center; color:#777; padding: 15px; font-size:0.8rem;">Belum ada data produk.</p>`;
+    } else {
+        listEl.innerHTML = topProducts.map(([name, count], i) => `
+            <div class="stats-product-item">
+                <div class="stats-rank">#${i+1}</div>
+                <div class="stats-product-name">${name}</div>
+                <div class="stats-product-count">${count}x</div>
+            </div>
+        `).join('');
+    }
+
+    const custStats = customers.map(c => {
+        const items = [...(debts[c.id] || []), ...(archived[c.id] || [])];
+        const freq = {};
+        items.forEach(d => {
+            const p = (d.produk || '').trim();
+            if(!p) return;
+            freq[p] = (freq[p] || 0) + 1;
+        });
+        const topCust = Object.entries(freq).sort((a,b) => b[1]-a[1]);
+        return { id: c.id, name: c.name, totalTx: items.length, topProducts: topCust };
+    });
+
+    const custEl = document.getElementById('statsCustomerList');
+    if(custStats.length === 0){
+        custEl.innerHTML = `<p style="text-align:center; color:#777; padding: 15px; font-size:0.8rem;">Belum ada customer.</p>`;
+    } else {
+        custEl.innerHTML = custStats.map(c => `
+            <div class="stats-cust-item">
+                <div class="stats-cust-head">
+                    <div>
+                        <div class="stats-cust-name">${c.name}</div>
+                        <div class="stats-cust-id">ID: ${c.id}</div>
+                    </div>
+                    <div class="stats-cust-tx">${c.totalTx} Tx</div>
+                </div>
+                ${c.topProducts.length > 0 ? `
+                    <div class="stats-cust-products">
+                        ${c.topProducts.slice(0, 3).map(([p, n]) => `
+                            <div class="stats-cust-product-tag">
+                                <span>${p}</span>
+                                <b>${n}x</b>
+                            </div>
+                        `).join('')}
+                    </div>
+                ` : `<div style="font-size:0.7rem; color:#666; margin-top:6px; text-align:center;">Belum ada transaksi</div>`}
+            </div>
+        `).join('');
+    }
+
+    document.getElementById('statsModal').classList.add('active');
+}
+
+function closeStatsModal(){
+    document.getElementById('statsModal').classList.remove('active');
+}
+
+/* ================= RENDER CUSTOMER LIST ================= */
 function renderCustomerList(){
     const customers = getCustomers();
     const debts = JSON.parse(localStorage.getItem(KEY_DEBTS)) || {};
@@ -1057,6 +957,8 @@ function renderCustomerList(){
     const chargeVal = getGlobalCharge();
     const list = document.getElementById("customerList");
     list.innerHTML = "";
+
+    computeDashboardStats();
 
     if(customers.length === 0){
         list.innerHTML = `<p style="text-align:center; color:#777; padding: 20px;">Belum ada customer terdaftar.</p>`;
@@ -1070,7 +972,6 @@ function renderCustomerList(){
         const chargeEnabled = !!data.chargeEnabled;
         const custDebts = debts[custId] || [];
         const archivedCustDebts = archivedDebts[custId] || [];
-
         const totalTxCount = custDebts.length + archivedCustDebts.length;
 
         let totalDebtAmount = 0;
@@ -1089,10 +990,7 @@ function renderCustomerList(){
             if(charge > 0){ totalChargeApplied += charge; chargedTxCount++; }
             totalSpent += dibayar + tip;
         });
-
-        archivedCustDebts.forEach(item => {
-            totalSpent += (item.dibayar || 0) + (item.tip || 0);
-        });
+        archivedCustDebts.forEach(item => { totalSpent += (item.dibayar || 0) + (item.tip || 0); });
 
         let pct = 0;
         if(limit > 0) pct = (totalDebtAmount / limit) * 100;
@@ -1124,6 +1022,9 @@ function renderCustomerList(){
         const card = document.createElement("div");
         card.classList.add("customer-card");
         if(over) card.classList.add("over-limit");
+        
+        // KLIK CARD -> KONFIRMASI EDIT
+        card.onclick = () => confirmEditCustomer(custId);
 
         const chargeLabelText = chargeVal > 0
             ? `Over-Limit <b>(x ${rupiah(chargeVal)})</b>`
@@ -1133,6 +1034,17 @@ function renderCustomerList(){
             ? `<div class="charge-info-text">${ICON_LIGHTNING.replace('<svg ', '<svg class="charge-tiny-icon" ')}Total charge diterapkan: <b>${rupiah(totalChargeApplied)}</b>${DOT_SEP}${chargedTxCount} transaksi</div>`
             : "";
 
+        // BIKIN HTML NOMOR TELEPON
+        let phonesHtml = "";
+        if(data.phones && data.phones.length > 0) {
+            phonesHtml = data.phones.map(ph => `
+                <small class="phone-badge" onclick="event.stopPropagation(); copyPhoneNumber('${ph}', this)" title="Klik untuk salin nomor">
+                    <svg viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
+                    ${ph}
+                </small>
+            `).join('');
+        }
+
         card.innerHTML = `
             <div class="customer-top">
                 <div class="customer-info">
@@ -1141,6 +1053,7 @@ function renderCustomerList(){
                     <div class="customer-meta-row">
                         <small>Jumlah Transaksi: ${totalTxCount} item</small>
                         <small class="spending-badge">Total Spending: ${rupiah(totalSpent)}</small>
+                        ${phonesHtml}
                     </div>
                 </div>
                 <div class="customer-stats">
@@ -1149,7 +1062,7 @@ function renderCustomerList(){
                 </div>
             </div>
 
-            <div class="customer-limit" onclick="openCustomerLimit('${custId}')" title="Ketuk untuk ubah limitasi customer ini">
+            <div class="customer-limit" onclick="event.stopPropagation(); openCustomerLimit('${custId}')" title="Ketuk untuk ubah limitasi customer ini">
                 <div class="limit-head">
                     <span>Limitasi Tagihan</span>
                     ${pctLabel}
@@ -1182,17 +1095,35 @@ function renderCustomerList(){
     });
 }
 
-function openPopup(){
-    renderGlobalLimitBadge();
-    document.getElementById("popupBox").classList.add("active");
+/* FUNGSI COPY NOMOR TELEPON */
+function copyPhoneNumber(phone, element) {
+    if (!phone) return;
+    
+    const originalHTML = element.innerHTML;
+    element.innerHTML = '<span style="color:#4caf5e;">Tersalin!</span>';
+    
+    if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(phone).catch(err => console.error("Gagal salin:", err));
+    } else {
+        const textArea = document.createElement("textarea");
+        textArea.value = phone;
+        textArea.style.position = "fixed";
+        textArea.style.left = "-999999px";
+        document.body.appendChild(textArea);
+        textArea.focus(); textArea.select();
+        try { document.execCommand('copy'); } catch (err) { console.error(err); }
+        textArea.remove();
+    }
+    
+    setTimeout(() => { element.innerHTML = originalHTML; }, 1500);
 }
-function closePopup(){
-    document.getElementById("popupBox").classList.remove("active");
-}
+
+function openPopup(){ renderGlobalLimitBadge(); document.getElementById("popupBox").classList.add("active"); }
+function closePopup(){ document.getElementById("popupBox").classList.remove("active"); }
+
 async function addCustomer(){
     const id = document.getElementById("customerId").value.trim();
     const name = document.getElementById("customerName").value.trim();
-
     if(id === "" || name === ""){
         await showAlert("Lengkapi ID dan Nama Customer terlebih dahulu.", "Data Belum Lengkap", "warning");
         return;
@@ -1202,13 +1133,10 @@ async function addCustomer(){
         await showAlert("ID Customer tersebut sudah terdaftar. Gunakan ID lain.", "ID Duplikat", "danger");
         return;
     }
-
-    customers.push({ id, name, limit: getGlobalLimit(), chargeEnabled: true });
+    customers.push({ id, name, limit: getGlobalLimit(), chargeEnabled: true, phones: [] });
     saveCustomers(customers);
-
     document.getElementById("customerId").value = "";
     document.getElementById("customerName").value = "";
-
     closePopup();
     renderCustomerList();
 }
@@ -1218,9 +1146,8 @@ function openGlobalLimit(){
     document.getElementById("globalLimitInput").value = val > 0 ? val.toLocaleString("id-ID") : "";
     document.getElementById("globalLimitPopup").classList.add("active");
 }
-function closeGlobalLimit(){
-    document.getElementById("globalLimitPopup").classList.remove("active");
-}
+function closeGlobalLimit(){ document.getElementById("globalLimitPopup").classList.remove("active"); }
+
 async function saveGlobalLimit(){
     const val = parseRibuan(document.getElementById("globalLimitInput").value);
     if(val <= 0){
@@ -1230,21 +1157,15 @@ async function saveGlobalLimit(){
     const customers = getCustomers();
     if(customers.length > 0){
         const ok = await showConfirm(
-            `Limitasi ${customers.length} customer akan disamakan menjadi ${rupiah(val)}.\n\n` +
-            `Limitasi custom per customer akan tertimpa. Lanjutkan?`,
-            "Samakan Limit Semua Customer",
-            "warning",
-            "Ya, Terapkan",
-            "Batal"
+            `Limitasi ${customers.length} customer akan disamakan menjadi ${rupiah(val)}.\n\nLimitasi custom per customer akan tertimpa. Lanjutkan?`,
+            "Samakan Limit Semua Customer", "warning", "Ya, Terapkan", "Batal"
         );
         if(!ok) return;
     }
     setGlobalLimit(val);
     customers.forEach(c => { c.limit = val; });
     saveCustomers(customers);
-
     customers.forEach(c => { if(c.chargeEnabled) recomputeCharges(c.id); });
-
     closeGlobalLimit();
     renderGlobalLimitBadge();
     renderCustomerList();
@@ -1255,9 +1176,8 @@ function openGlobalCharge(){
     document.getElementById("globalChargeInput").value = val > 0 ? val.toLocaleString("id-ID") : "";
     document.getElementById("globalChargePopup").classList.add("active");
 }
-function closeGlobalCharge(){
-    document.getElementById("globalChargePopup").classList.remove("active");
-}
+function closeGlobalCharge(){ document.getElementById("globalChargePopup").classList.remove("active"); }
+
 async function saveGlobalCharge(){
     const val = parseRibuan(document.getElementById("globalChargeInput").value);
     if(val < 0){
@@ -1265,10 +1185,8 @@ async function saveGlobalCharge(){
         return;
     }
     setGlobalCharge(val);
-
     const customers = getCustomers();
     customers.forEach(c => { if(c.chargeEnabled) recomputeCharges(c.id); });
-
     closeGlobalCharge();
     renderGlobalChargeBadge();
     renderCustomerList();
@@ -1278,11 +1196,9 @@ async function toggleCharge(custId){
     const customers = getCustomers();
     const cust = customers.find(c => c.id === custId);
     if(!cust) return;
-
     const debts = JSON.parse(localStorage.getItem(KEY_DEBTS)) || {};
     const custDebts = debts[custId] || [];
     const hasActiveDebts = custDebts.some(d => ((d.harga || 0) - (d.dibayar || 0)) > 0);
-
     const chargeVal = getGlobalCharge();
     const willEnable = !cust.chargeEnabled;
 
@@ -1297,24 +1213,16 @@ async function toggleCharge(custId){
         }
         if(hasActiveDebts){
             const ok = await showConfirm(
-                `Aktifkan charge ${rupiah(chargeVal)}?\n\n` +
-                `Setiap transaksi yang melebihi limit ${rupiah(cust.limit)} akan otomatis kena charge. Total tagihan akan bertambah.`,
-                "Aktifkan Charge",
-                "warning",
-                "Ya, Aktifkan",
-                "Batal"
+                `Aktifkan charge ${rupiah(chargeVal)}?\n\nSetiap transaksi yang melebihi limit ${rupiah(cust.limit)} akan otomatis kena charge. Total tagihan akan bertambah.`,
+                "Aktifkan Charge", "warning", "Ya, Aktifkan", "Batal"
             );
             if(!ok) return;
         }
     } else {
         if(custDebts.some(d => (d.charge || 0) > 0)){
             const ok = await showConfirm(
-                "Nonaktifkan charge untuk customer ini?\n\n" +
-                "Semua transaksi akan kembali ke harga normal (tanpa charge).",
-                "Nonaktifkan Charge",
-                "danger",
-                "Ya, Nonaktifkan",
-                "Batal"
+                "Nonaktifkan charge untuk customer ini?\n\nSemua transaksi akan kembali ke harga normal (tanpa charge).",
+                "Nonaktifkan Charge", "danger", "Ya, Nonaktifkan", "Batal"
             );
             if(!ok) return;
         }
@@ -1322,7 +1230,6 @@ async function toggleCharge(custId){
 
     cust.chargeEnabled = willEnable;
     saveCustomers(customers);
-
     recomputeCharges(custId);
     renderCustomerList();
 }
@@ -1331,14 +1238,11 @@ function openCustomerLimit(custId){
     const customers = getCustomers();
     const cust = customers.find(c => c.id === custId);
     if(!cust) return;
-
     activeLimitCustomerId = custId;
     const limit = (typeof cust.limit === "number") ? cust.limit : 0;
-
     document.getElementById("custLimitName").innerHTML =
         `<b>${cust.name}</b>${DOT_SEP}ID: ${cust.id}<br>Limit saat ini: <b>${limit > 0 ? rupiah(limit) : "belum diatur"}</b>`;
     document.getElementById("customerLimitInput").value = limit > 0 ? limit.toLocaleString("id-ID") : "";
-
     document.getElementById("customerLimitPopup").classList.add("active");
 }
 function closeCustomerLimit(){
@@ -1361,14 +1265,169 @@ async function saveCustomerLimit(){
         await showAlert("Customer tidak ditemukan.", "Error", "danger");
         return;
     }
-
     cust.limit = val;
     saveCustomers(customers);
-
     if(cust.chargeEnabled) recomputeCharges(cust.id);
-
     closeCustomerLimit();
     renderCustomerList();
+}
+
+/* ================= FITUR EDIT & HAPUS CUSTOMER ================= */
+async function confirmEditCustomer(custId) {
+    const customers = getCustomers();
+    const cust = customers.find(c => c.id === custId);
+    if(!cust) return;
+    
+    const ok = await showConfirm(
+        `Apakah kamu ingin mengedit data customer "${cust.name}" (ID: ${cust.id})?`,
+        "Konfirmasi Edit",
+        "info",
+        "Ya, Edit",
+        "Batal"
+    );
+    
+    if(ok) {
+        openEditCustomer(custId);
+    }
+}
+
+function openEditCustomer(custId) {
+    const customers = getCustomers();
+    const cust = customers.find(c => c.id === custId);
+    if(!cust) return;
+    
+    activeEditCustomerId = custId;
+    document.getElementById("editCustIdInput").value = cust.id;
+    document.getElementById("editCustName").value = cust.name;
+    
+    const container = document.getElementById("phoneInputsContainer");
+    container.innerHTML = "";
+    
+    // Render inputan nomor telepon
+    if(cust.phones && cust.phones.length > 0) {
+        cust.phones.forEach(ph => addPhoneInput(ph));
+    } else {
+        addPhoneInput(); // default 1 input kosong
+    }
+    
+    document.getElementById("editCustomerPopup").classList.add("active");
+}
+
+function closeEditCustomer() {
+    document.getElementById("editCustomerPopup").classList.remove("active");
+    activeEditCustomerId = null;
+}
+
+function addPhoneInput(val = '') {
+    const container = document.getElementById("phoneInputsContainer");
+    const div = document.createElement("div");
+    div.className = "phone-row";
+    div.innerHTML = `
+        <input type="tel" class="phone-input" placeholder="08xxxxxxxxxx" value="${val}">
+        <button type="button" class="btn-remove-phone" onclick="removePhoneInput(this)" title="Hapus Nomor">
+            <svg viewBox="0 0 24 24" style="width:20px;height:20px;fill:currentColor;"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+    `;
+    container.appendChild(div);
+}
+
+function removePhoneInput(btn) {
+    const container = document.getElementById("phoneInputsContainer");
+    // Minimal harus ada 1 input
+    if(container.children.length > 1) {
+        btn.parentElement.remove();
+    } else {
+        btn.parentElement.querySelector('input').value = '';
+    }
+}
+
+async function saveEditCustomer() {
+    if(!activeEditCustomerId) return;
+    
+    const newId = document.getElementById("editCustIdInput").value.trim();
+    const name = document.getElementById("editCustName").value.trim();
+    
+    if(!newId || !name) {
+        await showAlert("ID dan Nama Customer tidak boleh kosong.", "Data Tidak Valid", "warning");
+        return;
+    }
+
+    const customers = getCustomers();
+    const oldId = activeEditCustomerId;
+
+    // Cek apakah ID baru bentrok dengan customer lain
+    if (newId !== oldId && customers.some(c => c.id === newId)) {
+        await showAlert("ID Customer tersebut sudah terdaftar. Gunakan ID lain.", "ID Duplikat", "danger");
+        return;
+    }
+    
+    // Ambil semua nomor telepon yang diisi
+    const phoneInputs = document.querySelectorAll('#phoneInputsContainer .phone-input');
+    const phones = [];
+    phoneInputs.forEach(input => {
+        const val = input.value.trim();
+        if(val) phones.push(val);
+    });
+    
+    const index = customers.findIndex(c => c.id === oldId);
+    if(index > -1) {
+        // Update data master customer
+        customers[index].id = newId;
+        customers[index].name = name;
+        customers[index].phones = phones;
+        saveCustomers(customers);
+        
+        // PINDAHKAN RIWAYAT UTANG & ARSIP (Jika ID berubah)
+        if (newId !== oldId) {
+            let debts = JSON.parse(localStorage.getItem(KEY_DEBTS)) || {};
+            let archived = JSON.parse(localStorage.getItem(KEY_ARCHIVED)) || {};
+            
+            if (debts[oldId]) {
+                debts[newId] = debts[oldId];
+                delete debts[oldId];
+                localStorage.setItem(KEY_DEBTS, JSON.stringify(debts));
+            }
+            if (archived[oldId]) {
+                archived[newId] = archived[oldId];
+                delete archived[oldId];
+                localStorage.setItem(KEY_ARCHIVED, JSON.stringify(archived));
+            }
+        }
+        
+        closeEditCustomer();
+        renderCustomerList();
+        await showAlert("Data customer berhasil diperbarui.", "Berhasil", "info");
+    }
+}
+
+async function confirmDeleteCustomer() {
+    if(!activeEditCustomerId) return;
+    
+    const ok = await showConfirm(
+        "Yakin ingin menghapus Customer ini?\n\nSemua data utang dan riwayat transaksi milik customer ini akan terhapus permanen dan tidak bisa dikembalikan.",
+        "Hapus Customer?",
+        "danger",
+        "Ya, Hapus",
+        "Batal"
+    );
+    
+    if(ok) {
+        // Hapus dari master customer
+        let customers = getCustomers().filter(c => c.id !== activeEditCustomerId);
+        saveCustomers(customers);
+        
+        // Hapus semua data utang aktif & arsipnya agar tidak nyangkut
+        let debts = JSON.parse(localStorage.getItem(KEY_DEBTS)) || {};
+        let archived = JSON.parse(localStorage.getItem(KEY_ARCHIVED)) || {};
+        delete debts[activeEditCustomerId];
+        delete archived[activeEditCustomerId];
+        localStorage.setItem(KEY_DEBTS, JSON.stringify(debts));
+        localStorage.setItem(KEY_ARCHIVED, JSON.stringify(archived));
+        
+        closeEditCustomer();
+        renderCustomerList();
+        await showAlert("Customer berhasil dihapus.", "Terhapus", "info");
+    }
 }
 </script>
 

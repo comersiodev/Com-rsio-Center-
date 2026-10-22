@@ -1,0 +1,1044 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#050505">
+<title>Rekening Job · InJob</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --gold:#C9A24B;--gold-soft:rgba(201,162,75,.55);
+    --black:#050505;--text:#F2EBDD;--muted:#9a9384;
+    --in:#7fd69a;--out:#e58a7b;
+    --bg-color:#000;--nav-h:68px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+  html,body{min-height:100%}
+  body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg-color);color:var(--text);display:flex;justify-content:center}
+  a{color:inherit;text-decoration:none}
+  button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+  input{font:inherit;color:var(--text)}
+  :focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:8px}
+
+  .app{position:relative;width:100%;max-width:480px;min-height:100vh}
+
+  .hero{padding:calc(env(safe-area-inset-top) + 14px) 18px 60px;
+        background:linear-gradient(155deg,#E7C467 0%,#C9A24B 55%,#9A7424 100%);
+        background-size:cover;background-position:center}
+  .hero .greet small{color:rgba(30,22,4,.72)}
+  .hero .greet h1{color:#1b1403;text-shadow:0 1px 0 rgba(255,255,255,.25)}
+
+  .sheet{position:relative;z-index:2;margin-top:-50px;border-radius:28px 28px 0 0;
+         background:var(--black);overflow:hidden;
+         padding:14px 16px calc(var(--nav-h) + env(safe-area-inset-bottom) + 24px);
+         box-shadow:0 -12px 30px rgba(0,0,0,.45);
+         display:grid;gap:12px;align-content:start;min-height:calc(100vh - 80px)}
+  .sheet::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
+    background-image:var(--sheet-wallpaper,none);background-size:cover;background-position:center;background-repeat:no-repeat;opacity:.5}
+  .sheet.blurred::before{filter:blur(18px);transform:scale(1.1)}
+  .sheet > *{position:relative;z-index:1}
+
+  header{display:flex;align-items:center;justify-content:space-between;gap:12px}
+  .greet{min-width:0}
+  .greet small{display:block;color:var(--muted);font-size:13px;margin-bottom:2px}
+  .greet h1{font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:24px;letter-spacing:-.01em;line-height:1.15;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .header-right{display:flex;flex-direction:column;align-items:center;gap:6px;flex:none}
+  .logo-home{width:28px;height:28px;display:block;flex:none}
+  .logo-home img{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 1px 2px rgba(0,0,0,.35))}
+  .avatar{width:46px;height:46px;border-radius:50%;border:1.5px solid var(--gold);background:var(--black);
+          display:grid;place-items:center;overflow:hidden;flex:none;padding:0}
+  .avatar img{width:100%;height:100%;object-fit:cover}
+  .avatar svg{width:24px;height:24px}
+
+  .card{border:1.5px solid var(--gold);border-radius:20px;padding:16px;background:rgba(5,5,5,.82);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);box-shadow:0 14px 30px rgba(0,0,0,.55)}
+  .card-head{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:4px}
+  .card-head h2{font-family:'Bricolage Grotesque',sans-serif;font-size:17px;font-weight:700}
+  h2{font-family:'Bricolage Grotesque',sans-serif;font-size:17px;font-weight:700;margin-bottom:4px}
+
+  .stats{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .stat{padding:14px 16px;border:1.5px solid var(--gold-soft);border-radius:16px;
+        background:linear-gradient(135deg,rgba(201,162,75,.12),rgba(0,0,0,.45));
+        display:flex;align-items:center;gap:12px}
+  .stat-icon{width:40px;height:40px;border-radius:12px;background:rgba(201,162,75,.16);
+             border:1px solid rgba(201,162,75,.35);display:grid;place-items:center;color:var(--gold);flex:none}
+  .stat-icon svg{width:20px;height:20px}
+  .stat-body b{display:block;font-family:'Bricolage Grotesque',sans-serif;font-size:24px;line-height:1;color:var(--gold);font-variant-numeric:tabular-nums}
+  .stat-body span{display:block;font-size:11.5px;color:var(--muted);margin-top:4px}
+
+  .tabs{display:grid;grid-template-columns:1fr 1fr;gap:4px;background:rgba(0,0,0,.55);
+        border:1.5px solid var(--gold-soft);border-radius:14px;padding:4px}
+  .tabs button{padding:11px;border-radius:10px;font-size:13px;font-weight:600;color:var(--muted);
+               display:flex;align-items:center;justify-content:center;gap:7px;transition:all .15s}
+  .tabs button svg{width:16px;height:16px}
+  .tabs button.on{background:var(--gold);color:#1b1403;box-shadow:0 4px 14px rgba(201,162,75,.25)}
+
+  .list-head{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:12px}
+  .list-head h2{font-size:16px}
+  .add-btn{display:inline-flex;align-items:center;gap:6px;padding:8px 13px;border:1.5px solid var(--gold);
+           border-radius:10px;color:var(--gold);font-size:12.5px;font-weight:600;background:rgba(0,0,0,.4);transition:all .15s}
+  .add-btn:hover{background:rgba(201,162,75,.15)}
+  .add-btn svg{width:14px;height:14px}
+  .add-btn:active{transform:scale(.96)}
+
+  .acc-list{display:flex;flex-direction:column;gap:10px}
+  .acc-card{display:flex;align-items:center;gap:12px;padding:12px;border:1px solid rgba(201,162,75,.22);
+            border-radius:14px;background:rgba(0,0,0,.4);transition:all .15s;cursor:pointer;text-align:left;width:100%}
+  .acc-card:hover{border-color:rgba(201,162,75,.5);background:rgba(201,162,75,.05)}
+  .acc-card:active{transform:scale(.99)}
+  .logo{width:44px;height:44px;border-radius:12px;background:#f5f2ea;display:grid;place-items:center;
+        overflow:hidden;flex:none;font-weight:800;color:#1b1403;font-size:14px;letter-spacing:-.02em}
+  .logo img{width:100%;height:100%;object-fit:contain;padding:6px}
+  .acc-body{flex:1;min-width:0}
+  .acc-row1{display:flex;align-items:center;gap:6px;min-width:0}
+  .acc-row1 b{font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .acc-badge{font-size:9.5px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;
+             padding:2px 6px;border-radius:4px;background:rgba(201,162,75,.14);color:var(--gold);flex:none}
+  .acc-holder{font-size:11.5px;color:var(--muted);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .acc-number{font-family:'Bricolage Grotesque',sans-serif;font-size:14px;font-weight:700;color:var(--text);
+              margin-top:3px;letter-spacing:.02em;font-variant-numeric:tabular-nums;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .acc-chevron{color:var(--muted);flex:none;display:grid;place-items:center}
+  .acc-chevron svg{width:18px;height:18px}
+
+  .empty-state{padding:28px 8px;text-align:center;color:var(--muted)}
+  .empty-state svg{width:42px;height:42px;color:rgba(201,162,75,.5);margin-bottom:10px}
+  .empty-state p{font-size:13.5px;margin-bottom:3px}
+  .empty-state small{font-size:11.5px;opacity:.8}
+
+  /* MODAL BASE */
+  .modal{position:fixed;inset:0;z-index:200;display:flex;align-items:flex-end;justify-content:center}
+  .modal[hidden]{display:none}
+  .modal-bg{position:absolute;inset:0;background:rgba(0,0,0,.72);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);animation:fadeIn .2s ease}
+  .modal-card{position:relative;width:100%;max-width:480px;background:#0b0b0b;border:1.5px solid var(--gold);border-bottom:0;
+    border-radius:24px 24px 0 0;padding:16px 16px calc(16px + env(safe-area-inset-bottom));
+    animation:slideUp .28s cubic-bezier(.2,.8,.3,1);max-height:92vh;overflow-y:auto}
+  .modal-card.small{max-width:400px;border-radius:20px;border-bottom:1.5px solid var(--gold);margin:0 16px 16px}
+  @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+  @keyframes slideUp{from{transform:translateY(40px);opacity:0}to{transform:none;opacity:1}}
+  .modal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+  .modal-head h3{font-family:'Bricolage Grotesque',sans-serif;font-size:17px}
+  .modal-close{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;color:var(--muted);background:rgba(255,255,255,.04)}
+  .modal-close:hover{color:var(--text);background:rgba(255,255,255,.08)}
+  .modal-close svg{width:15px;height:15px}
+
+  /* ===== PREVIEW / DETAIL ===== */
+  .preview-hero{
+    display:flex;flex-direction:column;align-items:center;gap:10px;
+    padding:20px 16px 22px;
+    background:linear-gradient(135deg,rgba(201,162,75,.18),rgba(0,0,0,.4));
+    border:1px solid rgba(201,162,75,.3);
+    border-radius:18px;
+    margin-bottom:16px;
+    position:relative;
+    overflow:hidden;
+  }
+  .preview-hero::before{
+    content:"";position:absolute;right:-40px;top:-40px;width:160px;height:160px;border-radius:50%;
+    background:radial-gradient(circle,rgba(201,162,75,.2),transparent 70%);pointer-events:none;
+  }
+  .preview-logo{width:72px;height:72px;border-radius:18px;background:#f5f2ea;
+    display:grid;place-items:center;overflow:hidden;flex:none;
+    font-weight:800;color:#1b1403;font-size:22px;letter-spacing:-.02em;
+    box-shadow:0 8px 24px rgba(0,0,0,.4);position:relative}
+  .preview-logo img{width:100%;height:100%;object-fit:contain;padding:10px}
+  .preview-provider{font-family:'Bricolage Grotesque',sans-serif;font-size:18px;font-weight:700;text-align:center;line-height:1.2}
+  .preview-type{font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+    padding:3px 10px;border-radius:6px;background:rgba(201,162,75,.18);color:var(--gold);margin-top:2px}
+
+  .preview-section{display:grid;gap:12px;margin-bottom:16px}
+  .preview-field{display:flex;flex-direction:column;gap:6px;padding:12px 14px;
+    background:rgba(0,0,0,.45);border:1px solid rgba(201,162,75,.2);border-radius:14px}
+  .preview-label{font-size:10.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;font-weight:600}
+  .preview-value{font-size:15px;font-weight:600;color:var(--text);word-break:break-word}
+
+  /* Nomor rekening besar + copy button */
+  .number-row{display:flex;align-items:center;gap:10px;padding:14px;
+    background:linear-gradient(135deg,rgba(201,162,75,.14),rgba(0,0,0,.4));
+    border:1.5px solid rgba(201,162,75,.4);border-radius:14px}
+  .number-value{
+    flex:1;min-width:0;
+    font-family:'Bricolage Grotesque',sans-serif;
+    font-size:22px;font-weight:700;
+    color:var(--gold);
+    letter-spacing:.04em;
+    font-variant-numeric:tabular-nums;
+    word-spacing:2px;
+    line-height:1.15;
+    user-select:text;
+    word-break:break-all;
+  }
+  .copy-btn{
+    width:40px;height:40px;border-radius:10px;flex:none;
+    display:grid;place-items:center;
+    background:rgba(201,162,75,.18);
+    border:1.5px solid var(--gold);
+    color:var(--gold);
+    transition:all .15s;
+  }
+  .copy-btn:hover{background:var(--gold);color:#1b1403}
+  .copy-btn:active{transform:scale(.92)}
+  .copy-btn svg{width:18px;height:18px}
+  .copy-btn.copied{background:var(--in);border-color:var(--in);color:var(--black)}
+
+  /* Actions in preview */
+  .preview-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:4px}
+  .btn{border:1.5px solid var(--gold);border-radius:12px;padding:11px 14px;font-size:13px;font-weight:600;
+       color:var(--gold);background:rgba(0,0,0,.4);white-space:nowrap;transition:all .12s;cursor:pointer;
+       display:inline-flex;align-items:center;justify-content:center;gap:7px}
+  .btn.solid{background:var(--gold);color:#1b1403}
+  .btn.solid:hover{background:#d4b05a}
+  .btn:active{transform:scale(.97)}
+  .btn.danger{border-color:rgba(229,138,123,.5);color:var(--out);background:rgba(229,138,123,.08)}
+  .btn.danger:hover{background:rgba(229,138,123,.16)}
+  .btn svg{width:15px;height:15px}
+
+  /* ADD MODAL */
+  .field{margin-top:12px}
+  .field label{display:block;font-size:11.5px;color:var(--muted);margin-bottom:6px;font-weight:500;letter-spacing:.02em;text-transform:uppercase}
+  .field .req{color:var(--out)}
+  .input-group{display:flex;align-items:center;gap:10px;border:1.5px solid var(--gold-soft);border-radius:12px;
+               padding:11px 13px;background:rgba(0,0,0,.5);transition:border-color .15s, box-shadow .15s}
+  .input-group:focus-within{border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,162,75,.15)}
+  .input-group svg{width:17px;height:17px;color:var(--gold);flex:none}
+  .input-group input{flex:1;background:none;border:0;outline:none;font-size:14px;color:var(--text);min-width:0}
+  .input-group input::placeholder{color:#6f6a5e}
+
+  .type-tabs{display:grid;grid-template-columns:1fr 1fr;gap:4px;background:rgba(0,0,0,.5);border-radius:12px;padding:4px;border:1px solid rgba(201,162,75,.2)}
+  .type-tabs button{padding:10px;border-radius:9px;font-size:12.5px;font-weight:600;color:var(--muted);
+                    display:flex;align-items:center;justify-content:center;gap:6px;transition:all .15s}
+  .type-tabs button svg{width:14px;height:14px}
+  .type-tabs button.on{background:rgba(201,162,75,.16);color:var(--gold)}
+
+  .provider-search{margin-top:12px}
+  .provider-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:8px;
+                 max-height:210px;overflow-y:auto;padding-right:4px}
+  .provider-grid::-webkit-scrollbar{width:4px}
+  .provider-grid::-webkit-scrollbar-thumb{background:rgba(201,162,75,.3);border-radius:4px}
+  .provider{display:flex;flex-direction:column;align-items:center;gap:5px;padding:9px 4px;border-radius:10px;
+            border:1.5px solid transparent;background:rgba(255,255,255,.02);transition:all .15s;min-width:0}
+  .provider:hover{background:rgba(201,162,75,.08)}
+  .provider.on{border-color:var(--gold);background:rgba(201,162,75,.12)}
+  .provider .logo{width:38px;height:38px;border-radius:10px;font-size:12px}
+  .provider .logo img{padding:5px}
+  .provider span{font-size:10px;color:var(--muted);line-height:1.2;text-align:center;
+                 white-space:nowrap;overflow:hidden;text-overflow:ellipsis;width:100%}
+  .provider.on span{color:var(--gold);font-weight:600}
+  .prov-empty{grid-column:1/-1;text-align:center;font-size:12px;color:var(--muted);padding:14px 0}
+
+  .modal-foot{display:grid;grid-template-columns:1fr 1.4fr;gap:10px;margin-top:18px}
+
+  .confirm-text{font-size:13px;color:var(--muted);line-height:1.5;margin-bottom:4px}
+  .confirm-name{font-size:14px;font-weight:600;color:var(--text);margin-bottom:2px}
+
+  .toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,20px);background:var(--black);
+    border:1.5px solid var(--gold);color:var(--gold);padding:10px 16px;border-radius:12px;font-size:13px;
+    opacity:0;pointer-events:none;transition:.25s;z-index:500;max-width:90%}
+  .toast.show{opacity:1;transform:translate(-50%,0)}
+
+  .profile-menu{position:fixed;top:0;right:0;min-width:190px;background:#0b0b0b;border:1.5px solid var(--gold);
+    border-radius:14px;padding:6px;box-shadow:0 14px 34px rgba(0,0,0,.85),0 0 0 1px rgba(201,162,75,.15);
+    z-index:99999;animation:pop .14s ease-out}
+  .profile-menu[hidden]{display:none}
+  .profile-menu::before{content:"";position:absolute;top:-7px;right:18px;width:12px;height:12px;background:#0b0b0b;
+    border-left:1.5px solid var(--gold);border-top:1.5px solid var(--gold);transform:rotate(45deg)}
+  .profile-menu a,.profile-menu button{display:flex;align-items:center;gap:10px;width:100%;padding:10px 12px;
+    border-radius:10px;font-size:13.5px;color:var(--text);text-align:left;cursor:pointer;transition:background .12s}
+  .profile-menu a:hover,.profile-menu button:hover{background:rgba(201,162,75,.14)}
+  .profile-menu svg{width:16px;height:16px;color:var(--gold);flex:none}
+  @keyframes pop{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+  #loadInput{position:fixed;width:1px;height:1px;opacity:0;pointer-events:none;left:-9999px;top:-9999px}
+
+  nav{position:fixed;left:50%;transform:translateX(-50%);bottom:0;width:100%;max-width:480px;z-index:5;
+    height:calc(var(--nav-h) + env(safe-area-inset-bottom));padding-bottom:env(safe-area-inset-bottom);
+    background:var(--black);border-top:1.5px solid var(--gold);display:grid;grid-template-columns:repeat(5,1fr)}
+  nav a{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;font-size:10.5px;color:var(--muted)}
+  nav a svg{width:23px;height:23px}
+  nav a.active{color:var(--gold)}
+  .nav-pp{width:23px;height:23px;border-radius:50%;overflow:hidden;display:grid;place-items:center;flex:none}
+  .nav-pp img{width:100%;height:100%;object-fit:cover;border:1.5px solid var(--gold);border-radius:50%}
+  .nav-pp svg{width:23px;height:23px}
+
+  @media (prefers-reduced-motion:reduce){
+    .modal-bg,.modal-card,.toast,.provider,.copy-btn,.acc-card{animation:none;transition:none}
+  }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-user" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.2 3.6-7 8-7s8 2.8 8 7"/></symbol>
+    <symbol id="i-home" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10v10h13V10"/><path d="M10 20v-5.5h4V20"/></symbol>
+    <symbol id="i-job" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="2.5"/><path d="M9 7V5.5A1.5 1.5 0 0 1 10.5 4h3A1.5 1.5 0 0 1 15 5.5V7"/><path d="M3 13h18"/><path d="M11 13h2v2h-2z"/></symbol>
+    <symbol id="i-desk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3.5" width="14" height="17" rx="2.5"/><path d="m8.5 9 1.5 1.5L13 7.5"/><path d="M8.5 15h7"/><path d="M14 9.5h2"/></symbol>
+    <symbol id="i-money" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="6" width="19" height="12" rx="2"/><circle cx="12" cy="12" r="3"/><path d="M6 9v6M18 9v6"/></symbol>
+    <symbol id="i-card" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="5.5" width="19" height="13" rx="2.5"/><path d="M2.5 10h19"/><path d="M6 15h4"/><circle cx="17" cy="15" r="1"/></symbol>
+    <symbol id="i-wallet" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20 8V6a2 2 0 0 0-2-2H5a2 2 0 0 0 0 4h15a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6"/><path d="M17 13h.01"/></symbol>
+    <symbol id="i-bank" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10h18"/><path d="M5 10V21"/><path d="M19 10V21"/><path d="M9 10V21"/><path d="M15 10V21"/><path d="M2 21h20"/><path d="m12 3 9 6H3l9-6Z"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></symbol>
+    <symbol id="i-trash" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M10 11v6M14 11v6"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></symbol>
+    <symbol id="i-user-tag" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.2 3.6-7 8-7 1.3 0 2.5.3 3.6.8"/><path d="M17 15h5v5"/><path d="m22 15-3.5 3.5"/></symbol>
+    <symbol id="i-hash" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 9h14M4 15h14"/><path d="M10 3 8 21M16 3l-2 18"/></symbol>
+    <symbol id="i-tag" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2H2v10l9.3 9.3a2 2 0 0 0 2.8 0l7-7a2 2 0 0 0 0-2.8L12 2Z"/><circle cx="7" cy="7" r="1.5"/></symbol>
+    <symbol id="i-chevron-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 7"/></symbol>
+    <symbol id="i-settings" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></symbol>
+    <symbol id="i-download" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></symbol>
+    <symbol id="i-upload" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M17 8l-5-5-5 5"/><path d="M12 3v12"/></symbol>
+  </defs>
+</svg>
+
+<main class="app">
+  <div class="hero">
+    <header>
+      <div class="greet">
+        <small id="greetSmall">Halo,</small>
+        <h1 id="greetText">Selamat Datang</h1>
+      </div>
+      <div class="header-right">
+        <a href="index.html" class="logo-home" aria-label="Beranda">
+          <img src="icon.png" alt="" onerror="this.parentElement.style.display='none'">
+        </a>
+        <button class="avatar" id="avatarBtn" aria-label="Buka menu profil" aria-haspopup="menu" aria-expanded="false">
+          <svg style="color:var(--gold)"><use href="#i-user"/></svg>
+        </button>
+      </div>
+    </header>
+  </div>
+
+  <div class="sheet" id="sheet">
+    <div class="stats">
+      <div class="stat">
+        <span class="stat-icon"><svg><use href="#i-bank"/></svg></span>
+        <div class="stat-body"><b id="statBank">0</b><span>Rekening M-banking</span></div>
+      </div>
+      <div class="stat">
+        <span class="stat-icon"><svg><use href="#i-wallet"/></svg></span>
+        <div class="stat-body"><b id="statEw">0</b><span>Akun eWallet</span></div>
+      </div>
+    </div>
+
+    <div class="tabs" role="tablist">
+      <button data-tab="bank" class="on" role="tab"><svg><use href="#i-bank"/></svg>M-banking</button>
+      <button data-tab="ewallet" role="tab"><svg><use href="#i-wallet"/></svg>eWallet</button>
+    </div>
+
+    <section class="card" aria-label="Daftar rekening">
+      <div class="list-head">
+        <h2 id="listTitle">Rekening M-banking</h2>
+        <button class="add-btn" id="addBtn"><svg><use href="#i-plus"/></svg>Tambah</button>
+      </div>
+      <div class="acc-list" id="accList"></div>
+    </section>
+  </div>
+</main>
+
+<!-- ===== PREVIEW MODAL ===== -->
+<div class="modal" id="previewModal" hidden>
+  <div class="modal-bg" id="previewBg"></div>
+  <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="previewProvider">
+    <div class="modal-head">
+      <h3>Detail Rekening</h3>
+      <button class="modal-close" id="previewClose" aria-label="Tutup"><svg><use href="#i-close"/></svg></button>
+    </div>
+
+    <div class="preview-hero">
+      <div class="preview-logo" id="previewLogo"></div>
+      <div class="preview-provider" id="previewProvider"></div>
+      <div class="preview-type" id="previewType"></div>
+    </div>
+
+    <div class="preview-section">
+      <div class="preview-field">
+        <span class="preview-label">Nama Penerima</span>
+        <div class="preview-value" id="previewHolder">-</div>
+      </div>
+
+      <div class="preview-field" style="padding:12px 12px;gap:4px">
+        <span class="preview-label">Nomor Rekening</span>
+        <div class="number-row" style="padding:0;background:none;border:0">
+          <div class="number-value" id="previewNumber">-</div>
+          <button class="copy-btn" id="copyBtn" aria-label="Salin nomor rekening" title="Salin nomor">
+            <svg><use href="#i-copy"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="preview-field" id="labelField" hidden>
+        <span class="preview-label">Label</span>
+        <div class="preview-value" id="previewLabel">-</div>
+      </div>
+    </div>
+
+    <div class="preview-actions">
+      <button class="btn danger" id="deleteBtn"><svg><use href="#i-trash"/></svg>Hapus</button>
+      <button class="btn solid" id="previewDone">Selesai</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== ADD MODAL ===== -->
+<div class="modal" id="addModal" hidden>
+  <div class="modal-bg" id="addBg"></div>
+  <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="addTitle">
+    <div class="modal-head">
+      <h3 id="addTitle">Tambah Rekening</h3>
+      <button class="modal-close" id="addClose" aria-label="Tutup"><svg><use href="#i-close"/></svg></button>
+    </div>
+
+    <div class="type-tabs" id="addTypeTabs" role="tablist">
+      <button data-type="bank" class="on" role="tab"><svg><use href="#i-bank"/></svg>M-banking</button>
+      <button data-type="ewallet" role="tab"><svg><use href="#i-wallet"/></svg>eWallet</button>
+    </div>
+
+    <div class="provider-search">
+      <div class="input-group">
+        <svg><use href="#i-search"/></svg>
+        <input id="providerSearch" placeholder="Cari bank / e-wallet..." autocomplete="off">
+      </div>
+    </div>
+    <div class="provider-grid" id="providerGrid"></div>
+
+    <div class="field">
+      <label for="accHolder">Nama Penerima <span class="req">*</span></label>
+      <div class="input-group">
+        <svg><use href="#i-user-tag"/></svg>
+        <input id="accHolder" placeholder="cth: Budi Santoso" autocomplete="off" spellcheck="false">
+      </div>
+    </div>
+
+    <div class="field">
+      <label for="accNumber">Nomor Rekening / eWallet <span class="req">*</span></label>
+      <div class="input-group">
+        <svg><use href="#i-hash"/></svg>
+        <input id="accNumber" inputmode="numeric" placeholder="cth: 9012 3456 7890" autocomplete="off" spellcheck="false">
+      </div>
+    </div>
+
+    <div class="field">
+      <label for="accLabel">Label <span style="opacity:.6;font-weight:400;text-transform:none">(opsional)</span></label>
+      <div class="input-group">
+        <svg><use href="#i-tag"/></svg>
+        <input id="accLabel" placeholder="cth: Gaji, Tabungan, Utama" autocomplete="off" spellcheck="false">
+      </div>
+    </div>
+
+    <div class="modal-foot">
+      <button class="btn" id="addCancel">Batal</button>
+      <button class="btn solid" id="addSave">Simpan</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== DELETE CONFIRM ===== -->
+<div class="modal" id="confirmModal" hidden>
+  <div class="modal-bg" id="confirmBg"></div>
+  <div class="modal-card small" role="dialog" aria-modal="true">
+    <div class="modal-head">
+      <h3>Hapus Rekening?</h3>
+      <button class="modal-close" id="confirmClose" aria-label="Tutup"><svg><use href="#i-close"/></svg></button>
+    </div>
+    <div class="confirm-name" id="confirmName"></div>
+    <p class="confirm-text">Rekening ini akan dihapus dari daftar. Tindakan ini tidak bisa dibatalkan.</p>
+    <div class="modal-foot">
+      <button class="btn" id="confirmCancel">Batal</button>
+      <button class="btn danger" id="confirmYes">Hapus</button>
+    </div>
+  </div>
+</div>
+
+<!-- MENU PROFIL -->
+<div class="profile-menu" id="profileMenu" role="menu" hidden>
+  <a href="profile.html" role="menuitem"><svg><use href="#i-user"/></svg>Profile</a>
+  <button id="saveBtn" role="menuitem"><svg><use href="#i-download"/></svg>Save Data</button>
+  <button id="loadBtn" role="menuitem"><svg><use href="#i-upload"/></svg>Load Data</button>
+  <a href="setting.html" role="menuitem"><svg><use href="#i-settings"/></svg>Pengaturan</a>
+</div>
+<input type="file" id="loadInput" accept="application/json,.json">
+
+<nav aria-label="Navigasi utama">
+  <a href="injob.html"><svg><use href="#i-home"/></svg>Home</a>
+  <a href="job.html"><svg><use href="#i-job"/></svg>Detail Job</a>
+  <a href="jobdesk.html"><svg><use href="#i-desk"/></svg>Jobdesk</a>
+  <a href="duit.html"><svg><use href="#i-money"/></svg>Duit</a>
+  <a href="profile.html"><span class="nav-pp" id="navPP"><svg><use href="#i-user"/></svg></span>Profile</a>
+</nav>
+
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+const KEYS = {profile:'injob_profile', settings:'injob_settings', finance:'injob_finance',
+  notes:'injob_notes', rates:'injob_rates_cache', job:'injob_job', jobdesk:'injob_jobdesk', rekening:'injob_rekening'};
+const $ = id => document.getElementById(id);
+const read = (k,d) => { try { return JSON.parse(localStorage.getItem(k)) ?? d } catch { return d } };
+
+/* ================= PROVIDER DATA ================= */
+const BANKS = [
+  {id:'seabank',name:'SeaBank',domain:'seabank.co.id'},
+  {id:'superbank',name:'SuperBank',domain:'superbank.id'},
+  {id:'jago',name:'Bank Jago',domain:'jago.com'},
+  {id:'krom',name:'Krom',domain:'krom.id'},
+  {id:'bca',name:'BCA',domain:'bca.co.id'},
+  {id:'mandiri',name:'Mandiri',domain:'mandiri.co.id'},
+  {id:'bri',name:'BRI',domain:'bri.co.id'},
+  {id:'bni',name:'BNI',domain:'bni.co.id'},
+  {id:'btn',name:'BTN',domain:'btn.co.id'},
+  {id:'cimb',name:'CIMB Niaga',domain:'cimbniaga.co.id'},
+  {id:'permata',name:'Permata',domain:'permatabank.com'},
+  {id:'danamon',name:'Danamon',domain:'danamon.co.id'},
+  {id:'mega',name:'Bank Mega',domain:'megabank.co.id'},
+  {id:'bsi',name:'BSI',domain:'bankbsi.co.id'},
+  {id:'neocommerce',name:'Neo Commerce',domain:'bankneocommerce.co.id'},
+  {id:'blu',name:'Blu',domain:'blubybcadigital.id'},
+  {id:'allo',name:'Allo Bank',domain:'allobank.com'},
+  {id:'linebank',name:'LINE Bank',domain:'linebank.co.id'},
+  {id:'saqu',name:'Bank Saqu',domain:'banksaqu.co.id'},
+  {id:'raya',name:'Bank Raya',domain:'bankraya.co.id'},
+  {id:'jenius',name:'Jenius',domain:'jenius.com'},
+  {id:'tmrw',name:'TMRW',domain:'tmrw.id'},
+  {id:'uob',name:'UOB',domain:'uob.co.id'},
+  {id:'ocbc',name:'OCBC',domain:'ocbc.id'},
+  {id:'panin',name:'Panin',domain:'panin.co.id'},
+  {id:'maybank',name:'Maybank',domain:'maybank.co.id'},
+  {id:'bjb',name:'BJB',domain:'bjb.co.id'},
+  {id:'dki',name:'Bank DKI',domain:'bankdki.co.id'},
+  {id:'jateng',name:'Bank Jateng',domain:'bankjateng.co.id'},
+  {id:'jatim',name:'Bank Jatim',domain:'bankjatim.co.id'},
+  {id:'btpn',name:'BTPN',domain:'btpn.com'},
+  {id:'sinarmas',name:'Bank Sinarmas',domain:'banksinarmas.com'},
+  {id:'mnc',name:'MNC Bank',domain:'mncbank.co.id'},
+  {id:'nobu',name:'Nobu',domain:'nobubank.co.id'},
+  {id:'sampoerna',name:'Sampoerna',domain:'sampoernabank.com'},
+  {id:'victoria',name:'Bank Victoria',domain:'victoriabank.co.id'},
+  {id:'qnb',name:'QNB',domain:'qnb.co.id'},
+  {id:'woori',name:'Bank Woori',domain:'wooribank.co.id'},
+  {id:'hana',name:'KEB Hana',domain:'kebhanabank.co.id'},
+  {id:'ibk',name:'Bank IBK',domain:'ibk.co.id'},
+  {id:'bpdbali',name:'BPD Bali',domain:'bpdbali.co.id'},
+  {id:'aceh',name:'Bank Aceh',domain:'bankaceh.co.id'},
+  {id:'sumut',name:'Bank Sumut',domain:'banksumut.co.id'},
+  {id:'nagari',name:'Bank Nagari',domain:'banknagari.co.id'},
+  {id:'kalsel',name:'Bank Kalsel',domain:'bankkalsel.co.id'},
+  {id:'sulselbar',name:'Bank Sulselbar',domain:'banksulselbar.co.id'},
+  {id:'papua',name:'Bank Papua',domain:'bankpapua.co.id'},
+  {id:'maluku',name:'Bank Maluku Malut',domain:'bankmalukumalut.co.id'},
+  {id:'ntb',name:'NTB Syariah',domain:'bankntbsyariah.co.id'},
+  {id:'ntt',name:'Bank NTT',domain:'bankntt.co.id'}
+];
+const EWALLETS = [
+  {id:'dana',name:'DANA',domain:'dana.id'},
+  {id:'ovo',name:'OVO',domain:'ovo.id'},
+  {id:'gopay',name:'GoPay',domain:'gopay.com'},
+  {id:'shopeepay',name:'ShopeePay',domain:'shopeepay.co.id'},
+  {id:'linkaja',name:'LinkAja',domain:'linkaja.id'},
+  {id:'flip',name:'Flip',domain:'flip.id'},
+  {id:'sakuku',name:'Sakuku',domain:'sakuku.co.id'},
+  {id:'wondr',name:'Wondr',domain:'wondr.co.id'},
+  {id:'motionpay',name:'MotionPay',domain:'motionpay.id'},
+  {id:'isaku',name:'iSaku',domain:'isaku.id'},
+  {id:'truemoney',name:'TrueMoney',domain:'truemoney.co.id'},
+  {id:'paytren',name:'PayTren',domain:'paytren.co.id'},
+  {id:'pandai',name:'Pandai',domain:'pandai.id'},
+  {id:'nobu_ew',name:'Nobu e-Wallet',domain:'nobu.co.id'},
+  {id:'blu_ew',name:'Blu',domain:'blubybcadigital.id'},
+  {id:'jenius_ew',name:'Jenius',domain:'jenius.com'}
+];
+const PROVIDERS = { bank: BANKS, ewallet: EWALLETS };
+const TYPE_LABEL = { bank:'M-banking', ewallet:'eWallet' };
+
+/* ================= PROFILE & BACKGROUND ================= */
+function greeting(){
+  const h = new Date().getHours();
+  if (h >= 4  && h < 11) return 'Selamat Pagi';
+  if (h >= 11 && h < 15) return 'Selamat Siang';
+  if (h >= 15 && h < 18) return 'Selamat Sore';
+  return 'Selamat Malam';
+}
+const NAME_KEYS = ['username','userName','name','nama','fullname','fullName','nama_lengkap','displayName','nickname','profileName','profile_name'];
+const PHOTO_KEYS = ['photo','foto','pp','avatar','image','img','picture','photoURL','photoUrl','profilePic','profilePicture','profile_picture','avatarUrl','avatar_url','fotoProfil','foto_profil','profilePhoto','profile_photo','userPhoto','profileImage','profile_image','photo_url','image_url','imageUrl','imgUrl','gambar','fotoUrl','foto_url'];
+const ACC_KEYS = ['account','akun','handle','email','username','userName'];
+const looksLikeImg = v => {
+  if (!v || typeof v !== 'string') return false;
+  const s = v.trim(); if (!s) return false;
+  if (/^data:image\//i.test(s)) return true;
+  if (/^blob:/i.test(s)) return true;
+  if (/^(?:\.{0,2}\/)?[\w\-\/]+\.(png|jpe?g|webp|gif|svg|avif)(\?|#|$)/i.test(s)) return true;
+  if (/^https?:\/\//i.test(s) && /\.(png|jpe?g|webp|gif|svg|avif)(\?|#|$)/i.test(s)) return true;
+  if (/^[A-Za-z0-9+\/=]{200,}$/.test(s)) return true;
+  return false;
+};
+const toSrc = v => {
+  if (!v || typeof v !== 'string') return '';
+  const s = v.trim();
+  if (/^data:|^blob:|^https?:|^(?:\.{0,2}\/)?[\w\-\/]+\.[a-z0-9]+(\?|#|$)/i.test(s)) return s;
+  if (/^[A-Za-z0-9+\/=]{200,}$/.test(s)){
+    const mime = s.startsWith('iVBOR') ? 'image/png'
+               : s.startsWith('UklGR') ? 'image/webp'
+               : s.startsWith('R0lG')  ? 'image/gif'
+               : s.startsWith('PHN2Z') ? 'image/svg+xml'
+               : 'image/jpeg';
+    return `data:${mime};base64,` + s;
+  }
+  return s;
+};
+const pick = (o, keys) => {
+  for (const k of keys){
+    const v = o && o[k];
+    if (typeof v === 'string' && v.trim()) return v.trim();
+    if (v && typeof v === 'object' && !Array.isArray(v)){
+      for (const kk of ['url','src','data','base64','value','href','image','photo','foto']){
+        const vv = v[kk];
+        if (typeof vv === 'string' && vv.trim()) return vv.trim();
+      }
+    }
+  }
+  return '';
+};
+function loadProfile(){
+  const out = {name:'', photo:'', account:''};
+  const acceptPhoto = v => { if (!out.photo && typeof v === 'string' && looksLikeImg(v)) out.photo = v.trim(); };
+  const merge = (o, depth) => {
+    if (!o || typeof o !== 'object' || Array.isArray(o) || depth > 4) return;
+    if (!out.name)    out.name    = pick(o, NAME_KEYS);
+    if (!out.account) out.account = pick(o, ACC_KEYS);
+    if (!out.photo){ const p = pick(o, PHOTO_KEYS); if (p && looksLikeImg(p)) out.photo = p; }
+    if (!out.photo){
+      for (const v of Object.values(o)){
+        if (typeof v === 'string') acceptPhoto(v);
+        else if (v && typeof v === 'object' && !Array.isArray(v)){
+          for (const vv of Object.values(v)) acceptPhoto(vv);
+        }
+        if (out.photo) break;
+      }
+    }
+    Object.values(o).forEach(v => { if (v && typeof v === 'object' && !Array.isArray(v)) merge(v, depth+1); });
+  };
+  merge(read(KEYS.profile, {}), 0);
+
+  for (let i = 0; i < localStorage.length; i++){
+    const k = localStorage.key(i); if (!k) continue;
+    const raw = localStorage.getItem(k); if (!raw) continue;
+    let parsed = null; try { parsed = JSON.parse(raw); } catch {}
+    if (parsed && typeof parsed === 'object' && !Array.isArray(parsed)){
+      const keyMatch = /profil|profile|user|akun|account/i.test(k);
+      const hasField = PHOTO_KEYS.some(pk => parsed[pk]) ||
+                       NAME_KEYS.some(nk => parsed[nk] && typeof parsed[nk] === 'string') ||
+                       Object.values(parsed).some(v => typeof v === 'string' && looksLikeImg(v));
+      if (keyMatch || hasField) merge(parsed, 0);
+      continue;
+    }
+    if (!out.photo && /photo|foto|pp|avatar|image|pic|img/i.test(k) && looksLikeImg(raw)) out.photo = raw.trim();
+    else if (!out.name && /name|nama/i.test(k) && !looksLikeImg(raw) && raw.length < 80){
+      const t = raw.trim(); if (t && !/^[{\[]/.test(t)) out.name = t;
+    }
+  }
+  out.photo = toSrc(out.photo);
+  return out;
+}
+function setPhoto(el, photo, alt, fallbackSvg){
+  el.innerHTML = '';
+  if (photo){
+    const img = new Image(); img.alt = alt;
+    img.onerror = () => { el.innerHTML = fallbackSvg; };
+    img.src = photo; el.appendChild(img);
+  } else el.innerHTML = fallbackSvg;
+}
+function renderHeader(){
+  const p = loadProfile();
+  $('greetText').textContent = p.name ? `${greeting()}, ${p.name}` : greeting();
+  $('greetSmall').textContent = (p.account && p.account !== p.name) ? p.account : 'Halo,';
+  setPhoto($('avatarBtn'), p.photo, 'Foto profil', '<svg style="color:var(--gold)"><use href="#i-user"/></svg>');
+  setPhoto($('navPP'), p.photo, 'Profile', '<svg><use href="#i-user"/></svg>');
+}
+function renderBackground(){
+  const s = read(KEYS.settings, {});
+  document.documentElement.style.setProperty('--bg-color', s.bgColor || '#000000');
+  const sheet = $('sheet');
+  if (s.bgImage){
+    sheet.style.setProperty('--sheet-wallpaper', `url("${s.bgImage}")`);
+    sheet.classList.toggle('blurred', s.bgMode === 'blur');
+  } else {
+    sheet.style.setProperty('--sheet-wallpaper', 'none');
+    sheet.classList.remove('blurred');
+  }
+  const hero = document.querySelector('.hero');
+  if (hero){
+    hero.style.backgroundImage = s.heroImage
+      ? `linear-gradient(155deg,rgba(231,196,103,.4),rgba(154,116,36,.55)),url("${s.heroImage}")`
+      : '';
+  }
+}
+
+/* ================= DATA ================= */
+function loadAccounts(){
+  let a = read(KEYS.rekening, []);
+  if (!Array.isArray(a)) a = [];
+  return a.filter(x => x && x.id && x.type && x.providerName && x.number);
+}
+function saveAccounts(a){
+  try { localStorage.setItem(KEYS.rekening, JSON.stringify(a)); } catch {}
+}
+
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const initials = name => (String(name).replace(/[^A-Za-z0-9 ]/g,' ').trim().split(/\s+/).map(w=>w[0]).join('').slice(0,2).toUpperCase() || '?');
+function logoHTML(p){
+  const url = `https://www.google.com/s2/favicons?domain=${encodeURIComponent(p.domain)}&sz=128`;
+  const ini = initials(p.name);
+  return `<span class="logo"><img src="${url}" alt="" loading="lazy" onerror="this.remove();this.parentElement.textContent='${ini}'"></span>`;
+}
+const fmtNum = n => String(n).replace(/\D/g,'').replace(/(\d{4})(?=\d)/g,'$1 ').trim();
+
+/* ================= RENDER ================= */
+let currentTab = 'bank';
+let openedId = null;
+let pendingDeleteId = null;
+
+function renderStats(){
+  const a = loadAccounts();
+  $('statBank').textContent = a.filter(x => x.type === 'bank').length;
+  $('statEw').textContent   = a.filter(x => x.type === 'ewallet').length;
+}
+
+function renderList(){
+  const a = loadAccounts().filter(x => x.type === currentTab).sort((x,y) => (y.createdAt||0) - (x.createdAt||0));
+  $('listTitle').textContent = currentTab === 'bank' ? 'Rekening M-banking' : 'Akun eWallet';
+  const box = $('accList');
+
+  if (!a.length){
+    box.innerHTML = `
+      <div class="empty-state">
+        <svg><use href="#i-${currentTab === 'bank' ? 'bank' : 'wallet'}"/></svg>
+        <p>Belum ada ${currentTab === 'bank' ? 'rekening M-banking' : 'akun eWallet'}.</p>
+        <small>Tap tombol Tambah untuk menyimpan.</small>
+      </div>`;
+    return;
+  }
+
+  box.innerHTML = a.map(x => `
+    <button class="acc-card" data-id="${esc(x.id)}" type="button" aria-label="Lihat detail ${esc(x.providerName)}">
+      ${logoHTML({name:x.providerName, domain:x.domain})}
+      <div class="acc-body">
+        <div class="acc-row1">
+          <b>${esc(x.providerName)}</b>
+          <span class="acc-badge">${TYPE_LABEL[x.type]}</span>
+        </div>
+        <div class="acc-holder">${esc(x.holder)}</div>
+        <div class="acc-number">${fmtNum(x.number)}</div>
+      </div>
+      <span class="acc-chevron"><svg><use href="#i-chevron-right"/></svg></span>
+    </button>`).join('');
+
+  box.querySelectorAll('.acc-card').forEach(card => {
+    card.onclick = () => openPreview(card.dataset.id);
+  });
+}
+
+function renderAll(){ renderHeader(); renderBackground(); renderStats(); renderList(); }
+
+/* ================= COPY ================= */
+function copyText(t){
+  if (navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(t).then(() => toast('Nomor rekening disalin')).catch(() => fallbackCopy(t));
+  } else fallbackCopy(t);
+}
+function fallbackCopy(t){
+  const ta = document.createElement('textarea');
+  ta.value = t; ta.style.position = 'fixed'; ta.style.opacity = '0';
+  document.body.appendChild(ta); ta.select();
+  try { document.execCommand('copy'); toast('Nomor rekening disalin'); }
+  catch { toast('Gagal menyalin'); }
+  ta.remove();
+}
+
+/* ================= TOAST ================= */
+let toastT;
+function toast(msg){
+  const t = $('toast'); t.textContent = msg; t.classList.add('show');
+  clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('show'), 1800);
+}
+
+/* ================= TABS ================= */
+document.querySelectorAll('.tabs button').forEach(b => {
+  b.onclick = () => {
+    currentTab = b.dataset.tab;
+    document.querySelectorAll('.tabs button').forEach(x => x.classList.toggle('on', x === b));
+    renderList();
+  };
+});
+
+/* ================= PREVIEW MODAL ================= */
+const previewModal = $('previewModal');
+function openPreview(id){
+  const acc = loadAccounts().find(x => x.id === id);
+  if (!acc) return;
+  openedId = id;
+
+  // Logo + provider + type
+  const logoBox = $('previewLogo');
+  const ini = initials(acc.providerName);
+  const url = `https://www.google.com/s2/favicons?domain=${encodeURIComponent(acc.domain || '')}&sz=128`;
+  logoBox.innerHTML = `<img src="${url}" alt="" onerror="this.remove();this.parentElement.textContent='${ini}'">`;
+  $('previewProvider').textContent = acc.providerName;
+  $('previewType').textContent = TYPE_LABEL[acc.type];
+
+  $('previewHolder').textContent = acc.holder || '-';
+  $('previewNumber').textContent = fmtNum(acc.number);
+
+  const labelField = $('labelField');
+  if (acc.label){
+    labelField.hidden = false;
+    $('previewLabel').textContent = acc.label;
+  } else {
+    labelField.hidden = true;
+  }
+
+  // Reset copy state
+  const cb = $('copyBtn');
+  cb.classList.remove('copied');
+  cb.innerHTML = '<svg><use href="#i-copy"/></svg>';
+  cb.setAttribute('aria-label', 'Salin nomor rekening');
+
+  previewModal.hidden = false;
+  document.body.style.overflow = 'hidden';
+}
+function closePreview(){
+  previewModal.hidden = true;
+  document.body.style.overflow = '';
+  openedId = null;
+}
+
+$('previewBg').onclick = closePreview;
+$('previewClose').onclick = closePreview;
+$('previewDone').onclick = closePreview;
+
+$('copyBtn').onclick = () => {
+  if (!openedId) return;
+  const acc = loadAccounts().find(x => x.id === openedId);
+  if (!acc) return;
+  copyText(acc.number);
+  const cb = $('copyBtn');
+  cb.classList.add('copied');
+  cb.innerHTML = '<svg><use href="#i-check"/></svg>';
+  cb.setAttribute('aria-label', 'Tersalin');
+  clearTimeout(cb._t);
+  cb._t = setTimeout(() => {
+    cb.classList.remove('copied');
+    cb.innerHTML = '<svg><use href="#i-copy"/></svg>';
+    cb.setAttribute('aria-label', 'Salin nomor rekening');
+  }, 1600);
+};
+
+$('deleteBtn').onclick = () => {
+  if (!openedId) return;
+  askDelete(openedId);
+};
+
+/* ================= ADD MODAL ================= */
+const addModal = $('addModal');
+let draftType = 'bank';
+let draftProvider = null;
+
+function openAdd(type){
+  draftType = type || currentTab;
+  draftProvider = null;
+  $('providerSearch').value = '';
+  $('accHolder').value = '';
+  $('accNumber').value = '';
+  $('accLabel').value = '';
+  document.querySelectorAll('#addTypeTabs button').forEach(b => b.classList.toggle('on', b.dataset.type === draftType));
+  renderProviders();
+  addModal.hidden = false;
+  document.body.style.overflow = 'hidden';
+  setTimeout(() => $('providerSearch').focus(), 160);
+}
+function closeAdd(){
+  addModal.hidden = true;
+  document.body.style.overflow = '';
+}
+
+function renderProviders(){
+  const list = PROVIDERS[draftType] || [];
+  const q = $('providerSearch').value.trim().toLowerCase();
+  const filtered = q ? list.filter(p => p.name.toLowerCase().includes(q)) : list;
+
+  $('providerGrid').innerHTML = filtered.length
+    ? filtered.map(p => `
+        <button type="button" class="provider ${draftProvider && draftProvider.id === p.id ? 'on' : ''}" data-pid="${p.id}">
+          ${logoHTML(p)}
+          <span>${esc(p.name)}</span>
+        </button>`).join('')
+    : '<p class="prov-empty">Tidak ada hasil</p>';
+}
+
+$('providerGrid').addEventListener('click', e => {
+  const btn = e.target.closest('.provider');
+  if (!btn) return;
+  const p = (PROVIDERS[draftType] || []).find(x => x.id === btn.dataset.pid);
+  if (!p) return;
+  draftProvider = p;
+  renderProviders();
+});
+
+$('providerSearch').addEventListener('input', renderProviders);
+
+document.querySelectorAll('#addTypeTabs button').forEach(b => {
+  b.onclick = () => {
+    draftType = b.dataset.type;
+    draftProvider = null;
+    document.querySelectorAll('#addTypeTabs button').forEach(x => x.classList.toggle('on', x === b));
+    renderProviders();
+  };
+});
+
+$('addBtn').onclick = () => openAdd(currentTab);
+$('addBg').onclick = closeAdd;
+$('addClose').onclick = closeAdd;
+$('addCancel').onclick = closeAdd;
+
+$('accNumber').addEventListener('input', e => {
+  const raw = e.target.value.replace(/\D/g,'').slice(0,24);
+  e.target.value = raw.replace(/(\d{4})(?=\d)/g,'$1 ');
+});
+
+$('addSave').onclick = () => {
+  if (!draftProvider){ toast('Pilih bank / e-wallet dulu'); return; }
+  const holder = $('accHolder').value.trim();
+  const number = $('accNumber').value.replace(/\D/g,'');
+  const label = $('accLabel').value.trim();
+
+  if (!holder){ toast('Nama penerima wajib diisi'); $('accHolder').focus(); return; }
+  if (number.length < 4){ toast('Nomor rekening minimal 4 digit'); $('accNumber').focus(); return; }
+
+  const a = loadAccounts();
+  const dup = a.some(x => x.type === draftType && x.providerId === draftProvider.id && x.number === number);
+  if (dup){ toast('Rekening ini sudah tersimpan'); return; }
+
+  const newAcc = {
+    id: 'rek-' + Date.now() + '-' + Math.random().toString(36).slice(2,6),
+    type: draftType,
+    providerId: draftProvider.id,
+    providerName: draftProvider.name,
+    domain: draftProvider.domain,
+    holder,
+    number,
+    label,
+    createdAt: Date.now()
+  };
+  a.push(newAcc);
+  saveAccounts(a);
+
+  currentTab = draftType;
+  document.querySelectorAll('.tabs button').forEach(x => x.classList.toggle('on', x.dataset.tab === currentTab));
+
+  closeAdd();
+  renderAll();
+  toast(draftType === 'bank' ? 'Rekening M-banking ditambahkan' : 'Akun eWallet ditambahkan');
+
+  // Langsung buka preview biar user bisa langsung copy nomornya
+  setTimeout(() => openPreview(newAcc.id), 180);
+};
+
+/* ================= DELETE CONFIRM ================= */
+const confirmModal = $('confirmModal');
+function askDelete(id){
+  const a = loadAccounts().find(x => x.id === id);
+  if (!a) return;
+  pendingDeleteId = id;
+  $('confirmName').textContent = `${a.providerName} · ${a.holder}`;
+  confirmModal.hidden = false;
+  document.body.style.overflow = 'hidden';
+}
+function closeConfirm(){
+  confirmModal.hidden = true;
+  pendingDeleteId = null;
+  // Jangan langsung kosongin overflow kalau preview masih kebuka di belakang
+  if (!previewModal.hidden || !addModal.hidden) return;
+  document.body.style.overflow = '';
+}
+$('confirmBg').onclick = closeConfirm;
+$('confirmClose').onclick = closeConfirm;
+$('confirmCancel').onclick = closeConfirm;
+$('confirmYes').onclick = () => {
+  if (!pendingDeleteId) return;
+  const a = loadAccounts().filter(x => x.id !== pendingDeleteId);
+  saveAccounts(a);
+  const wasOpen = openedId === pendingDeleteId;
+  closeConfirm();
+  if (wasOpen) closePreview();
+  renderAll();
+  toast('Rekening dihapus');
+};
+
+/* ================= ESC ================= */
+document.addEventListener('keydown', e => {
+  if (e.key !== 'Escape') return;
+  if (!confirmModal.hidden) closeConfirm();
+  else if (!addModal.hidden) closeAdd();
+  else if (!previewModal.hidden) closePreview();
+  else if (!pm.hidden) closePM();
+});
+
+/* ================= PROFILE MENU ================= */
+const pm = $('profileMenu'), pbtn = $('avatarBtn');
+function closePM(){ pm.hidden = true; pbtn.setAttribute('aria-expanded','false'); }
+function openPM(){
+  const r = pbtn.getBoundingClientRect();
+  pm.style.top = (r.bottom + 10) + 'px';
+  pm.style.right = Math.max(12, window.innerWidth - r.right) + 'px';
+  pm.hidden = false;
+  pbtn.setAttribute('aria-expanded','true');
+}
+pbtn.addEventListener('click', e => { e.stopPropagation(); pm.hidden ? openPM() : closePM(); });
+document.addEventListener('click', e => {
+  if (pm.hidden) return;
+  if (pm.contains(e.target) || pbtn.contains(e.target)) return;
+  closePM();
+});
+window.addEventListener('resize', () => { if (!pm.hidden) closePM(); });
+
+/* SAVE / LOAD */
+$('saveBtn').onclick = () => {
+  const data = {};
+  for (let i = 0; i < localStorage.length; i++){
+    const k = localStorage.key(i);
+    if (k && /^injob_/.test(k)) data[k] = localStorage.getItem(k);
+  }
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `injob-backup-${new Date().toISOString().slice(0,10)}.json`;
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 500);
+  closePM();
+};
+$('loadBtn').onclick = () => { closePM(); $('loadInput').click(); };
+$('loadInput').addEventListener('change', async e => {
+  const file = e.target.files && e.target.files[0];
+  e.target.value = '';
+  if (!file) return;
+  try{
+    const data = JSON.parse(await file.text());
+    if (!data || typeof data !== 'object') throw 0;
+    let n = 0;
+    for (const [k, v] of Object.entries(data)){
+      if (/^injob_/.test(k) && typeof v === 'string'){ localStorage.setItem(k, v); n++; }
+    }
+    alert(`Berhasil memuat ${n} data. Halaman akan dimuat ulang.`);
+    location.reload();
+  }catch{ alert('File tidak valid.'); }
+});
+
+/* ================= INIT ================= */
+renderAll();
+window.addEventListener('storage', renderAll);
+document.addEventListener('visibilitychange', () => { if (!document.hidden) renderAll(); });
+setInterval(renderHeader, 60000);
+</script>
+</body>
+</html>
