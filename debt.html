@@ -302,7 +302,6 @@
     flex-shrink: 0;
   }
 
-  /* Grid Payment Method - Dynamic */
   .payment-category-title {
     font-family: 'FiraCondBold', sans-serif;
     font-size: 0.8rem; color: var(--emas-terang);
@@ -473,7 +472,6 @@
     .date-badge-top { display: none; }
   }
 
-  /* ================= PAGE LOADING OVERLAY (RINGAN) ================= */
   .page-loading-overlay {
     position: fixed;
     inset: 0;
@@ -529,13 +527,29 @@
   </div>
 
 <div class="content-wrap">
-    <div style="margin-bottom: 16px; margin-top: 4px; display: flex; flex-direction: column; gap: 8px;">
-        <button type="button" class="btn-action btn-add-debt" style="width: 100%; height: 46px; font-size: 0.95rem;" onclick="openGlobalAddPopup()">
-            + Tambah Utang ke Customer Lain / Mana Saja
+    <div style="margin-bottom: 16px; margin-top: 4px; display: flex; gap: 10px; justify-content: center;">
+        <button type="button" onclick="openGlobalAddPopup()" title="Tambah Utang - waktu sekarang"
+            style="width: 62px; height: 66px; border-radius: 12px; background: #121814; border: 1.5px solid var(--emas-terang); color: var(--emas-terang); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; cursor: pointer; transition: background 0.2s, transform 0.15s; font-family: 'FiraCondBold', sans-serif;"
+            onmouseover="this.style.background='rgba(232,177,60,0.25)'"
+            onmouseout="this.style.background='#121814'"
+            onmousedown="this.style.transform='scale(0.94)'"
+            onmouseup="this.style.transform='scale(1)'">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/>
+            </svg>
+            <span style="font-size: 0.5rem; letter-spacing: 0.3px;">SEKARANG</span>
         </button>
-        <button type="button" class="btn-action" style="width: 100%; height: 46px; font-size: 0.9rem; background: rgba(232,177,60,0.15); color: var(--emas-terang); border: 1.5px solid var(--emas-terang); border-radius: 10px; cursor: pointer; font-family: 'FiraCondBold', sans-serif; display: flex; align-items: center; justify-content: center; gap: 6px; transition: background 0.2s, transform 0.15s;" onclick="openGlobalAddPopupWithDate()" onmouseover="this.style.background='rgba(232,177,60,0.3)'" onmouseout="this.style.background='rgba(232,177,60,0.15)'" onmousedown="this.style.transform='scale(0.97)'" onmouseup="this.style.transform='scale(1)'">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/></svg>
-            Tambah Utang dengan Tanggal Custom
+
+        <button type="button" onclick="openGlobalAddPopupWithDate()" title="Tambah Utang - tanggal custom"
+            style="width: 62px; height: 66px; border-radius: 12px; background: rgba(232,177,60,0.15); border: 1.5px solid var(--emas-terang); color: var(--emas-terang); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; cursor: pointer; transition: background 0.2s, transform 0.15s; font-family: 'FiraCondBold', sans-serif;"
+            onmouseover="this.style.background='rgba(232,177,60,0.3)'"
+            onmouseout="this.style.background='rgba(232,177,60,0.15)'"
+            onmousedown="this.style.transform='scale(0.94)'"
+            onmouseup="this.style.transform='scale(1)'">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/>
+            </svg>
+            <span style="font-size: 0.5rem; letter-spacing: 0.3px;">CUSTOM</span>
         </button>
     </div>
 
@@ -566,11 +580,14 @@
         <label>Harga Jual:</label>
         <input type="number" id="hargaInput" placeholder="Harga Jual (Rp)" oninput="calculateMargin()">
 
-        <label>Tanggal Transaksi:</label>
-        <input type="datetime-local" id="tanggalInput" style="color-scheme: dark; font-family: 'FiraCondBook', sans-serif;">
-        <small style="display: block; color: #888; font-size: 0.68rem; margin-top: 2px; font-family: 'FiraCondBook', sans-serif; line-height: 1.2;">
-            Kosongkan untuk memakai waktu sekarang. Isi untuk backdate / postdate.
-        </small>
+        <!-- Field tanggal: HANYA tampil saat mode CUSTOM -->
+        <div id="tanggalFieldWrap" style="display: none;">
+            <label>Tanggal Transaksi:</label>
+            <input type="datetime-local" id="tanggalInput" style="color-scheme: dark; font-family: 'FiraCondBook', sans-serif;">
+            <small style="display: block; color: #888; font-size: 0.68rem; margin-top: 2px; font-family: 'FiraCondBook', sans-serif; line-height: 1.2;">
+                Ubah tanggal/jam untuk backdate atau postdate transaksi.
+            </small>
+        </div>
 
         <div id="marginPreviewBox" style="margin-top: 10px; padding: 8px 10px; background: #000; border-radius: 8px; border: 1px dashed rgba(232, 177, 60, 0.4); font-size: 0.8rem; display: flex; justify-content: space-between; align-items: center;">
             <span style="color: #aaa;">Estimasi Keuntungan:</span>
@@ -666,19 +683,16 @@
             <button type="button" id="btnTypeAmort" onclick="setPaymentType('amort')" style="flex:1; padding: 8px; border-radius: 8px; border: 1.5px solid var(--emas-terang); background: #111; color: var(--emas-terang); font-family: 'FiraCondBold', sans-serif; cursor: pointer; font-size: 0.8rem;">Amortisasi (Cicilan)</button>
         </div>
 
-        <!-- Container Cash (Default) -->
         <div id="cashSection" style="display: block;">
             <div class="payment-category-title">TUNAI / CASH</div>
             <div class="payment-grid" id="cashGrid"></div>
         </div>
 
-        <!-- Container E-Wallet -->
         <div id="ewalletSection" style="display: none;">
             <div class="payment-category-title">E-WALLET</div>
             <div class="payment-grid" id="ewalletGrid"></div>
         </div>
 
-        <!-- Container Bank/QRIS -->
         <div id="bankSection" style="display: none;">
             <div class="payment-category-title">M-BANKING / QRIS</div>
             <div class="payment-grid" id="bankGrid"></div>
@@ -749,16 +763,12 @@
     </a>
 </nav>
 
-<!-- ================= PAGE LOADING OVERLAY ================= -->
 <div id="pageLoadingOverlay" class="page-loading-overlay">
     <img src="loading.webp" alt="Loading...">
     <div class="loading-text">Memuat Halaman...</div>
 </div>
 
 <script>
-/* =========================================================
-   PAGE LOADING OVERLAY
-========================================================= */
 (function preloadLoadingGif(){
     const img = new Image();
     img.src = 'loading.webp';
@@ -775,7 +785,6 @@ function navigateWithLoading(url){
     setTimeout(() => { window.location.href = url; }, 450);
 }
 
-/* Handler global untuk semua <a href="*.html"> */
 document.addEventListener('click', function(e){
     const link = e.target.closest('a[href]');
     if (!link) return;
@@ -792,7 +801,6 @@ document.addEventListener('click', function(e){
     navigateWithLoading(href);
 });
 
-/* Bottom nav: loading */
 document.querySelectorAll('.nav-item').forEach(item => {
   const href = item.getAttribute('href');
   if (item.tagName === 'A' && href && href.endsWith('.html')){
@@ -803,9 +811,6 @@ document.querySelectorAll('.nav-item').forEach(item => {
   }
 });
 
-/* =========================================================
-   STORAGE
-========================================================= */
 const KEY_DEBTS = "debts";
 const KEY_ARCHIVED = "archivedDebts";
 
@@ -830,12 +835,6 @@ let archiveMode = 'list';
 let archiveSelectedCust = '';
 let paymentTargetCustId = "";
 
-/* =========================================================
-   WALLET METADATA (Sinkron dengan index.html)
-   - localLogo  : file PNG lokal (PRIORITAS UTAMA)
-   - urlLogo    : URL online (KHUSUS SuperBank, OVO, OctoPay)
-   - domain     : fallback favicon google
-========================================================= */
 const WALLET_META = {
     qris:      { name: 'QRIS',       type: 'qris',    localLogo: 'QRIS Logo.png', urlLogo: '', domain: 'qris.id' },
     bca:       { name: 'BCA',        type: 'bank',    localLogo: 'BCA.png',       urlLogo: '', domain: 'bca.co.id' },
@@ -855,9 +854,6 @@ const WALLET_META = {
     octopay:   { name: 'OctoPay',    type: 'ewallet', localLogo: '', urlLogo: 'https://www.google.com/s2/favicons?domain=octopay.id&sz=128', domain: 'octopay.id' }
 };
 
-/* =========================================================
-   HELPER
-========================================================= */
 function getCustomersFromStorage(){
     return JSON.parse(localStorage.getItem("customers")) || [];
 }
@@ -878,9 +874,6 @@ function isItemPaid(item){
     return total > 0 && dibayar >= total;
 }
 
-/* =========================================================
-   MIGRASI: item lunas (data lama) -> arsip
-========================================================= */
 function migratePaidDebtsToArchive(){
     let migratedCount = 0;
     let changedDebts = false;
@@ -926,9 +919,6 @@ function migratePaidDebtsToArchive(){
     return migratedCount;
 }
 
-/* =========================================================
-   CHARGE RECOMPUTE
-========================================================= */
 function recomputeCharges(custId){
     const customers = getCustomersFromStorage();
     const cust = customers.find(c => c.id === custId);
@@ -951,9 +941,6 @@ function recomputeCharges(custId){
     debts[custId] = custDebts;
 }
 
-/* =========================================================
-   INIT
-========================================================= */
 window.onload = function(){
     updateDateOnly();
 
@@ -986,9 +973,6 @@ function updateDateOnly(){
     document.getElementById("dateText").innerText = now.toLocaleDateString('id-ID', optionsDate);
 }
 
-/* =========================================================
-   RENDER LIST CUSTOMER
-========================================================= */
 function renderCustomerList(){
     const customers = getCustomersFromStorage();
     const container = document.getElementById("customerAccordionList");
@@ -1271,6 +1255,7 @@ function updateChargePreview(){
     }
 }
 
+/* Buka popup mode SEKARANG — field tanggal DISEMBUNYIKAN, waktu = new Date() */
 function openGlobalAddPopup(){
     const customers = getCustomersFromStorage();
     if(customers.length > 0){
@@ -1285,23 +1270,23 @@ function openGlobalAddPopup(){
     document.getElementById("modalInput").value = "";
     document.getElementById("hargaInput").value = "";
     document.getElementById("tanggalInput").value = "";
+    document.getElementById("tanggalFieldWrap").style.display = "none"; // sembunyikan field tanggal
     document.getElementById("marginValueText").innerText = "Rp 0";
     document.getElementById("chargePreviewBox").style.display = "none";
     document.getElementById("popupBox").classList.add("active");
 }
 
-/* Tombol baru: buka popup dengan field tanggal otomatis terisi waktu sekarang
-   (biar user tinggal ganti tahun/bulan kalau mau backdate/postdate) */
+/* Buka popup mode CUSTOM — field tanggal DIMUNCULKAN & prefill waktu sekarang */
 function openGlobalAddPopupWithDate(){
     openGlobalAddPopup();
-    setTimeout(() => {
-        const dateInput = document.getElementById("tanggalInput");
-        if(dateInput){
-            const now = new Date();
-            now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
-            dateInput.value = now.toISOString().slice(0, 16);
-        }
-    }, 180);
+    const wrap = document.getElementById("tanggalFieldWrap");
+    wrap.style.display = "block";
+    const dateInput = document.getElementById("tanggalInput");
+    if(dateInput){
+        const now = new Date();
+        now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+        dateInput.value = now.toISOString().slice(0, 16);
+    }
 }
 
 function openPopupForCustomer(custId){
@@ -1316,6 +1301,7 @@ function openPopupForCustomer(custId){
     document.getElementById("modalInput").value = "";
     document.getElementById("hargaInput").value = "";
     document.getElementById("tanggalInput").value = "";
+    document.getElementById("tanggalFieldWrap").style.display = "none"; // sembunyikan field tanggal
     document.getElementById("marginValueText").innerText = "Rp 0";
     document.getElementById("chargePreviewBox").style.display = "none";
     document.getElementById("popupBox").classList.add("active");
@@ -1337,7 +1323,7 @@ function addDebt(){
         return;
     }
 
-    // Waktu transaksi: pakai custom tanggal kalau diisi, kalau tidak pakai waktu sekarang
+    // Kalau field tanggal tersembunyi (mode SEKARANG) atau kosong → pakai new Date()
     let waktuTransaksi = new Date().toLocaleString("id-ID");
     if(tanggalVal){
         const dt = new Date(tanggalVal);
@@ -1520,9 +1506,6 @@ function confirmDeleteDebt(){
     closeDeletePopup();
 }
 
-/* =========================================================
-   PAYMENT POPUP (DYNAMIC WALLET + CASH)
-========================================================= */
 function setPaymentType(type){
     selectedPaymentMode = type;
     const btnFull = document.getElementById("btnTypeFull");
@@ -1570,7 +1553,6 @@ function renderPaymentMethods() {
     let hasEwallet = false;
     let hasBank = false;
 
-    // 1. Render Cash Terlebih Dahulu (Selalu Tampil)
     const cashIcon = `data:image/svg+xml;utf8,${encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#4caf5e"><path d="M20 6H4V4h16v2zm0 3H4c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V11c0-1.1-.9-2-2-2zm-2 8c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm-4-2c0 1.66-1.34 3-3 3s-3-1.34-3-3 1.34-3 3-3 3 1.34 3 3z"/></svg>`)}`;
     
     cashContainer.innerHTML = `
@@ -1580,7 +1562,6 @@ function renderPaymentMethods() {
         </div>
     `;
 
-    // 2. Render Wallets (E-Wallet & Bank)
     if(keys.length === 0) {
         document.getElementById("ewalletSection").style.display = "none";
         document.getElementById("bankSection").style.display = "none";
@@ -1662,9 +1643,6 @@ function proceedToPaymentRedirect(method, amount) {
     navigateWithLoading("payment.html");
 }
 
-/* =========================================================
-   ARSIP TRANSAKSI
-========================================================= */
 function openArchiveModal(){
     archiveMode = 'list';
     archiveSelectedCust = '';
