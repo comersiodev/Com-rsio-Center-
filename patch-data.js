@@ -1,10 +1,24 @@
 // Database Patch Notes Comersio Center
 const PATCH_NOTES_DATA = [
   {
-    version: "Aegea 1.4",
+    version: "Aegea 1.5",
     tag: "TERBARU",
-    date: "20 Oktober 2026",
+    date: "23 Oktober 2026",
     isLatest: true,
+    features: [
+      { icon: SVG.user, title: "Customer Management Revamp", desc: "Fitur lengkap Edit & Hapus Customer. Klik kartu untuk konfirmasi edit, ubah ID Customer (riwayat utang otomatis pindah), dan hapus customer beserta seluruh riwayatnya." },
+      { icon: SVG.phone, title: "Multi Phone Number & Copy Action", desc: "Customer sekarang bisa menyimpan lebih dari satu nomor telepon. Nomor tampil di card dan bisa disalin sekali klik (ada animasi 'Tersalin')." },
+      { icon: SVG.chart, title: "Dashboard Statistik Customer", desc: "Halaman Customer kini punya ringkasan Total Transaksi, Total Utang, dan tombol khusus buat lihat Top 5 Produk Terlaris (Top Selling) per customer." },
+      { icon: SVG.pin, title: "Revamp Icon Wallet (Local vs Google)", desc: "Logo khusus untuk QRIS, SeaBank, Bank Jago, Krom, OVO, GoPay, DANA, dan ShopeePay kini pakai file gambar lokal. Sisanya otomatis pakai Google Favicon anti-blank." },
+      { icon: SVG.star, title: "Watermark Logo di Billing", desc: "Tampilan struk (Mode Normal & Nota Billing) kini punya watermark logo icon.png di sisi kanan yang mojok dan transparan, bikin struk makin estetik." },
+      { icon: SVG.save, title: "Smart Download Payment", desc: "Pas klik 'Simpan Bill', nomor rekening/e-wallet otomatis disembunyikan dan diganti jadi Nama Bank/E-Wallet aja. Tombol salin juga hilang biar struk bersih." }
+    ]
+  },
+  {
+    version: "Aegea 1.4",
+    tag: null,
+    date: "20 Oktober 2026",
+    isLatest: false,
     features: [
       { icon: SVG.star, title: "Opsi Pembayaran SuperBank", desc: "Penambahan rekening SuperBank (000045742939) lengkap dengan penarikan otomatis logo resmi dari internet." },
       { icon: SVG.bookmark, title: "Grid Payment Layout (E-Wallet & M-Banking)", desc: "Penyusunan ulang tampilan pilihan metode pembayaran tagihan menjadi 2 kolom rapi yang terpisah per kategori." },
