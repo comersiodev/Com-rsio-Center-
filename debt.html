@@ -529,9 +529,13 @@
   </div>
 
 <div class="content-wrap">
-    <div style="margin-bottom: 16px; margin-top: 4px;">
+    <div style="margin-bottom: 16px; margin-top: 4px; display: flex; flex-direction: column; gap: 8px;">
         <button type="button" class="btn-action btn-add-debt" style="width: 100%; height: 46px; font-size: 0.95rem;" onclick="openGlobalAddPopup()">
             + Tambah Utang ke Customer Lain / Mana Saja
+        </button>
+        <button type="button" class="btn-action" style="width: 100%; height: 46px; font-size: 0.9rem; background: rgba(232,177,60,0.15); color: var(--emas-terang); border: 1.5px solid var(--emas-terang); border-radius: 10px; cursor: pointer; font-family: 'FiraCondBold', sans-serif; display: flex; align-items: center; justify-content: center; gap: 6px; transition: background 0.2s, transform 0.15s;" onclick="openGlobalAddPopupWithDate()" onmouseover="this.style.background='rgba(232,177,60,0.3)'" onmouseout="this.style.background='rgba(232,177,60,0.15)'" onmousedown="this.style.transform='scale(0.97)'" onmouseup="this.style.transform='scale(1)'">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/></svg>
+            Tambah Utang dengan Tanggal Custom
         </button>
     </div>
 
@@ -561,6 +565,12 @@
 
         <label>Harga Jual:</label>
         <input type="number" id="hargaInput" placeholder="Harga Jual (Rp)" oninput="calculateMargin()">
+
+        <label>Tanggal Transaksi:</label>
+        <input type="datetime-local" id="tanggalInput" style="color-scheme: dark; font-family: 'FiraCondBook', sans-serif;">
+        <small style="display: block; color: #888; font-size: 0.68rem; margin-top: 2px; font-family: 'FiraCondBook', sans-serif; line-height: 1.2;">
+            Kosongkan untuk memakai waktu sekarang. Isi untuk backdate / postdate.
+        </small>
 
         <div id="marginPreviewBox" style="margin-top: 10px; padding: 8px 10px; background: #000; border-radius: 8px; border: 1px dashed rgba(232, 177, 60, 0.4); font-size: 0.8rem; display: flex; justify-content: space-between; align-items: center;">
             <span style="color: #aaa;">Estimasi Keuntungan:</span>
@@ -1274,9 +1284,24 @@ function openGlobalAddPopup(){
     document.getElementById("produkInput").value = "";
     document.getElementById("modalInput").value = "";
     document.getElementById("hargaInput").value = "";
+    document.getElementById("tanggalInput").value = "";
     document.getElementById("marginValueText").innerText = "Rp 0";
     document.getElementById("chargePreviewBox").style.display = "none";
     document.getElementById("popupBox").classList.add("active");
+}
+
+/* Tombol baru: buka popup dengan field tanggal otomatis terisi waktu sekarang
+   (biar user tinggal ganti tahun/bulan kalau mau backdate/postdate) */
+function openGlobalAddPopupWithDate(){
+    openGlobalAddPopup();
+    setTimeout(() => {
+        const dateInput = document.getElementById("tanggalInput");
+        if(dateInput){
+            const now = new Date();
+            now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+            dateInput.value = now.toISOString().slice(0, 16);
+        }
+    }, 180);
 }
 
 function openPopupForCustomer(custId){
@@ -1290,6 +1315,7 @@ function openPopupForCustomer(custId){
     document.getElementById("produkInput").value = "";
     document.getElementById("modalInput").value = "";
     document.getElementById("hargaInput").value = "";
+    document.getElementById("tanggalInput").value = "";
     document.getElementById("marginValueText").innerText = "Rp 0";
     document.getElementById("chargePreviewBox").style.display = "none";
     document.getElementById("popupBox").classList.add("active");
@@ -1304,10 +1330,20 @@ function addDebt(){
     const produk = document.getElementById("produkInput").value.trim();
     const modal = parseInt(document.getElementById("modalInput").value);
     const harga = parseInt(document.getElementById("hargaInput").value);
+    const tanggalVal = document.getElementById("tanggalInput").value;
 
     if(!chosenCustId || produk === "" || isNaN(modal) || isNaN(harga)){
         alert("Pilih customer dan lengkapi data modal serta harga jual dengan benar!");
         return;
+    }
+
+    // Waktu transaksi: pakai custom tanggal kalau diisi, kalau tidak pakai waktu sekarang
+    let waktuTransaksi = new Date().toLocaleString("id-ID");
+    if(tanggalVal){
+        const dt = new Date(tanggalVal);
+        if(!isNaN(dt.getTime())){
+            waktuTransaksi = dt.toLocaleString("id-ID");
+        }
     }
 
     if(!debts[chosenCustId]) debts[chosenCustId] = [];
@@ -1321,7 +1357,7 @@ function addDebt(){
         tip: 0,
         excluded: false,
         isLogged: false,
-        waktu: new Date().toLocaleString("id-ID")
+        waktu: waktuTransaksi
     });
 
     recomputeCharges(chosenCustId);
