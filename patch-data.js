@@ -3,15 +3,19 @@ const PATCH_NOTES_DATA = [
   {
     version: "Aegea 1.5",
     tag: "TERBARU",
-    date: "23 Oktober 2026",
+    date: "11 November 2026",
     isLatest: true,
     features: [
-      { icon: SVG.user, title: "Customer Management Revamp", desc: "Fitur lengkap Edit & Hapus Customer. Klik kartu untuk konfirmasi edit, ubah ID Customer (riwayat utang otomatis pindah), dan hapus customer beserta seluruh riwayatnya." },
-      { icon: SVG.phone, title: "Multi Phone Number & Copy Action", desc: "Customer sekarang bisa menyimpan lebih dari satu nomor telepon. Nomor tampil di card dan bisa disalin sekali klik (ada animasi 'Tersalin')." },
-      { icon: SVG.chart, title: "Dashboard Statistik Customer", desc: "Halaman Customer kini punya ringkasan Total Transaksi, Total Utang, dan tombol khusus buat lihat Top 5 Produk Terlaris (Top Selling) per customer." },
-      { icon: SVG.pin, title: "Revamp Icon Wallet (Local vs Google)", desc: "Logo khusus untuk QRIS, SeaBank, Bank Jago, Krom, OVO, GoPay, DANA, dan ShopeePay kini pakai file gambar lokal. Sisanya otomatis pakai Google Favicon anti-blank." },
-      { icon: SVG.star, title: "Watermark Logo di Billing", desc: "Tampilan struk (Mode Normal & Nota Billing) kini punya watermark logo icon.png di sisi kanan yang mojok dan transparan, bikin struk makin estetik." },
-      { icon: SVG.save, title: "Smart Download Payment", desc: "Pas klik 'Simpan Bill', nomor rekening/e-wallet otomatis disembunyikan dan diganti jadi Nama Bank/E-Wallet aja. Tombol salin juga hilang biar struk bersih." }
+      { icon: SVG.star, title: "blu by BCA Ditambahkan", desc: "Metode pembayaran blu by BCA resmi masuk daftar Wallet. Icon otomatis ambil dari web resmi blubybcadigital.co.id, mendukung multi rekening seperti bank lain." },
+      { icon: SVG.bookmark, title: "Multi Rekening per Bank", desc: "Setiap bank & e-wallet sekarang bisa nyimpen lebih dari 1 rekening. Klik kartu wallet di Dashboard → tampil list rekening dalam bentuk card dengan tombol Salin / Edit / Hapus. Badge angka di kartu wallet nunjukin jumlah rekening aktif." },
+      { icon: SVG.user, title: "Rekening Picker di Konfirmasi Bayar", desc: "Kalau bank punya lebih dari 1 rekening, saat mau tagih utang user wajib pilih rekening tujuan dulu lewat modal picker. Rekening yang dipilih disimpan via paymentAccountId dan otomatis nongol di struk payment.html." },
+      { icon: SVG.save, title: "Fix Download Bill Anti-Gagal", desc: "Download struk sekarang pakai canvas.toBlob() bukan toDataURL() — bebas dari limit ukuran 2MB di Chrome Android yang bikin download sering gagal. Ditambah preload semua gambar sebelum capture biar logo & QRIS nggak blank." },
+      { icon: SVG.note, title: "Konfirmasi Sebelum Simpan Billing", desc: "Tombol SIMPAN BILL sekarang munculin modal konfirmasi elegan dulu (Batal / Ya, Simpan) sebelum capture gambar. Klik di luar modal = batal, nggak ada download accidental lagi." },
+      { icon: SVG.chart, title: "Payment Method Filter Otomatis", desc: "Halaman Tagih Utang cuma nampilin wallet yang udah dikonfigurasi. Kalau belum ada wallet sama sekali, muncul link shortcut 'Atur di Dashboard → Wallet'. Nggak ada lagi pilihan bank kosong yang bikin bingung." },
+      { icon: SVG.cog || SVG.star, title: "Icon Bank Sumber Resmi Web", desc: "Logo BCA, BNI, Mandiri, SuperBank, OVO, Speedcash, OctoPay sekarang otomatis ambil favicon langsung dari website resmi masing-masing bank via Google S2 Favicons — persis kayak icon di tab browser m-banking." },
+      { icon: SVG.rocket, title: "Migrasi Wallet Format Lama", desc: "Data wallet lama format {name, number} otomatis dimigrasi ke format baru {accounts: [...]} tanpa kehilangan data. payment.html tetap kompatibel baca field lama jadi nggak ada yang rusak." },
+      { icon: SVG.globe, title: "Toast Notification & Loading Dinamis", desc: "Semua aksi download sekarang kasih feedback visual via toast (hijau = berhasil, merah = gagal). Overlay loading juga dinamis: 'Menyiapkan Gambar...' saat proses capture, balik ke 'Memuat Halaman...' setelah selesai." },
+      { icon: SVG.trash, title: "Hapus Rekening Non-Destruktif", desc: "Hapus satu rekening dari bank yang punya beberapa rekening nggak akan hapus semua data. Field name & number top-level otomatis sync ke rekening pertama yang tersisa biar tetap valid." }
     ]
   },
   {
