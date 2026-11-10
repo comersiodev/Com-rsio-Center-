@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="id">
-
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -10,497 +9,116 @@
   @font-face{ font-family: 'OswaldBold'; src: url('oswald-bold.ttf') format('truetype'); font-weight: 700; }
   @font-face{ font-family: 'FiraCondBold'; src: url('firasanscondensed-bold.otf') format('opentype'); font-weight: 700; }
   @font-face{ font-family: 'FiraCondBook'; src: url('firasanscondensed-book.otf') format('opentype'); font-weight: 400; }
-
-  :root{
-    --hijau: #2f6b3a;
-    --hijau-terang: #4caf5e;
-    --emas: #e8b13c;
-    --emas-terang: #ffd166;
-    --oranye: #ff9f1a;
-    --gelap: #0a0a0a;
-  }
-
+  :root{ --hijau: #2f6b3a; --hijau-terang: #4caf5e; --emas: #e8b13c; --emas-terang: #ffd166; --oranye: #ff9f1a; --gelap: #0a0a0a; }
   *{ box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-
-  html, body{
-    margin: 0; padding: 0; width: 100%; min-height: 100vh;
-    font-family: 'FiraCondBook', sans-serif;
-    background: #0a0a0a !important;
-    color: #ffffff;
-    overflow-x: hidden;
-  }
-
+  html, body{ margin: 0; padding: 0; width: 100%; min-height: 100vh; font-family: 'FiraCondBook', sans-serif; background: #0a0a0a !important; color: #ffffff; overflow-x: hidden; }
   .bg-layer{ position: fixed; inset: 0; background-image: url('background.jpg'); background-size: cover; background-position: center center; background-repeat: no-repeat; z-index: 0; }
   .bg-dim{ position: fixed; inset: 0; background: rgba(6, 10, 7, 0.82); z-index: 1; }
-
-  .mbanking-topbar {
-    position: fixed; top: 0; left: 0; right: 0; height: 60px;
-    background: rgba(10, 14, 11, 0.95);
-    border-bottom: 1px solid rgba(232, 177, 60, 0.25);
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 0 16px; z-index: 20; backdrop-filter: blur(8px);
-  }
-
+  .mbanking-topbar { position: fixed; top: 0; left: 0; right: 0; height: 60px; background: rgba(10, 14, 11, 0.95); border-bottom: 1px solid rgba(232, 177, 60, 0.25); display: flex; align-items: center; justify-content: space-between; padding: 0 16px; z-index: 20; backdrop-filter: blur(8px); }
   .mbanking-brand-container { display: flex; flex-direction: column; justify-content: center; min-width: 0; }
   .mbanking-brand { font-family: 'OswaldBold', sans-serif; font-size: 1.1rem; color: #ffffff; letter-spacing: 0.5px; line-height: 1.1; white-space: nowrap; }
   .mbanking-brand span { color: var(--emas-terang); }
   .mbanking-greeting-top { font-size: 0.7rem; color: var(--emas-terang); font-family: 'FiraCondBold', sans-serif; margin-top: 1px; line-height: 1; }
-
   .topbar-right-box { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
-
-  .date-badge-top {
-    font-family: 'FiraCondBold', sans-serif;
-    font-size: 0.8rem; color: var(--emas-terang);
-    background: rgba(232, 177, 60, 0.1);
-    border: 1px solid rgba(232, 177, 60, 0.3);
-    padding: 4px 8px; border-radius: 8px; white-space: nowrap;
-  }
-
-  .archive-topbar-btn {
-    width: 36px; height: 36px;
-    border-radius: 8px;
-    border: 1.5px solid rgba(232, 177, 60, 0.5);
-    background: rgba(232, 177, 60, 0.1);
-    color: var(--emas-terang);
-    display: flex; align-items: center; justify-content: center;
-    cursor: pointer;
-    transition: background 0.2s, box-shadow 0.2s, transform 0.15s;
-    flex-shrink: 0;
-  }
+  .date-badge-top { font-family: 'FiraCondBold', sans-serif; font-size: 0.8rem; color: var(--emas-terang); background: rgba(232, 177, 60, 0.1); border: 1px solid rgba(232, 177, 60, 0.3); padding: 4px 8px; border-radius: 8px; white-space: nowrap; }
+  .archive-topbar-btn { width: 36px; height: 36px; border-radius: 8px; border: 1.5px solid rgba(232, 177, 60, 0.5); background: rgba(232, 177, 60, 0.1); color: var(--emas-terang); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background 0.2s, box-shadow 0.2s, transform 0.15s; flex-shrink: 0; }
   .archive-topbar-btn:hover { background: rgba(232, 177, 60, 0.25); box-shadow: 0 0 10px rgba(255, 209, 102, 0.35); }
   .archive-topbar-btn:active { transform: scale(0.95); }
   .archive-topbar-btn svg { width: 18px; height: 18px; fill: currentColor; }
-
-  .profile-circle-btn {
-    width: 36px; height: 36px; border-radius: 50%;
-    border: 2px solid var(--emas-terang);
-    background: #121814; overflow: hidden;
-    display: flex; align-items: center; justify-content: center;
-    cursor: pointer; text-decoration: none;
-    transition: transform 0.2s, box-shadow 0.2s;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.5); flex-shrink: 0;
-  }
+  .profile-circle-btn { width: 36px; height: 36px; border-radius: 50%; border: 2px solid var(--emas-terang); background: #121814; overflow: hidden; display: flex; align-items: center; justify-content: center; cursor: pointer; text-decoration: none; transition: transform 0.2s, box-shadow 0.2s; box-shadow: 0 2px 8px rgba(0,0,0,0.5); flex-shrink: 0; }
   .profile-circle-btn:hover { transform: scale(1.08); box-shadow: 0 0 12px rgba(255, 209, 102, 0.4); }
   .profile-circle-btn svg, .profile-circle-btn img { width: 100%; height: 100%; object-fit: cover; }
   .profile-circle-btn svg { width: 20px; height: 20px; fill: var(--emas-terang); padding: 2px; }
-
   .content-wrap { position: relative; z-index: 5; padding: 76px 16px 90px 16px; max-width: 600px; margin: 0 auto; }
-
   .customer-list-container { display: flex; flex-direction: column; gap: 12px; }
-
-  .customer-card {
-    background: rgba(12, 17, 13, 0.92);
-    border: 2px solid var(--emas);
-    border-radius: 16px;
-    overflow: hidden;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.6);
-    transition: border-color 0.2s;
-  }
+  .customer-card { background: rgba(12, 17, 13, 0.92); border: 2px solid var(--emas); border-radius: 16px; overflow: hidden; box-shadow: 0 6px 20px rgba(0,0,0,0.6); transition: border-color 0.2s; }
   .customer-card.active { border-color: var(--emas-terang); box-shadow: 0 0 15px rgba(255, 209, 102, 0.25); }
-
-  .customer-header {
-    padding: 16px;
-    display: flex; justify-content: space-between; align-items: center;
-    cursor: pointer;
-    background: rgba(16, 23, 18, 0.95);
-  }
-
+  .customer-header { padding: 16px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; background: rgba(16, 23, 18, 0.95); }
   .customer-info h3 { margin: 0 0 3px 0; font-family: 'FiraCondBold', sans-serif; font-size: 1.05rem; color: var(--emas-terang); }
   .customer-info p { margin: 0; font-size: 0.8rem; color: #bbb; }
-
-  .arrow-icon {
-    width: 22px; height: 22px;
-    stroke: var(--emas-terang); fill: none;
-    stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round;
-    transition: transform 0.3s ease;
-    flex-shrink: 0;
-  }
+  .arrow-icon { width: 22px; height: 22px; stroke: var(--emas-terang); fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; transition: transform 0.3s ease; flex-shrink: 0; }
   .customer-card.active .arrow-icon { transform: rotate(180deg); }
-
-  .customer-body {
-    max-height: 0;
-    overflow: hidden;
-    background: #080c09;
-    transition: max-height 0.32s cubic-bezier(0.4, 0, 0.2, 1);
-    will-change: max-height;
-  }
-  .customer-body-content {
-    padding: 14px 16px;
-    border-top: 1px solid rgba(232, 177, 60, 0.25);
-  }
-
+  .customer-body { max-height: 0; overflow: hidden; background: #080c09; transition: max-height 0.32s cubic-bezier(0.4, 0, 0.2, 1); will-change: max-height; }
+  .customer-body-content { padding: 14px 16px; border-top: 1px solid rgba(232, 177, 60, 0.25); }
   .table-responsive { width: 100%; overflow-x: auto; scrollbar-width: thin; scrollbar-color: var(--emas) #111; }
-
   table { width: 100%; border-collapse: collapse; font-size: 0.8rem; margin-bottom: 12px; white-space: nowrap; }
   th, td { padding: 8px 6px; text-align: center; border-bottom: 1px solid rgba(255, 255, 255, 0.08); vertical-align: middle; }
-  th {
-    font-family: 'FiraCondBold', sans-serif; color: var(--emas-terang);
-    background: #0d120f; border-bottom: 2px solid var(--emas);
-    font-size: 0.75rem; text-transform: uppercase;
-  }
-
-  .custom-checkbox {
-    width: 22px; height: 22px;
-    border: 2px solid var(--emas-terang);
-    border-radius: 6px;
-    background: #000;
-    display: inline-flex; align-items: center; justify-content: center;
-    cursor: pointer;
-    transition: background 0.2s ease;
-  }
+  th { font-family: 'FiraCondBold', sans-serif; color: var(--emas-terang); background: #0d120f; border-bottom: 2px solid var(--emas); font-size: 0.75rem; text-transform: uppercase; }
+  .custom-checkbox { width: 22px; height: 22px; border: 2px solid var(--emas-terang); border-radius: 6px; background: #000; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; transition: background 0.2s ease; }
   .custom-checkbox svg { width: 12px; height: 12px; fill: none; stroke: #000; stroke-width: 3.5; stroke-linecap: round; stroke-linejoin: round; display: none; }
   .custom-checkbox.checked { background: var(--emas-terang); }
   .custom-checkbox.checked svg { display: block; }
-
   .action-group { display: flex; gap: 8px; margin-top: 8px; }
-
-  .btn-action {
-    flex: 1; height: 42px; border-radius: 10px;
-    font-family: 'FiraCondBold', sans-serif;
-    font-size: 0.85rem; cursor: pointer; border: none;
-    display: flex; align-items: center; justify-content: center; gap: 6px;
-    transition: transform 0.2s, box-shadow 0.2s;
-  }
+  .btn-action { flex: 1; height: 42px; border-radius: 10px; font-family: 'FiraCondBold', sans-serif; font-size: 0.85rem; cursor: pointer; border: none; display: flex; align-items: center; justify-content: center; gap: 6px; transition: transform 0.2s, box-shadow 0.2s; }
   .btn-action:active { transform: scale(0.97); }
   .btn-add-debt { background: #121814; color: var(--emas-terang); border: 1.5px solid var(--emas-terang); }
   .btn-pay-debt { background: var(--emas-terang); color: #000000; box-shadow: 0 3px 10px rgba(255, 209, 102, 0.3); }
-
-  .card-total-box {
-    font-family: 'FiraCondBold', sans-serif; font-size: 0.9rem; color: #fff;
-    margin-bottom: 10px; background: #000;
-    padding: 8px 12px; border-radius: 8px;
-    display: flex; justify-content: space-between;
-    border: 1px solid rgba(232, 177, 60, 0.3);
-  }
-
-  .popupBox {
-    position: fixed; inset: 0;
-    background: rgba(0,0,0,0.85);
-    display: none; justify-content: center; align-items: center;
-    z-index: 99999; padding: 20px; backdrop-filter: blur(5px);
-  }
+  .card-total-box { font-family: 'FiraCondBold', sans-serif; font-size: 0.9rem; color: #fff; margin-bottom: 10px; background: #000; padding: 8px 12px; border-radius: 8px; display: flex; justify-content: space-between; border: 1px solid rgba(232, 177, 60, 0.3); }
+  .popupBox { position: fixed; inset: 0; background: rgba(0,0,0,0.85); display: none; justify-content: center; align-items: center; z-index: 99999; padding: 20px; backdrop-filter: blur(5px); }
   .popupBox.active { display: flex; }
-
-  #customerPickerModal, #productPickerModal, #archivePopup, #paymentPopup, #amortPopup { z-index: 9999999 !important; }
-
-  .popupContent {
-    display: flex; flex-direction: column;
-    width: 100%; max-width: 360px;
-    background: #0d120f;
-    border: 2px solid var(--emas-terang);
-    border-radius: 16px;
-    padding: 20px;
-    max-height: 85vh;
-    overflow-y: auto;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.8);
-  }
-
-  .popupContent h2 {
-    margin-top: 0; margin-bottom: 12px;
-    font-family: 'FiraCondBold', sans-serif;
-    color: var(--emas-terang); text-align: center;
-    font-size: 1.1rem;
-  }
-
-  input {
-    width: 100%; height: 44px;
-    background: #000;
-    border: 1.5px solid var(--emas);
-    border-radius: 10px;
-    color: white; padding: 0 12px;
-    box-sizing: border-box; margin-top: 4px;
-    font-family: 'FiraCondBook', sans-serif;
-    font-size: 0.95rem; outline: none;
-  }
+  #customerPickerModal, #productPickerModal, #archivePopup, #paymentPopup, #amortPopup, #accountPickerModal { z-index: 9999999 !important; }
+  .popupContent { display: flex; flex-direction: column; width: 100%; max-width: 360px; background: #0d120f; border: 2px solid var(--emas-terang); border-radius: 16px; padding: 20px; max-height: 85vh; overflow-y: auto; box-shadow: 0 10px 30px rgba(0,0,0,0.8); }
+  .popupContent h2 { margin-top: 0; margin-bottom: 12px; font-family: 'FiraCondBold', sans-serif; color: var(--emas-terang); text-align: center; font-size: 1.1rem; }
+  input { width: 100%; height: 44px; background: #000; border: 1.5px solid var(--emas); border-radius: 10px; color: white; padding: 0 12px; box-sizing: border-box; margin-top: 4px; font-family: 'FiraCondBook', sans-serif; font-size: 0.95rem; outline: none; }
   input:focus { border-color: var(--emas-terang); box-shadow: 0 0 8px rgba(255, 209, 102, 0.25); }
-
-  .popupContent label {
-    margin-top: 10px; display: block;
-    font-size: 0.75rem; color: var(--emas-terang);
-    font-family: 'FiraCondBold', sans-serif; text-transform: uppercase;
-  }
-
+  .popupContent label { margin-top: 10px; display: block; font-size: 0.75rem; color: var(--emas-terang); font-family: 'FiraCondBold', sans-serif; text-transform: uppercase; }
   .popupButtonGroup { display: flex; gap: 8px; margin-top: 16px; }
-  .cancelButton, .addButton {
-    flex: 1; height: 42px;
-    border: none; border-radius: 10px;
-    cursor: pointer;
-    font-family: 'FiraCondBold', sans-serif;
-    font-size: 0.9rem;
-  }
+  .cancelButton, .addButton { flex: 1; height: 42px; border: none; border-radius: 10px; cursor: pointer; font-family: 'FiraCondBold', sans-serif; font-size: 0.9rem; }
   .cancelButton { background: #222; color: #aaa; border: 1px solid #444; }
   .addButton { background: var(--emas-terang); color: black; box-shadow: 0 3px 10px rgba(255, 209, 102, 0.3); }
   .btn-delete-confirm { background: #ff3b3b !important; color: white !important; }
-
-  .custom-select-trigger {
-    width: 100%; height: 44px;
-    background: #000;
-    border: 1.5px solid var(--emas);
-    border-radius: 10px;
-    color: white; padding: 0 12px;
-    margin-top: 4px;
-    display: flex; align-items: center; justify-content: space-between;
-    cursor: pointer;
-    font-family: 'FiraCondBold', sans-serif;
-    font-size: 0.9rem;
-  }
-  .custom-select-trigger svg {
-    width: 18px; height: 18px;
-    fill: var(--emas-terang);
-    flex-shrink: 0;
-  }
-
-  .select-option-item {
-    background: #111;
-    border: 1px solid rgba(232, 177, 60, 0.3);
-    color: #fff; padding: 10px 12px;
-    border-radius: 8px; text-align: left;
-    font-family: 'FiraCondBold', sans-serif;
-    font-size: 0.9rem; margin-bottom: 8px;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-  .select-option-item:hover {
-    background: rgba(232, 177, 60, 0.2);
-    border-color: var(--emas-terang);
-    color: var(--emas-terang);
-  }
-
-  .product-input-row {
-    display: flex; align-items: center; gap: 6px;
-    margin-top: 4px; width: 100%; height: 44px;
-  }
+  .custom-select-trigger { width: 100%; height: 44px; background: #000; border: 1.5px solid var(--emas); border-radius: 10px; color: white; padding: 0 12px; margin-top: 4px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; font-family: 'FiraCondBold', sans-serif; font-size: 0.9rem; }
+  .custom-select-trigger svg { width: 18px; height: 18px; fill: var(--emas-terang); flex-shrink: 0; }
+  .select-option-item { background: #111; border: 1px solid rgba(232, 177, 60, 0.3); color: #fff; padding: 10px 12px; border-radius: 8px; text-align: left; font-family: 'FiraCondBold', sans-serif; font-size: 0.9rem; margin-bottom: 8px; cursor: pointer; transition: all 0.2s; }
+  .select-option-item:hover { background: rgba(232, 177, 60, 0.2); border-color: var(--emas-terang); color: var(--emas-terang); }
+  .product-input-row { display: flex; align-items: center; gap: 6px; margin-top: 4px; width: 100%; height: 44px; }
   .product-input-row input { margin: 0 !important; flex: 1; height: 44px !important; }
-
-  .cart-icon-btn {
-    margin: 0 !important;
-    width: 44px !important; min-width: 44px !important; height: 44px !important;
-    background: rgba(232, 177, 60, 0.15);
-    border: 1.5px solid var(--emas-terang);
-    color: var(--emas-terang);
-    border-radius: 10px;
-    display: flex; align-items: center; justify-content: center;
-    cursor: pointer; flex-shrink: 0;
-    transition: background 0.2s;
-  }
+  .cart-icon-btn { margin: 0 !important; width: 44px !important; min-width: 44px !important; height: 44px !important; background: rgba(232, 177, 60, 0.15); border: 1.5px solid var(--emas-terang); color: var(--emas-terang); border-radius: 10px; display: flex; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0; transition: background 0.2s; }
   .cart-icon-btn:hover { background: rgba(232, 177, 60, 0.3); }
-
-  .product-picker-card {
-    background: #111;
-    border: 1px solid rgba(232, 177, 60, 0.3);
-    border-radius: 10px;
-    padding: 10px 12px;
-    margin-bottom: 8px;
-    cursor: pointer;
-    display: flex; justify-content: space-between; align-items: center;
-    transition: all 0.2s;
-  }
+  .product-picker-card { background: #111; border: 1px solid rgba(232, 177, 60, 0.3); border-radius: 10px; padding: 10px 12px; margin-bottom: 8px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: all 0.2s; }
   .product-picker-card:hover { border-color: var(--emas-terang); background: rgba(232, 177, 60, 0.1); }
-  .product-picker-card .picker-arrow {
-    width: 16px; height: 16px;
-    fill: var(--emas-terang);
-    flex-shrink: 0;
-  }
-
-  .payment-category-title {
-    font-family: 'FiraCondBold', sans-serif;
-    font-size: 0.8rem; color: var(--emas-terang);
-    margin: 14px 0 8px 0; text-align: left;
-    border-bottom: 1px dashed rgba(232, 177, 60, 0.3);
-    padding-bottom: 4px; letter-spacing: 0.5px;
-  }
-  .payment-grid {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
-  }
-  .payment-card {
-    display: flex; flex-direction: row; align-items: center; justify-content: flex-start; gap: 8px;
-    background: #121814; border: 1.5px solid rgba(232, 177, 60, 0.4); border-radius: 10px;
-    padding: 8px 10px; color: white; cursor: pointer; font-size: 0.8rem; transition: all 0.2s;
-  }
-  .payment-card:hover {
-    border-color: var(--emas-terang); background: rgba(232, 177, 60, 0.1); transform: translateY(-2px);
-  }
+  .product-picker-card .picker-arrow { width: 16px; height: 16px; fill: var(--emas-terang); flex-shrink: 0; }
+  .payment-category-title { font-family: 'FiraCondBold', sans-serif; font-size: 0.8rem; color: var(--emas-terang); margin: 14px 0 8px 0; text-align: left; border-bottom: 1px dashed rgba(232, 177, 60, 0.3); padding-bottom: 4px; letter-spacing: 0.5px; }
+  .payment-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .payment-card { display: flex; flex-direction: row; align-items: center; justify-content: flex-start; gap: 8px; background: #121814; border: 1.5px solid rgba(232, 177, 60, 0.4); border-radius: 10px; padding: 8px 10px; color: white; cursor: pointer; font-size: 0.8rem; transition: all 0.2s; position: relative; }
+  .payment-card:hover { border-color: var(--emas-terang); background: rgba(232, 177, 60, 0.1); transform: translateY(-2px); }
   .payment-card img { width: 32px; height: 32px; object-fit: contain; background: #fff; border-radius: 4px; padding: 2px; }
   .payment-card span { font-family: 'FiraCondBold', sans-serif; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-
-  .charge-preview-box {
-    margin-top: 10px;
-    padding: 10px 12px;
-    background: rgba(255, 159, 26, 0.06);
-    border: 1.5px dashed rgba(255, 159, 26, 0.55);
-    border-radius: 10px;
-  }
-  .charge-preview-box .charge-head {
-    display: flex; justify-content: space-between; align-items: center;
-    gap: 8px;
-  }
-  .charge-preview-box .charge-head span:first-child {
-    color: var(--oranye);
-    font-family: 'FiraCondBold', sans-serif;
-    font-size: 0.78rem;
-    display: flex; align-items: center; gap: 6px;
-  }
-  .charge-preview-box .charge-head svg {
-    width: 12px; height: 12px;
-    fill: var(--oranye);
-    filter: drop-shadow(0 0 4px rgba(255, 159, 26, 0.6));
-    flex-shrink: 0;
-  }
-  .charge-preview-box .charge-value {
-    color: var(--oranye);
-    font-family: 'FiraCondBold', sans-serif;
-    font-size: 0.85rem;
-  }
-  .charge-preview-box .charge-total-row {
-    display: flex; justify-content: space-between; align-items: center;
-    margin-top: 8px; padding-top: 8px;
-    border-top: 1px dashed rgba(255, 159, 26, 0.3);
-  }
-  .charge-preview-box .charge-total-row span:first-child {
-    color: #aaa; font-size: 0.75rem;
-  }
-  .charge-preview-box .charge-total-row span:last-child {
-    color: var(--emas-terang);
-    font-family: 'FiraCondBold', sans-serif;
-    font-size: 0.9rem;
-  }
-  .charge-preview-box .charge-note {
-    font-size: 0.65rem;
-    color: #999;
-    margin-top: 6px;
-    font-family: 'FiraCondBold', sans-serif;
-    letter-spacing: 0.2px;
-  }
-
-  .archive-header-row {
-    display: flex; justify-content: space-between; align-items: center;
-    gap: 8px; margin-bottom: 12px;
-  }
+  .payment-card .acc-badge { position: absolute; top: 2px; right: 2px; background: rgba(232, 177, 60, 0.9); color: #000; font-size: 0.55rem; padding: 1px 4px; border-radius: 4px; font-weight: bold; }
+  .charge-preview-box { margin-top: 10px; padding: 10px 12px; background: rgba(255, 159, 26, 0.06); border: 1.5px dashed rgba(255, 159, 26, 0.55); border-radius: 10px; }
+  .charge-preview-box .charge-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+  .charge-preview-box .charge-head span:first-child { color: var(--oranye); font-family: 'FiraCondBold', sans-serif; font-size: 0.78rem; display: flex; align-items: center; gap: 6px; }
+  .charge-preview-box .charge-head svg { width: 12px; height: 12px; fill: var(--oranye); filter: drop-shadow(0 0 4px rgba(255, 159, 26, 0.6)); flex-shrink: 0; }
+  .charge-preview-box .charge-value { color: var(--oranye); font-family: 'FiraCondBold', sans-serif; font-size: 0.85rem; }
+  .charge-preview-box .charge-total-row { display: flex; justify-content: space-between; align-items: center; margin-top: 8px; padding-top: 8px; border-top: 1px dashed rgba(255, 159, 26, 0.3); }
+  .charge-preview-box .charge-total-row span:first-child { color: #aaa; font-size: 0.75rem; }
+  .charge-preview-box .charge-total-row span:last-child { color: var(--emas-terang); font-family: 'FiraCondBold', sans-serif; font-size: 0.9rem; }
+  .charge-preview-box .charge-note { font-size: 0.65rem; color: #999; margin-top: 6px; font-family: 'FiraCondBold', sans-serif; letter-spacing: 0.2px; }
+  .archive-header-row { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 12px; }
   .archive-header-row h2 { margin: 0; text-align: left; font-size: 1rem; }
-  .archive-back-btn {
-    display: none;
-    align-items: center; gap: 4px;
-    background: rgba(232, 177, 60, 0.12);
-    border: 1px solid rgba(232, 177, 60, 0.5);
-    color: var(--emas-terang);
-    padding: 6px 10px;
-    border-radius: 8px;
-    font-family: 'FiraCondBold', sans-serif;
-    font-size: 0.72rem;
-    cursor: pointer;
-    flex-shrink: 0;
-    transition: background 0.2s;
-  }
+  .archive-back-btn { display: none; align-items: center; gap: 4px; background: rgba(232, 177, 60, 0.12); border: 1px solid rgba(232, 177, 60, 0.5); color: var(--emas-terang); padding: 6px 10px; border-radius: 8px; font-family: 'FiraCondBold', sans-serif; font-size: 0.72rem; cursor: pointer; flex-shrink: 0; transition: background 0.2s; }
   .archive-back-btn:hover { background: rgba(232, 177, 60, 0.25); }
-  .archive-back-btn svg {
-    width: 14px; height: 14px;
-    fill: currentColor;
-  }
-
-  .archive-customer-info {
-    margin-bottom: 12px;
-    padding: 10px 12px;
-    background: #000;
-    border: 1px solid rgba(232, 177, 60, 0.3);
-    border-radius: 8px;
-  }
-
-  .archive-item {
-    background: #0a100c;
-    border: 1px solid rgba(232, 177, 60, 0.25);
-    border-radius: 10px;
-    padding: 10px 12px;
-    margin-bottom: 8px;
-  }
-  .archive-item .arc-title {
-    font-family: 'FiraCondBold', sans-serif;
-    color: var(--emas-terang);
-    font-size: 0.85rem;
-    word-break: break-word;
-  }
-  .archive-item .arc-waktu {
-    font-size: 0.65rem; color: #888; margin-top: 2px;
-  }
-  .archive-item .arc-meta {
-    display: flex; gap: 6px;
-    font-size: 0.7rem; color: #aaa;
-    margin-top: 8px;
-    padding-top: 8px;
-    border-top: 1px dashed rgba(232, 177, 60, 0.2);
-    flex-wrap: wrap;
-  }
+  .archive-back-btn svg { width: 14px; height: 14px; fill: currentColor; }
+  .archive-customer-info { margin-bottom: 12px; padding: 10px 12px; background: #000; border: 1px solid rgba(232, 177, 60, 0.3); border-radius: 8px; }
+  .archive-item { background: #0a100c; border: 1px solid rgba(232, 177, 60, 0.25); border-radius: 10px; padding: 10px 12px; margin-bottom: 8px; }
+  .archive-item .arc-title { font-family: 'FiraCondBold', sans-serif; color: var(--emas-terang); font-size: 0.85rem; word-break: break-word; }
+  .archive-item .arc-waktu { font-size: 0.65rem; color: #888; margin-top: 2px; }
+  .archive-item .arc-meta { display: flex; gap: 6px; font-size: 0.7rem; color: #aaa; margin-top: 8px; padding-top: 8px; border-top: 1px dashed rgba(232, 177, 60, 0.2); flex-wrap: wrap; }
   .archive-item .arc-sep { color: #555; }
-
-  .unarchive-btn {
-    margin-top: 8px; width: 100%;
-    padding: 6px 10px;
-    background: rgba(232, 177, 60, 0.1);
-    border: 1px solid rgba(232, 177, 60, 0.4);
-    color: var(--emas-terang);
-    border-radius: 6px;
-    font-family: 'FiraCondBold', sans-serif;
-    font-size: 0.7rem;
-    cursor: pointer;
-    transition: background 0.2s;
-  }
+  .unarchive-btn { margin-top: 8px; width: 100%; padding: 6px 10px; background: rgba(232, 177, 60, 0.1); border: 1px solid rgba(232, 177, 60, 0.4); color: var(--emas-terang); border-radius: 6px; font-family: 'FiraCondBold', sans-serif; font-size: 0.7rem; cursor: pointer; transition: background 0.2s; }
   .unarchive-btn:hover { background: rgba(232, 177, 60, 0.25); }
-
-  .mbanking-bottom-nav {
-    position: fixed; bottom: 0; left: 0; right: 0; height: 64px;
-    background: rgba(10, 14, 11, 0.96);
-    border-top: 1px solid rgba(232, 177, 60, 0.3);
-    display: grid; grid-template-columns: repeat(7, 1fr);
-    z-index: 99999; backdrop-filter: blur(8px);
-  }
-  .nav-item {
-    display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
-    text-decoration: none; color: #888;
-    font-family: 'FiraCondBold', sans-serif;
-    font-size: 0.55rem; gap: 3px; padding: 4px 0;
-    transition: color 0.2s;
-  }
-  .nav-item img {
-    width: 20px; height: 20px; object-fit: contain;
-    filter: grayscale(100%) opacity(0.6);
-    transition: filter 0.2s;
-  }
+  .mbanking-bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; height: 64px; background: rgba(10, 14, 11, 0.96); border-top: 1px solid rgba(232, 177, 60, 0.3); display: grid; grid-template-columns: repeat(7, 1fr); z-index: 99999; backdrop-filter: blur(8px); }
+  .nav-item { display: flex; flex-direction: column; align-items: center; justify-content: center; text-decoration: none; color: #888; font-family: 'FiraCondBold', sans-serif; font-size: 0.55rem; gap: 3px; padding: 4px 0; transition: color 0.2s; }
+  .nav-item img { width: 20px; height: 20px; object-fit: contain; filter: grayscale(100%) opacity(0.6); transition: filter 0.2s; }
   .nav-item.active, .nav-item:hover { color: var(--emas-terang); }
   .nav-item.active img, .nav-item:hover img { filter: none; }
-
-  @media (max-width: 420px){
-    .date-badge-top { display: none; }
-  }
-
-  .page-loading-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(5, 8, 6, 0.92);
-    z-index: 2147483647;
-    display: none;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 14px;
-    pointer-events: all;
-  }
+  @media (max-width: 420px){ .date-badge-top { display: none; } }
+  .page-loading-overlay { position: fixed; inset: 0; background: rgba(5, 8, 6, 0.92); z-index: 2147483647; display: none; flex-direction: column; align-items: center; justify-content: center; gap: 14px; pointer-events: all; }
   .page-loading-overlay.active { display: flex; }
-  .page-loading-overlay img {
-    width: 80px;
-    height: 80px;
-    object-fit: contain;
-  }
-  .page-loading-overlay .loading-text {
-    color: var(--emas-terang);
-    font-family: 'FiraCondBold', sans-serif;
-    font-size: 0.8rem;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    opacity: 0.85;
-  }
+  .page-loading-overlay img { width: 80px; height: 80px; object-fit: contain; }
+  .page-loading-overlay .loading-text { color: var(--emas-terang); font-family: 'FiraCondBold', sans-serif; font-size: 0.8rem; letter-spacing: 1px; text-transform: uppercase; opacity: 0.85; }
 </style>
 </head>
-
 <body>
 
   <div class="bg-layer"></div>
@@ -514,14 +132,10 @@
     <div class="topbar-right-box">
       <div class="date-badge-top" id="dateText">01 Jan 2026</div>
       <button class="archive-topbar-btn" onclick="openArchiveModal()" title="Arsip Transaksi">
-        <svg viewBox="0 0 24 24">
-          <path d="M20.54 5.23l-1.39-1.68C18.88 3.21 18.47 3 18 3H6c-.47 0-.88.21-1.16.55L3.46 5.23C3.17 5.57 3 6.02 3 6.5V19c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6.5c0-.48-.17-.93-.46-1.27zM12 17.5L6.5 12H10v-2h4v2h3.5L12 17.5zM5.12 5l.81-1h12l.94 1H5.12z"/>
-        </svg>
+        <svg viewBox="0 0 24 24"><path d="M20.54 5.23l-1.39-1.68C18.88 3.21 18.47 3 18 3H6c-.47 0-.88.21-1.16.55L3.46 5.23C3.17 5.57 3 6.02 3 6.5V19c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6.5c0-.48-.17-.93-.46-1.27zM12 17.5L6.5 12H10v-2h4v2h3.5L12 17.5zM5.12 5l.81-1h12l.94 1H5.12z"/></svg>
       </button>
       <a href="profile.html" class="profile-circle-btn" id="topProfileBtn" title="Pengaturan Profile">
-        <svg viewBox="0 0 24 24">
-          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
-        </svg>
+        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>
       </a>
     </div>
   </div>
@@ -534,25 +148,19 @@
             onmouseout="this.style.background='#121814'"
             onmousedown="this.style.transform='scale(0.94)'"
             onmouseup="this.style.transform='scale(1)'">
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/>
-            </svg>
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg>
             <span style="font-size: 0.5rem; letter-spacing: 0.3px;">SEKARANG</span>
         </button>
-
         <button type="button" onclick="openGlobalAddPopupWithDate()" title="Tambah Utang - tanggal custom"
             style="width: 62px; height: 66px; border-radius: 12px; background: rgba(232,177,60,0.15); border: 1.5px solid var(--emas-terang); color: var(--emas-terang); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; cursor: pointer; transition: background 0.2s, transform 0.15s; font-family: 'FiraCondBold', sans-serif;"
             onmouseover="this.style.background='rgba(232,177,60,0.3)'"
             onmouseout="this.style.background='rgba(232,177,60,0.15)'"
             onmousedown="this.style.transform='scale(0.94)'"
             onmouseup="this.style.transform='scale(1)'">
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/>
-            </svg>
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/></svg>
             <span style="font-size: 0.5rem; letter-spacing: 0.3px;">CUSTOM</span>
         </button>
     </div>
-
     <div class="customer-list-container" id="customerAccordionList"></div>
 </div>
 
@@ -565,7 +173,6 @@
             <span id="selectedCustomerLabel">Pilih Customer...</span>
             <svg viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
         </div>
-
         <label>Nama Produk:</label>
         <div class="product-input-row">
             <input type="text" id="produkInput" placeholder="Nama Produk / Layanan">
@@ -573,42 +180,27 @@
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
             </button>
         </div>
-
         <label>Harga Modal:</label>
         <input type="number" id="modalInput" placeholder="Harga Modal (Rp)" oninput="calculateMargin()">
-
         <label>Harga Jual:</label>
         <input type="number" id="hargaInput" placeholder="Harga Jual (Rp)" oninput="calculateMargin()">
-
-        <!-- Field tanggal: HANYA tampil saat mode CUSTOM -->
         <div id="tanggalFieldWrap" style="display: none;">
             <label>Tanggal Transaksi:</label>
             <input type="datetime-local" id="tanggalInput" style="color-scheme: dark; font-family: 'FiraCondBook', sans-serif;">
-            <small style="display: block; color: #888; font-size: 0.68rem; margin-top: 2px; font-family: 'FiraCondBook', sans-serif; line-height: 1.2;">
-                Ubah tanggal/jam untuk backdate atau postdate transaksi.
-            </small>
+            <small style="display: block; color: #888; font-size: 0.68rem; margin-top: 2px; font-family: 'FiraCondBook', sans-serif; line-height: 1.2;">Ubah tanggal/jam untuk backdate atau postdate transaksi.</small>
         </div>
-
         <div id="marginPreviewBox" style="margin-top: 10px; padding: 8px 10px; background: #000; border-radius: 8px; border: 1px dashed rgba(232, 177, 60, 0.4); font-size: 0.8rem; display: flex; justify-content: space-between; align-items: center;">
             <span style="color: #aaa;">Estimasi Keuntungan:</span>
             <span id="marginValueText" style="font-family: 'FiraCondBold', sans-serif; color: var(--emas-terang);">Rp 0</span>
         </div>
-
         <div id="chargePreviewBox" class="charge-preview-box" style="display: none;">
             <div class="charge-head">
-                <span>
-                    <svg viewBox="0 0 24 24"><path d="M7 2v11h3v9l7-12h-4l4-8z"/></svg>
-                    Charge Over-Limit
-                </span>
+                <span><svg viewBox="0 0 24 24"><path d="M7 2v11h3v9l7-12h-4l4-8z"/></svg> Charge Over-Limit</span>
                 <span class="charge-value" id="chargePreviewValue">Rp 0</span>
             </div>
-            <div class="charge-total-row">
-                <span>Total Tagihan:</span>
-                <span id="totalPreviewValue">Rp 0</span>
-            </div>
+            <div class="charge-total-row"><span>Total Tagihan:</span><span id="totalPreviewValue">Rp 0</span></div>
             <div class="charge-note">Otomatis dari limitasi customer &mdash; tidak dapat diubah</div>
         </div>
-
         <div class="popupButtonGroup">
             <button class="cancelButton" onclick="closePopup()">Batal</button>
             <button class="addButton" onclick="addDebt()">Tambahkan</button>
@@ -644,15 +236,11 @@
     <div class="popupContent">
         <h2>INPUT PEMBAYARAN &amp; TIP</h2>
         <p id="editProductInfo" style="text-align:center; color:#aaa; font-size:0.8rem; margin-top:-4px; margin-bottom:8px;"></p>
-
         <label>Jumlah Dibayar:</label>
         <input type="number" id="nominalBayarInput" placeholder="Masukkan nominal dibayar...">
-
         <label>Nominal Tip:</label>
         <input type="number" id="nominalTipInput" placeholder="Masukkan nominal tip...">
-
         <p style="font-size: 0.7rem; color: #4caf5e; margin: 8px 0 0 0; font-family: 'FiraCondBold', sans-serif;">Jika jumlah bayar sudah mencapai total tagihan, transaksi otomatis masuk ke Arsip.</p>
-
         <div class="popupButtonGroup">
             <button class="cancelButton" onclick="closeEditPopup()">Batal</button>
             <button class="addButton" onclick="saveEditDebt()">Simpan</button>
@@ -672,34 +260,41 @@
     </div>
 </div>
 
-<!-- POPUP METODE PEMBAYARAN (DYNAMIC) -->
+<!-- POPUP METODE PEMBAYARAN -->
 <div id="paymentPopup" class="popupBox">
     <div class="popupContent" style="max-height: 85vh; overflow-y: auto;">
         <h2>METODE PEMBAYARAN</h2>
         <p style="text-align: center; font-size: 0.8rem; color: #aaa; margin-top: -4px; margin-bottom: 12px;">Pilih jenis pembayaran tagihan:</p>
-
         <div style="display: flex; gap: 8px; margin-bottom: 12px;">
             <button type="button" id="btnTypeFull" onclick="setPaymentType('full')" style="flex:1; padding: 8px; border-radius: 8px; border: 1.5px solid var(--emas-terang); background: var(--emas-terang); color: #000; font-family: 'FiraCondBold', sans-serif; cursor: pointer; font-size: 0.8rem;">Penuh (Full)</button>
             <button type="button" id="btnTypeAmort" onclick="setPaymentType('amort')" style="flex:1; padding: 8px; border-radius: 8px; border: 1.5px solid var(--emas-terang); background: #111; color: var(--emas-terang); font-family: 'FiraCondBold', sans-serif; cursor: pointer; font-size: 0.8rem;">Amortisasi (Cicilan)</button>
         </div>
-
         <div id="cashSection" style="display: block;">
             <div class="payment-category-title">TUNAI / CASH</div>
             <div class="payment-grid" id="cashGrid"></div>
         </div>
-
         <div id="ewalletSection" style="display: none;">
             <div class="payment-category-title">E-WALLET</div>
             <div class="payment-grid" id="ewalletGrid"></div>
         </div>
-
         <div id="bankSection" style="display: none;">
             <div class="payment-category-title">M-BANKING / QRIS</div>
             <div class="payment-grid" id="bankGrid"></div>
         </div>
-
         <div class="popupButtonGroup" style="margin-top: 12px;">
             <button class="cancelButton" onclick="closePaymentPopup()">Tutup</button>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL PILIH REKENING (MULTI-ACCOUNT) -->
+<div id="accountPickerModal" class="popupBox">
+    <div class="popupContent">
+        <h2 id="accountPickerTitle">Pilih Rekening</h2>
+        <p style="text-align:center; font-size:0.75rem; color:#aaa; margin-top:-6px; margin-bottom:12px;">Pilih rekening tujuan pembayaran</p>
+        <div id="accountPickerList" style="max-height: 45vh; overflow-y: auto;"></div>
+        <div style="margin-top: 12px;">
+            <button type="button" class="cancelButton" style="width:120px; display:block; margin:0 auto;" onclick="closeAccountPicker()">Batal</button>
         </div>
     </div>
 </div>
@@ -709,15 +304,12 @@
     <div class="popupContent">
         <h2>NOMINAL CICILAN</h2>
         <p style="text-align:center; color:#aaa; font-size:0.8rem; margin-top:-4px; margin-bottom:12px;">Tentukan nominal yang dibayarkan saat ini.</p>
-
         <div style="background: rgba(232, 177, 60, 0.1); border: 1px solid rgba(232, 177, 60, 0.3); border-radius: 10px; padding: 12px; margin-bottom: 16px; text-align: center;">
             <span style="font-size: 0.75rem; color: #aaa; display: block; font-family: 'FiraCondBold', sans-serif; text-transform: uppercase;">Total Tagihan Aktif:</span>
             <span id="amortTotalTagihanText" style="font-family: 'FiraCondBold', sans-serif; font-size: 1.25rem; color: var(--emas-terang); display: block; margin-top: 4px;">Rp 0</span>
         </div>
-
         <label style="text-align: center; margin-bottom: 6px; font-size: 0.8rem;">Jumlah Pembayaran:</label>
         <input type="number" id="amortNominalInput" placeholder="Contoh: 50000" style="font-size: 1.1rem; text-align: center; font-family: 'FiraCondBold', sans-serif; height: 50px;">
-
         <div class="popupButtonGroup" style="margin-top: 20px;">
             <button class="cancelButton" onclick="closeAmortPopup()">Kembali</button>
             <button class="addButton" onclick="confirmAmortPayment()">Lanjut Bayar</button>
@@ -735,14 +327,11 @@
                 Kembali
             </button>
         </div>
-
         <div id="archiveListView"></div>
-
         <div id="archiveDetailView" style="display: none;">
             <div id="archiveCustomerInfo" class="archive-customer-info"></div>
             <div id="archiveDetailList" style="max-height: 48vh; overflow-y: auto;"></div>
         </div>
-
         <div class="popupButtonGroup" style="margin-top: 14px;">
             <button class="cancelButton" onclick="closeArchiveModal()">Tutup</button>
         </div>
@@ -769,34 +358,18 @@
 </div>
 
 <script>
-(function preloadLoadingGif(){
-    const img = new Image();
-    img.src = 'loading.webp';
-})();
-
-function showPageLoading(){
-    const ov = document.getElementById('pageLoadingOverlay');
-    if (ov) ov.classList.add('active');
-}
-
-function navigateWithLoading(url){
-    if (!url) return;
-    showPageLoading();
-    setTimeout(() => { window.location.href = url; }, 450);
-}
+(function preloadLoadingGif(){ const img = new Image(); img.src = 'loading.webp'; })();
+function showPageLoading(){ const ov = document.getElementById('pageLoadingOverlay'); if (ov) ov.classList.add('active'); }
+function navigateWithLoading(url){ if (!url) return; showPageLoading(); setTimeout(() => { window.location.href = url; }, 450); }
 
 document.addEventListener('click', function(e){
     const link = e.target.closest('a[href]');
     if (!link) return;
     if (link.classList.contains('nav-item')) return;
-
     const href = link.getAttribute('href');
     if (!href) return;
-    if (href.startsWith('http') || href.startsWith('javascript') ||
-        href.startsWith('#') || href.startsWith('mailto') ||
-        href.startsWith('tel') || href.startsWith('blob')) return;
+    if (href.startsWith('http') || href.startsWith('javascript') || href.startsWith('#') || href.startsWith('mailto') || href.startsWith('tel') || href.startsWith('blob')) return;
     if (!href.endsWith('.html')) return;
-
     e.preventDefault();
     navigateWithLoading(href);
 });
@@ -804,16 +377,12 @@ document.addEventListener('click', function(e){
 document.querySelectorAll('.nav-item').forEach(item => {
   const href = item.getAttribute('href');
   if (item.tagName === 'A' && href && href.endsWith('.html')){
-    item.addEventListener('click', function(e){
-      e.preventDefault();
-      navigateWithLoading(href);
-    });
+    item.addEventListener('click', function(e){ e.preventDefault(); navigateWithLoading(href); });
   }
 });
 
 const KEY_DEBTS = "debts";
 const KEY_ARCHIVED = "archivedDebts";
-
 let debts = JSON.parse(localStorage.getItem(KEY_DEBTS)) || {};
 let archivedDebts = JSON.parse(localStorage.getItem(KEY_ARCHIVED)) || {};
 let monthlyLogs = JSON.parse(localStorage.getItem("monthlyLogs")) || [];
@@ -821,6 +390,7 @@ let monthlyLogs = JSON.parse(localStorage.getItem("monthlyLogs")) || [];
 let targetCustomerTotal = 0;
 let selectedPaymentMode = "full";
 let pendingPaymentMethod = "";
+let pendingPaymentAccountId = null;
 
 let activeEditCustId = "";
 let activeEditIndex = -1;
@@ -835,9 +405,11 @@ let archiveMode = 'list';
 let archiveSelectedCust = '';
 let paymentTargetCustId = "";
 
+/* ========= WALLET META (termasuk blu by BCA) ========= */
 const WALLET_META = {
     qris:      { name: 'QRIS',       type: 'qris',    localLogo: 'QRIS Logo.png', urlLogo: '', domain: 'qris.id' },
     bca:       { name: 'BCA',        type: 'bank',    localLogo: 'BCA.png',       urlLogo: '', domain: 'bca.co.id' },
+    blu:       { name: 'blu by BCA', type: 'bank',    localLogo: 'blu.png',       urlLogo: '', domain: 'blubybcadigital.co.id' },
     bri:       { name: 'BRI',        type: 'bank',    localLogo: 'Bank BRI.png',  urlLogo: '', domain: 'bri.co.id' },
     bni:       { name: 'BNI',        type: 'bank',    localLogo: 'BNI.png',       urlLogo: '', domain: 'bni.co.id' },
     ina:       { name: 'Bank INA',   type: 'bank',    localLogo: 'Bank INA.png',  urlLogo: '', domain: 'bankina.co.id' },
@@ -854,16 +426,10 @@ const WALLET_META = {
     octopay:   { name: 'OctoPay',    type: 'ewallet', localLogo: '', urlLogo: 'https://www.google.com/s2/favicons?domain=octopay.id&sz=128', domain: 'octopay.id' }
 };
 
-function getCustomersFromStorage(){
-    return JSON.parse(localStorage.getItem("customers")) || [];
-}
-
-function getGlobalCharge(){
-    const v = parseInt(localStorage.getItem("global_charge_value") || "0", 10);
-    return isNaN(v) ? 0 : v;
-}
-
+function getCustomersFromStorage(){ return JSON.parse(localStorage.getItem("customers")) || []; }
+function getGlobalCharge(){ const v = parseInt(localStorage.getItem("global_charge_value") || "0", 10); return isNaN(v) ? 0 : v; }
 function rupiah(n){ return "Rp " + Number(n || 0).toLocaleString("id-ID"); }
+function escapeHtml(str){ return String(str || '').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
 
 function saveDebts(){ localStorage.setItem(KEY_DEBTS, JSON.stringify(debts)); }
 function saveArchived(){ localStorage.setItem(KEY_ARCHIVED, JSON.stringify(archivedDebts)); }
@@ -877,45 +443,25 @@ function isItemPaid(item){
 function migratePaidDebtsToArchive(){
     let migratedCount = 0;
     let changedDebts = false;
-
     Object.keys(debts).forEach(custId => {
         const list = debts[custId] || [];
         if(list.length === 0) return;
-
         const stillActive = [];
         list.forEach(item => {
             if(isItemPaid(item)){
-                if(!item.waktuArchive){
-                    item.waktuArchive = item.waktu || new Date().toLocaleString("id-ID");
-                }
+                if(!item.waktuArchive) item.waktuArchive = item.waktu || new Date().toLocaleString("id-ID");
                 if(!archivedDebts[custId]) archivedDebts[custId] = [];
-
-                const dup = archivedDebts[custId].some(a =>
-                    a.produk === item.produk &&
-                    a.waktu === item.waktu &&
-                    a.harga === item.harga
-                );
-                if(!dup){
-                    archivedDebts[custId].push(item);
-                }
+                const dup = archivedDebts[custId].some(a => a.produk === item.produk && a.waktu === item.waktu && a.harga === item.harga);
+                if(!dup) archivedDebts[custId].push(item);
                 migratedCount++;
                 changedDebts = true;
             } else {
                 stillActive.push(item);
             }
         });
-
-        if(stillActive.length !== list.length){
-            debts[custId] = stillActive;
-            changedDebts = true;
-        }
+        if(stillActive.length !== list.length){ debts[custId] = stillActive; changedDebts = true; }
     });
-
-    if(changedDebts){
-        saveDebts();
-        saveArchived();
-    }
-
+    if(changedDebts){ saveDebts(); saveArchived(); }
     return migratedCount;
 }
 
@@ -923,11 +469,9 @@ function recomputeCharges(custId){
     const customers = getCustomersFromStorage();
     const cust = customers.find(c => c.id === custId);
     if(!cust) return;
-
     const custDebts = debts[custId] || [];
     const limit = cust.limit || 0;
     const chargeVal = getGlobalCharge();
-
     if(!cust.chargeEnabled || chargeVal <= 0 || limit <= 0){
         custDebts.forEach(d => { d.charge = 0; });
     } else {
@@ -943,27 +487,20 @@ function recomputeCharges(custId){
 
 window.onload = function(){
     updateDateOnly();
-
     const migrated = migratePaidDebtsToArchive();
-
     if(migrated > 0){
         const customers = getCustomersFromStorage();
         customers.forEach(c => recomputeCharges(c.id));
         saveDebts();
     }
-
     renderCustomerList();
-
     const savedPic = localStorage.getItem("profile_picture") || localStorage.getItem("user_avatar");
     if(savedPic) {
       const topBtn = document.getElementById("topProfileBtn");
       topBtn.innerHTML = `<img src="${savedPic}" alt="Profile">`;
     }
-
     document.querySelectorAll(".popupBox").forEach(box => {
-        box.addEventListener("click", e => {
-            if(e.target === box) box.classList.remove("active");
-        });
+        box.addEventListener("click", e => { if(e.target === box) box.classList.remove("active"); });
     });
 };
 
@@ -977,17 +514,14 @@ function renderCustomerList(){
     const customers = getCustomersFromStorage();
     const container = document.getElementById("customerAccordionList");
     container.innerHTML = "";
-
     if(customers.length === 0){
         container.innerHTML = `<p style="text-align:center; color:#777; padding: 20px;">Belum ada customer terdaftar. Tambahkan di menu Customer.</p>`;
         return;
     }
-
     customers.forEach(cust => {
         const custId = cust.id;
         const custName = cust.name;
         const customerDebtList = debts[custId] || [];
-
         let currentTotal = 0;
         let totalCharge = 0;
         customerDebtList.forEach(item => {
@@ -995,21 +529,14 @@ function renderCustomerList(){
             const charge = item.charge || 0;
             const dibayar = item.dibayar || 0;
             const sisa = (harga + charge) - dibayar;
-            if(sisa > 0 && !item.excluded) {
-                currentTotal += sisa;
-            }
+            if(sisa > 0 && !item.excluded) currentTotal += sisa;
             totalCharge += charge;
         });
-
         const card = document.createElement("div");
         card.className = "customer-card";
         card.id = `card-${custId}`;
         if(openCustomerCards[custId]) card.classList.add("active");
-
-        const chargeHint = totalCharge > 0
-            ? `<span style="display:inline-block; margin-left:6px; padding:1px 6px; background:rgba(255,159,26,0.15); color:#ff9f1a; border-radius:4px; font-size:0.62rem; font-family:'FiraCondBold',sans-serif;">Charge aktif</span>`
-            : '';
-
+        const chargeHint = totalCharge > 0 ? `<span style="display:inline-block; margin-left:6px; padding:1px 6px; background:rgba(255,159,26,0.15); color:#ff9f1a; border-radius:4px; font-size:0.62rem; font-family:'FiraCondBold',sans-serif;">Charge aktif</span>` : '';
         card.innerHTML = `
             <div class="customer-header" onclick="toggleAccordion('${custId}')">
                 <div class="customer-info">
@@ -1020,43 +547,21 @@ function renderCustomerList(){
             </div>
             <div class="customer-body" id="body-${custId}">
                 <div class="customer-body-content">
-                    <div class="card-total-box">
-                        <span>TOTAL TAGIHAN (DITAGIH) :</span>
-                        <span>Rp ${currentTotal.toLocaleString("id-ID")}</span>
-                    </div>
-
+                    <div class="card-total-box"><span>TOTAL TAGIHAN (DITAGIH) :</span><span>Rp ${currentTotal.toLocaleString("id-ID")}</span></div>
                     <div class="table-responsive">
                         <table>
-                            <thead>
-                                <tr>
-                                    <th>Log</th>
-                                    <th>Produk</th>
-                                    <th>Modal / Jual</th>
-                                    <th>Dibayar</th>
-                                    <th>Tip</th>
-                                    <th>Aksi</th>
-                                </tr>
-                            </thead>
-                            <tbody id="table-body-${custId}">
-                                ${renderDebtRows(customerDebtList, custId)}
-                            </tbody>
+                            <thead><tr><th>Log</th><th>Produk</th><th>Modal / Jual</th><th>Dibayar</th><th>Tip</th><th>Aksi</th></tr></thead>
+                            <tbody id="table-body-${custId}">${renderDebtRows(customerDebtList, custId)}</tbody>
                         </table>
                     </div>
-
                     <div class="action-group">
-                        <button type="button" class="btn-action btn-add-debt" onclick="openPopupForCustomer('${custId}')">
-                            + Tambah Utang
-                        </button>
-                        <button type="button" class="btn-action btn-pay-debt" onclick="openPaymentPopup('${custId}', ${currentTotal})">
-                            Tagih Utang
-                        </button>
+                        <button type="button" class="btn-action btn-add-debt" onclick="openPopupForCustomer('${custId}')">+ Tambah Utang</button>
+                        <button type="button" class="btn-action btn-pay-debt" onclick="openPaymentPopup('${custId}', ${currentTotal})">Tagih Utang</button>
                     </div>
                 </div>
             </div>
         `;
-
         container.appendChild(card);
-
         if(openCustomerCards[custId]){
             const bodyEl = card.querySelector('.customer-body');
             if(bodyEl) bodyEl.style.maxHeight = "none";
@@ -1065,17 +570,12 @@ function renderCustomerList(){
 }
 
 function renderDebtRows(debtList, custId){
-    if(debtList.length === 0){
-        return `<tr><td colspan="6" style="color:#777; padding: 15px;">Belum ada catatan utang</td></tr>`;
-    }
-
+    if(debtList.length === 0) return `<tr><td colspan="6" style="color:#777; padding: 15px;">Belum ada catatan utang</td></tr>`;
     let html = "";
     let renderedCount = 0;
-
     debtList.forEach((item, index) => {
         if(isItemPaid(item)) return;
         renderedCount++;
-
         const modal = item.modal || 0;
         const harga = item.harga || 0;
         const charge = item.charge || 0;
@@ -1084,18 +584,10 @@ function renderDebtRows(debtList, custId){
         const sisaItem = (harga + charge) - dibayar;
         const tipItem = item.tip || 0;
         const isChecked = item.excluded ? "checked" : "";
-
-        const chargeLine = charge > 0
-            ? `<br><small style="color:#ff9f1a; font-family:'FiraCondBold',sans-serif;">Charge: +Rp ${charge.toLocaleString("id-ID")}</small>`
-            : '';
-
+        const chargeLine = charge > 0 ? `<br><small style="color:#ff9f1a; font-family:'FiraCondBold',sans-serif;">Charge: +Rp ${charge.toLocaleString("id-ID")}</small>` : '';
         html += `
             <tr>
-                <td>
-                    <div class="custom-checkbox ${isChecked}" onclick="toggleExcludeItem('${custId}', ${index})" title="Centang untuk exclude dari tagihan dan masuk monthly log">
-                        <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                    </div>
-                </td>
+                <td><div class="custom-checkbox ${isChecked}" onclick="toggleExcludeItem('${custId}', ${index})" title="Centang untuk exclude dari tagihan dan masuk monthly log"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></div></td>
                 <td>${item.produk}<br><small style="color:#888;">${item.waktu}</small></td>
                 <td>
                     <span style="color:#aaa;">Modal: Rp ${modal.toLocaleString("id-ID")}</span><br>
@@ -1107,22 +599,12 @@ function renderDebtRows(debtList, custId){
                     Rp ${dibayar.toLocaleString("id-ID")}
                     <br><small style="color:${sisaItem <= 0 ? '#4caf5e' : '#ff3b3b'}">Sisa: Rp ${sisaItem.toLocaleString("id-ID")}</small>
                 </td>
-                <td onclick="openEditDebt('${custId}', ${index})" style="cursor:pointer; color: var(--emas-terang); font-family: 'FiraCondBold', sans-serif;" title="Klik untuk isi/ubah tip">
-                    Rp ${tipItem.toLocaleString("id-ID")}
-                </td>
-                <td>
-                    <button type="button" onclick="promptDeleteDebt('${custId}', ${index})" style="background:#ff3b3b; color:white; border:none; border-radius:6px; padding:5px 8px; cursor:pointer; font-size:10px; font-family:'FiraCondBold', sans-serif;">
-                        Hapus
-                    </button>
-                </td>
+                <td onclick="openEditDebt('${custId}', ${index})" style="cursor:pointer; color: var(--emas-terang); font-family: 'FiraCondBold', sans-serif;" title="Klik untuk isi/ubah tip">Rp ${tipItem.toLocaleString("id-ID")}</td>
+                <td><button type="button" onclick="promptDeleteDebt('${custId}', ${index})" style="background:#ff3b3b; color:white; border:none; border-radius:6px; padding:5px 8px; cursor:pointer; font-size:10px; font-family:'FiraCondBold', sans-serif;">Hapus</button></td>
             </tr>
         `;
     });
-
-    if(renderedCount === 0){
-        return `<tr><td colspan="6" style="color:#777; padding: 15px;">Semua transaksi sudah lunas &amp; diarsipkan</td></tr>`;
-    }
-
+    if(renderedCount === 0) return `<tr><td colspan="6" style="color:#777; padding: 15px;">Semua transaksi sudah lunas &amp; diarsipkan</td></tr>`;
     return html;
 }
 
@@ -1130,12 +612,10 @@ function toggleAccordion(custId){
     const card = document.getElementById(`card-${custId}`);
     const body = document.getElementById(`body-${custId}`);
     if(!card || !body) return;
-
     const isOpen = card.classList.contains("active");
-
     if(isOpen){
         body.style.maxHeight = body.scrollHeight + "px";
-        void body.offsetHeight; 
+        void body.offsetHeight;
         card.classList.remove("active");
         body.style.maxHeight = "0px";
     } else {
@@ -1145,38 +625,24 @@ function toggleAccordion(custId){
         body.style.maxHeight = "0px";
         void body.offsetHeight;
         body.style.maxHeight = targetH + "px";
-
-        setTimeout(() => {
-            if(card.classList.contains("active")){
-                body.style.maxHeight = "none";
-            }
-        }, 340);
+        setTimeout(() => { if(card.classList.contains("active")) body.style.maxHeight = "none"; }, 340);
     }
-
     openCustomerCards[custId] = card.classList.contains("active");
 }
 
 function toggleExcludeItem(custId, index){
     const item = debts[custId][index];
     item.excluded = !item.excluded;
-
     if(item.excluded && !item.isLogged){
         item.isLogged = true;
         monthlyLogs.push({
-            customer: custId,
-            produk: item.produk,
-            modal: item.modal || 0,
-            harga: item.harga || 0,
-            charge: item.charge || 0,
-            dibayar: item.dibayar || 0,
-            tip: item.tip || 0,
+            customer: custId, produk: item.produk, modal: item.modal || 0, harga: item.harga || 0,
+            charge: item.charge || 0, dibayar: item.dibayar || 0, tip: item.tip || 0,
             profit: ((item.dibayar || 0) + (item.tip || 0)) - (item.modal || 0),
-            waktuLog: new Date().toLocaleString("id-ID"),
-            keterangan: "Log Tagihan (Excluded dari Tagihan Aktif)"
+            waktuLog: new Date().toLocaleString("id-ID"), keterangan: "Log Tagihan (Excluded dari Tagihan Aktif)"
         });
         localStorage.setItem("monthlyLogs", JSON.stringify(monthlyLogs));
     }
-
     saveDebts();
     openCustomerCards[custId] = true;
     renderCustomerList();
@@ -1187,7 +653,6 @@ function openCustomerPickerModal(event){
     const customers = getCustomersFromStorage();
     const listContainer = document.getElementById("customerPickerList");
     listContainer.innerHTML = "";
-
     if(customers.length === 0){
         listContainer.innerHTML = `<p style="color:#777; text-align:center;">Belum ada customer terdaftar.</p>`;
     } else {
@@ -1207,47 +672,35 @@ function openCustomerPickerModal(event){
     }
     document.getElementById("customerPickerModal").classList.add("active");
 }
-
-function closeCustomerPickerModal(){
-    document.getElementById("customerPickerModal").classList.remove("active");
-}
+function closeCustomerPickerModal(){ document.getElementById("customerPickerModal").classList.remove("active"); }
 
 function calculateMargin(){
     const modal = parseFloat(document.getElementById("modalInput").value) || 0;
     const jual = parseFloat(document.getElementById("hargaInput").value) || 0;
     const profit = jual - modal;
-
     const profitText = document.getElementById("marginValueText");
     profitText.innerText = `Rp ${profit.toLocaleString("id-ID")}`;
     profitText.style.color = profit >= 0 ? "var(--emas-terang)" : "#ff3b3b";
-
     updateChargePreview();
 }
 
 function updateChargePreview(){
     const box = document.getElementById("chargePreviewBox");
     box.style.display = "none";
-
     const custId = selectedCustIdTemp;
     if(!custId) return;
-
     const customers = getCustomersFromStorage();
     const cust = customers.find(c => c.id === custId);
     if(!cust || !cust.chargeEnabled) return;
-
     const limit = cust.limit || 0;
     if(limit <= 0) return;
-
     const chargeVal = getGlobalCharge();
     if(chargeVal <= 0) return;
-
     const newHarga = parseInt(document.getElementById("hargaInput").value) || 0;
     if(newHarga <= 0) return;
-
     const custDebts = debts[custId] || [];
     let cumulative = 0;
     custDebts.forEach(d => { cumulative += (d.harga || 0); });
-
     if((cumulative + newHarga) > limit){
         box.style.display = "block";
         document.getElementById("chargePreviewValue").innerText = "Rp " + chargeVal.toLocaleString("id-ID");
@@ -1255,7 +708,6 @@ function updateChargePreview(){
     }
 }
 
-/* Buka popup mode SEKARANG — field tanggal DISEMBUNYIKAN, waktu = new Date() */
 function openGlobalAddPopup(){
     const customers = getCustomersFromStorage();
     if(customers.length > 0){
@@ -1265,18 +717,15 @@ function openGlobalAddPopup(){
         selectedCustIdTemp = "";
         document.getElementById("selectedCustomerLabel").innerText = "Pilih Customer...";
     }
-
     document.getElementById("produkInput").value = "";
     document.getElementById("modalInput").value = "";
     document.getElementById("hargaInput").value = "";
     document.getElementById("tanggalInput").value = "";
-    document.getElementById("tanggalFieldWrap").style.display = "none"; // sembunyikan field tanggal
+    document.getElementById("tanggalFieldWrap").style.display = "none";
     document.getElementById("marginValueText").innerText = "Rp 0";
     document.getElementById("chargePreviewBox").style.display = "none";
     document.getElementById("popupBox").classList.add("active");
 }
-
-/* Buka popup mode CUSTOM — field tanggal DIMUNCULKAN & prefill waktu sekarang */
 function openGlobalAddPopupWithDate(){
     openGlobalAddPopup();
     const wrap = document.getElementById("tanggalFieldWrap");
@@ -1288,7 +737,6 @@ function openGlobalAddPopupWithDate(){
         dateInput.value = now.toISOString().slice(0, 16);
     }
 }
-
 function openPopupForCustomer(custId){
     const customers = getCustomersFromStorage();
     const found = customers.find(c => c.id === custId);
@@ -1296,20 +744,16 @@ function openPopupForCustomer(custId){
         selectedCustIdTemp = found.id;
         document.getElementById("selectedCustomerLabel").innerText = `${found.id} - ${found.name}`;
     }
-
     document.getElementById("produkInput").value = "";
     document.getElementById("modalInput").value = "";
     document.getElementById("hargaInput").value = "";
     document.getElementById("tanggalInput").value = "";
-    document.getElementById("tanggalFieldWrap").style.display = "none"; // sembunyikan field tanggal
+    document.getElementById("tanggalFieldWrap").style.display = "none";
     document.getElementById("marginValueText").innerText = "Rp 0";
     document.getElementById("chargePreviewBox").style.display = "none";
     document.getElementById("popupBox").classList.add("active");
 }
-
-function closePopup(){
-    document.getElementById("popupBox").classList.remove("active");
-}
+function closePopup(){ document.getElementById("popupBox").classList.remove("active"); }
 
 function addDebt(){
     const chosenCustId = selectedCustIdTemp;
@@ -1317,35 +761,20 @@ function addDebt(){
     const modal = parseInt(document.getElementById("modalInput").value);
     const harga = parseInt(document.getElementById("hargaInput").value);
     const tanggalVal = document.getElementById("tanggalInput").value;
-
     if(!chosenCustId || produk === "" || isNaN(modal) || isNaN(harga)){
         alert("Pilih customer dan lengkapi data modal serta harga jual dengan benar!");
         return;
     }
-
-    // Kalau field tanggal tersembunyi (mode SEKARANG) atau kosong → pakai new Date()
     let waktuTransaksi = new Date().toLocaleString("id-ID");
     if(tanggalVal){
         const dt = new Date(tanggalVal);
-        if(!isNaN(dt.getTime())){
-            waktuTransaksi = dt.toLocaleString("id-ID");
-        }
+        if(!isNaN(dt.getTime())) waktuTransaksi = dt.toLocaleString("id-ID");
     }
-
     if(!debts[chosenCustId]) debts[chosenCustId] = [];
-
     debts[chosenCustId].push({
-        produk: produk,
-        modal: modal,
-        harga: harga,
-        charge: 0,
-        dibayar: 0,
-        tip: 0,
-        excluded: false,
-        isLogged: false,
-        waktu: waktuTransaksi
+        produk: produk, modal: modal, harga: harga, charge: 0, dibayar: 0, tip: 0,
+        excluded: false, isLogged: false, waktu: waktuTransaksi
     });
-
     recomputeCharges(chosenCustId);
     saveDebts();
     openCustomerCards[chosenCustId] = true;
@@ -1355,45 +784,30 @@ function addDebt(){
 
 function openProductPickerModal(event){
     if(event) event.stopPropagation();
-
     allMasterProductsTemp = [];
     const digitalCats = ["Pulsa", "DANA", "GoPay", "OVO", "SeaBank"];
     const nominals = [20000, 25000, 30000, 40000, 50000, 75000, 100000];
     const globalMargin = parseInt(localStorage.getItem("globalMargin")) || 2000;
-
     digitalCats.forEach(cat => {
         nominals.forEach(nom => {
-            allMasterProductsTemp.push({
-                nama: `${cat} Rp ${nom.toLocaleString("id-ID")}`,
-                modal: nom,
-                harga: nom + globalMargin
-            });
+            allMasterProductsTemp.push({ nama: `${cat} Rp ${nom.toLocaleString("id-ID")}`, modal: nom, harga: nom + globalMargin });
         });
     });
-
     const customProducts = JSON.parse(localStorage.getItem("customProducts")) || [];
     customProducts.forEach(prod => {
-        allMasterProductsTemp.push({
-            nama: prod.nama,
-            modal: prod.modal || 0,
-            harga: prod.hargaJual || 0
-        });
+        allMasterProductsTemp.push({ nama: prod.nama, modal: prod.modal || 0, harga: prod.hargaJual || 0 });
     });
-
     document.getElementById("productSearchInput").value = "";
     renderProductPickerItems(allMasterProductsTemp);
     document.getElementById("productPickerModal").classList.add("active");
 }
-
 function renderProductPickerItems(items){
     const listContainer = document.getElementById("productPickerList");
     listContainer.innerHTML = "";
-
     if(items.length === 0){
         listContainer.innerHTML = `<p style="color:#777; text-align:center; padding: 15px;">Tidak ada produk yang cocok.</p>`;
         return;
     }
-
     items.forEach(item => {
         let div = document.createElement("div");
         div.className = "product-picker-card";
@@ -1415,68 +829,47 @@ function renderProductPickerItems(items){
         listContainer.appendChild(div);
     });
 }
-
 function filterProductPickerList(){
     const keyword = document.getElementById("productSearchInput").value.toLowerCase();
     const filtered = allMasterProductsTemp.filter(p => p.nama.toLowerCase().includes(keyword));
     renderProductPickerItems(filtered);
 }
-
-function closeProductPickerModal(){
-    document.getElementById("productPickerModal").classList.remove("active");
-}
+function closeProductPickerModal(){ document.getElementById("productPickerModal").classList.remove("active"); }
 
 function openEditDebt(custId, index){
     activeEditCustId = custId;
     activeEditIndex = index;
     const item = debts[custId][index];
     if(!item) return;
-
     const charge = item.charge || 0;
     const chargeInfo = charge > 0 ? ` | Charge: +Rp ${charge.toLocaleString("id-ID")}` : '';
-    document.getElementById("editProductInfo").innerText =
-        `Produk: ${item.produk} (Modal: Rp ${(item.modal || 0).toLocaleString("id-ID")} | Jual: Rp ${(item.harga || 0).toLocaleString("id-ID")}${chargeInfo})`;
+    document.getElementById("editProductInfo").innerText = `Produk: ${item.produk} (Modal: Rp ${(item.modal || 0).toLocaleString("id-ID")} | Jual: Rp ${(item.harga || 0).toLocaleString("id-ID")}${chargeInfo})`;
     document.getElementById("nominalBayarInput").value = item.dibayar || "";
     document.getElementById("nominalTipInput").value = item.tip || "";
     document.getElementById("editPopupBox").classList.add("active");
 }
-
-function closeEditPopup(){
-    document.getElementById("editPopupBox").classList.remove("active");
-}
+function closeEditPopup(){ document.getElementById("editPopupBox").classList.remove("active"); }
 
 function saveEditDebt(){
     if(activeEditCustId === "" || activeEditIndex === -1) return;
-
     const bayarVal = document.getElementById("nominalBayarInput").value;
     const tipVal = document.getElementById("nominalTipInput").value;
-
     const bayar = parseInt(bayarVal);
     const tip = parseInt(tipVal);
-
-    if(isNaN(bayar) || bayar < 0){
-        alert("Masukkan nominal pembayaran yang valid!");
-        return;
-    }
-
+    if(isNaN(bayar) || bayar < 0){ alert("Masukkan nominal pembayaran yang valid!"); return; }
     const item = debts[activeEditCustId][activeEditIndex];
     if(!item) { closeEditPopup(); return; }
-
     item.dibayar = bayar;
     item.tip = isNaN(tip) ? 0 : tip;
     item.waktu = new Date().toLocaleString("id-ID");
-
     if(isItemPaid(item)){
         item.waktuArchive = new Date().toLocaleString("id-ID");
-
         if(!archivedDebts[activeEditCustId]) archivedDebts[activeEditCustId] = [];
         archivedDebts[activeEditCustId].push(item);
         debts[activeEditCustId].splice(activeEditIndex, 1);
-
         saveArchived();
         recomputeCharges(activeEditCustId);
     }
-
     saveDebts();
     openCustomerCards[activeEditCustId] = true;
     renderCustomerList();
@@ -1488,13 +881,11 @@ function promptDeleteDebt(custId, index){
     deleteTargetIndex = index;
     document.getElementById("deleteConfirmPopup").classList.add("active");
 }
-
 function closeDeletePopup(){
     deleteTargetCustId = "";
     deleteTargetIndex = -1;
     document.getElementById("deleteConfirmPopup").classList.remove("active");
 }
-
 function confirmDeleteDebt(){
     if(deleteTargetCustId !== "" && deleteTargetIndex !== -1){
         debts[deleteTargetCustId].splice(deleteTargetIndex, 1);
@@ -1510,7 +901,6 @@ function setPaymentType(type){
     selectedPaymentMode = type;
     const btnFull = document.getElementById("btnTypeFull");
     const btnAmort = document.getElementById("btnTypeAmort");
-
     if(type === 'full'){
         btnFull.style.background = "var(--emas-terang)";
         btnFull.style.color = "#000";
@@ -1533,53 +923,64 @@ function openPaymentPopup(custId, total){
     targetCustomerTotal = total;
     selectedPaymentMode = "full";
     setPaymentType("full");
-    
-    renderPaymentMethods(); 
+    renderPaymentMethods();
     document.getElementById("paymentPopup").classList.add("active");
 }
 
+/* ============================================================
+   RENDER PAYMENT METHODS — HANYA WALLET YANG TERKONFIGURASI
+============================================================ */
 function renderPaymentMethods() {
     const wallets = JSON.parse(localStorage.getItem("comersio_wallets")) || {};
-    const keys = Object.keys(wallets);
 
     const cashContainer = document.getElementById("cashGrid");
     const ewalletContainer = document.getElementById("ewalletGrid");
     const bankContainer = document.getElementById("bankGrid");
-    
+
     cashContainer.innerHTML = "";
     ewalletContainer.innerHTML = "";
     bankContainer.innerHTML = "";
 
     let hasEwallet = false;
     let hasBank = false;
+    let hasAnyConfigured = false;
 
+    /* --- Cash selalu ada --- */
     const cashIcon = `data:image/svg+xml;utf8,${encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#4caf5e"><path d="M20 6H4V4h16v2zm0 3H4c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V11c0-1.1-.9-2-2-2zm-2 8c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm-4-2c0 1.66-1.34 3-3 3s-3-1.34-3-3 1.34-3 3-3 3 1.34 3 3z"/></svg>`)}`;
-    
     cashContainer.innerHTML = `
-        <div class="payment-card" onclick="openPaymentPage('cash')">
+        <div class="payment-card" onclick="handlePaymentMethodClick('cash')">
             <img src="${cashIcon}" alt="Cash" style="background:transparent; padding:0;">
             <span>Tunai / Cash</span>
         </div>
     `;
 
-    if(keys.length === 0) {
-        document.getElementById("ewalletSection").style.display = "none";
-        document.getElementById("bankSection").style.display = "none";
-        return;
-    }
-
-    keys.forEach(key => {
+    /* --- Iterate wallets --- */
+    Object.keys(wallets).forEach(key => {
         const meta = WALLET_META[key];
-        if(!meta) return;
+        if (!meta) return;
+
+        const entry = wallets[key];
+
+        // Cek konfigurasi
+        const isConfigured = meta.type === 'qris'
+            ? !!(entry && entry.image)
+            : !!(entry && entry.accounts && entry.accounts.length > 0);
+
+        if (!isConfigured) return;
+        hasAnyConfigured = true;
 
         const faviconUrl = `https://www.google.com/s2/favicons?domain=${meta.domain}&sz=128`;
         const iconUrl = meta.localLogo || meta.urlLogo || faviconUrl;
         const fallbackUrl = meta.urlLogo || faviconUrl;
 
+        const accCount = (meta.type !== 'qris' && entry.accounts) ? entry.accounts.length : 0;
+        const badge = accCount > 1 ? `<span class="acc-badge">${accCount}</span>` : '';
+
         const cardHTML = `
-            <div class="payment-card" onclick="openPaymentPage('${key}')">
+            <div class="payment-card" onclick="handlePaymentMethodClick('${key}')">
                 <img src="${iconUrl}" alt="${meta.name}" onerror="this.onerror=null; this.src='${fallbackUrl}'">
                 <span>${meta.name}</span>
+                ${badge}
             </div>
         `;
 
@@ -1592,54 +993,105 @@ function renderPaymentMethods() {
         }
     });
 
+    /* --- Handle empty state --- */
+    if (!hasAnyConfigured) {
+        bankContainer.innerHTML = `
+            <div style="grid-column: 1 / -1; text-align: center; padding: 20px 12px; color: #888; font-family: 'FiraCondBook', sans-serif; font-size: 0.82rem; line-height: 1.5;">
+                Belum ada wallet/bank terkonfigurasi.<br>
+                <a href="index.html" style="color: var(--emas-terang); text-decoration: underline; font-family: 'FiraCondBold', sans-serif; font-size: 0.85rem; margin-top: 10px; display: inline-block;">Atur di Dashboard &rarr; Wallet</a>
+            </div>
+        `;
+        document.getElementById("bankSection").style.display = "block";
+        document.getElementById("ewalletSection").style.display = "none";
+        return;
+    }
+
     document.getElementById("ewalletSection").style.display = hasEwallet ? "block" : "none";
     document.getElementById("bankSection").style.display = hasBank ? "block" : "none";
 }
 
-function closePaymentPopup(){
-    document.getElementById("paymentPopup").classList.remove("active");
+/* ============================================================
+   HANDLE KLIK METODE — TRIGGER ACCOUNT PICKER JIKA MULTI
+============================================================ */
+function handlePaymentMethodClick(method) {
+    if (method === 'cash') { openPaymentPage('cash', null); return; }
+
+    const meta = WALLET_META[method];
+    if (!meta) return;
+
+    if (meta.type === 'qris') { openPaymentPage(method, null); return; }
+
+    const wallets = JSON.parse(localStorage.getItem("comersio_wallets")) || {};
+    const entry = wallets[method];
+    if (!entry || !entry.accounts || entry.accounts.length === 0) {
+        alert("Rekening untuk " + meta.name + " belum diatur.");
+        return;
+    }
+
+    if (entry.accounts.length === 1) {
+        openPaymentPage(method, entry.accounts[0].id);
+    } else {
+        showAccountPicker(method, entry.accounts);
+    }
 }
 
-function openPaymentPage(method){
+function showAccountPicker(method, accounts) {
+    const meta = WALLET_META[method];
+    document.getElementById("accountPickerTitle").innerText = `Pilih Rekening ${meta.name}`;
+    const list = document.getElementById("accountPickerList");
+    list.innerHTML = accounts.map(acc => `
+        <div class="select-option-item" onclick="pickAccount('${method}', '${escapeHtml(acc.id)}')" style="display: flex; flex-direction: column; align-items: flex-start; gap: 3px;">
+            <div style="font-family: 'FiraCondBold', sans-serif; color: var(--emas-terang); font-size: 0.9rem;">${escapeHtml(acc.name)}</div>
+            <div style="font-family: 'OswaldBold', sans-serif; color: #fff; font-size: 0.9rem; letter-spacing: 0.5px;">${escapeHtml(acc.number)}</div>
+        </div>
+    `).join('');
+    document.getElementById("accountPickerModal").classList.add("active");
+}
+
+function pickAccount(method, accId) {
+    closeAccountPicker();
+    openPaymentPage(method, accId);
+}
+
+function closeAccountPicker() {
+    document.getElementById("accountPickerModal").classList.remove("active");
+}
+
+function closePaymentPopup(){ document.getElementById("paymentPopup").classList.remove("active"); }
+
+function openPaymentPage(method, accountId) {
     if(selectedPaymentMode === 'amort'){
         pendingPaymentMethod = method;
+        pendingPaymentAccountId = accountId || null;
         document.getElementById('amortTotalTagihanText').innerText = "Rp " + targetCustomerTotal.toLocaleString("id-ID");
-        document.getElementById('amortNominalInput').value = ""; 
-        
+        document.getElementById('amortNominalInput').value = "";
         closePaymentPopup();
         document.getElementById('amortPopup').classList.add('active');
     } else {
-        proceedToPaymentRedirect(method, targetCustomerTotal);
+        proceedToPaymentRedirect(method, targetCustomerTotal, accountId || null);
     }
 }
 
 function closeAmortPopup() {
     document.getElementById('amortPopup').classList.remove('active');
-    document.getElementById('paymentPopup').classList.add('active'); 
+    document.getElementById('paymentPopup').classList.add('active');
 }
 
 function confirmAmortPayment() {
     const inputVal = document.getElementById('amortNominalInput').value;
     const parsedCicilanNum = parseInt(inputVal);
-
-    if(isNaN(parsedCicilanNum) || parsedCicilanNum <= 0){
-        alert("Nominal pembayaran tidak valid!");
-        return;
-    }
-    if(parsedCicilanNum > targetCustomerTotal){
-        alert("Nominal cicilan tidak boleh melebihi sisa total tagihan aktif!");
-        return;
-    }
-
-    proceedToPaymentRedirect(pendingPaymentMethod, parsedCicilanNum);
+    if(isNaN(parsedCicilanNum) || parsedCicilanNum <= 0){ alert("Nominal pembayaran tidak valid!"); return; }
+    if(parsedCicilanNum > targetCustomerTotal){ alert("Nominal cicilan tidak boleh melebihi sisa total tagihan aktif!"); return; }
+    proceedToPaymentRedirect(pendingPaymentMethod, parsedCicilanNum, pendingPaymentAccountId);
 }
 
-function proceedToPaymentRedirect(method, amount) {
+function proceedToPaymentRedirect(method, amount, accountId) {
     localStorage.setItem("paymentCustomer", paymentTargetCustId);
     localStorage.setItem("paymentTotal", amount);
     localStorage.setItem("paymentMethod", method);
     localStorage.setItem("paymentMode", selectedPaymentMode);
-    
+    if (accountId) localStorage.setItem("paymentAccountId", accountId);
+    else localStorage.removeItem("paymentAccountId");
     navigateWithLoading("payment.html");
 }
 
@@ -1650,17 +1102,14 @@ function openArchiveModal(){
     document.getElementById("archiveDetailView").style.display = "none";
     document.getElementById("archiveBackBtn").style.display = "none";
     document.getElementById("archiveTitle").innerText = "ARSIP TRANSAKSI";
-
     renderArchiveCustomerList();
     document.getElementById("archivePopup").classList.add("active");
 }
-
 function closeArchiveModal(){
     document.getElementById("archivePopup").classList.remove("active");
     archiveMode = 'list';
     archiveSelectedCust = '';
 }
-
 function archiveGoBack(){
     archiveMode = 'list';
     archiveSelectedCust = '';
@@ -1670,23 +1119,18 @@ function archiveGoBack(){
     document.getElementById("archiveTitle").innerText = "ARSIP TRANSAKSI";
     renderArchiveCustomerList();
 }
-
 function renderArchiveCustomerList(){
     const listEl = document.getElementById("archiveListView");
     listEl.innerHTML = "";
-
     const customers = getCustomersFromStorage();
     const withArchive = customers.filter(c => ((archivedDebts[c.id] || []).length > 0));
-
     if(withArchive.length === 0){
         listEl.innerHTML = `<p style="text-align:center; color:#777; padding: 20px;">Belum ada transaksi yang diarsipkan.</p>`;
         return;
     }
-
     withArchive.forEach(cust => {
         const items = archivedDebts[cust.id] || [];
         const totalNominal = items.reduce((s, d) => s + ((d.harga || 0) + (d.charge || 0)), 0);
-
         const div = document.createElement("div");
         div.className = "select-option-item";
         div.style.cssText = "display: flex; justify-content: space-between; align-items: center; gap: 8px;";
@@ -1695,53 +1139,42 @@ function renderArchiveCustomerList(){
                 <div style="font-family: 'FiraCondBold'; color: var(--emas-terang); font-size: 0.88rem; word-break: break-word;">${cust.id} - ${cust.name}</div>
                 <div style="font-size: 0.7rem; color: #aaa; margin-top: 2px;">${items.length} transaksi lunas</div>
             </div>
-            <div style="text-align: right; font-family: 'FiraCondBold'; font-size: 0.85rem; color: #4caf5e; flex-shrink: 0;">
-                ${rupiah(totalNominal)}
-            </div>
+            <div style="text-align: right; font-family: 'FiraCondBold'; font-size: 0.85rem; color: #4caf5e; flex-shrink: 0;">${rupiah(totalNominal)}</div>
         `;
         div.onclick = () => renderArchiveDetail(cust.id);
         listEl.appendChild(div);
     });
 }
-
 function renderArchiveDetail(custId){
     const items = archivedDebts[custId] || [];
     const customers = getCustomersFromStorage();
     const cust = customers.find(c => c.id === custId);
     if(!cust) return;
-
     archiveMode = 'detail';
     archiveSelectedCust = custId;
-
     document.getElementById("archiveListView").style.display = "none";
     document.getElementById("archiveDetailView").style.display = "block";
     document.getElementById("archiveBackBtn").style.display = "inline-flex";
     document.getElementById("archiveTitle").innerText = "ARSIP - " + cust.name;
-
     const totalNominal = items.reduce((s, d) => s + ((d.harga || 0) + (d.charge || 0)), 0);
     document.getElementById("archiveCustomerInfo").innerHTML = `
         <div style="font-family: 'FiraCondBold'; color: var(--emas-terang); font-size: 0.95rem;">${cust.id} - ${cust.name}</div>
         <div style="font-size: 0.75rem; color: #aaa; margin-top: 4px;">${items.length} transaksi lunas | Total: ${rupiah(totalNominal)}</div>
     `;
-
     const listEl = document.getElementById("archiveDetailList");
     listEl.innerHTML = "";
-
     if(items.length === 0){
         listEl.innerHTML = `<p style="text-align:center; color:#777; padding: 20px;">Tidak ada arsip.</p>`;
         return;
     }
-
     const sorted = items.map((item, idx) => ({...item, _origIdx: idx}))
         .sort((a, b) => String(b.waktuArchive || '').localeCompare(String(a.waktuArchive || '')));
-
     sorted.forEach(item => {
         const harga = item.harga || 0;
         const charge = item.charge || 0;
         const modal = item.modal || 0;
         const tip = item.tip || 0;
         const total = harga + charge;
-
         const card = document.createElement("div");
         card.className = "archive-item";
         card.innerHTML = `
@@ -1767,23 +1200,17 @@ function renderArchiveDetail(custId){
         listEl.appendChild(card);
     });
 }
-
 function unarchiveItem(custId, idx){
     const items = archivedDebts[custId] || [];
     if(idx < 0 || idx >= items.length) return;
-
     const item = items[idx];
     if(!confirm(`Kembalikan "${item.produk}" ke tagihan aktif customer ${custId}?`)) return;
-
     items.splice(idx, 1);
     if(items.length === 0) delete archivedDebts[custId];
     else archivedDebts[custId] = items;
-
     if(!debts[custId]) debts[custId] = [];
     debts[custId].push(item);
-
     recomputeCharges(custId);
-
     saveArchived();
     saveDebts();
     openCustomerCards[custId] = true;
@@ -1791,6 +1218,5 @@ function unarchiveItem(custId, idx){
     renderArchiveDetail(custId);
 }
 </script>
-
 </body>
 </html>
