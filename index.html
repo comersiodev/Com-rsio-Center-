@@ -39,20 +39,26 @@ body{ position: relative; width: 100%; height: 100vh; background: #0a0a0a; }
 .mbanking-brand { font-family: 'OswaldBold', sans-serif; font-size: 1.1rem; color: #ffffff; letter-spacing: 0.5px; line-height: 1.1; }
 .mbanking-brand span { color: var(--emas-terang); }
 .mbanking-greeting-top { font-size: 0.7rem; color: var(--emas-terang); font-family: 'FiraCondBold', sans-serif; margin-top: 1px; line-height: 1; }
-.profile-circle-btn { width: 36px; height: 36px; border-radius: 50%; border: 2px solid var(--emas-terang); background: #121814; overflow: hidden; display: flex; align-items: center; justify-content: center; cursor: pointer; text-decoration: none; transition: transform 0.2s, box-shadow 0.2s; box-shadow: 0 2px 8px rgba(0,0,0,0.5); padding: 0; }
+
+/* ===== PROFILE BUTTON TOPBAR ===== */
+.profile-circle-btn { width: 36px; height: 36px; border-radius: 50%; border: 2px solid var(--emas-terang); background: #121814; overflow: hidden; display: flex; align-items: center; justify-content: center; cursor: pointer; text-decoration: none; transition: transform 0.2s, box-shadow 0.2s; box-shadow: 0 2px 8px rgba(0,0,0,0.5); padding: 0; position: relative; }
 .profile-circle-btn:hover { transform: scale(1.08); box-shadow: 0 0 12px rgba(255, 209, 102, 0.4); }
-.profile-circle-btn img { width: 100%; height: 100%; object-fit: cover; }
+
 .profile-dropdown-wrapper { position: relative; display: inline-block; }
 .profile-bubble-menu { position: absolute; top: 45px; right: 0; width: 250px; background: rgba(12, 17, 13, 0.98); border: 2px solid var(--emas-terang); border-radius: 14px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); display: none; flex-direction: column; z-index: 999999; backdrop-filter: blur(10px); overflow: hidden; animation: bubbleIn 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
 .profile-bubble-menu.active { display: flex; }
 @keyframes bubbleIn { from { opacity: 0; transform: translateY(-8px) scale(0.95); } to { opacity: 1; transform: translateY(0) scale(1); } }
-.bubble-profile-preview { display: flex; align-items: center; gap: 10px; padding: 12px; background: rgba(232, 177, 60, 0.08); border-bottom: 1px solid rgba(232, 177, 60, 0.2); text-decoration: none; transition: background 0.2s; }
-.bubble-profile-preview:hover { background: rgba(232, 177, 60, 0.18); }
+
+/* ===== BUBBLE PROFILE HEADER WITH BANNER BACKGROUND ===== */
+.bubble-profile-preview { position: relative; display: flex; align-items: center; gap: 10px; padding: 14px 12px; border-bottom: 1px solid rgba(232, 177, 60, 0.3); text-decoration: none; transition: background 0.2s; background: #121814; overflow: hidden; min-height: 72px; }
+.bubble-banner-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1; }
+.bubble-profile-preview::before { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(10, 15, 11, 0.35) 0%, rgba(10, 15, 11, 0.85) 100%); z-index: 2; pointer-events: none; }
+.bubble-avatar, .bubble-info { position: relative; z-index: 3; }
 .bubble-avatar { width: 40px; height: 40px; border-radius: 50%; border: 1.5px solid var(--emas-terang); background: #121814; overflow: hidden; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
 .bubble-avatar img { width: 100%; height: 100%; object-fit: cover; }
 .bubble-info { display: flex; flex-direction: column; min-width: 0; }
-.bubble-name { font-family: 'FiraCondBold', sans-serif; font-size: 0.9rem; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.bubble-sub { font-size: 0.7rem; color: var(--emas-terang); display: flex; align-items: center; gap: 3px; }
+.bubble-name { font-family: 'FiraCondBold', sans-serif; font-size: 0.9rem; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-shadow: 0 1px 3px rgba(0,0,0,0.8); }
+.bubble-sub { font-size: 0.7rem; color: var(--emas-terang); display: flex; align-items: center; gap: 3px; text-shadow: 0 1px 3px rgba(0,0,0,0.8); }
 .bubble-menu-item { display: flex; align-items: center; gap: 10px; padding: 11px 14px; color: #f0f0f0; text-decoration: none; font-family: 'FiraCondBold', sans-serif; font-size: 0.85rem; border-bottom: 1px solid rgba(255, 255, 255, 0.06); background: transparent; border-top: none; border-left: none; border-right: none; width: 100%; text-align: left; cursor: pointer; transition: background 0.2s, color 0.2s; }
 .bubble-menu-item:last-child { border-bottom: none; }
 .bubble-menu-item:hover { background: rgba(232, 177, 60, 0.15); color: var(--emas-terang); }
@@ -211,14 +217,7 @@ body{ position: relative; width: 100%; height: 100vh; background: #0a0a0a; }
 
 /* WALLET STYLES */
 .wallet-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
-.wallet-card {
-    background: #121814;
-    border: 1.5px solid rgba(232, 177, 60, 0.3);
-    border-radius: 12px;
-    padding: 12px;
-    display: flex; flex-direction: column; align-items: center; justify-content: center;
-    gap: 8px; cursor: pointer; transition: all 0.2s; position: relative;
-}
+.wallet-card { background: #121814; border: 1.5px solid rgba(232, 177, 60, 0.3); border-radius: 12px; padding: 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; cursor: pointer; transition: all 0.2s; position: relative; }
 .wallet-card:hover { border-color: var(--emas-terang); background: rgba(232,177,60,0.1); transform: translateY(-2px); }
 .wallet-card img { width: 32px; height: 32px; object-fit: contain; border-radius: 6px; background: #fff; padding: 2px; }
 .wallet-card span { font-family: 'FiraCondBold', sans-serif; font-size: 0.8rem; color: #fff; text-align: center; }
@@ -243,7 +242,7 @@ body{ position: relative; width: 100%; height: 100vh; background: #0a0a0a; }
 .account-action-btn.delete { border-color: #ff5555; color: #ff5555; }
 .account-action-btn.delete:hover { background: rgba(255,85,85,0.15); }
 
-/* ================= PAGE LOADING OVERLAY (RINGAN) ================= */
+/* ================= PAGE LOADING OVERLAY ================= */
 .page-loading-overlay { position: fixed; inset: 0; background: rgba(5, 8, 6, 0.92); z-index: 2147483647; display: none; flex-direction: column; align-items: center; justify-content: center; gap: 14px; pointer-events: all; }
 .page-loading-overlay.active { display: flex; }
 .page-loading-overlay img { width: 80px; height: 80px; object-fit: contain; }
@@ -262,7 +261,7 @@ body{ position: relative; width: 100%; height: 100vh; background: #0a0a0a; }
 <div class="profile-dropdown-wrapper">
 <button type="button" class="profile-circle-btn" id="topProfileMenuBtn" title="Menu Profil & Akun" onclick="toggleProfileBubble(event)"></button>
 <div class="profile-bubble-menu" id="profileBubbleMenu">
-<a href="profile.html" class="bubble-profile-preview">
+<a href="profile.html" class="bubble-profile-preview" id="bubbleProfilePreview">
 <div class="bubble-avatar" id="bubbleAvatarContainer"></div>
 <div class="bubble-info">
 <span class="bubble-name" id="bubbleUserName">Sobat</span>
@@ -577,10 +576,6 @@ function getWalletsData() {
 
 function escapeHtml(str) {
     return String(str || '').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
-}
-
-function escapeJs(str) {
-    return String(str || '').replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/"/g, '\\"').replace(/\n/g, '\\n').replace(/\r/g, '\\r');
 }
 
 function openWalletList() {
@@ -959,21 +954,55 @@ const username = localStorage.getItem("username") || "Sobat";
 function toggleProfileBubble(e) { if(e) e.stopPropagation(); document.getElementById("profileBubbleMenu").classList.toggle("active"); }
 function closeProfileBubble() { const menu = document.getElementById("profileBubbleMenu"); if(menu) menu.classList.remove("active"); }
 window.addEventListener("click", function() { closeProfileBubble(); });
+
+/* ===== RENDER BANNER BG DI DROPDOWN BUBBLE & AVATAR DI ICON ===== */
 window.addEventListener("DOMContentLoaded", () => {
   const topProfileMenuBtn = document.getElementById("topProfileMenuBtn");
   const bubbleAvatarContainer = document.getElementById("bubbleAvatarContainer");
   const bubbleUserName = document.getElementById("bubbleUserName");
-  if(bubbleUserName) bubbleUserName.innerText = username;
-  if (!topProfileMenuBtn || !bubbleAvatarContainer) return;
-  let savedPic = localStorage.getItem("profile_picture") || localStorage.getItem("user_avatar") || "";
-  savedPic = String(savedPic).trim();
-  const isInvalid = !savedPic || savedPic === "null" || savedPic === "undefined" || savedPic === "data:," || savedPic.length < 10;
-  if (isInvalid) { topProfileMenuBtn.innerHTML = ""; bubbleAvatarContainer.innerHTML = ""; return; }
-  const testImg = new Image();
-  testImg.onload = function() { const imgHTML = '<img src="' + savedPic + '" alt="Profile">'; topProfileMenuBtn.innerHTML = imgHTML; bubbleAvatarContainer.innerHTML = imgHTML; };
-  testImg.onerror = function() { topProfileMenuBtn.innerHTML = ""; bubbleAvatarContainer.innerHTML = ""; };
-  testImg.src = savedPic;
+  const bubbleProfilePreview = document.getElementById("bubbleProfilePreview");
+
+  if (bubbleUserName) bubbleUserName.innerText = username;
+
+  const savedBanner = String(localStorage.getItem("profile_banner") || "").trim();
+  const savedPic = String(localStorage.getItem("profile_picture") || localStorage.getItem("user_avatar") || "").trim();
+
+  const isBannerValid = savedBanner && savedBanner !== "null" && savedBanner !== "undefined" && savedBanner.length >= 10;
+  const isPicValid = savedPic && savedPic !== "null" && savedPic !== "undefined" && savedPic.length >= 10;
+
+  // 1. PASANG BANNER SEBAGAI BACKGROUND DROPDOWN HEADER (MyGF)
+  if (bubbleProfilePreview) {
+    const oldBanner = bubbleProfilePreview.querySelector(".bubble-banner-bg");
+    if (oldBanner) oldBanner.remove();
+
+    if (isBannerValid) {
+      const bannerImg = document.createElement("img");
+      bannerImg.src = savedBanner;
+      bannerImg.className = "bubble-banner-bg";
+      bannerImg.alt = "Profile Banner";
+      bubbleProfilePreview.prepend(bannerImg);
+    }
+  }
+
+  // 2. TOMBOL PROFILE BULAT ATAS (Topbar) - Menampilkan Foto Profil Avatar
+  if (topProfileMenuBtn) {
+    if (isPicValid) {
+      topProfileMenuBtn.innerHTML = '<img src="' + savedPic + '" alt="Profile" style="width:100%;height:100%;object-fit:cover;">';
+    } else {
+      topProfileMenuBtn.innerHTML = SVG.user;
+    }
+  }
+
+  // 3. AVATAR BULAT DI DALAM DROPDOWN MENU
+  if (bubbleAvatarContainer) {
+    if (isPicValid) {
+      bubbleAvatarContainer.innerHTML = '<img src="' + savedPic + '" alt="Profile" style="width:100%;height:100%;object-fit:cover;">';
+    } else {
+      bubbleAvatarContainer.innerHTML = SVG.user;
+    }
+  }
 });
+
 function openPatchNotesModal() {
   openPatchIndex = 0;
   if(typeof PATCH_NOTES_DATA === "undefined") {
