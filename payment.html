@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Payment Comérsio</title>
-<link rel="stylesheet" href="style.css">
 <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 <style>
   @font-face{font-family:'OswaldBold';src:url('oswald-bold.ttf') format('truetype');font-weight:700;}
@@ -26,27 +25,10 @@
   .modeToggleWrap{display:flex;background:rgba(10,14,11,0.9);border:1px solid rgba(232,177,60,0.3);border-radius:24px;padding:4px;max-width:320px;margin:0 auto 16px;gap:4px;}
   .modeBtn{flex:1;background:transparent;border:none;color:#999;padding:8px 10px;border-radius:20px;font-family:'FiraCondBold',sans-serif;font-size:0.82rem;cursor:pointer;transition:all 0.2s;letter-spacing:0.5px;}
   .modeBtn.active{background:var(--emas-terang);color:#000;}
-  
-  /* WATERMARK & CAPTURE AREA */
   #captureArea, #notaCaptureArea{position:relative;overflow:hidden;}
   #captureArea{background:rgba(12,17,13,0.95);border:2px solid var(--emas);border-radius:16px;padding:20px;box-shadow:0 6px 25px rgba(0,0,0,0.7);}
-  
-  /* WATERMARK BARU: 180px, Opacity 15%, Geser kanan -40px */
-  .billing-watermark{
-    position:absolute;
-    top:50%;
-    right:-40px;
-    transform:translateY(-50%) rotate(-15deg);
-    width:180px;
-    height:180px;
-    object-fit:contain;
-    opacity:0.15;
-    pointer-events:none;
-    z-index:0;
-  }
-  
+  .billing-watermark{position:absolute;top:50%;right:-40px;transform:translateY(-50%) rotate(-15deg);width:180px;height:180px;object-fit:contain;opacity:0.15;pointer-events:none;z-index:0;}
   #captureArea > *:not(.billing-watermark), .notaBody > *:not(.billing-watermark){position:relative;z-index:1;}
-  
   div.headerBox{all:unset !important;display:flex !important;flex-direction:column !important;align-items:center !important;text-align:center !important;width:100% !important;border-bottom:1px solid rgba(255,209,102,0.2) !important;padding-bottom:15px !important;margin-bottom:15px !important;background:transparent !important;box-shadow:none !important;}
   .headerTopRow{display:flex;align-items:center;gap:12px;justify-content:center;}
   .mainLogo{width:40px !important;height:40px !important;object-fit:contain !important;border-radius:50% !important;border:1px solid var(--emas-terang) !important;margin:0 !important;background:#0a0a0a !important;cursor:default;}
@@ -71,7 +53,6 @@
   .paymentCard{background:#000;padding:14px;border-radius:10px;border:1px solid var(--emas);text-align:center;color:#fff;font-family:'FiraCondBold',sans-serif;}
   .qrisContainer{display:flex;flex-direction:column;align-items:center;background:#fff;padding:8px;border-radius:0 !important;border:none !important;max-width:176px;margin:0 auto;}
   .qrisImage{width:160px;height:160px;object-fit:contain;border-radius:0 !important;display:block;}
-  
   .notaBill{background:transparent;border:none;padding:0;width:400px;max-width:100%;margin:0 auto;position:relative;}
   .tornStrip{position:relative;width:100%;height:30px;overflow:hidden;display:block;}
   .notaBody{background:#0d0d0d;border-left:2px solid var(--emas);border-right:2px solid var(--emas);padding:8px 16px 14px 16px;position:relative;overflow:hidden;}
@@ -110,35 +91,33 @@
   .copy-btn.icon-only svg{margin-right:0;}
   .saveButton{width:100%;height:48px;border:none;border-radius:12px;margin-top:20px;background:var(--emas-terang);color:#000;font-size:0.95rem;font-family:'FiraCondBold',sans-serif;cursor:pointer;box-shadow:0 4px 15px rgba(255,209,102,0.3);transition:transform 0.2s;}
   .saveButton:active{transform:scale(0.98);}
+  .saveButton:disabled{opacity:0.7;cursor:not-allowed;}
   .noCapture{z-index:99;}
 
-  /* ================= PAGE LOADING OVERLAY (RINGAN) ================= */
-  .page-loading-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(5, 8, 6, 0.92);
-    z-index: 2147483647;
-    display: none;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 14px;
-    pointer-events: all;
-  }
-  .page-loading-overlay.active { display: flex; }
-  .page-loading-overlay img {
-    width: 80px;
-    height: 80px;
-    object-fit: contain;
-  }
-  .page-loading-overlay .loading-text {
-    color: var(--emas-terang);
-    font-family: 'FiraCondBold', sans-serif;
-    font-size: 0.8rem;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    opacity: 0.85;
-  }
+  .page-loading-overlay{position:fixed;inset:0;background:rgba(5,8,6,0.92);z-index:2147483646;display:none;flex-direction:column;align-items:center;justify-content:center;gap:14px;pointer-events:all;}
+  .page-loading-overlay.active{display:flex;}
+  .page-loading-overlay img{width:80px;height:80px;object-fit:contain;}
+  .page-loading-overlay .loading-text{color:var(--emas-terang);font-family:'FiraCondBold',sans-serif;font-size:0.8rem;letter-spacing:1px;text-transform:uppercase;opacity:0.85;}
+
+  /* ================= CONFIRM MODAL ================= */
+  .confirm-overlay{position:fixed;inset:0;background:rgba(5,8,6,0.88);z-index:2147483645;display:none;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(6px);}
+  .confirm-overlay.active{display:flex;animation:cfFade 0.2s ease;}
+  @keyframes cfFade{from{opacity:0}to{opacity:1}}
+  .confirm-box{background:#0d120f;border:2px solid var(--emas);border-radius:16px;padding:24px 20px;max-width:340px;width:100%;text-align:center;box-shadow:0 10px 40px rgba(0,0,0,0.8);animation:cfScale 0.25s cubic-bezier(0.34,1.56,0.64,1);}
+  @keyframes cfScale{from{transform:scale(0.9);opacity:0}to{transform:scale(1);opacity:1}}
+  .confirm-icon{font-size:2.5rem;margin-bottom:8px;}
+  .confirm-box h3{font-family:'FiraCondBold',sans-serif;color:var(--emas-terang);font-size:1.2rem;margin:0 0 8px 0;letter-spacing:0.5px;}
+  .confirm-box p{font-size:0.85rem;color:#bbb;margin:0 0 20px 0;line-height:1.4;}
+  .confirm-actions{display:flex;gap:10px;}
+  .confirm-actions button{flex:1;padding:12px;border-radius:10px;font-family:'FiraCondBold',sans-serif;font-size:0.9rem;cursor:pointer;border:none;letter-spacing:0.5px;transition:transform 0.15s;}
+  .confirm-actions button:active{transform:scale(0.97);}
+  .confirm-cancel{background:rgba(255,255,255,0.08);color:#ddd;border:1px solid rgba(255,255,255,0.15) !important;}
+  .confirm-ok{background:var(--emas-terang);color:#000;box-shadow:0 3px 15px rgba(255,209,102,0.35);}
+
+  /* ================= TOAST ================= */
+  .comersio-toast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%) translateY(20px);background:#e8b13c;color:#000;padding:12px 24px;border-radius:30px;font-family:'FiraCondBold',sans-serif;font-size:0.9rem;font-weight:bold;z-index:2147483647;opacity:0;transition:opacity 0.3s,transform 0.3s;box-shadow:0 4px 20px rgba(232,177,60,0.5);letter-spacing:0.5px;pointer-events:none;max-width:90vw;text-align:center;}
+  .comersio-toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+  .comersio-toast.error{background:#ff4d4d;color:#fff;box-shadow:0 4px 20px rgba(255,77,77,0.5);}
 </style>
 </head>
 <body>
@@ -158,7 +137,6 @@
       <button class="modeBtn" data-mode="nota" onclick="switchMode('nota')">Nota Billing</button>
     </div>
 
-    <!-- MODE NORMAL / SIMPLE -->
     <div id="captureArea">
       <img src="icon.png" alt="Watermark" class="billing-watermark">
       <div class="headerBox">
@@ -180,7 +158,6 @@
       </div>
     </div>
 
-    <!-- MODE NOTA BILLING -->
     <div id="notaCaptureArea" class="notaBill" style="display:none;">
       <div class="tornStrip" id="tornTop"></div>
       <div class="notaBody">
@@ -218,47 +195,53 @@
     <button class="saveButton noCapture" onclick="saveAsImage()">SIMPAN BILL PEMBAYARAN</button>
   </div>
 
-<!-- ================= PAGE LOADING OVERLAY ================= -->
 <div id="pageLoadingOverlay" class="page-loading-overlay">
     <img src="loading.webp" alt="Loading...">
     <div class="loading-text">Memuat Halaman...</div>
 </div>
 
+<div id="downloadConfirmModal" class="confirm-overlay">
+    <div class="confirm-box">
+        <div class="confirm-icon">📥</div>
+        <h3>Simpan Billing?</h3>
+        <p id="confirmModalDesc">File gambar akan disimpan ke perangkat kamu.</p>
+        <div class="confirm-actions">
+            <button class="confirm-cancel" onclick="closeConfirmModal()">Batal</button>
+            <button class="confirm-ok" onclick="confirmAndDownload()">Ya, Simpan</button>
+        </div>
+    </div>
+</div>
+
 <script>
-/* =========================================================
-   PAGE LOADING OVERLAY
-========================================================= */
-(function preloadLoadingGif(){
-    const img = new Image();
-    img.src = 'loading.webp';
-})();
+/* ========== LOADING OVERLAY ========== */
+(function preloadLoadingGif(){ const img = new Image(); img.src = 'loading.webp'; })();
+function showPageLoading(){ const ov = document.getElementById('pageLoadingOverlay'); if (ov) ov.classList.add('active'); }
+function hidePageLoading(){ const ov = document.getElementById('pageLoadingOverlay'); if (ov) ov.classList.remove('active'); }
+function navigateWithLoading(url){ if (!url) return; showPageLoading(); setTimeout(() => { window.location.href = url; }, 450); }
 
-function showPageLoading(){
-    const ov = document.getElementById('pageLoadingOverlay');
-    if (ov) ov.classList.add('active');
+function showToast(msg, isError){
+    const t = document.createElement('div');
+    t.className = 'comersio-toast' + (isError ? ' error' : '');
+    t.innerText = msg;
+    document.body.appendChild(t);
+    requestAnimationFrame(() => t.classList.add('show'));
+    setTimeout(() => { t.classList.remove('show'); setTimeout(() => t.remove(), 350); }, 2400);
 }
 
-function navigateWithLoading(url){
-    if (!url) return;
-    showPageLoading();
-    setTimeout(() => { window.location.href = url; }, 450);
-}
-
-/* =========================================================
-   WALLET METADATA
-========================================================= */
+/* ========== WALLET METADATA (ICON DARI WEB RESMI) ========== */
 const WALLET_META = {
     qris:      { name: 'QRIS',       type: 'qris',    localLogo: 'QRIS Logo.png', urlLogo: '', color: 'E31E24' },
-    bca:       { name: 'BCA',        type: 'bank',    localLogo: '',              urlLogo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Bank_Central_Asia.svg/240px-Bank_Central_Asia.svg.png', color: '0060AE' },
+    bca:       { name: 'BCA',        type: 'bank',    localLogo: '',              urlLogo: 'https://www.google.com/s2/favicons?domain=bca.co.id&sz=128', color: '0060AE' },
+    blu:       { name: 'blu by BCA', type: 'bank',    localLogo: '',              urlLogo: 'https://www.google.com/s2/favicons?domain=blubybcadigital.co.id&sz=128', color: '00C8E8' },
     bri:       { name: 'BRI',        type: 'bank',    localLogo: 'Bank BRI.png',  urlLogo: '', color: '00529C' },
-    bni:       { name: 'BNI',        type: 'bank',    localLogo: '',              urlLogo: 'https://upload.wikimedia.org/wikipedia/id/thumb/5/55/BNI_logo.svg/240px-BNI_logo.svg.png', color: 'F15A23' },
+    bni:       { name: 'BNI',        type: 'bank',    localLogo: '',              urlLogo: 'https://www.google.com/s2/favicons?domain=bni.co.id&sz=128', color: 'F15A23' },
     ina:       { name: 'Bank INA',   type: 'bank',    localLogo: '',              urlLogo: 'https://www.google.com/s2/favicons?domain=bankina.co.id&sz=128', color: '1B4F72' },
     seabank:   { name: 'SeaBank',    type: 'bank',    localLogo: 'SeaBank.png',   urlLogo: '', color: 'F97316' },
     krom:      { name: 'Krom',       type: 'bank',    localLogo: 'Krom.png',      urlLogo: '', color: '111111' },
     jago:      { name: 'Bank Jago',  type: 'bank',    localLogo: 'Bank Jago.png', urlLogo: '', color: '1A6AF0' },
-    superbank: { name: 'SuperBank',  type: 'bank',    localLogo: '',              urlLogo: 'https://upload.wikimedia.org/wikipedia/commons/c/c6/Superbank_Indonesia.png', color: '0060E0' },
-    mandiri:   { name: 'Mandiri',    type: 'bank',    localLogo: '',              urlLogo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Bank_Mandiri_logo_2016.svg/240px-Bank_Mandiri_logo_2016.svg.png', color: '003D79' },
-    ovo:       { name: 'OVO',        type: 'ewallet', localLogo: '',              urlLogo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/OVO_logo.svg/240px-OVO_logo.svg.png', color: '4C3494' },
+    superbank: { name: 'SuperBank',  type: 'bank',    localLogo: '',              urlLogo: 'https://www.google.com/s2/favicons?domain=superbank.co.id&sz=128', color: '0060E0' },
+    mandiri:   { name: 'Mandiri',    type: 'bank',    localLogo: '',              urlLogo: 'https://www.google.com/s2/favicons?domain=bankmandiri.co.id&sz=128', color: '003D79' },
+    ovo:       { name: 'OVO',        type: 'ewallet', localLogo: '',              urlLogo: 'https://www.google.com/s2/favicons?domain=ovo.id&sz=128', color: '4C3494' },
     gopay:     { name: 'GoPay',      type: 'ewallet', localLogo: 'GoPay.png',     urlLogo: '', color: '00AED6' },
     dana:      { name: 'DANA',       type: 'ewallet', localLogo: 'DANA.png',      urlLogo: '', color: '118EEA' },
     shopeepay: { name: 'ShopeePay',  type: 'ewallet', localLogo: 'ShopeePay.png', urlLogo: '', color: 'EE4D2D' },
@@ -301,12 +284,8 @@ if (method === 'cash') {
     pay.logo = getWalletLogo(method);
     pay.logoFallback = getFallbackLogo(method);
     if (wData) {
-        if (pay.type === 'qris') {
-            if (wData.image) pay.qrisImage = wData.image;
-        } else {
-            pay.number = wData.number || '-';
-            pay.owner = wData.name || '-';
-        }
+        if (pay.type === 'qris') { if (wData.image) pay.qrisImage = wData.image; }
+        else { pay.number = wData.number || '-'; pay.owner = wData.name || '-'; }
     }
 }
 
@@ -394,7 +373,6 @@ if(productNames.length > 0){
 }
 
 const infoText = pay.type === "qris" ? "Scan QR Code di bawah ini untuk melakukan pembayaran" : (pay.type === "cash" ? "Silakan lakukan pembayaran secara tunai (cash) ke kasir." : "Salin nomor di bawah ini untuk melakukan pembayaran");
-
 const content = document.getElementById("paymentContent");
 
 if(pay.type === "qris"){
@@ -422,7 +400,6 @@ if(pay.type === "qris"){
         <div class="paymentInfoText">${infoText}</div>
         <div class="paymentCard" style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
             <div style="display: flex; align-items: center; gap: 8px;">
-                <!-- ID di sini -->
                 <span id="walletNumberText" style="font-size: 1.2rem; color: var(--emas-terang);">${pay.number}</span>
                 <button class="copy-btn icon-only" style="padding: 6px;" onclick="copyToClipboard('${pay.number}', this)"><svg viewBox="0 0 24 24" style="margin:0;"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg></button>
             </div>
@@ -462,7 +439,6 @@ function renderNota(){
         notaPay.innerHTML = `
             <div class="notaMethodHeader"><img src="${pay.logo}" alt="${pay.name}" onerror="this.onerror=null; this.src='${pay.logoFallback}'"><span id="walletHeaderNameNota">${pay.name}</span></div>
             <div class="notaPaymentBox">
-                <!-- ID di sini -->
                 <div class="notaTransferNumber" id="walletNumberTextNota">${pay.number}</div>
                 <button class="copy-btn" style="margin-top: 6px;" onclick="copyToClipboard('${pay.number}', this)"><svg viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg> Salin</button>
                 <div class="notaTransferOwner" style="margin-top: 8px;">a.n. ${pay.owner}</div>
@@ -517,48 +493,134 @@ function switchMode(mode){
 }
 switchMode(currentMode);
 
+/* ========== DOWNLOAD FLOW: CONFIRM -> CAPTURE -> SAVE ========== */
 function saveAsImage(){
+    const desc = document.getElementById('confirmModalDesc');
+    desc.innerText = currentMode === 'nota'
+        ? 'Nota Billing akan disimpan sebagai gambar ke perangkat kamu.'
+        : 'Bill Pembayaran akan disimpan sebagai gambar ke perangkat kamu.';
+    document.getElementById('downloadConfirmModal').classList.add('active');
+}
+function closeConfirmModal(){
+    document.getElementById('downloadConfirmModal').classList.remove('active');
+}
+function confirmAndDownload(){
+    closeConfirmModal();
+    executeDownload();
+}
+
+function executeDownload(){
     const button = document.querySelector(".saveButton");
     const originalText = button.innerText;
-    button.innerText = "Memproses Gambar..."; button.disabled = true;
-    const targetEl = (currentMode === 'nota') ? document.getElementById('notaCaptureArea') : document.getElementById('captureArea');
-    
-    html2canvas(targetEl, { 
-        scale: 3, 
-        useCORS: true, 
-        backgroundColor: "#0a0a0a", 
-        logging: false,
-        onclone: (clonedDoc) => {
-            // LOGIKA DOWNLOAD: Hilangkan nomor, Ganti jadi nama bank
-            const numNormal = clonedDoc.getElementById('walletNumberText');
-            const numNota = clonedDoc.getElementById('walletNumberTextNota');
-            const headNormal = clonedDoc.getElementById('walletHeaderName');
-            const headNota = clonedDoc.getElementById('walletHeaderNameNota');
+    button.innerText = "Memproses...";
+    button.disabled = true;
 
-            // Ganti text no rekening jadi nama bank
-            if (numNormal) numNormal.innerText = pay.name;
-            if (numNota) numNota.innerText = pay.name;
+    const targetEl = (currentMode === 'nota')
+        ? document.getElementById('notaCaptureArea')
+        : document.getElementById('captureArea');
 
-            // Sembunyikan nama bank di header biar ga dobel
-            if (headNormal) headNormal.style.visibility = 'hidden';
-            if (headNota) headNota.style.visibility = 'hidden';
-            
-            // Sembunyikan tombol salin jika ada
-            const copyBtnNormal = numNormal ? numNormal.parentElement.querySelector('.copy-btn') : null;
-            if (copyBtnNormal) copyBtnNormal.style.display = 'none';
-            const copyBtnNota = numNota ? numNota.parentElement.querySelector('.copy-btn') : null;
-            if (copyBtnNota) copyBtnNota.style.display = 'none';
-        }
-    }).then(canvas => {
-        const link = document.createElement("a");
-        link.download = `Bill-Comersio-${customer}-${currentMode}.png`;
-        link.href = canvas.toDataURL("image/png"); link.click();
-        button.innerText = originalText; button.disabled = false;
-    }).catch(err => { 
-        alert("Gagal menyimpan gambar."); 
-        button.innerText = originalText; button.disabled = false; 
+    // Preload semua gambar supaya tidak blank di hasil capture
+    const images = Array.from(targetEl.querySelectorAll('img'));
+    const imagePromises = images.map(img => {
+        if (img.complete && img.naturalHeight !== 0) return Promise.resolve();
+        return new Promise(resolve => {
+            const done = () => resolve();
+            img.addEventListener('load', done, { once: true });
+            img.addEventListener('error', done, { once: true });
+            setTimeout(done, 5000);
+        });
     });
+
+    const overlay = document.getElementById('pageLoadingOverlay');
+    const loadingTxt = overlay.querySelector('.loading-text');
+    if (loadingTxt) loadingTxt.innerText = 'Menyiapkan Gambar...';
+    overlay.classList.add('active');
+
+    Promise.all(imagePromises)
+        .then(() => new Promise(r => setTimeout(r, 150)))
+        .then(() => {
+            const rect = targetEl.getBoundingClientRect();
+            const scale = rect.height > 1500 ? 2 : 3;
+            return html2canvas(targetEl, {
+                scale: scale,
+                useCORS: true,
+                allowTaint: false,
+                backgroundColor: "#0a0a0a",
+                logging: false,
+                imageTimeout: 15000,
+                onclone: (clonedDoc) => {
+                    const numNormal = clonedDoc.getElementById('walletNumberText');
+                    const numNota = clonedDoc.getElementById('walletNumberTextNota');
+                    const headNormal = clonedDoc.getElementById('walletHeaderName');
+                    const headNota = clonedDoc.getElementById('walletHeaderNameNota');
+
+                    if (numNormal) numNormal.innerText = pay.name;
+                    if (numNota) numNota.innerText = pay.name;
+                    if (headNormal) headNormal.style.visibility = 'hidden';
+                    if (headNota) headNota.style.visibility = 'hidden';
+
+                    if (numNormal) {
+                        const b = numNormal.parentElement.querySelector('.copy-btn');
+                        if (b) b.style.display = 'none';
+                    }
+                    if (numNota) {
+                        const b = numNota.parentElement.querySelector('.copy-btn');
+                        if (b) b.style.display = 'none';
+                    }
+                }
+            });
+        })
+        .then(canvas => new Promise((resolve, reject) => {
+            // pakai toBlob - lebih reliable dari dataURL (dataURL kena size limit di HP)
+            if (canvas.toBlob) {
+                canvas.toBlob(blob => blob ? resolve(blob) : reject(new Error('toBlob null')), 'image/png');
+            } else {
+                const dataUrl = canvas.toDataURL('image/png');
+                resolve(dataUrlToBlob(dataUrl));
+            }
+        }))
+        .then(blob => {
+            const url = URL.createObjectURL(blob);
+            const safeName = (customer || 'customer').replace(/[^a-zA-Z0-9-_]/g, '_');
+            const link = document.createElement('a');
+            link.download = `Bill-Comersio-${safeName}-${currentMode}-${Date.now()}.png`;
+            link.href = url;
+            link.style.display = 'none';
+            document.body.appendChild(link);
+            link.click();
+            setTimeout(() => {
+                document.body.removeChild(link);
+                URL.revokeObjectURL(url);
+            }, 1500);
+
+            button.innerText = originalText;
+            button.disabled = false;
+            hidePageLoading();
+            if (loadingTxt) loadingTxt.innerText = 'Memuat Halaman...';
+            showToast('✓ Bill berhasil disimpan');
+        })
+        .catch(err => {
+            console.error('Download error:', err);
+            button.innerText = originalText;
+            button.disabled = false;
+            hidePageLoading();
+            if (loadingTxt) loadingTxt.innerText = 'Memuat Halaman...';
+            showToast('Gagal menyimpan gambar. Coba lagi.', true);
+        });
 }
+
+function dataUrlToBlob(dataUrl){
+    const arr = dataUrl.split(','), mime = arr[0].match(/:(.*?);/)[1];
+    const bstr = atob(arr[1]);
+    let n = bstr.length;
+    const u8 = new Uint8Array(n);
+    while(n--) u8[n] = bstr.charCodeAt(n);
+    return new Blob([u8], { type: mime });
+}
+
+document.getElementById('downloadConfirmModal').addEventListener('click', function(e){
+    if (e.target === this) closeConfirmModal();
+});
 </script>
 </body>
 </html>
