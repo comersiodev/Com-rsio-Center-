@@ -228,33 +228,26 @@ body{ position: relative; width: 100%; height: 100vh; background: #0a0a0a; }
 .qris-upload-box:hover { border-color: var(--emas-terang); background: rgba(232,177,60,0.05); }
 .qris-upload-box img { max-width: 100%; max-height: 200px; border-radius: 8px; object-fit: contain; }
 
+/* ACCOUNT CARDS (MULTI REKENING) */
+.account-card { background: #0d120f; border: 1.5px solid rgba(232,177,60,0.3); border-radius: 12px; padding: 12px; display: flex; flex-direction: column; gap: 6px; transition: border-color 0.2s, box-shadow 0.2s; }
+.account-card:hover { border-color: var(--emas-terang); box-shadow: 0 0 10px rgba(255,209,102,0.15); }
+.account-card-owner { font-family: 'FiraCondBold', sans-serif; color: #fff; font-size: 0.9rem; }
+.account-card-number { font-family: 'OswaldBold', sans-serif; color: var(--emas-terang); font-size: 1.05rem; letter-spacing: 1px; word-break: break-all; }
+.account-card-actions { display: flex; gap: 6px; margin-top: 4px; }
+.account-action-btn { flex: 1; padding: 6px 8px; border-radius: 6px; border: 1px solid; font-family: 'FiraCondBold', sans-serif; font-size: 0.7rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 3px; background: transparent; transition: all 0.2s; }
+.account-action-btn svg { width: 12px; height: 12px; fill: currentColor; }
+.account-action-btn.copy { border-color: var(--emas-terang); color: var(--emas-terang); }
+.account-action-btn.copy:hover { background: rgba(232,177,60,0.15); }
+.account-action-btn.edit { border-color: var(--hijau-terang); color: var(--hijau-terang); }
+.account-action-btn.edit:hover { background: rgba(76,175,94,0.15); }
+.account-action-btn.delete { border-color: #ff5555; color: #ff5555; }
+.account-action-btn.delete:hover { background: rgba(255,85,85,0.15); }
+
 /* ================= PAGE LOADING OVERLAY (RINGAN) ================= */
-.page-loading-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(5, 8, 6, 0.92);
-    z-index: 2147483647;
-    display: none;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 14px;
-    pointer-events: all;
-}
+.page-loading-overlay { position: fixed; inset: 0; background: rgba(5, 8, 6, 0.92); z-index: 2147483647; display: none; flex-direction: column; align-items: center; justify-content: center; gap: 14px; pointer-events: all; }
 .page-loading-overlay.active { display: flex; }
-.page-loading-overlay img {
-    width: 80px;
-    height: 80px;
-    object-fit: contain;
-}
-.page-loading-overlay .loading-text {
-    color: var(--emas-terang);
-    font-family: 'FiraCondBold', sans-serif;
-    font-size: 0.8rem;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    opacity: 0.85;
-}
+.page-loading-overlay img { width: 80px; height: 80px; object-fit: contain; }
+.page-loading-overlay .loading-text { color: var(--emas-terang); font-family: 'FiraCondBold', sans-serif; font-size: 0.8rem; letter-spacing: 1px; text-transform: uppercase; opacity: 0.85; }
 </style>
 </head>
 <body>
@@ -325,13 +318,10 @@ body{ position: relative; width: 100%; height: 100vh; background: #0a0a0a; }
 <a href="debt.html" class="menu-grid-item"><img src="debt.png" alt=""><span>Utang</span></a>
 <a href="monthly.html" class="menu-grid-item"><img src="pembukuan.png" alt=""><span>Pembukuan</span></a>
 <a href="recap.html" class="menu-grid-item"><img src="rekap.png" alt=""><span>Rekap Total</span></a>
-
-<!-- GANTI MIDTRANS JADI WALLET -->
 <a href="javascript:void(0)" onclick="openWalletList()" class="menu-grid-item" style="border-color: rgba(232, 177, 60, 0.4);">
     <svg viewBox="0 0 24 24" style="width:26px; height:26px; fill:var(--emas-terang); margin-bottom:6px;"><path d="M21 18v1a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v1h-9a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h9zm-9-2h10V8H12v8zm4-2.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/></svg>
     <span>Wallet</span>
 </a>
-
 </div>
 <div id="modularBoardsContainer"></div>
 </div>
@@ -358,18 +348,31 @@ body{ position: relative; width: 100%; height: 100vh; background: #0a0a0a; }
     </div>
 </div>
 
+<!-- WALLET ACCOUNTS LIST MODAL (MULTI REKENING) -->
+<div id="walletAccountsModal" class="popupBox">
+    <div class="popupContent" style="max-width: 400px;">
+        <h2 id="walletAccountsTitle">Rekening</h2>
+        <p style="text-align:center; font-size:0.72rem; color:#aaa; margin-top:-6px; margin-bottom:14px;">Daftar rekening tersimpan</p>
+        <div id="walletAccountsList" style="display:flex; flex-direction:column; gap:10px; max-height:320px; overflow-y:auto; margin-bottom:14px;"></div>
+        <button type="button" class="option-btn" onclick="openAddAccount()" style="background:var(--hijau); margin-bottom:8px;">
+            <svg viewBox="0 0 24 24" style="width:16px;height:16px;fill:currentColor;"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+            Tambah Rekening Baru
+        </button>
+        <button type="button" class="cancelButton" onclick="closeWalletAccounts()">Tutup</button>
+    </div>
+</div>
+
 <!-- EDIT WALLET MODAL -->
 <div id="walletEditModal" class="popupBox">
     <div class="popupContent">
         <h2 id="walletEditTitle">Edit Wallet</h2>
         <div id="walletEditBody" style="display:flex; flex-direction:column; gap:10px;">
-            <!-- Dynamic content -->
         </div>
         <div class="popupButtonGroup" style="margin-top: 15px;">
             <button type="button" class="cancelButton" onclick="closeWalletEdit()">Batal</button>
-            <button type="button" class="addButton" id="btnSaveWallet" onclick="saveWalletConfig()">Simpan</button>
+            <button type="button" class="addButton" id="btnSaveWallet" onclick="saveWalletConfig()" style="background:var(--emas-terang); color:#000; border:none; padding:10px; border-radius:10px; font-family:'FiraCondBold'; cursor:pointer; width:100%; margin-top:6px;">Simpan</button>
         </div>
-        <button type="button" class="btn-delete-confirm" id="btnDeleteWallet" style="display:none; width:100%; height:40px; border:none; border-radius:10px; margin-top:10px; font-family:'FiraCondBold'; font-size:0.85rem; cursor:pointer;" onclick="deleteWalletConfig()">Hapus Pengaturan</button>
+        <button type="button" class="btn-delete-confirm" id="btnDeleteWallet" style="display:none; width:100%; height:40px; border:none; border-radius:10px; margin-top:10px; font-family:'FiraCondBold'; font-size:0.85rem; cursor:pointer; background:rgba(255,85,85,0.2); color:#ff5555;" onclick="deleteWalletConfig()">Hapus Pengaturan</button>
     </div>
 </div>
 
@@ -448,42 +451,26 @@ Ketuk tiap patch untuk lihat detail perubahan
 </div>
 </div>
 
-<!-- ================= PAGE LOADING OVERLAY ================= -->
 <div id="pageLoadingOverlay" class="page-loading-overlay">
     <img src="loading.webp" alt="Loading...">
     <div class="loading-text">Memuat Halaman...</div>
 </div>
 
 <script>
-
-/* ================= IMAGE INTERCEPTOR (Base64 Cache) ================= */
+/* ================= IMAGE INTERCEPTOR ================= */
 (function(){
-  // 🔴 ISI INI: Convert loading.webp kamu ke base64, paste string panjangnya
   const webpBase64 = "data:image/webp;base64,ISI_BASE64_LOADING_WEBP_DISINI";
-  
-  const BASE64_MAP = {
-    'loading.webp': webpBase64
-    // tambah pattern lain kalau mau, contoh:
-    // 'google.com/s2/favicons?domain=snaptik': 'data:image/png;base64,...',
-    // 'ui-avatars.com': 'data:image/png;base64,...'
-  };
-  
+  const BASE64_MAP = { 'loading.webp': webpBase64 };
   function interceptImage(img){
     const src = img.src || '';
     if (!src || src.startsWith('data:') || src.startsWith('blob:')) return;
-    
     for (const pattern in BASE64_MAP) {
       if (src.includes(pattern) && BASE64_MAP[pattern].length > 100) {
-        img.src = BASE64_MAP[pattern];
-        return;
+        img.src = BASE64_MAP[pattern]; return;
       }
     }
   }
-  
-  // Scan gambar yang udah ada di DOM
   document.querySelectorAll('img').forEach(interceptImage);
-  
-  // Pantau gambar baru (wallet icon, media downloader, dll)
   new MutationObserver((mutations) => {
     mutations.forEach((m) => {
       m.addedNodes.forEach((node) => {
@@ -493,6 +480,7 @@ Ketuk tiap patch untuk lihat detail perubahan
     });
   }).observe(document.documentElement, { childList: true, subtree: true });
 })();
+
 const SVG = {
   inbox: '<svg class="board-icon" viewBox="0 0 24 24"><path d="M19 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 12h-4c0 1.66-1.35 3-3 3s-3-1.34-3-3H5V5h14v10z"/></svg>',
   currency: '<svg class="board-icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1.41 16.09V20h-2.67v-1.93c-1.71-.36-3.16-1.46-3.27-3.4h1.96c.1 1.05 1.18 1.79 2.51 1.79 1.44 0 2.28-.72 2.28-1.72 0-.83-.62-1.37-2.18-1.72l-1.15-.26c-2.05-.46-3.18-1.55-3.18-3.23 0-1.87 1.48-2.99 3.32-3.3V4h2.67v1.96c1.71.4 2.75 1.53 2.85 3.25h-1.94c-.11-.88-.96-1.65-2.18-1.65-1.18 0-2.05.58-2.05 1.51 0 .78.62 1.26 2.05 1.58l1.34.31c2.16.48 3.13 1.5 3.13 3.28 0 2.02-1.5 3.12-3.48 3.39z"/></svg>',
@@ -523,6 +511,7 @@ const SVG = {
 const WALLET_LIST = [
     { id: 'qris', name: 'QRIS', type: 'qris', domain: 'qris.id' },
     { id: 'bca', name: 'BCA', type: 'bank', domain: 'bca.co.id' },
+    { id: 'blu', name: 'blu by BCA', type: 'bank', domain: 'blubybcadigital.co.id' },
     { id: 'bri', name: 'BRI', type: 'bank', domain: 'bri.co.id' },
     { id: 'bni', name: 'BNI', type: 'bank', domain: 'bni.co.id' },
     { id: 'ina', name: 'Bank INA', type: 'bank', domain: 'bankina.co.id' },
@@ -539,9 +528,9 @@ const WALLET_LIST = [
     { id: 'octopay', name: 'OctoPay', type: 'ewallet', domain: 'octopay.id' }
 ];
 
-/* ===== REVAMP WALLET ICON ===== */
 const LOCAL_WALLET_ICONS = {
     qris: "qris logo",
+    blu: "blu",
     seabank: "seabank",
     jago: "jago",
     krom: "krom",
@@ -562,11 +551,36 @@ function buildWalletIconCandidates(w) {
     return [...new Set(candidates)];
 }
 
-let currentWalletEditId = null;
+let currentBankId = null;
+let currentEditingAccountId = null;
 let qrisTempImage = null;
 
 function getWalletsData() {
-    return JSON.parse(localStorage.getItem("comersio_wallets")) || {};
+    let raw = JSON.parse(localStorage.getItem("comersio_wallets")) || {};
+    let changed = false;
+    for (let k in raw) {
+        if (k === 'qris') continue;
+        let entry = raw[k];
+        if (!entry) continue;
+        if (!entry.accounts && entry.name) {
+            entry.accounts = [{
+                id: 'acc_' + Date.now() + '_' + Math.random().toString(36).slice(2, 8),
+                name: entry.name,
+                number: entry.number || ''
+            }];
+            changed = true;
+        }
+    }
+    if (changed) localStorage.setItem("comersio_wallets", JSON.stringify(raw));
+    return raw;
+}
+
+function escapeHtml(str) {
+    return String(str || '').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+}
+
+function escapeJs(str) {
+    return String(str || '').replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/"/g, '\\"').replace(/\n/g, '\\n').replace(/\r/g, '\\r');
 }
 
 function openWalletList() {
@@ -575,11 +589,17 @@ function openWalletList() {
     grid.innerHTML = "";
 
     WALLET_LIST.forEach(w => {
-        const isConfigured = !!wallets[w.id];
+        const entry = wallets[w.id];
+        const isConfigured = w.type === 'qris'
+            ? !!(entry && entry.image)
+            : !!(entry && entry.accounts && entry.accounts.length > 0);
+        const accCount = (w.type !== 'qris' && entry && entry.accounts) ? entry.accounts.length : 0;
+
         const card = document.createElement("div");
         card.className = "wallet-card" + (isConfigured ? " configured" : "");
         card.innerHTML = `
-            ${isConfigured ? `<div class="wallet-badge">Aktif</div>` : ''}
+            ${isConfigured && w.type !== 'qris' ? `<div class="wallet-badge">${accCount} Rek</div>` : ''}
+            ${isConfigured && w.type === 'qris' ? `<div class="wallet-badge">Aktif</div>` : ''}
             <img alt="${w.name}">
             <span>${w.name}</span>
         `;
@@ -594,7 +614,10 @@ function openWalletList() {
         };
         imgEl.src = candidates[0];
 
-        card.onclick = () => openWalletEdit(w.id);
+        card.onclick = () => {
+            if (w.type === 'qris') openQRISUpload();
+            else openBankAccounts(w.id);
+        };
         grid.appendChild(card);
     });
 
@@ -605,54 +628,170 @@ function closeWalletList() {
     document.getElementById("walletListModal").classList.remove("active");
 }
 
-function openWalletEdit(id) {
-    currentWalletEditId = id;
+function openQRISUpload() {
+    currentBankId = 'qris';
+    currentEditingAccountId = null;
     qrisTempImage = null;
-    const w = WALLET_LIST.find(x => x.id === id);
     const wallets = getWalletsData();
-    const existing = wallets[id];
+    const existing = wallets['qris'];
 
-    document.getElementById("walletEditTitle").innerText = `Atur ${w.name}`;
+    document.getElementById("walletEditTitle").innerText = "Atur QRIS";
+    document.getElementById("btnDeleteWallet").style.display = existing && existing.image ? "block" : "none";
+
+    qrisTempImage = existing ? existing.image : null;
     const body = document.getElementById("walletEditBody");
-    body.innerHTML = "";
-    
-    document.getElementById("btnDeleteWallet").style.display = existing ? "block" : "none";
-
-    if (w.type === 'qris') {
-        qrisTempImage = existing ? existing.image : null;
-        body.innerHTML = `
-            <p style="font-size:0.75rem; color:#aaa; margin-bottom:10px;">Upload foto QRIS Anda. Foto akan dipotong otomatis menjadi rasio 1:1 (kotak) jika belum kotak.</p>
-            <div class="qris-upload-box" onclick="document.getElementById('qrisInput').click()">
-                ${qrisTempImage ? `<img src="${qrisTempImage}" id="qrisPreview">` : `
-                    <svg viewBox="0 0 24 24" style="width:40px; height:40px; fill:#888; margin-bottom:10px;"><path d="M9 3L7.17 5H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2h-3.17L15 3H9zm3 15c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z"/><circle cx="12" cy="13" r="3"/></svg>
-                    <span style="color:#888; font-family:'FiraCondBold'; font-size:0.8rem;">Klik untuk Upload QRIS</span>
-                `}
-            </div>
-            <input type="file" id="qrisInput" accept="image/*" style="display:none;" onchange="handleQrisUpload(event)">
-        `;
-    } else {
-        const labelNo = w.type === 'bank' ? 'No Rekening' : 'No E-Wallet';
-        body.innerHTML = `
-            <label>Nama Pemilik:</label>
-            <input type="text" id="walletNameInput" placeholder="Contoh: Budi Santoso" value="${existing ? existing.name : ''}">
-            <label>${labelNo}:</label>
-            <input type="text" id="walletNumberInput" placeholder="Contoh: 1234567890" value="${existing ? existing.number : ''}">
-        `;
-    }
-
+    body.innerHTML = `
+        <p style="font-size:0.75rem; color:#aaa; margin-bottom:10px;">Upload foto QRIS Anda. Foto akan dipotong otomatis menjadi rasio 1:1 (kotak) jika belum kotak.</p>
+        <div class="qris-upload-box" onclick="document.getElementById('qrisInput').click()">
+            ${qrisTempImage ? `<img src="${qrisTempImage}" id="qrisPreview">` : `
+                <svg viewBox="0 0 24 24" style="width:40px; height:40px; fill:#888; margin-bottom:10px;"><path d="M9 3L7.17 5H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2h-3.17L15 3H9zm3 15c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z"/><circle cx="12" cy="13" r="3"/></svg>
+                <span style="color:#888; font-family:'FiraCondBold'; font-size:0.8rem;">Klik untuk Upload QRIS</span>
+            `}
+        </div>
+        <input type="file" id="qrisInput" accept="image/*" style="display:none;" onchange="handleQrisUpload(event)">
+    `;
+    document.getElementById("walletListModal").classList.remove("active");
     document.getElementById("walletEditModal").classList.add("active");
 }
 
-function closeWalletEdit() {
-    document.getElementById("walletEditModal").classList.remove("active");
-    currentWalletEditId = null;
-    qrisTempImage = null;
+function openBankAccounts(bankId) {
+    currentBankId = bankId;
+    const w = WALLET_LIST.find(x => x.id === bankId);
+    const wallets = getWalletsData();
+    const entry = wallets[bankId] || { accounts: [] };
+    const accounts = entry.accounts || [];
+
+    document.getElementById('walletAccountsTitle').innerText = w.name;
+    const list = document.getElementById('walletAccountsList');
+
+    if (accounts.length === 0) {
+        list.innerHTML = `<div style="text-align:center; padding:30px 10px; color:#666; font-style:italic; font-size:0.85rem; line-height:1.5;">Belum ada rekening tersimpan.<br>Klik "+ Tambah Rekening Baru" di bawah.</div>`;
+    } else {
+        list.innerHTML = accounts.map(acc => `
+            <div class="account-card">
+                <div class="account-card-owner">${escapeHtml(acc.name)}</div>
+                <div class="account-card-number">${escapeHtml(acc.number)}</div>
+                <div class="account-card-actions">
+                    <button type="button" class="account-action-btn copy" data-action="copy" data-id="${escapeHtml(acc.id)}">
+                        <svg viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
+                        Salin
+                    </button>
+                    <button type="button" class="account-action-btn edit" data-action="edit" data-id="${escapeHtml(acc.id)}">
+                        <svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a1.003 1.003 0 0 0 0-1.42l-2.34-2.34a1.003 1.003 0 0 0-1.42 0l-1.83 1.83 3.75 3.75 1.84-1.82z"/></svg>
+                        Edit
+                    </button>
+                    <button type="button" class="account-action-btn delete" data-action="delete" data-id="${escapeHtml(acc.id)}">
+                        <svg viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
+                        Hapus
+                    </button>
+                </div>
+            </div>
+        `).join('');
+
+        list.querySelectorAll('[data-action]').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const action = this.dataset.action;
+                const accId = this.dataset.id;
+                const acc = accounts.find(a => a.id === accId);
+                if (!acc) return;
+                if (action === 'copy') copyAccountNumber(acc.number, this);
+                else if (action === 'edit') openEditAccount(accId);
+                else if (action === 'delete') deleteAccount(accId);
+            });
+        });
+    }
+
+    document.getElementById('walletListModal').classList.remove('active');
+    document.getElementById('walletAccountsModal').classList.add('active');
+}
+
+function closeWalletAccounts() {
+    document.getElementById('walletAccountsModal').classList.remove('active');
+    currentBankId = null;
+    openWalletList();
+}
+
+function openAddAccount() {
+    if (!currentBankId) return;
+    currentEditingAccountId = null;
+    const w = WALLET_LIST.find(x => x.id === currentBankId);
+    document.getElementById('walletEditTitle').innerText = `Tambah Rekening ${w.name}`;
+
+    const labelNo = w.type === 'bank' ? 'No Rekening' : 'No E-Wallet';
+    document.getElementById('walletEditBody').innerHTML = `
+        <label>Nama Pemilik:</label>
+        <input type="text" id="walletNameInput" placeholder="Contoh: Budi Santoso" style="width:100%;height:42px;background:#000;border:1px solid var(--emas);border-radius:8px;color:#fff;padding:0 12px;font-family:'FiraCondBook',sans-serif;font-size:0.95rem;outline:none;">
+        <label>${labelNo}:</label>
+        <input type="text" id="walletNumberInput" placeholder="Contoh: 1234567890" style="width:100%;height:42px;background:#000;border:1px solid var(--emas);border-radius:8px;color:#fff;padding:0 12px;font-family:'FiraCondBook',sans-serif;font-size:0.95rem;outline:none;">
+    `;
+    document.getElementById('btnDeleteWallet').style.display = 'none';
+    document.getElementById('walletAccountsModal').classList.remove('active');
+    document.getElementById('walletEditModal').classList.add('active');
+}
+
+function openEditAccount(accountId) {
+    const wallets = getWalletsData();
+    const entry = wallets[currentBankId];
+    if (!entry || !entry.accounts) return;
+    const acc = entry.accounts.find(a => a.id === accountId);
+    if (!acc) return;
+
+    currentEditingAccountId = accountId;
+    const w = WALLET_LIST.find(x => x.id === currentBankId);
+    document.getElementById('walletEditTitle').innerText = `Edit Rekening ${w.name}`;
+
+    const labelNo = w.type === 'bank' ? 'No Rekening' : 'No E-Wallet';
+    document.getElementById('walletEditBody').innerHTML = `
+        <label>Nama Pemilik:</label>
+        <input type="text" id="walletNameInput" value="${escapeHtml(acc.name)}" style="width:100%;height:42px;background:#000;border:1px solid var(--emas);border-radius:8px;color:#fff;padding:0 12px;font-family:'FiraCondBook',sans-serif;font-size:0.95rem;outline:none;">
+        <label>${labelNo}:</label>
+        <input type="text" id="walletNumberInput" value="${escapeHtml(acc.number)}" style="width:100%;height:42px;background:#000;border:1px solid var(--emas);border-radius:8px;color:#fff;padding:0 12px;font-family:'FiraCondBook',sans-serif;font-size:0.95rem;outline:none;">
+    `;
+    document.getElementById('btnDeleteWallet').style.display = 'block';
+    document.getElementById('walletAccountsModal').classList.remove('active');
+    document.getElementById('walletEditModal').classList.add('active');
+}
+
+async function deleteAccount(accountId) {
+    const conf = await showCustomConfirm('Hapus rekening ini?', 'Konfirmasi Hapus');
+    if (!conf) return;
+    const wallets = getWalletsData();
+    const entry = wallets[currentBankId];
+    if (!entry || !entry.accounts) return;
+    entry.accounts = entry.accounts.filter(a => a.id !== accountId);
+    entry.name = entry.accounts[0] ? entry.accounts[0].name : '';
+    entry.number = entry.accounts[0] ? entry.accounts[0].number : '';
+    localStorage.setItem("comersio_wallets", JSON.stringify(wallets));
+    openBankAccounts(currentBankId);
+}
+
+function copyAccountNumber(num, btn) {
+    const orig = btn.innerHTML;
+    const doCopy = () => {
+        btn.innerHTML = `<svg viewBox="0 0 24 24" style="width:12px;height:12px;fill:currentColor;"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg> Tersalin`;
+        setTimeout(() => { btn.innerHTML = orig; }, 1500);
+    };
+    if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(num).then(doCopy).catch(() => fallbackCopy(num, doCopy));
+    } else {
+        fallbackCopy(num, doCopy);
+    }
+}
+
+function fallbackCopy(text, cb) {
+    const ta = document.createElement("textarea");
+    ta.value = text;
+    ta.style.position = "fixed";
+    ta.style.left = "-999999px";
+    document.body.appendChild(ta);
+    ta.select();
+    try { document.execCommand('copy'); cb(); } catch(e) { console.error(e); }
+    ta.remove();
 }
 
 function handleQrisUpload(e) {
     const file = e.target.files[0];
     if (!file) return;
-
     const reader = new FileReader();
     reader.onload = (event) => {
         const img = new Image();
@@ -666,8 +805,7 @@ function handleQrisUpload(e) {
             const sy = (img.height - size) / 2;
             ctx.drawImage(img, sx, sy, size, size, 0, 0, size, size);
             qrisTempImage = canvas.toDataURL('image/jpeg', 0.8);
-            const box = document.querySelector('.qris-upload-box');
-            box.innerHTML = `<img src="${qrisTempImage}" id="qrisPreview">`;
+            document.querySelector('.qris-upload-box').innerHTML = `<img src="${qrisTempImage}" id="qrisPreview">`;
         };
         img.src = event.target.result;
     };
@@ -675,8 +813,8 @@ function handleQrisUpload(e) {
 }
 
 function saveWalletConfig() {
-    if (!currentWalletEditId) return;
-    const w = WALLET_LIST.find(x => x.id === currentWalletEditId);
+    if (!currentBankId) return;
+    const w = WALLET_LIST.find(x => x.id === currentBankId);
     const wallets = getWalletsData();
 
     if (w.type === 'qris') {
@@ -684,36 +822,59 @@ function saveWalletConfig() {
             showCustomAlert("Silakan upload foto QRIS terlebih dahulu!", "Peringatan");
             return;
         }
-        wallets[w.id] = { image: qrisTempImage };
-    } else {
-        const name = document.getElementById("walletNameInput").value.trim();
-        const number = document.getElementById("walletNumberInput").value.trim();
-        if (!name || !number) {
-            showCustomAlert("Lengkapi Nama dan Nomor terlebih dahulu!", "Peringatan");
-            return;
-        }
-        wallets[w.id] = { name: name, number: number };
+        wallets['qris'] = { image: qrisTempImage };
+        localStorage.setItem("comersio_wallets", JSON.stringify(wallets));
+        closeWalletEdit();
+        openWalletList();
+        showCustomAlert("QRIS berhasil disimpan!", "Berhasil");
+        return;
     }
+
+    const name = document.getElementById("walletNameInput").value.trim();
+    const number = document.getElementById("walletNumberInput").value.trim();
+    if (!name || !number) {
+        showCustomAlert("Lengkapi Nama dan Nomor terlebih dahulu!", "Peringatan");
+        return;
+    }
+
+    if (!wallets[w.id]) wallets[w.id] = { name: '', number: '', accounts: [] };
+    if (!wallets[w.id].accounts) wallets[w.id].accounts = [];
+
+    if (currentEditingAccountId) {
+        const idx = wallets[w.id].accounts.findIndex(a => a.id === currentEditingAccountId);
+        if (idx >= 0) {
+            wallets[w.id].accounts[idx].name = name;
+            wallets[w.id].accounts[idx].number = number;
+        }
+    } else {
+        wallets[w.id].accounts.push({
+            id: 'acc_' + Date.now() + '_' + Math.random().toString(36).slice(2, 8),
+            name, number
+        });
+    }
+
+    wallets[w.id].name = wallets[w.id].accounts[0].name;
+    wallets[w.id].number = wallets[w.id].accounts[0].number;
 
     localStorage.setItem("comersio_wallets", JSON.stringify(wallets));
     closeWalletEdit();
-    openWalletList();
-    showCustomAlert("Pengaturan berhasil disimpan!", "Berhasil");
+    openBankAccounts(currentBankId);
+    showCustomAlert("Rekening berhasil disimpan!", "Berhasil");
 }
 
-function deleteWalletConfig() {
-    if (!currentWalletEditId) return;
-    showCustomConfirm("Hapus pengaturan ini?", "Konfirmasi Hapus").then(res => {
-        if (res) {
-            const wallets = getWalletsData();
-            delete wallets[currentWalletEditId];
-            localStorage.setItem("comersio_wallets", JSON.stringify(wallets));
-            closeWalletEdit();
-            openWalletList();
-        }
-    });
+function closeWalletEdit() {
+    document.getElementById("walletEditModal").classList.remove("active");
+    currentEditingAccountId = null;
+    qrisTempImage = null;
 }
 
+async function deleteWalletConfig() {
+    if (!currentEditingAccountId || !currentBankId) return;
+    await deleteAccount(currentEditingAccountId);
+    closeWalletEdit();
+}
+
+/* ================= PATCH NOTES ================= */
 let openPatchIndex = 0;
 let modalCallback = null;
 function renderPatchAccordion(){
@@ -775,43 +936,21 @@ function closeCustomModal(result) {
   if(modalCallback) { modalCallback(result); modalCallback = null; }
 }
 
-/* ================= PAGE LOADING OVERLAY ================= */
-(function preloadLoadingGif(){
-    const img = new Image();
-    img.src = 'loading.webp';
-})();
+(function preloadLoadingGif(){ const img = new Image(); img.src = 'loading.webp'; })();
+function showPageLoading(){ const ov = document.getElementById('pageLoadingOverlay'); if (ov) ov.classList.add('active'); }
+function navigateWithLoading(url){ if (!url) return; showPageLoading(); setTimeout(() => { window.location.href = url; }, 450); }
+function reloadWithLoading(){ showPageLoading(); setTimeout(() => { window.location.reload(); }, 450); }
 
-function showPageLoading(){
-    const ov = document.getElementById('pageLoadingOverlay');
-    if (ov) ov.classList.add('active');
-}
-
-function navigateWithLoading(url){
-    if (!url) return;
-    showPageLoading();
-    setTimeout(() => { window.location.href = url; }, 450);
-}
-
-function reloadWithLoading(){
-    showPageLoading();
-    setTimeout(() => { window.location.reload(); }, 450);
-}
-
-/* Handler global untuk semua <a href="*.html"> */
 document.addEventListener('click', function(e){
     const link = e.target.closest('a[href]');
     if (!link) return;
     if (link.classList.contains('menu-grid-item')) return;
     if (link.classList.contains('nav-item')) return;
     if (link.id === 'topProfileMenuBtn') return;
-
     const href = link.getAttribute('href');
     if (!href) return;
-    if (href.startsWith('http') || href.startsWith('javascript') ||
-        href.startsWith('#') || href.startsWith('mailto') ||
-        href.startsWith('tel') || href.startsWith('blob')) return;
+    if (href.startsWith('http') || href.startsWith('javascript') || href.startsWith('#') || href.startsWith('mailto') || href.startsWith('tel') || href.startsWith('blob')) return;
     if (!href.endsWith('.html')) return;
-
     e.preventDefault();
     navigateWithLoading(href);
 });
@@ -913,8 +1052,6 @@ function parseTgl(val) {
   if (m1) { let d = parseInt(m1[1],10), mo = parseInt(m1[2],10)-1, y = parseInt(m1[3],10); if(y<100) y+=2000; let dt=new Date(y,mo,d); if(!isNaN(dt.getTime())) return dt; }
   let m2 = s.match(/^(\d{4})[\/\-](\d{1,2})[\/\-](\d{1,2})/);
   if (m2) { let dt=new Date(parseInt(m2[1],10), parseInt(m2[2],10)-1, parseInt(m2[3],10)); if(!isNaN(dt.getTime())) return dt; }
-  let m3 = s.match(/^(\d{4})[\/\-](\d{1,2})$/);
-  if (m3) { let dt=new Date(parseInt(m3[1],10), parseInt(m3[2],10)-1, 1); if(!isNaN(dt.getTime())) return dt; }
   let d = new Date(s);
   return isNaN(d.getTime()) ? null : d;
 }
@@ -926,13 +1063,7 @@ function bulanKeIndex(bulanVal) {
   let s = String(bulanVal).trim().toLowerCase();
   if (!s) return -1;
   const NAMA_ID = ["januari","februari","maret","april","mei","juni","juli","agustus","september","oktober","november","desember"];
-  const NAMA_EN = ["january","february","march","april","may","june","july","august","september","october","november","december"];
-  const NAMA_SHORT_ID = ["jan","feb","mar","apr","mei","jun","jul","agu","sep","okt","nov","des"];
-  const NAMA_SHORT_EN = ["jan","feb","mar","apr","may","jun","jul","aug","sep","oct","nov","dec"];
   let idx = NAMA_ID.indexOf(s); if (idx !== -1) return idx;
-  idx = NAMA_EN.indexOf(s); if (idx !== -1) return idx;
-  idx = NAMA_SHORT_ID.indexOf(s); if (idx !== -1) return idx;
-  idx = NAMA_SHORT_EN.indexOf(s); if (idx !== -1) return idx;
   let n = parseInt(s, 10); if (!isNaN(n)) return n > 11 ? n - 1 : n;
   return -1;
 }
@@ -945,28 +1076,10 @@ function loadDashboardFinance() {
   const now = new Date(), currentMonth = now.getMonth(), currentYear = now.getFullYear();
   let startDateStr = localStorage.getItem("comersio_profit_start_date") || "";
   let startYear = null, startMonth = null;
-  
-  if (startDateStr) { 
-    let m = startDateStr.match(/^(\d{4})[\/\-](\d{1,2})/); 
-    if (m) { startYear = parseInt(m[1],10); startMonth = parseInt(m[2],10)-1; } 
-  }
-  
-  function isSameMonth(dateVal) { 
-    let d = parseTgl(dateVal); if (!d) return false; 
-    return d.getMonth() === currentMonth && d.getFullYear() === currentYear; 
-  }
-  function cekProfitMasuk(tahunItem, bulanItem) { 
-    if (startYear === null || startMonth === null) return true; 
-    if (tahunItem > startYear) return true; 
-    if (tahunItem < startYear) return false; 
-    return bulanItem >= startMonth; 
-  }
-  function isAfterStartMonth(dateVal) { 
-    if (startYear === null || startMonth === null) return true; 
-    let d = parseTgl(dateVal); if (!d) return true; 
-    return cekProfitMasuk(d.getFullYear(), d.getMonth()); 
-  }
-
+  if (startDateStr) { let m = startDateStr.match(/^(\d{4})[\/\-](\d{1,2})/); if (m) { startYear = parseInt(m[1],10); startMonth = parseInt(m[2],10)-1; } }
+  function isSameMonth(dateVal) { let d = parseTgl(dateVal); if (!d) return false; return d.getMonth() === currentMonth && d.getFullYear() === currentYear; }
+  function cekProfitMasuk(tahunItem, bulanItem) { if (startYear === null || startMonth === null) return true; if (tahunItem > startYear) return true; if (tahunItem < startYear) return false; return bulanItem >= startMonth; }
+  function isAfterStartMonth(dateVal) { if (startYear === null || startMonth === null) return true; let d = parseTgl(dateVal); if (!d) return true; return cekProfitMasuk(d.getFullYear(), d.getMonth()); }
   function processTransactionData(dataSet) {
     if (!dataSet) return;
     for (let custId in dataSet) {
@@ -979,29 +1092,17 @@ function loadDashboardFinance() {
         let dibayar = numField(item,"dibayar","bayar","paid","amount");
         let tip = numField(item,"tip","tips");
         let waktu = getWaktuField(item);
-        
         let masuk = dibayar + tip;
         totalIncomeAllTime += masuk;
         if (isSameMonth(waktu)) totalIncomeThisMonth += masuk;
-        
         totalModalOut += modal;
-        
         let itemProfit = (harga - modal) + tip;
         if (isAfterStartMonth(waktu)) totalProfit += itemProfit;
       });
     }
   }
-
-  try {
-    let debtsData = JSON.parse(localStorage.getItem("debts")) || {};
-    processTransactionData(debtsData);
-  } catch(e) { console.error("Error reading debts:", e); }
-
-  try {
-    let archivedData = JSON.parse(localStorage.getItem("archivedDebts")) || {};
-    processTransactionData(archivedData);
-  } catch(e) { console.error("Error reading archivedDebts:", e); }
-
+  try { let debtsData = JSON.parse(localStorage.getItem("debts")) || {}; processTransactionData(debtsData); } catch(e) {}
+  try { let archivedData = JSON.parse(localStorage.getItem("archivedDebts")) || {}; processTransactionData(archivedData); } catch(e) {}
   try {
     let monthlyData = JSON.parse(localStorage.getItem("monthlyLogs")) || JSON.parse(localStorage.getItem("monthly")) || [];
     if (Array.isArray(monthlyData)) {
@@ -1040,7 +1141,6 @@ function loadDashboardFinance() {
       });
     }
   } catch(e) {}
-
   let finalSaldo = baseSaldo - totalModalOut + totalIncomeAllTime;
   const formatIDR = (n) => { if (isNaN(n)) n = 0; if (n < 0) return "-Rp " + Math.abs(Math.round(n)).toLocaleString('id-ID'); return "Rp " + Math.round(n).toLocaleString('id-ID'); };
   document.getElementById("display-saldo").innerText = formatIDR(finalSaldo);
@@ -1114,7 +1214,6 @@ function getBoardsConfig() {
       if(!parsed.some(b => b.id === "mediadownloader")) { parsed.unshift({ id: "mediadownloader", name: "Media Downloader", visible: true, order: -1, isCustom: false }); parsed.forEach((b,i) => { b.order = i; }); }
       if(!parsed.some(b => b.id === "coingecko")) parsed.push({ id: "coingecko", name: "CoinGecko Market & News", visible: true, order: parsed.length, isCustom: false });
       if(!parsed.some(b => b.id === "football")) parsed.push({ id: "football", name: "DetikSport Terkini", visible: true, order: parsed.length, isCustom: false });
-      parsed.forEach(b => { if (b.id === "football" && b.name === "Berita Bola Terkini") b.name = "DetikSport Terkini"; });
       return parsed;
     } catch(e) {}
   }
@@ -1147,7 +1246,7 @@ function createMediaDownloaderBoardElement() {
 function createConverterBoardElement() {
   const div = document.createElement("div");
   div.className = "converter-container";
-  div.innerHTML = `<div class="converter-header"><span>${SVG.currency} Kurs Live Google Finance</span><span class="converter-mode-badge" id="converterModeLabel">Asing &rarr; IDR</span></div> <div class="currency-pills-scroll" id="currencyPillsContainer"> <div class="currency-pill active" data-curr="USD" onclick="selectCurrency('USD')">USD ($)</div> <div class="currency-pill" data-curr="EUR" onclick="selectCurrency('EUR')">EUR (&euro;)</div> <div class="currency-pill" data-curr="GBP" onclick="selectCurrency('GBP')">GBP (&pound;)</div> <div class="currency-pill" data-curr="SGD" onclick="selectCurrency('SGD')">SGD ($)</div> <div class="currency-pill" data-curr="AUD" onclick="selectCurrency('AUD')">AUD ($)</div> <div class="currency-pill" data-curr="MYR" onclick="selectCurrency('MYR')">MYR (RM)</div> <div class="currency-pill" data-curr="CNY" onclick="selectCurrency('CNY')">CNY (&yen;)</div> <div class="currency-pill" data-curr="THB" onclick="selectCurrency('THB')">THB (&#3647;)</div> <div class="currency-pill" data-curr="JPY" onclick="selectCurrency('JPY')">JPY (&yen;)</div> <div class="currency-pill" data-curr="KRW" onclick="selectCurrency('KRW')">KRW (&#8361;)</div> </div> <div class="converter-input-row"><input type="number" id="converterInput" class="converter-input" placeholder="Masukkan nominal..." value="1" oninput="convertCurrency()"><span class="converter-input-unit" id="inputUnitLabel">USD</span></div> <div class="converter-switch-row"><span style="font-size: 0.75rem; color: #888;" id="currentRateInfo">Memuat kurs...</span><div class="converter-switch-btn" onclick="toggleConverterDirection()" title="Balik Arah">${SVG.upDown}</div></div> <div class="converter-result-box"><span id="converterResultDesc">Hasil Konversi (IDR):</span><span class="converter-result-val" id="converterResult">Menghitung...</span></div> <div class="asset-ticker-container"><div class="asset-ticker-title"><span>${SVG.chartLine} Komoditas &amp; Aset Real-Time (IDR)</span><span class="live-label">${SVG.dot} LIVE</span></div> <div class="asset-grid"> <div class="asset-card"><span class="asset-name">Bitcoin (BTC)</span><span class="asset-price" id="assetBtc">Memuat...</span></div> <div class="asset-card"><span class="asset-name">Ethereum (ETH)</span><span class="asset-price" id="assetEth">Memuat...</span></div> <div class="asset-card"><span class="asset-name">Gold / Emas (XAU)</span><span class="asset-price" id="assetGold">Memuat...</span></div> <div class="asset-card"><span class="asset-name">Nikel (Nickel)</span><span class="asset-price" id="assetNickel">Memuat...</span></div> </div> </div>`;
+  div.innerHTML = `<div class="converter-header"><span>${SVG.currency} Kurs Live</span><span class="converter-mode-badge" id="converterModeLabel">Asing &rarr; IDR</span></div> <div class="currency-pills-scroll" id="currencyPillsContainer"> <div class="currency-pill active" data-curr="USD" onclick="selectCurrency('USD')">USD ($)</div> <div class="currency-pill" data-curr="EUR" onclick="selectCurrency('EUR')">EUR</div> <div class="currency-pill" data-curr="GBP" onclick="selectCurrency('GBP')">GBP</div> <div class="currency-pill" data-curr="SGD" onclick="selectCurrency('SGD')">SGD</div> <div class="currency-pill" data-curr="MYR" onclick="selectCurrency('MYR')">MYR</div> <div class="currency-pill" data-curr="CNY" onclick="selectCurrency('CNY')">CNY</div> <div class="currency-pill" data-curr="JPY" onclick="selectCurrency('JPY')">JPY</div> </div> <div class="converter-input-row"><input type="number" id="converterInput" class="converter-input" placeholder="Masukkan nominal..." value="1" oninput="convertCurrency()"><span class="converter-input-unit" id="inputUnitLabel">USD</span></div> <div class="converter-switch-row"><span style="font-size: 0.75rem; color: #888;" id="currentRateInfo">Memuat kurs...</span><div class="converter-switch-btn" onclick="toggleConverterDirection()" title="Balik Arah">${SVG.upDown}</div></div> <div class="converter-result-box"><span id="converterResultDesc">Hasil Konversi (IDR):</span><span class="converter-result-val" id="converterResult">Menghitung...</span></div> <div class="asset-ticker-container"><div class="asset-ticker-title"><span>${SVG.chartLine} Komoditas &amp; Aset Real-Time (IDR)</span><span class="live-label">${SVG.dot} LIVE</span></div> <div class="asset-grid"> <div class="asset-card"><span class="asset-name">Bitcoin (BTC)</span><span class="asset-price" id="assetBtc">Memuat...</span></div> <div class="asset-card"><span class="asset-name">Ethereum (ETH)</span><span class="asset-price" id="assetEth">Memuat...</span></div> <div class="asset-card"><span class="asset-name">Gold / Emas (XAU)</span><span class="asset-price" id="assetGold">Memuat...</span></div> <div class="asset-card"><span class="asset-name">Nikel (Nickel)</span><span class="asset-price" id="assetNickel">Memuat...</span></div> </div> </div>`;
   setTimeout(() => { convertCurrency(); fetchGoogleFinanceRates(); }, 50);
   return div;
 }
@@ -1167,7 +1266,7 @@ function createBloombergBoardElement() {
 function createCoinGeckoBoardElement() {
   const div = document.createElement("div");
   div.className = "market-board";
-  div.innerHTML = `<div class="market-board-header"><span>${SVG.crypto} COINGECKO MARKET &amp; NEWS</span><span style="display: flex; align-items: center; gap: 6px; font-size: 0.7rem; color: #aaa;"><span class="live-dot"></span> LIVE</span></div> <div class="asset-ticker-container" style="margin-top: 0; padding-top: 0; border-top: none; margin-bottom: 8px;"><div class="asset-grid"> <div class="asset-card"><span class="asset-name">Solana (SOL)</span><span class="asset-price" id="cgSol">Memuat...</span></div> <div class="asset-card"><span class="asset-name">Binance Coin (BNB)</span><span class="asset-price" id="cgBnb">Memuat...</span></div> </div></div> <div class="news-ticker-list"> <a href="javascript:void(0)" onclick="return openExternalLink(event, 'https://www.coingecko.com/en/news', 'CoinGecko News')" class="news-item-card"><div class="news-item-title">Crypto Market Update: Altcoins Gain Momentum</div><div class="news-item-time">CoinGecko News &bull; Real-time</div></a> <a href="javascript:void(0)" onclick="return openExternalLink(event, 'https://www.coingecko.com/en/news', 'CoinGecko News')" class="news-item-card"><div class="news-item-title">DeFi TVL Rebounds Following Major Protocol Upgrades</div><div class="news-item-time">CoinGecko Insights &bull; Terbaru</div></a> </div>`;
+  div.innerHTML = `<div class="market-board-header"><span>${SVG.crypto} COINGECKO MARKET &amp; NEWS</span><span style="display: flex; align-items: center; gap: 6px; font-size: 0.7rem; color: #aaa;"><span class="live-dot"></span> LIVE</span></div> <div class="asset-ticker-container" style="margin-top: 0; padding-top: 0; border-top: none; margin-bottom: 8px;"><div class="asset-grid"> <div class="asset-card"><span class="asset-name">Solana (SOL)</span><span class="asset-price" id="cgSol">Memuat...</span></div> <div class="asset-card"><span class="asset-name">Binance Coin (BNB)</span><span class="asset-price" id="cgBnb">Memuat...</span></div> </div></div> <div class="news-ticker-list"> <a href="javascript:void(0)" onclick="return openExternalLink(event, 'https://www.coingecko.com/en/news', 'CoinGecko News')" class="news-item-card"><div class="news-item-title">Crypto Market Update: Altcoins Gain Momentum</div><div class="news-item-time">CoinGecko News &bull; Real-time</div></a> </div>`;
   setTimeout(() => fetchCoinGeckoMiniPrices(), 50);
   return div;
 }
@@ -1183,13 +1282,13 @@ async function fetchCoinGeckoMiniPrices() {
 function createCryptowaveBoardElement() {
   const div = document.createElement("div");
   div.className = "market-board";
-  div.innerHTML = `<div class="market-board-header"><span>${SVG.wave} CRYPTOWAVE INDONESIA</span><span style="display: flex; align-items: center; gap: 6px; font-size: 0.7rem; color: #aaa;"><span class="live-dot"></span> LIVE</span></div> <div class="news-ticker-list" style="margin-bottom: 6px;"> <a href="javascript:void(0)" onclick="return openExternalLink(event, 'https://cryptowave.co.id', 'Cryptowave')" class="news-item-card"><div class="news-item-title">Bitcoin Lanjut Reli, Melesat ke Harga Tinggi Didukung Volume ETF</div><div class="news-item-time">Cryptowave.co.id &bull; Berita Terbaru</div></a> <a href="javascript:void(0)" onclick="return openExternalLink(event, 'https://cryptowave.co.id', 'Cryptowave')" class="news-item-card"><div class="news-item-title">Data Ekonomi Makro &amp; Suku Bunga Pengaruhi Pasar Kripto Global</div><div class="news-item-time">Cryptowave.co.id &bull; Analisis</div></a> </div> <a href="javascript:void(0)" onclick="return openExternalLink(event, 'https://id.tradingview.com', 'TradingView')" class="tradingview-btn"><div class="tradingview-left"><span class="tv-title">${SVG.chartLine} TradingView Indonesia</span><span class="tv-sub">Buka Chart &amp; Analisis Pasar Real-Time</span></div><span class="tv-arrow">${SVG.arrowRight}</span></a>`;
+  div.innerHTML = `<div class="market-board-header"><span>${SVG.wave} CRYPTOWAVE INDONESIA</span><span style="display: flex; align-items: center; gap: 6px; font-size: 0.7rem; color: #aaa;"><span class="live-dot"></span> LIVE</span></div> <div class="news-ticker-list" style="margin-bottom: 6px;"> <a href="javascript:void(0)" onclick="return openExternalLink(event, 'https://cryptowave.co.id', 'Cryptowave')" class="news-item-card"><div class="news-item-title">Bitcoin Lanjut Reli, Melesat ke Harga Tinggi Didukung Volume ETF</div><div class="news-item-time">Cryptowave.co.id &bull; Berita Terbaru</div></a> </div> <a href="javascript:void(0)" onclick="return openExternalLink(event, 'https://id.tradingview.com', 'TradingView')" class="tradingview-btn"><div class="tradingview-left"><span class="tv-title">${SVG.chartLine} TradingView Indonesia</span><span class="tv-sub">Buka Chart &amp; Analisis Pasar Real-Time</span></div><span class="tv-arrow">${SVG.arrowRight}</span></a>`;
   return div;
 }
 function createIndoStockBoardElement() {
   const div = document.createElement("div");
   div.className = "market-board";
-  div.innerHTML = `<div class="market-board-header"><span>${SVG.chartLine} BERITA STOCK INDONESIA</span><span style="display: flex; align-items: center; gap: 6px; font-size: 0.7rem; color: #aaa;"><span class="live-dot"></span> IDX</span></div> <div class="news-ticker-list"> <a href="javascript:void(0)" onclick="return openExternalLink(event, 'https://www.idx.co.id', 'IDX')" class="news-item-card"><div class="news-item-title">IHSG Ditutup Hijau Didukung Saham Big Banks &amp; Emiten Komoditas</div><div class="news-item-time">IDX News &bull; Berita Pasar</div></a> <a href="javascript:void(0)" onclick="return openExternalLink(event, 'https://www.idx.co.id', 'IDX')" class="news-item-card"><div class="news-item-title">Daftar Saham Top Gainers &amp; Corporate Action Emiten Pekan Ini</div><div class="news-item-time">Bursa Efek Indonesia &bull; Market Update</div></a> </div>`;
+  div.innerHTML = `<div class="market-board-header"><span>${SVG.chartLine} BERITA STOCK INDONESIA</span><span style="display: flex; align-items: center; gap: 6px; font-size: 0.7rem; color: #aaa;"><span class="live-dot"></span> IDX</span></div> <div class="news-ticker-list"> <a href="javascript:void(0)" onclick="return openExternalLink(event, 'https://www.idx.co.id', 'IDX')" class="news-item-card"><div class="news-item-title">IHSG Ditutup Hijau Didukung Saham Big Banks &amp; Emiten Komoditas</div><div class="news-item-time">IDX News &bull; Berita Pasar</div></a> </div>`;
   return div;
 }
 function createFootballBoardElement() {
@@ -1251,7 +1350,7 @@ async function fetchFootballNews() {
       renderFootballItems(items); return;
     }
   } catch(e) {}
-  listEl.innerHTML = `<div class="news-item-card"><div class="news-item-title" style="color:#ff6b6b;">Gagal memuat berita DetikSport.</div><div class="news-item-time">Tap tombol di bawah buat buka langsung.</div></div>`;
+  listEl.innerHTML = `<div class="news-item-card"><div class="news-item-title" style="color:#ff6b6b;">Gagal memuat berita DetikSport.</div></div>`;
 }
 function createCustomBoardElement(boardObj) {
   const div = document.createElement("div");
@@ -1261,7 +1360,7 @@ function createCustomBoardElement(boardObj) {
   div.innerHTML = `<div class="market-board-header"><span>${SVG.pin} ${boardObj.name}</span><span style="font-size: 0.7rem; color: var(--emas-terang);">CUSTOM</span></div> <div class="news-ticker-list"> <a href="javascript:void(0)" onclick="return openExternalLink(event, '${safeUrl}', '${safeName}')" class="news-item-card"><div class="news-item-title">Kunjungi Link / Berita Terkait: ${boardObj.name}</div><div class="news-item-time">Klik untuk membuka tautan eksternal</div></a> </div>`;
   return div;
 }
-let liveRates = { USD: 17630, EUR: 19100, GBP: 22400, SGD: 13200, AUD: 11500, MYR: 4050, CNY: 2450, THB: 515, JPY: 118, KRW: 13.2 };
+let liveRates = { USD: 17630, EUR: 19100, GBP: 22400, SGD: 13200, MYR: 4050, CNY: 2450, JPY: 118 };
 let selectedCurrency = "USD";
 let isIdrToForeign = false;
 async function fetchGoogleFinanceRates() {
@@ -1285,19 +1384,7 @@ async function fetchLiveAssetPrices() {
     const cryptoData = await cryptoRes.json();
     if(cryptoData.bitcoin && document.getElementById("assetBtc")) { document.getElementById("assetBtc").innerText = "Rp " + Math.round(cryptoData.bitcoin.usd * usdIdr).toLocaleString('id-ID'); }
     if(cryptoData.ethereum && document.getElementById("assetEth")) { document.getElementById("assetEth").innerText = "Rp " + Math.round(cryptoData.ethereum.usd * usdIdr).toLocaleString('id-ID'); }
-    const goldRes = await fetch("https://api.metals.dev/v1/latest?api_key=demo&currency=USD");
-    const goldData = await goldRes.json();
-    if(goldData && goldData.metals && goldData.metals.gold) {
-      const goldUsdPerGram = goldData.metals.gold / 31.1035;
-      const goldIdrPerGram = Math.round(goldUsdPerGram * usdIdr);
-      if(document.getElementById("assetGold")) { document.getElementById("assetGold").innerText = "Rp " + goldIdrPerGram.toLocaleString('id-ID') + "/g"; }
-    }
-    const nickelRes = await fetch("https://api.metals.dev/v1/latest?api_key=demo&currency=USD");
-    const nickelData = await nickelRes.json();
-    if(nickelData && nickelData.metals && nickelData.metals.nickel) {
-      if(document.getElementById("assetNickel")) { document.getElementById("assetNickel").innerText = "Rp " + Math.round(nickelData.metals.nickel * usdIdr).toLocaleString('id-ID') + "/kg"; }
-    }
-  } catch(e) { console.log("Error fetch asset live:", e); }
+  } catch(e) {}
 }
 function selectCurrency(curr) {
   selectedCurrency = curr;
@@ -1344,9 +1431,6 @@ function loadActiveNoteBoard() {
   const savedNoteV2 = localStorage.getItem("comersio_active_board_note_v2");
   if(savedNoteV2) {
     try { const parsed = JSON.parse(savedNoteV2); titleEl.value = parsed.title || ""; contentEl.value = parsed.content || ""; } catch(e) {}
-  } else {
-    const oldNote = localStorage.getItem("comersio_active_board_note");
-    if(oldNote) contentEl.value = oldNote;
   }
 }
 async function saveDashboardNote() {
@@ -1415,7 +1499,6 @@ async function saveBoardSettings() {
 }
 renderAllBoards();
 
-/* Menu grid: bounce + loading */
 document.querySelectorAll('.menu-grid-item').forEach(item => {
   if(item.hasAttribute('href') && item.getAttribute('href').endsWith('.html')){
     item.addEventListener('click', function(e){
@@ -1427,8 +1510,6 @@ document.querySelectorAll('.menu-grid-item').forEach(item => {
     });
   }
 });
-
-/* Bottom nav: loading */
 document.querySelectorAll('.nav-item').forEach(item => {
   const href = item.getAttribute('href');
   if (item.tagName === 'A' && href && href.endsWith('.html')){
@@ -1442,23 +1523,16 @@ document.querySelectorAll('.nav-item').forEach(item => {
 const BACKUP_FORMAT = "comersio-json";
 const BACKUP_VERSION = 2;
 const BACKUP_SKIP_KEYS = new Set(["ilya_greet_date"]);
-const BACKUP_KEY_ALIASES = {
-  active_board_note: "comersio_active_board_note",
-  notes_archive: "comersio_notes_archive",
-  boards_config: "comersio_boards_config",
-  base_saldo: "comersio_base_saldo",
-  profit_start_date: "comersio_profit_start_date"
-};
+const BACKUP_KEY_ALIASES = { active_board_note: "comersio_active_board_note", notes_archive: "comersio_notes_archive", boards_config: "comersio_boards_config", base_saldo: "comersio_base_saldo", profit_start_date: "comersio_profit_start_date" };
 const BACKUP_JSON_KEYS = ["customers","debts","products","monthly","monthlyLogs","comersio_notes_archive","comersio_boards_config","comersio_active_board_note_v2"];
 const BACKUP_CORE_DEFAULTS = { customers: "[]", debts: "{}", products: "[]", monthly: "[]" };
 function normalizeBackup(raw){
-  if(!raw || typeof raw !== "object" || Array.isArray(raw)) throw new Error("Format tidak dikenali (root bukan object)");
+  if(!raw || typeof raw !== "object" || Array.isArray(raw)) throw new Error("Format tidak dikenali");
   const out = {};
   const put = (k, v) => { if(v === undefined || v === null) return; out[k] = (typeof v === "string") ? v : JSON.stringify(v); };
   const hasStorage = raw.storage && typeof raw.storage === "object" && !Array.isArray(raw.storage);
   const hasData    = raw.data    && typeof raw.data    === "object" && !Array.isArray(raw.data);
   const flatKeys = Object.keys(raw).filter(k => !BACKUP_SKIP_KEYS.has(k) && k !== "__format" && k !== "__version" && k !== "__savedAt" && k !== "storage" && k !== "profile" && k !== "data");
-  flatKeys.sort((a, b) => { const aAlias = BACKUP_KEY_ALIASES[a] !== undefined ? 0 : 1; const bAlias = BACKUP_KEY_ALIASES[b] !== undefined ? 0 : 1; return aAlias - bAlias; });
   flatKeys.forEach(k => put(BACKUP_KEY_ALIASES[k] || k, raw[k]));
   if(hasData){ Object.keys(raw.data).forEach(k => { if(BACKUP_SKIP_KEYS.has(k)) return; put(BACKUP_KEY_ALIASES[k] || k, raw.data[k]); }); }
   if(raw.profile && typeof raw.profile === "object" && !Array.isArray(raw.profile)){
@@ -1468,7 +1542,6 @@ function normalizeBackup(raw){
   }
   if(hasStorage){
     const storageKeys = Object.keys(raw.storage).filter(k => !BACKUP_SKIP_KEYS.has(k));
-    storageKeys.sort((a, b) => { const aAlias = BACKUP_KEY_ALIASES[a] !== undefined ? 0 : 1; const bAlias = BACKUP_KEY_ALIASES[b] !== undefined ? 0 : 1; return aAlias - bAlias; });
     storageKeys.forEach(k => put(BACKUP_KEY_ALIASES[k] || k, raw.storage[k]));
   }
   BACKUP_JSON_KEYS.forEach(k => { if(!(k in out)) return; try { const parsed = JSON.parse(out[k]); if(parsed === null) delete out[k]; else out[k] = JSON.stringify(parsed); } catch(e){ delete out[k]; } });
@@ -1507,11 +1580,11 @@ document.getElementById("loadFile").addEventListener("change", function(e){
   reader.onload = async function(event){
     input.value = "";
     let data;
-    try { data = JSON.parse(event.target.result); } catch(parseErr) { await showCustomAlert("File tidak bisa dibaca sebagai JSON.\n\nPastikan file berekstensi .json dan tidak korup.\n\nDetail: " + parseErr.message, "Kesalahan Baca File"); return; }
+    try { data = JSON.parse(event.target.result); } catch(parseErr) { await showCustomAlert("File tidak bisa dibaca sebagai JSON.\n\nDetail: " + parseErr.message, "Kesalahan Baca File"); return; }
     try {
       const wasOld = !(data && data.__format === BACKUP_FORMAT);
       const count = applyBackup(data);
-      if(count === 0) { await showCustomAlert("File terbaca tapi TIDAK ADA data yang bisa disimpan.\n\nKemungkinan file kosong atau formatnya tidak dikenali.", "Peringatan"); return; }
+      if(count === 0) { await showCustomAlert("File terbaca tapi TIDAK ADA data yang bisa disimpan.", "Peringatan"); return; }
       await showCustomAlert(`Data berhasil di-load (${count} entri)${wasOld ? " dan dikonversi ke format baru" : ""}.\n\nHalaman akan dimuat ulang.`, "Berhasil");
       reloadWithLoading();
     } catch(err) { await showCustomAlert("Gagal load data: " + (err.message || err), "Kesalahan Load"); }
