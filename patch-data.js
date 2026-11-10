@@ -6,6 +6,7 @@ const PATCH_NOTES_DATA = [
     date: "11 November 2026",
     isLatest: true,
     features: [
+      { icon: SVG.user, title: "Banner Profil & Topbar Gold", desc: "Halaman profil sekarang mendukung upload banner. Di tampilan statis, banner dan foto profil digabung jadi satu kesatuan (avatar menimpa banner). Tombol profil di pojok kanan atas otomatis menampilkan gambar banner dengan efek overlay emas transparan." },
       { icon: SVG.star, title: "blu by BCA Ditambahkan", desc: "Metode pembayaran blu by BCA resmi masuk daftar Wallet. Icon otomatis ambil dari web resmi blubybcadigital.co.id, mendukung multi rekening seperti bank lain." },
       { icon: SVG.bookmark, title: "Multi Rekening per Bank", desc: "Setiap bank & e-wallet sekarang bisa nyimpen lebih dari 1 rekening. Klik kartu wallet di Dashboard → tampil list rekening dalam bentuk card dengan tombol Salin / Edit / Hapus. Badge angka di kartu wallet nunjukin jumlah rekening aktif." },
       { icon: SVG.user, title: "Rekening Picker di Konfirmasi Bayar", desc: "Kalau bank punya lebih dari 1 rekening, saat mau tagih utang user wajib pilih rekening tujuan dulu lewat modal picker. Rekening yang dipilih disimpan via paymentAccountId dan otomatis nongol di struk payment.html." },
