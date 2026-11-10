@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Payment Comérsio</title>
+<link rel="stylesheet" href="style.css">
 <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 <style>
   @font-face{font-family:'OswaldBold';src:url('oswald-bold.ttf') format('truetype');font-weight:700;}
@@ -99,7 +100,6 @@
   .page-loading-overlay img{width:80px;height:80px;object-fit:contain;}
   .page-loading-overlay .loading-text{color:var(--emas-terang);font-family:'FiraCondBold',sans-serif;font-size:0.8rem;letter-spacing:1px;text-transform:uppercase;opacity:0.85;}
 
-  /* ================= CONFIRM MODAL ================= */
   .confirm-overlay{position:fixed;inset:0;background:rgba(5,8,6,0.88);z-index:2147483645;display:none;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(6px);}
   .confirm-overlay.active{display:flex;animation:cfFade 0.2s ease;}
   @keyframes cfFade{from{opacity:0}to{opacity:1}}
@@ -114,7 +114,6 @@
   .confirm-cancel{background:rgba(255,255,255,0.08);color:#ddd;border:1px solid rgba(255,255,255,0.15) !important;}
   .confirm-ok{background:var(--emas-terang);color:#000;box-shadow:0 3px 15px rgba(255,209,102,0.35);}
 
-  /* ================= TOAST ================= */
   .comersio-toast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%) translateY(20px);background:#e8b13c;color:#000;padding:12px 24px;border-radius:30px;font-family:'FiraCondBold',sans-serif;font-size:0.9rem;font-weight:bold;z-index:2147483647;opacity:0;transition:opacity 0.3s,transform 0.3s;box-shadow:0 4px 20px rgba(232,177,60,0.5);letter-spacing:0.5px;pointer-events:none;max-width:90vw;text-align:center;}
   .comersio-toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
   .comersio-toast.error{background:#ff4d4d;color:#fff;box-shadow:0 4px 20px rgba(255,77,77,0.5);}
@@ -128,7 +127,7 @@
       <div class="mbanking-brand">Comersio <span>Center</span></div>
       <div class="mbanking-greeting-top">Detail Pembayaran</div>
     </div>
-    <button class="backBtn noCapture" onclick="navigateWithLoading('index.html')">← Kembali</button>
+    <button class="backBtn noCapture" onclick="navigateWithLoading('debt.html')">← Kembali</button>
   </div>
 
   <div class="content-wrap" style="padding-top: 70px;">
@@ -228,25 +227,25 @@ function showToast(msg, isError){
     setTimeout(() => { t.classList.remove('show'); setTimeout(() => t.remove(), 350); }, 2400);
 }
 
-/* ========== WALLET METADATA (ICON DARI WEB RESMI) ========== */
+/* ========== WALLET META (TERMASUK blu by BCA) ========== */
 const WALLET_META = {
-    qris:      { name: 'QRIS',       type: 'qris',    localLogo: 'QRIS Logo.png', urlLogo: '', color: 'E31E24' },
-    bca:       { name: 'BCA',        type: 'bank',    localLogo: '',              urlLogo: 'https://www.google.com/s2/favicons?domain=bca.co.id&sz=128', color: '0060AE' },
-    blu:       { name: 'blu by BCA', type: 'bank',    localLogo: '',              urlLogo: 'https://www.google.com/s2/favicons?domain=blubybcadigital.co.id&sz=128', color: '00C8E8' },
-    bri:       { name: 'BRI',        type: 'bank',    localLogo: 'Bank BRI.png',  urlLogo: '', color: '00529C' },
-    bni:       { name: 'BNI',        type: 'bank',    localLogo: '',              urlLogo: 'https://www.google.com/s2/favicons?domain=bni.co.id&sz=128', color: 'F15A23' },
-    ina:       { name: 'Bank INA',   type: 'bank',    localLogo: '',              urlLogo: 'https://www.google.com/s2/favicons?domain=bankina.co.id&sz=128', color: '1B4F72' },
-    seabank:   { name: 'SeaBank',    type: 'bank',    localLogo: 'SeaBank.png',   urlLogo: '', color: 'F97316' },
-    krom:      { name: 'Krom',       type: 'bank',    localLogo: 'Krom.png',      urlLogo: '', color: '111111' },
-    jago:      { name: 'Bank Jago',  type: 'bank',    localLogo: 'Bank Jago.png', urlLogo: '', color: '1A6AF0' },
-    superbank: { name: 'SuperBank',  type: 'bank',    localLogo: '',              urlLogo: 'https://www.google.com/s2/favicons?domain=superbank.co.id&sz=128', color: '0060E0' },
-    mandiri:   { name: 'Mandiri',    type: 'bank',    localLogo: '',              urlLogo: 'https://www.google.com/s2/favicons?domain=bankmandiri.co.id&sz=128', color: '003D79' },
-    ovo:       { name: 'OVO',        type: 'ewallet', localLogo: '',              urlLogo: 'https://www.google.com/s2/favicons?domain=ovo.id&sz=128', color: '4C3494' },
-    gopay:     { name: 'GoPay',      type: 'ewallet', localLogo: 'GoPay.png',     urlLogo: '', color: '00AED6' },
-    dana:      { name: 'DANA',       type: 'ewallet', localLogo: 'DANA.png',      urlLogo: '', color: '118EEA' },
-    shopeepay: { name: 'ShopeePay',  type: 'ewallet', localLogo: 'ShopeePay.png', urlLogo: '', color: 'EE4D2D' },
-    speedcash: { name: 'Speedcash',  type: 'ewallet', localLogo: '',              urlLogo: 'https://www.google.com/s2/favicons?domain=speedcash.co.id&sz=128', color: 'FF6B00' },
-    octopay:   { name: 'OctoPay',    type: 'ewallet', localLogo: '',              urlLogo: 'https://www.google.com/s2/favicons?domain=octopay.id&sz=128', color: 'FF4757' }
+    qris:      { name: 'QRIS',       type: 'qris',    localLogo: 'QRIS Logo.png', urlLogo: '', color: 'E31E24', domain: 'qris.id' },
+    bca:       { name: 'BCA',        type: 'bank',    localLogo: '',              urlLogo: 'https://www.google.com/s2/favicons?domain=bca.co.id&sz=128', color: '0060AE', domain: 'bca.co.id' },
+    blu:       { name: 'blu by BCA', type: 'bank',    localLogo: 'blu.png',       urlLogo: 'https://www.google.com/s2/favicons?domain=blubybcadigital.co.id&sz=128', color: '00C8E8', domain: 'blubybcadigital.co.id' },
+    bri:       { name: 'BRI',        type: 'bank',    localLogo: 'Bank BRI.png',  urlLogo: '', color: '00529C', domain: 'bri.co.id' },
+    bni:       { name: 'BNI',        type: 'bank',    localLogo: '',              urlLogo: 'https://www.google.com/s2/favicons?domain=bni.co.id&sz=128', color: 'F15A23', domain: 'bni.co.id' },
+    ina:       { name: 'Bank INA',   type: 'bank',    localLogo: '',              urlLogo: 'https://www.google.com/s2/favicons?domain=bankina.co.id&sz=128', color: '1B4F72', domain: 'bankina.co.id' },
+    seabank:   { name: 'SeaBank',    type: 'bank',    localLogo: 'SeaBank.png',   urlLogo: '', color: 'F97316', domain: 'seabank.co.id' },
+    krom:      { name: 'Krom',       type: 'bank',    localLogo: 'Krom.png',      urlLogo: '', color: '111111', domain: 'krom.id' },
+    jago:      { name: 'Bank Jago',  type: 'bank',    localLogo: 'Bank Jago.png', urlLogo: '', color: '1A6AF0', domain: 'bankjago.com' },
+    superbank: { name: 'SuperBank',  type: 'bank',    localLogo: '',              urlLogo: 'https://www.google.com/s2/favicons?domain=superbank.co.id&sz=128', color: '0060E0', domain: 'superbank.co.id' },
+    mandiri:   { name: 'Mandiri',    type: 'bank',    localLogo: '',              urlLogo: 'https://www.google.com/s2/favicons?domain=bankmandiri.co.id&sz=128', color: '003D79', domain: 'bankmandiri.co.id' },
+    ovo:       { name: 'OVO',        type: 'ewallet', localLogo: '',              urlLogo: 'https://www.google.com/s2/favicons?domain=ovo.id&sz=128', color: '4C3494', domain: 'ovo.id' },
+    gopay:     { name: 'GoPay',      type: 'ewallet', localLogo: 'GoPay.png',     urlLogo: '', color: '00AED6', domain: 'gopay.co.id' },
+    dana:      { name: 'DANA',       type: 'ewallet', localLogo: 'DANA.png',      urlLogo: '', color: '118EEA', domain: 'dana.id' },
+    shopeepay: { name: 'ShopeePay',  type: 'ewallet', localLogo: 'ShopeePay.png', urlLogo: '', color: 'EE4D2D', domain: 'shopeepay.co.id' },
+    speedcash: { name: 'Speedcash',  type: 'ewallet', localLogo: '',              urlLogo: 'https://www.google.com/s2/favicons?domain=speedcash.co.id&sz=128', color: 'FF6B00', domain: 'speedcash.co.id' },
+    octopay:   { name: 'OctoPay',    type: 'ewallet', localLogo: '',              urlLogo: 'https://www.google.com/s2/favicons?domain=octopay.id&sz=128', color: 'FF4757', domain: 'octopay.id' }
 };
 
 function getWalletLogo(key) {
@@ -266,6 +265,7 @@ function getFallbackLogo(key) {
 const customer = localStorage.getItem("paymentCustomer") || "-";
 const method = localStorage.getItem("paymentMethod") || "qris";
 const paymentMode = localStorage.getItem("paymentMode") || "full";
+const paymentAccountId = localStorage.getItem("paymentAccountId") || null;
 const debts = JSON.parse(localStorage.getItem("debts")) || {};
 const walletsData = JSON.parse(localStorage.getItem("comersio_wallets")) || {};
 
@@ -284,8 +284,22 @@ if (method === 'cash') {
     pay.logo = getWalletLogo(method);
     pay.logoFallback = getFallbackLogo(method);
     if (wData) {
-        if (pay.type === 'qris') { if (wData.image) pay.qrisImage = wData.image; }
-        else { pay.number = wData.number || '-'; pay.owner = wData.name || '-'; }
+        if (pay.type === 'qris') {
+            if (wData.image) pay.qrisImage = wData.image;
+        } else {
+            /* Ambil rekening spesifik dari paymentAccountId kalau ada */
+            let chosenAcc = null;
+            if (paymentAccountId && wData.accounts && wData.accounts.length > 0) {
+                chosenAcc = wData.accounts.find(a => a.id === paymentAccountId);
+            }
+            if (chosenAcc) {
+                pay.number = chosenAcc.number || '-';
+                pay.owner = chosenAcc.name || '-';
+            } else {
+                pay.number = wData.number || '-';
+                pay.owner = wData.name || '-';
+            }
+        }
     }
 }
 
@@ -373,6 +387,7 @@ if(productNames.length > 0){
 }
 
 const infoText = pay.type === "qris" ? "Scan QR Code di bawah ini untuk melakukan pembayaran" : (pay.type === "cash" ? "Silakan lakukan pembayaran secara tunai (cash) ke kasir." : "Salin nomor di bawah ini untuk melakukan pembayaran");
+
 const content = document.getElementById("paymentContent");
 
 if(pay.type === "qris"){
@@ -493,7 +508,7 @@ function switchMode(mode){
 }
 switchMode(currentMode);
 
-/* ========== DOWNLOAD FLOW: CONFIRM -> CAPTURE -> SAVE ========== */
+/* ========== DOWNLOAD: CONFIRM -> CAPTURE -> SAVE ========== */
 function saveAsImage(){
     const desc = document.getElementById('confirmModalDesc');
     desc.innerText = currentMode === 'nota'
@@ -519,7 +534,6 @@ function executeDownload(){
         ? document.getElementById('notaCaptureArea')
         : document.getElementById('captureArea');
 
-    // Preload semua gambar supaya tidak blank di hasil capture
     const images = Array.from(targetEl.querySelectorAll('img'));
     const imagePromises = images.map(img => {
         if (img.complete && img.naturalHeight !== 0) return Promise.resolve();
@@ -571,7 +585,6 @@ function executeDownload(){
             });
         })
         .then(canvas => new Promise((resolve, reject) => {
-            // pakai toBlob - lebih reliable dari dataURL (dataURL kena size limit di HP)
             if (canvas.toBlob) {
                 canvas.toBlob(blob => blob ? resolve(blob) : reject(new Error('toBlob null')), 'image/png');
             } else {
