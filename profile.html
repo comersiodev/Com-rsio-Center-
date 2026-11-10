@@ -7,207 +7,150 @@
 <link rel="stylesheet" href="style.css">
 <meta name="theme-color" content="#000000">
 <style>
-  @font-face{
-    font-family: 'OswaldBold';
-    src: url('oswald-bold.ttf') format('truetype');
-    font-weight: 700;
-    font-style: normal;
-  }
+  @font-face{ font-family: 'OswaldBold'; src: url('oswald-bold.ttf') format('truetype'); font-weight: 700; font-style: normal; }
+  @font-face{ font-family: 'FiraCondBold'; src: url('firasanscondensed-bold.otf') format('opentype'); font-weight: 700; font-style: normal; }
+  @font-face{ font-family: 'FiraCondBook'; src: url('firasanscondensed-book.otf') format('opentype'); font-weight: 400; font-style: normal; }
+  :root{ --hijau: #2f6b3a; --hijau-terang: #4caf5e; --emas: #e8b13c; --emas-terang: #ffd166; --gelap: #0b0f0c; }
+  *{ box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body{ margin: 0; padding: 0; height: 100%; overflow: hidden; font-family: 'FiraCondBook', sans-serif; }
+  body{ position: relative; width: 100%; height: 100vh; background: #0a0a0a; }
+  .bg-layer{ position: fixed; inset: 0; background-image: url('background.jpg'); background-size: cover; background-position: center center; background-repeat: no-repeat; z-index: 0; }
+  .bg-dim{ position: fixed; inset: 0; background: rgba(6, 10, 7, 0.78); z-index: 1; }
+  .blur-active{ filter: blur(6px); pointer-events: none; transition: filter 0.3s ease; }
+  .mbanking-topbar{ position: fixed; top: 0; left: 0; right: 0; height: 56px; background: rgba(10, 14, 11, 0.95); border-bottom: 1px solid rgba(232, 177, 60, 0.25); display: flex; align-items: center; justify-content: space-between; padding: 0 16px; z-index: 20; backdrop-filter: blur(8px); }
+  .mbanking-brand-container{ display: flex; flex-direction: column; justify-content: center; }
+  .mbanking-brand{ font-family: 'OswaldBold', sans-serif; font-size: 1.1rem; color: #ffffff; letter-spacing: 0.5px; line-height: 1.1; }
+  .mbanking-brand span{ color: var(--emas-terang); }
+  .mbanking-greeting-top{ font-size: 0.7rem; color: var(--emas-terang); font-family: 'FiraCondBold', sans-serif; margin-top: 1px; line-height: 1; }
+  .back-home-btn{ width: 36px; height: 36px; border-radius: 50%; border: 2px solid var(--emas-terang); background: #121814; display: flex; align-items: center; justify-content: center; cursor: pointer; text-decoration: none; transition: transform 0.2s, box-shadow 0.2s; box-shadow: 0 2px 8px rgba(0,0,0,0.5); }
+  .back-home-btn:hover{ transform: scale(1.08); box-shadow: 0 0 12px rgba(255, 209, 102, 0.4); }
+  .back-home-btn svg{ width: 18px; height: 18px; fill: var(--emas-terang); }
+  #screen-profile{ position: fixed; inset: 0; z-index: 5; display: flex; flex-direction: column; align-items: center; padding-top: 72px; padding-bottom: 76px; overflow-y: auto; }
 
-  @font-face{
-    font-family: 'FiraCondBold';
-    src: url('firasanscondensed-bold.otf') format('opentype');
-    font-weight: 700;
-    font-style: normal;
-  }
-
-  @font-face{
-    font-family: 'FiraCondBook';
-    src: url('firasanscondensed-book.otf') format('opentype');
-    font-weight: 400;
-    font-style: normal;
-  }
-
-  :root{
-    --hijau: #2f6b3a;
-    --hijau-terang: #4caf5e;
-    --emas: #e8b13c;
-    --emas-terang: #ffd166;
-    --gelap: #0b0f0c;
-  }
-
-  *{
-    box-sizing: border-box;
-    -webkit-tap-highlight-color: transparent;
-  }
-
-  html, body{
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    overflow: hidden;
-    font-family: 'FiraCondBook', sans-serif;
-  }
-
-  body{
-    position: relative;
-    width: 100%;
-    height: 100vh;
-    background: #0a0a0a;
-  }
-
-  .bg-layer{
-    position: fixed;
-    inset: 0;
-    background-image: url('background.jpg');
-    background-size: cover;
-    background-position: center center;
-    background-repeat: no-repeat;
-    z-index: 0;
-  }
-
-  .bg-dim{
-    position: fixed;
-    inset: 0;
-    background: rgba(6, 10, 7, 0.78);
-    z-index: 1;
-  }
-
-  /* KELAS UNTUK EFEK BLUR SAAT LOADING */
-  .blur-active {
-    filter: blur(6px);
-    pointer-events: none;
-    transition: filter 0.3s ease;
-  }
-
-  /* TOP BAR M-BANKING */
-  .mbanking-topbar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 56px;
-    background: rgba(10, 14, 11, 0.95);
-    border-bottom: 1px solid rgba(232, 177, 60, 0.25);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 16px;
-    z-index: 20;
-    backdrop-filter: blur(8px);
-  }
-
-  .mbanking-brand-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-
-  .mbanking-brand {
-    font-family: 'OswaldBold', sans-serif;
-    font-size: 1.1rem;
-    color: #ffffff;
-    letter-spacing: 0.5px;
-    line-height: 1.1;
-  }
-
-  .mbanking-brand span {
-    color: var(--emas-terang);
-  }
-
-  .mbanking-greeting-top {
-    font-size: 0.7rem;
-    color: var(--emas-terang);
-    font-family: 'FiraCondBold', sans-serif;
-    margin-top: 1px;
-    line-height: 1;
-  }
-
-  .back-home-btn {
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    border: 2px solid var(--emas-terang);
-    background: #121814;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    text-decoration: none;
-    transition: transform 0.2s, box-shadow 0.2s;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.5);
-  }
-
-  .back-home-btn:hover {
-    transform: scale(1.08);
-    box-shadow: 0 0 12px rgba(255, 209, 102, 0.4);
-  }
-
-  .back-home-btn svg {
-    width: 18px;
-    height: 18px;
-    fill: var(--emas-terang);
-  }
-
-  /* LAYAR UTAMA PROFILE */
-  #screen-profile {
-    position: fixed;
-    inset: 0;
-    z-index: 5;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-top: 68px;
-    padding-bottom: 76px;
-    overflow-y: auto;
-  }
-
-  .profile-card-container {
+  /* ================= PROFILE CARD (dengan Hero Banner+Avatar) ================= */
+  .profile-card-container{
     width: 92%;
     max-width: 360px;
     background: rgba(12, 17, 13, 0.95);
     border: 2px solid var(--emas);
     border-radius: 16px;
-    padding: 16px;
     box-shadow: 0 6px 20px rgba(0,0,0,0.6);
     display: flex;
     flex-direction: column;
     align-items: center;
     margin-bottom: 20px;
+    overflow: hidden;
+    padding: 0;
   }
 
-  .profile-avatar-wrapper {
+  /* Hero wrap - banner + avatar overlap */
+  .hero-wrap{
+    width: 100%;
     position: relative;
-    cursor: pointer;
-    margin-bottom: 12px;
+    margin-bottom: 48px;
   }
 
-  .profile-avatar-large {
+  .hero-banner{
+    width: 100%;
+    aspect-ratio: 2.5 / 1;
+    background: linear-gradient(135deg, #111a13, #1c2b1e);
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: default;
+    transition: filter 0.2s;
+  }
+  body.edit-mode .hero-banner{ cursor: pointer; }
+  body.edit-mode .hero-banner:hover{ filter: brightness(1.15); }
+
+  .hero-banner .banner-preview-img{
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .banner-empty-state{
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 4px; color: #888;
+    padding: 8px; text-align: center;
+    pointer-events: none;
+  }
+  .banner-empty-state svg{ width: 30px; height: 30px; fill: rgba(255,209,102,0.5); margin-bottom: 2px; }
+  .banner-empty-title{ font-family: 'FiraCondBold', sans-serif; font-size: 0.78rem; color: var(--emas-terang); letter-spacing: 0.5px; }
+  .banner-empty-sub{ font-size: 0.62rem; color: #777; font-family: 'FiraCondBook', sans-serif; }
+
+  .banner-edit-badge{
+    position: absolute;
+    bottom: 8px; right: 8px;
+    background: rgba(0,0,0,0.78);
+    border: 1.5px solid var(--emas-terang);
+    color: var(--emas-terang);
+    padding: 3px 8px;
+    border-radius: 20px;
+    font-family: 'FiraCondBold', sans-serif;
+    font-size: 0.65rem;
+    display: none;
+    align-items: center; gap: 3px;
+    backdrop-filter: blur(6px);
+    pointer-events: none;
+  }
+  .banner-edit-badge svg{ width: 10px; height: 10px; fill: currentColor; }
+
+  .banner-remove-btn{
+    position: absolute;
+    top: 8px; right: 8px;
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.78);
+    border: 1.5px solid #ff5555;
+    color: #ff5555;
+    display: none;
+    align-items: center; justify-content: center;
+    cursor: pointer;
+    z-index: 5;
+    backdrop-filter: blur(6px);
+    transition: background 0.2s, transform 0.15s;
+    padding: 0;
+  }
+  .banner-remove-btn:hover{ background: rgba(255,85,85,0.4); }
+  .banner-remove-btn:active{ transform: scale(0.9); }
+  .banner-remove-btn svg{ width: 11px; height: 11px; fill: currentColor; }
+
+  body.edit-mode .hero-banner.has-banner .banner-edit-badge{ display: flex; }
+  body.edit-mode .hero-banner.has-banner .banner-remove-btn{ display: flex; }
+
+  /* Avatar overlap di bawah banner */
+  .hero-avatar-wrapper{
+    position: absolute;
+    bottom: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 3;
+    cursor: default;
+  }
+  body.edit-mode .hero-avatar-wrapper{ cursor: pointer; }
+
+  .hero-avatar{
     width: 80px;
     height: 80px;
     border-radius: 50%;
-    border: 2.5px solid var(--emas-terang);
+    border: 3px solid #0d120f;
+    box-shadow: 0 0 0 2px var(--emas-terang), 0 4px 20px rgba(0,0,0,0.7);
+    overflow: hidden;
     background: #1e2620;
     display: flex;
     align-items: center;
     justify-content: center;
-    overflow: hidden;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+    transition: transform 0.2s;
   }
+  body.edit-mode .hero-avatar-wrapper:hover .hero-avatar{ transform: scale(1.04); }
+  .hero-avatar img, .hero-avatar svg{ width: 100%; height: 100%; object-fit: cover; }
+  .hero-avatar svg{ width: 38px; height: 38px; fill: var(--emas-terang); }
 
-  .profile-avatar-large img, .profile-avatar-large svg {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  .profile-avatar-large svg {
-    width: 40px;
-    height: 40px;
-    fill: var(--emas-terang);
-  }
-
-  .avatar-badge-edit {
+  .avatar-badge-edit{
     position: absolute;
     bottom: 0;
     right: 0;
@@ -216,133 +159,60 @@
     border-radius: 50%;
     width: 24px;
     height: 24px;
-    display: flex;
+    display: none;
     align-items: center;
     justify-content: center;
     font-size: 11px;
-    border: 2px solid #000;
+    border: 2px solid #0d120f;
     box-shadow: 0 2px 6px rgba(0,0,0,0.5);
   }
+  body.edit-mode .avatar-badge-edit{ display: flex; }
 
-  .profile-form-group {
+  /* ================= VIEW MODE INFO ================= */
+  .view-mode-content{
     width: 100%;
-    margin-bottom: 10px;
+    padding: 0 16px 16px 16px;
     display: flex;
     flex-direction: column;
-  }
-
-  .profile-label {
-    font-family: 'FiraCondBold', sans-serif;
-    font-size: 0.75rem;
-    color: var(--emas-terang);
-    text-transform: uppercase;
-    margin-bottom: 4px;
-  }
-
-  .profile-input {
-    width: 100%;
-    height: 40px;
-    background: #000;
-    border: 1px solid rgba(232, 177, 60, 0.4);
-    border-radius: 10px;
-    color: #fff;
-    padding: 0 12px;
-    font-family: 'FiraCondBook', sans-serif;
-    font-size: 0.95rem;
-    outline: none;
-    transition: border-color 0.2s;
-  }
-
-  .profile-input:focus {
-    border-color: var(--emas-terang);
-    box-shadow: 0 0 8px rgba(255, 209, 102, 0.25);
-  }
-
-  /* --- CUSTOM SELECT (PENGGANTI DROPDOWN GINGERBREAD JADUL) --- */
-  .custom-select-container {
-    position: relative;
-    width: 100%;
-    user-select: none;
-  }
-
-  .custom-select-trigger {
-    width: 100%;
-    height: 40px;
-    background: #000;
-    border: 1px solid rgba(232, 177, 60, 0.4);
-    border-radius: 10px;
-    color: #fff;
-    padding: 0 12px;
-    font-family: 'FiraCondBook', sans-serif;
-    font-size: 0.95rem;
-    display: flex;
     align-items: center;
-    justify-content: space-between;
-    cursor: pointer;
-    transition: border-color 0.2s, box-shadow 0.2s;
+    gap: 6px;
   }
-
-  .custom-select-trigger:focus, .custom-select-trigger.active {
-    border-color: var(--emas-terang);
-    box-shadow: 0 0 8px rgba(255, 209, 102, 0.25);
+  .view-username{
+    font-family: 'OswaldBold', sans-serif;
+    font-size: 1.3rem;
+    color: #fff;
+    letter-spacing: 0.5px;
+    text-align: center;
+    line-height: 1.2;
+    margin-top: 2px;
+    word-break: break-word;
   }
+  .view-username.empty{ color: #555; font-family: 'FiraCondBook', sans-serif; font-style: italic; font-size: 0.95rem; }
 
-  .custom-select-icon {
-    width: 18px;
-    height: 18px;
-    fill: var(--emas-terang);
-    transition: transform 0.3s ease;
-  }
-
-  .custom-select-trigger.active .custom-select-icon {
-    transform: rotate(180deg);
-  }
-
-  .custom-select-options {
-    position: absolute;
-    top: calc(100% + 6px);
-    left: 0;
-    right: 0;
-    background: #0d120f;
-    border: 1px solid var(--emas-terang);
-    border-radius: 10px;
-    z-index: 100;
-    display: none;
-    flex-direction: column;
-    overflow: hidden;
-    box-shadow: 0 8px 16px rgba(0,0,0,0.8);
-    opacity: 0;
-    transform: translateY(-10px);
-    transition: opacity 0.2s ease, transform 0.2s ease;
-  }
-
-  .custom-select-options.show {
-    display: flex;
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  .custom-select-option {
-    padding: 12px;
-    color: #ddd;
-    font-family: 'FiraCondBook', sans-serif;
-    font-size: 0.95rem;
-    cursor: pointer;
-    border-bottom: 1px solid rgba(232, 177, 60, 0.15);
-    transition: background 0.2s, color 0.2s, padding-left 0.2s;
-  }
-
-  .custom-select-option:last-child {
-    border-bottom: none;
-  }
-
-  .custom-select-option:hover, .custom-select-option.selected {
-    background: rgba(232, 177, 60, 0.2);
+  .view-title-badge{
+    display: inline-block;
+    background: rgba(232,177,60,0.12);
+    border: 1px solid rgba(232,177,60,0.4);
     color: var(--emas-terang);
-    padding-left: 18px; /* Animasi geser dikit pas dihover/dipilih */
+    padding: 4px 14px;
+    border-radius: 20px;
+    font-family: 'FiraCondBold', sans-serif;
+    font-size: 0.78rem;
+    letter-spacing: 0.5px;
   }
+  .view-title-badge.empty{ background: transparent; border-color: rgba(255,255,255,0.1); color: #555; }
 
-  .profile-save-btn {
+  .view-email{
+    font-family: 'FiraCondBook', sans-serif;
+    font-size: 0.82rem;
+    color: #999;
+    text-align: center;
+    margin-bottom: 8px;
+    word-break: break-word;
+  }
+  .view-email.empty{ color: #555; font-style: italic; }
+
+  .profile-edit-btn{
     width: 100%;
     background: var(--emas-terang);
     color: #000;
@@ -350,155 +220,68 @@
     border-radius: 10px;
     padding: 12px;
     font-family: 'FiraCondBold', sans-serif;
-    font-size: 0.95rem;
+    font-size: 0.92rem;
     cursor: pointer;
     margin-top: 6px;
     box-shadow: 0 4px 12px rgba(255, 209, 102, 0.3);
     transition: transform 0.2s, box-shadow 0.2s;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
   }
+  .profile-edit-btn:hover{ transform: translateY(-2px); box-shadow: 0 0 15px rgba(255, 209, 102, 0.5); }
+  .profile-edit-btn:active{ transform: scale(0.97); }
+  .profile-edit-btn svg{ width: 15px; height: 15px; fill: currentColor; }
 
-  .profile-save-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 0 15px rgba(255, 209, 102, 0.5);
-  }
-
-  /* BOTTOM NAVBAR */
-  .mbanking-bottom-nav {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 64px;
-    background: rgba(10, 14, 11, 0.96);
-    border-top: 1px solid rgba(232, 177, 60, 0.3);
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    z-index: 99999;
-    backdrop-filter: blur(8px);
-  }
-
-  .nav-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none;
-    color: #888;
-    font-family: 'FiraCondBold', sans-serif;
-    font-size: 0.55rem;
-    gap: 3px;
-    padding: 4px 0;
-    transition: color 0.2s;
-    cursor: pointer;
-    background: none;
-    border: none;
-  }
-
-  .nav-item img {
-    width: 20px;
-    height: 20px;
-    object-fit: contain;
-    filter: grayscale(100%) opacity(0.6);
-    transition: filter 0.2s;
-  }
-
-  .nav-item.active, .nav-item:hover {
-    color: var(--emas-terang);
-  }
-
-  .nav-item.active img, .nav-item:hover img {
-    filter: none;
-  }
-
-  /* MODAL ALERT & PASSWORD & LOADING */
-  .popupBox {
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.85);
+  /* ================= EDIT MODE FORM ================= */
+  .edit-mode-content{
+    width: 100%;
+    padding: 0 16px 16px 16px;
     display: none;
-    justify-content: center;
-    align-items: center;
-    z-index: 999999;
-    padding: 20px;
-  }
-
-  .popupBox.active {
-    display: flex;
-  }
-
-  /* Loading GIF Styling */
-  .loading-gif {
-    width: 60px;
-    height: 60px;
-    object-fit: contain;
-    filter: drop-shadow(0 0 10px rgba(255, 209, 102, 0.5));
-  }
-
-  .popupContent, .custom-modal-box {
-    display: flex;
     flex-direction: column;
-    width: 100%;
-    max-width: 320px;
-    background: #0d120f;
-    border: 2px solid var(--emas-terang);
-    border-radius: 16px;
-    padding: 20px;
-    text-align: center;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.8);
   }
+  body.edit-mode .view-mode-content{ display: none; }
+  body.edit-mode .edit-mode-content{ display: flex; }
 
-  .popupContent h2 {
-    margin-top: 0;
-    margin-bottom: 8px;
-    font-family: 'FiraCondBold', sans-serif;
-    color: var(--emas-terang);
-    font-size: 1rem;
-  }
+  .profile-form-group{ width: 100%; margin-bottom: 10px; display: flex; flex-direction: column; }
+  .profile-label{ font-family: 'FiraCondBold', sans-serif; font-size: 0.75rem; color: var(--emas-terang); text-transform: uppercase; margin-bottom: 4px; }
+  .profile-input{ width: 100%; height: 40px; background: #000; border: 1px solid rgba(232, 177, 60, 0.4); border-radius: 10px; color: #fff; padding: 0 12px; font-family: 'FiraCondBook', sans-serif; font-size: 0.95rem; outline: none; transition: border-color 0.2s; }
+  .profile-input:focus{ border-color: var(--emas-terang); box-shadow: 0 0 8px rgba(255, 209, 102, 0.25); }
+  .custom-select-container{ position: relative; width: 100%; user-select: none; }
+  .custom-select-trigger{ width: 100%; height: 40px; background: #000; border: 1px solid rgba(232, 177, 60, 0.4); border-radius: 10px; color: #fff; padding: 0 12px; font-family: 'FiraCondBook', sans-serif; font-size: 0.95rem; display: flex; align-items: center; justify-content: space-between; cursor: pointer; transition: border-color 0.2s, box-shadow 0.2s; }
+  .custom-select-trigger:focus, .custom-select-trigger.active{ border-color: var(--emas-terang); box-shadow: 0 0 8px rgba(255, 209, 102, 0.25); }
+  .custom-select-icon{ width: 18px; height: 18px; fill: var(--emas-terang); transition: transform 0.3s ease; }
+  .custom-select-trigger.active .custom-select-icon{ transform: rotate(180deg); }
+  .custom-select-options{ position: absolute; top: calc(100% + 6px); left: 0; right: 0; background: #0d120f; border: 1px solid var(--emas-terang); border-radius: 10px; z-index: 100; display: none; flex-direction: column; overflow: hidden; box-shadow: 0 8px 16px rgba(0,0,0,0.8); opacity: 0; transform: translateY(-10px); transition: opacity 0.2s ease, transform 0.2s ease; }
+  .custom-select-options.show{ display: flex; opacity: 1; transform: translateY(0); }
+  .custom-select-option{ padding: 12px; color: #ddd; font-family: 'FiraCondBook', sans-serif; font-size: 0.95rem; cursor: pointer; border-bottom: 1px solid rgba(232, 177, 60, 0.15); transition: background 0.2s, color 0.2s, padding-left 0.2s; }
+  .custom-select-option:last-child{ border-bottom: none; }
+  .custom-select-option:hover, .custom-select-option.selected{ background: rgba(232, 177, 60, 0.2); color: var(--emas-terang); padding-left: 18px; }
 
-  .crop-preview-box {
-    width: 180px;
-    height: 180px;
-    border-radius: 50%;
-    border: 3px solid var(--emas-terang);
-    overflow: hidden;
-    margin: 0 auto 12px auto;
-    background: #111;
-    position: relative;
-    box-shadow: 0 0 20px rgba(0,0,0,0.8);
-  }
+  .edit-actions-row{ display: flex; gap: 8px; width: 100%; margin-top: 6px; }
+  .edit-actions-row button{ flex: 1; border: none; border-radius: 10px; padding: 12px; font-family: 'FiraCondBold', sans-serif; font-size: 0.9rem; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; }
+  .edit-actions-row button:active{ transform: scale(0.97); }
+  .profile-cancel-btn{ background: #222; color: #ccc; border: 1px solid #444 !important; }
+  .profile-cancel-btn:hover{ background: #333; color: #fff; }
+  .profile-save-btn{ background: var(--emas-terang); color: #000; box-shadow: 0 4px 12px rgba(255, 209, 102, 0.3); }
+  .profile-save-btn:hover{ box-shadow: 0 0 15px rgba(255, 209, 102, 0.5); }
 
-  .crop-preview-box img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
+  /* ================= NAV ================= */
+  .mbanking-bottom-nav{ position: fixed; bottom: 0; left: 0; right: 0; height: 64px; background: rgba(10, 14, 11, 0.96); border-top: 1px solid rgba(232, 177, 60, 0.3); display: grid; grid-template-columns: repeat(7, 1fr); z-index: 99999; backdrop-filter: blur(8px); }
+  .nav-item{ display: flex; flex-direction: column; align-items: center; justify-content: center; text-decoration: none; color: #888; font-family: 'FiraCondBold', sans-serif; font-size: 0.55rem; gap: 3px; padding: 4px 0; transition: color 0.2s; cursor: pointer; background: none; border: none; }
+  .nav-item img{ width: 20px; height: 20px; object-fit: contain; filter: grayscale(100%) opacity(0.6); transition: filter 0.2s; }
+  .nav-item.active, .nav-item:hover{ color: var(--emas-terang); }
+  .nav-item.active img, .nav-item:hover img{ filter: none; }
 
-  .custom-modal-title {
-    font-family: 'FiraCondBold', sans-serif;
-    font-size: 1.1rem;
-    color: var(--emas-terang);
-    margin-bottom: 8px;
-  }
-
-  .custom-modal-msg {
-    font-size: 0.9rem;
-    color: #ddd;
-    margin-bottom: 16px;
-    line-height: 1.4;
-    white-space: pre-wrap;
-  }
-
-  .custom-modal-btn {
-    width: 100%;
-    padding: 10px;
-    border-radius: 8px;
-    font-family: 'FiraCondBold', sans-serif;
-    font-size: 0.9rem;
-    cursor: pointer;
-    border: none;
-    background: var(--emas-terang);
-    color: #000;
-  }
+  /* ================= MODALS ================= */
+  .popupBox{ position: fixed; inset: 0; background: rgba(0,0,0,0.85); display: none; justify-content: center; align-items: center; z-index: 999999; padding: 20px; }
+  .popupBox.active{ display: flex; }
+  .loading-gif{ width: 60px; height: 60px; object-fit: contain; filter: drop-shadow(0 0 10px rgba(255, 209, 102, 0.5)); }
+  .popupContent, .custom-modal-box{ display: flex; flex-direction: column; width: 100%; max-width: 320px; background: #0d120f; border: 2px solid var(--emas-terang); border-radius: 16px; padding: 20px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.8); }
+  .popupContent h2{ margin-top: 0; margin-bottom: 8px; font-family: 'FiraCondBold', sans-serif; color: var(--emas-terang); font-size: 1rem; }
+  .crop-preview-box{ width: 180px; height: 180px; border-radius: 50%; border: 3px solid var(--emas-terang); overflow: hidden; margin: 0 auto 12px auto; background: #111; position: relative; box-shadow: 0 0 20px rgba(0,0,0,0.8); }
+  .crop-preview-box img{ width: 100%; height: 100%; object-fit: cover; }
+  .custom-modal-title{ font-family: 'FiraCondBold', sans-serif; font-size: 1.1rem; color: var(--emas-terang); margin-bottom: 8px; }
+  .custom-modal-msg{ font-size: 0.9rem; color: #ddd; margin-bottom: 16px; line-height: 1.4; white-space: pre-wrap; }
+  .custom-modal-btn{ width: 100%; padding: 10px; border-radius: 8px; font-family: 'FiraCondBold', sans-serif; font-size: 0.9rem; cursor: pointer; border: none; background: var(--emas-terang); color: #000; }
 </style>
 </head>
 <body>
@@ -506,7 +289,6 @@
   <div class="bg-layer" id="bg-layer-el"></div>
   <div class="bg-dim" id="bg-dim-el"></div>
 
-  <!-- TOP BAR M-BANKING -->
   <div class="mbanking-topbar" id="topbar-el">
     <div class="mbanking-brand-container">
       <div class="mbanking-brand">Comersio <span>Center</span></div>
@@ -514,101 +296,107 @@
     </div>
     <div style="display:flex; align-items:center; gap:8px;">
       <a href="index.html" class="back-home-btn" title="Kembali ke Beranda">
-        <svg viewBox="0 0 24 24">
-          <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
-        </svg>
+        <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
       </a>
     </div>
   </div>
 
-  <!-- LAYAR UTAMA PROFILE -->
   <div id="screen-profile">
     <div class="profile-card-container">
-      
-      <!-- FOTO PROFIL DENGAN KLIK UPLOAD -->
-      <div class="profile-avatar-wrapper" onclick="document.getElementById('avatarFileInput').click()" title="Ganti Foto Profil">
-        <div class="profile-avatar-large" id="profileAvatarContainer">
-          <svg viewBox="0 0 24 24" id="defaultAvatarSvg">
-            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
-          </svg>
+
+      <!-- ========== HERO: BANNER + AVATAR OVERLAP ========== -->
+      <div class="hero-wrap">
+        <div class="hero-banner" id="profileBannerBox" onclick="handleBannerClick()">
+          <div class="banner-empty-state" id="bannerEmptyState">
+            <svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+            <div class="banner-empty-title" id="bannerEmptyTitle">Belum Ada Banner</div>
+            <div class="banner-empty-sub" id="bannerEmptySub">Banner profil belum diatur</div>
+          </div>
+          <img id="bannerPreviewImg" class="banner-preview-img" style="display:none;" alt="Banner">
+          <div class="banner-edit-badge">
+            <svg viewBox="0 0 24 24"><path d="M9 3L7.17 5H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2h-3.17L15 3H9zm3 15c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z"/><circle cx="12" cy="13" r="3"/></svg>
+            Ganti
+          </div>
+          <button type="button" class="banner-remove-btn" onclick="removeBanner(event)" title="Hapus Banner">
+            <svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+          </button>
         </div>
-        <div class="avatar-badge-edit">📷</div>
+
+        <!-- Avatar overlap -->
+        <div class="hero-avatar-wrapper" onclick="handleAvatarClick()" title="Ganti Foto Profil">
+          <div class="hero-avatar" id="profileAvatarContainer">
+            <svg viewBox="0 0 24 24" id="defaultAvatarSvg">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
+            </svg>
+          </div>
+          <div class="avatar-badge-edit">📷</div>
+        </div>
       </div>
+
+      <input type="file" id="bannerFileInput" accept="image/*" hidden onchange="handleBannerSelected(event)">
       <input type="file" id="avatarFileInput" accept="image/*" hidden onchange="handleImageSelected(event)">
 
-      <div class="profile-form-group">
-        <label class="profile-label">Nama Pengguna / Username:</label>
-        <input type="text" id="profileUsernameInput" class="profile-input" placeholder="Masukkan nama lu...">
+      <!-- ========== VIEW MODE ========== -->
+      <div class="view-mode-content" id="viewModeContent">
+        <div class="view-username" id="viewUsername">-</div>
+        <div class="view-title-badge" id="viewTitle">-</div>
+        <div class="view-email" id="viewEmail">-</div>
+        <button type="button" class="profile-edit-btn" onclick="enterEditMode()">
+          <svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a1.003 1.003 0 0 0 0-1.42l-2.34-2.34a1.003 1.003 0 0 0-1.42 0l-1.83 1.83 3.75 3.75 1.84-1.82z"/></svg>
+          Edit Profil
+        </button>
       </div>
 
-      <div class="profile-form-group">
-        <label class="profile-label">Email: </label>
-        <input type="email" id="profileEmailInput" class="profile-input" placeholder="Masukkan email lu...">
-      </div>
-
-      <div class="profile-form-group">
-        <label class="profile-label">Jabatan / Gelar (Title):</label>
-        
-        <!-- CUSTOM SELECT DROPDOWN -->
-        <div class="custom-select-container">
-          <div class="custom-select-trigger" id="titleSelectTrigger" onclick="toggleCustomSelect()">
-            <span id="titleSelectDisplay">Staff</span>
-            <svg viewBox="0 0 24 24" class="custom-select-icon"><path d="M7 10l5 5 5-5z"/></svg>
-          </div>
-          <div class="custom-select-options" id="titleSelectOptions">
-            <div class="custom-select-option" onclick="selectTitle('Staff')">Staff</div>
-            <div class="custom-select-option" onclick="selectTitle('Employee')">Employee</div>
-            <div class="custom-select-option" onclick="selectTitle('Owner')">Owner</div>
-          </div>
+      <!-- ========== EDIT MODE ========== -->
+      <div class="edit-mode-content" id="editModeContent">
+        <div class="profile-form-group">
+          <label class="profile-label">Nama Pengguna / Username:</label>
+          <input type="text" id="profileUsernameInput" class="profile-input" placeholder="Masukkan nama lu...">
         </div>
-        <!-- Input disembunyikan buat nyimpan data untuk JS -->
-        <input type="hidden" id="profileTitleInput" value="Staff">
+        <div class="profile-form-group">
+          <label class="profile-label">Email:</label>
+          <input type="email" id="profileEmailInput" class="profile-input" placeholder="Masukkan email lu...">
+        </div>
+        <div class="profile-form-group">
+          <label class="profile-label">Jabatan / Gelar (Title):</label>
+          <div class="custom-select-container">
+            <div class="custom-select-trigger" id="titleSelectTrigger" onclick="toggleCustomSelect()">
+              <span id="titleSelectDisplay">Staff</span>
+              <svg viewBox="0 0 24 24" class="custom-select-icon"><path d="M7 10l5 5 5-5z"/></svg>
+            </div>
+            <div class="custom-select-options" id="titleSelectOptions">
+              <div class="custom-select-option" onclick="selectTitle('Staff')">Staff</div>
+              <div class="custom-select-option" onclick="selectTitle('Employee')">Employee</div>
+              <div class="custom-select-option" onclick="selectTitle('Owner')">Owner</div>
+            </div>
+          </div>
+          <input type="hidden" id="profileTitleInput" value="Staff">
+        </div>
+        <div class="edit-actions-row">
+          <button type="button" class="profile-cancel-btn" onclick="cancelEditMode()">Batal</button>
+          <button type="button" class="profile-save-btn" onclick="saveProfileData()">Simpan</button>
+        </div>
       </div>
-
-      <button type="button" class="profile-save-btn" onclick="saveProfileData()">Simpan Perubahan</button>
     </div>
   </div>
 
-  <!-- BOTTOM NAVBAR M-BANKING (7 TOMBOL) -->
   <nav class="mbanking-bottom-nav" id="bottom-nav-el">
-      <a href="index.html" class="nav-item">
-          <img src="icon.png" alt="Home">
-          <span>Home</span>
-      </a>
-      <a href="product.html" class="nav-item">
-          <img src="voucher.png" alt="Produk">
-          <span>Produk</span>
-      </a>
-      <a href="debt.html" class="nav-item">
-          <img src="debt.png" alt="Utang">
-          <span>Utang</span>
-      </a>
-      <a href="customer.html" class="nav-item">
-          <img src="nama.png" alt="Customer">
-          <span>Customer</span>
-      </a>
-      <a href="recap.html" class="nav-item">
-          <img src="rekap.png" alt="Rekap">
-          <span>Rekap</span>
-      </a>
-      <a href="monthly.html" class="nav-item">
-          <img src="pembukuan.png" alt="Laporan">
-          <span>Laporan</span>
-      </a>
+      <a href="index.html" class="nav-item"><img src="icon.png" alt="Home"><span>Home</span></a>
+      <a href="product.html" class="nav-item"><img src="voucher.png" alt="Produk"><span>Produk</span></a>
+      <a href="debt.html" class="nav-item"><img src="debt.png" alt="Utang"><span>Utang</span></a>
+      <a href="customer.html" class="nav-item"><img src="nama.png" alt="Customer"><span>Customer</span></a>
+      <a href="recap.html" class="nav-item"><img src="rekap.png" alt="Rekap"><span>Rekap</span></a>
+      <a href="monthly.html" class="nav-item"><img src="pembukuan.png" alt="Laporan"><span>Laporan</span></a>
       <a href="profile.html" class="nav-item active">
           <svg viewBox="0 0 24 24" style="width:20px; height:20px; fill:currentColor; filter:none;"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>
           <span>Profil</span>
       </a>
   </nav>
 
-  <!-- ================= MODALS ================= -->
-
-  <!-- LOADING OVERLAY -->
   <div id="loadingOverlay" class="popupBox" style="background: rgba(0,0,0,0.6);">
     <img src="loading.webp" class="loading-gif" alt="Loading...">
   </div>
 
-  <!-- MODAL CROP 1:1 PREVIEW -->
   <div id="cropModalOverlay" class="popupBox">
     <div class="popupContent">
       <h2>CROP FOTO 1:1</h2>
@@ -617,13 +405,12 @@
         <img id="cropPreviewImg" src="" alt="Crop Preview">
       </div>
       <div style="display:flex; gap:8px;">
-        <button type="button" class="profile-save-btn" onclick="confirmCropAvatar()" style="margin:0; background:var(--hijau-terang); color:#000;">Gunakan Foto</button>
-        <button type="button" class="profile-save-btn" onclick="closeCropModal()" style="margin:0; background:#2a2a2a; color:#fff;">Batal</button>
+        <button type="button" class="profile-save-btn" onclick="confirmCropAvatar()" style="margin:0; flex:1; padding:12px; border:none; border-radius:10px; font-family:'FiraCondBold',sans-serif; cursor:pointer;">Gunakan</button>
+        <button type="button" class="profile-cancel-btn" onclick="closeCropModal()" style="margin:0; flex:1; padding:12px; border-radius:10px; font-family:'FiraCondBold',sans-serif; cursor:pointer;">Batal</button>
       </div>
     </div>
   </div>
 
-  <!-- MODAL CUSTOM ALERT -->
   <div id="customModalOverlay" class="popupBox">
     <div class="custom-modal-box">
       <div class="custom-modal-title" id="customModalTitle">Informasi</div>
@@ -632,7 +419,6 @@
     </div>
   </div>
 
-  <!-- MODAL PASSWORD KHUSUS OWNER -->
   <div id="passwordModalOverlay" class="popupBox">
     <div class="custom-modal-box">
       <div class="custom-modal-title">Otorisasi Owner</div>
@@ -646,47 +432,40 @@
   </div>
 
   <script>
-    // --- CUSTOM DROPDOWN LOGIC ---
+    let tempCroppedBase64 = "";
+    let tempBannerBase64 = "";
+    let savedAvatarBase64 = "";
+    let savedBannerBase64 = "";
+    let bannerRemoved = false;
+
+    /* ========== DROPDOWN ========== */
     function toggleCustomSelect() {
       const trigger = document.getElementById("titleSelectTrigger");
       const options = document.getElementById("titleSelectOptions");
       trigger.classList.toggle("active");
-      
       if (options.classList.contains("show")) {
-        // Hilangkan perlahan
         setTimeout(() => options.classList.remove("show"), 200);
         options.style.opacity = "0";
         options.style.transform = "translateY(-10px)";
       } else {
         options.classList.add("show");
-        // Tunggu bentar buat trigger transisi opacity/transform
-        setTimeout(() => {
-          options.style.opacity = "1";
-          options.style.transform = "translateY(0)";
-        }, 10);
+        setTimeout(() => { options.style.opacity = "1"; options.style.transform = "translateY(0)"; }, 10);
       }
     }
-
     function selectTitle(value) {
       document.getElementById("profileTitleInput").value = value;
       document.getElementById("titleSelectDisplay").innerText = value;
-      
-      // Update class selected di opsinya
       const opts = document.querySelectorAll(".custom-select-option");
       opts.forEach(opt => {
         if(opt.innerText === value) opt.classList.add("selected");
         else opt.classList.remove("selected");
       });
-
-      // Tutup Dropdown
       document.getElementById("titleSelectTrigger").classList.remove("active");
       const options = document.getElementById("titleSelectOptions");
       options.style.opacity = "0";
       options.style.transform = "translateY(-10px)";
       setTimeout(() => options.classList.remove("show"), 200);
     }
-
-    // Klik di luar buat nutup dropdown
     document.addEventListener("click", function(e) {
       const container = document.querySelector(".custom-select-container");
       if (container && !container.contains(e.target)) {
@@ -700,7 +479,7 @@
       }
     });
 
-    // --- CUSTOM ALERTS ---
+    /* ========== ALERTS ========== */
     function showCustomAlert(message, title = "Informasi") {
       return new Promise((resolve) => {
         document.getElementById("customModalTitle").innerText = title;
@@ -709,13 +488,10 @@
         window.modalResolve = resolve;
       });
     }
-
     function closeCustomModal() {
       document.getElementById("customModalOverlay").classList.remove("active");
       if(window.modalResolve) window.modalResolve();
     }
-
-    // --- CUSTOM PASSWORD PROMPT UNTUK OWNER ---
     function showPasswordPrompt() {
       return new Promise((resolve) => {
         document.getElementById("ownerPasswordInput").value = "";
@@ -723,66 +499,118 @@
         window.passwordResolve = resolve;
       });
     }
-
     function submitPassword() {
       const pwd = document.getElementById("ownerPasswordInput").value;
       document.getElementById("passwordModalOverlay").classList.remove("active");
       if (window.passwordResolve) window.passwordResolve(pwd);
     }
-
     function cancelPassword() {
       document.getElementById("passwordModalOverlay").classList.remove("active");
       if (window.passwordResolve) window.passwordResolve(null);
     }
 
-    // --- BLUR HANDLER (LOADING) ---
+    /* ========== LOADING ========== */
     function toggleLoadingState(isActive) {
       const elementsToBlur = ["bg-layer-el", "bg-dim-el", "topbar-el", "screen-profile", "bottom-nav-el"];
-      
       if(isActive) {
         document.getElementById("loadingOverlay").classList.add("active");
-        elementsToBlur.forEach(id => {
-          document.getElementById(id).classList.add("blur-active");
-        });
+        elementsToBlur.forEach(id => document.getElementById(id).classList.add("blur-active"));
       } else {
         document.getElementById("loadingOverlay").classList.remove("active");
-        elementsToBlur.forEach(id => {
-          document.getElementById(id).classList.remove("blur-active");
-        });
+        elementsToBlur.forEach(id => document.getElementById(id).classList.remove("blur-active"));
       }
     }
 
-
-    let tempCroppedBase64 = "";
-
-    window.addEventListener("DOMContentLoaded", () => {
+    /* ========== LOAD STATE ========== */
+    function loadProfileState() {
       const username = localStorage.getItem("username") || "";
       const email = localStorage.getItem("email") || "";
-      const savedTitleFull = localStorage.getItem("title") || "Staff •"; 
-      const savedPic = localStorage.getItem("profile_picture") || localStorage.getItem("user_avatar");
+      const savedTitleFull = localStorage.getItem("title") || "Staff •";
+      const savedPic = localStorage.getItem("profile_picture") || localStorage.getItem("user_avatar") || "";
+      const savedBanner = localStorage.getItem("profile_banner") || "";
 
+      // View fields
+      const vUser = document.getElementById("viewUsername");
+      vUser.innerText = username || "Belum diatur";
+      vUser.className = "view-username" + (username ? "" : " empty");
+
+      const vEmail = document.getElementById("viewEmail");
+      vEmail.innerText = email || "Belum diatur";
+      vEmail.className = "view-email" + (email ? "" : " empty");
+
+      let baseTitle = savedTitleFull.replace(" ✔", "").replace(" •", "").trim();
+      const isOwner = savedTitleFull.includes("✔");
+      const vTitle = document.getElementById("viewTitle");
+      if (baseTitle && baseTitle !== "") {
+        vTitle.innerText = baseTitle + (isOwner ? " ✔" : "");
+        vTitle.className = "view-title-badge";
+      } else {
+        vTitle.innerText = "Belum diatur";
+        vTitle.className = "view-title-badge empty";
+      }
+
+      // Edit fields
       document.getElementById("profileUsernameInput").value = username;
       document.getElementById("profileEmailInput").value = email;
-      
-      // Sinkronisasi Data UI Custom Select
-      let baseTitle = savedTitleFull.replace(" ✔", "").replace(" •", "");
       if(["Owner", "Staff", "Employee"].includes(baseTitle)) {
-        selectTitle(baseTitle); // Otomatis nge-set tulisan dan state-nya
+        selectTitle(baseTitle);
       } else {
-        selectTitle("Staff"); 
+        selectTitle("Staff");
       }
 
+      // Avatar
+      savedAvatarBase64 = savedPic;
+      const container = document.getElementById("profileAvatarContainer");
       if(savedPic) {
-        const container = document.getElementById("profileAvatarContainer");
         container.innerHTML = `<img src="${savedPic}" alt="Avatar">`;
-        tempCroppedBase64 = savedPic;
+      } else {
+        container.innerHTML = `<svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>`;
       }
-    });
 
+      // Banner
+      savedBannerBase64 = savedBanner;
+      if(savedBanner) showBannerPreview(savedBanner);
+      else hideBannerPreview();
+    }
+
+    window.addEventListener("DOMContentLoaded", loadProfileState);
+
+    /* ========== MODE SWITCH ========== */
+    function enterEditMode() {
+      tempCroppedBase64 = savedAvatarBase64;
+      tempBannerBase64 = savedBannerBase64;
+      bannerRemoved = false;
+      document.body.classList.add("edit-mode");
+      updateBannerEmptyText();
+    }
+    function cancelEditMode() {
+      document.body.classList.remove("edit-mode");
+      loadProfileState();
+      tempCroppedBase64 = savedAvatarBase64;
+      tempBannerBase64 = savedBannerBase64;
+      bannerRemoved = false;
+      updateBannerEmptyText();
+    }
+    function updateBannerEmptyText() {
+      const title = document.getElementById("bannerEmptyTitle");
+      const sub = document.getElementById("bannerEmptySub");
+      if (document.body.classList.contains("edit-mode")) {
+        title.innerText = "Upload Banner Profil";
+        sub.innerText = "Ketuk untuk pilih gambar (auto-crop 2.5:1)";
+      } else {
+        title.innerText = "Belum Ada Banner";
+        sub.innerText = "Banner profil belum diatur";
+      }
+    }
+
+    /* ========== AVATAR ========== */
+    function handleAvatarClick() {
+      if (!document.body.classList.contains("edit-mode")) return;
+      document.getElementById("avatarFileInput").click();
+    }
     function handleImageSelected(event) {
       const file = event.target.files[0];
       if(!file) return;
-
       const reader = new FileReader();
       reader.onload = function(e) {
         const img = new Image();
@@ -792,89 +620,139 @@
           canvas.width = 300;
           canvas.height = 300;
           const ctx = canvas.getContext("2d");
-
           const offsetX = (img.width - size) / 2;
           const offsetY = (img.height - size) / 2;
-
           ctx.drawImage(img, offsetX, offsetY, size, size, 0, 0, 300, 300);
           tempCroppedBase64 = canvas.toDataURL("image/jpeg", 0.85);
-
           document.getElementById("cropPreviewImg").src = tempCroppedBase64;
           document.getElementById("cropModalOverlay").classList.add("active");
+          event.target.value = "";
         };
         img.src = e.target.result;
       };
       reader.readAsDataURL(file);
     }
-
     function confirmCropAvatar() {
-      const container = document.getElementById("profileAvatarContainer");
-      container.innerHTML = `<img src="${tempCroppedBase64}" alt="Avatar">`;
+      document.getElementById("profileAvatarContainer").innerHTML = `<img src="${tempCroppedBase64}" alt="Avatar">`;
       document.getElementById("cropModalOverlay").classList.remove("active");
     }
-
     function closeCropModal() {
       document.getElementById("cropModalOverlay").classList.remove("active");
+      tempCroppedBase64 = savedAvatarBase64 || "";
     }
 
+    /* ========== BANNER ========== */
+    function handleBannerClick() {
+      if (!document.body.classList.contains("edit-mode")) return;
+      document.getElementById("bannerFileInput").click();
+    }
+    function handleBannerSelected(event) {
+      const file = event.target.files[0];
+      if(!file) return;
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const img = new Image();
+        img.onload = function() {
+          const targetRatio = 2.5 / 1;
+          const canvas = document.createElement("canvas");
+          canvas.width = 1200;
+          canvas.height = 480;
+          const ctx = canvas.getContext("2d");
+          let srcW, srcH, srcX, srcY;
+          const imgRatio = img.width / img.height;
+          if (imgRatio > targetRatio) {
+            srcH = img.height;
+            srcW = img.height * targetRatio;
+            srcX = (img.width - srcW) / 2;
+            srcY = 0;
+          } else {
+            srcW = img.width;
+            srcH = img.width / targetRatio;
+            srcX = 0;
+            srcY = (img.height - srcH) / 2;
+          }
+          ctx.drawImage(img, srcX, srcY, srcW, srcH, 0, 0, 1200, 480);
+          tempBannerBase64 = canvas.toDataURL("image/jpeg", 0.85);
+          bannerRemoved = false;
+          showBannerPreview(tempBannerBase64);
+          event.target.value = "";
+        };
+        img.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+    function showBannerPreview(base64) {
+      const img = document.getElementById("bannerPreviewImg");
+      const empty = document.getElementById("bannerEmptyState");
+      const box = document.getElementById("profileBannerBox");
+      img.src = base64;
+      img.style.display = "block";
+      empty.style.display = "none";
+      box.classList.add("has-banner");
+    }
+    function hideBannerPreview() {
+      const img = document.getElementById("bannerPreviewImg");
+      const empty = document.getElementById("bannerEmptyState");
+      const box = document.getElementById("profileBannerBox");
+      img.src = "";
+      img.style.display = "none";
+      empty.style.display = "flex";
+      box.classList.remove("has-banner");
+    }
+    function removeBanner(ev) {
+      if (ev) ev.stopPropagation();
+      hideBannerPreview();
+      tempBannerBase64 = "";
+      bannerRemoved = true;
+    }
+
+    /* ========== SAVE ========== */
     async function saveProfileData() {
       const newUsername = document.getElementById("profileUsernameInput").value.trim();
       const newEmail = document.getElementById("profileEmailInput").value.trim();
       const selectedTitle = document.getElementById("profileTitleInput").value;
 
-      if(!newUsername) {
-        await showCustomAlert("Nama pengguna tidak boleh kosong!", "Peringatan");
-        return;
-      }
-
-      // Validasi wajib isi email sesuai permintaan
-      if(!newEmail) {
-        await showCustomAlert("Email wajib diisi coy! Kalo kaga ga bisa di save.", "Peringatan");
-        return;
-      }
+      if(!newUsername) { await showCustomAlert("Nama pengguna tidak boleh kosong!", "Peringatan"); return; }
+      if(!newEmail) { await showCustomAlert("Email wajib diisi coy! Kalo kaga ga bisa di save.", "Peringatan"); return; }
 
       let finalTitleToSave = "";
-
-      // Validasi Khusus Owner
       if (selectedTitle === "Owner") {
         const passAttempt = await showPasswordPrompt();
-        
-        // Jika dibatalkan
-        if (passAttempt === null) {
-          return; 
-        }
-
+        if (passAttempt === null) return;
         if (passAttempt !== "cocenter1") {
           await showCustomAlert("Password salah! Lu bukan Owner asli ya 🤨", "Akses Ditolak");
           return;
         }
-        
-        // Format dengan logo verified khusus owner
         finalTitleToSave = "Owner ✔";
       } else {
-        // Format non-owner dengan titik (dot)
         finalTitleToSave = selectedTitle + " •";
       }
 
-      // Aktifkan Efek Loading (Gambar Loading & Latar Blur)
       toggleLoadingState(true);
 
-      // Simulasi proses delay
       setTimeout(async () => {
         localStorage.setItem("username", newUsername);
         localStorage.setItem("email", newEmail);
         localStorage.setItem("title", finalTitleToSave);
-        
+
         if(tempCroppedBase64) {
           localStorage.setItem("profile_picture", tempCroppedBase64);
           localStorage.setItem("user_avatar", tempCroppedBase64);
         }
 
+        if (bannerRemoved) {
+          localStorage.removeItem("profile_banner");
+        } else if (tempBannerBase64) {
+          localStorage.setItem("profile_banner", tempBannerBase64);
+        }
+
         toggleLoadingState(false);
-        
         await showCustomAlert("Profil berhasil diperbarui!", "Berhasil");
-        window.location.href = "index.html";
-      }, 1500);
+
+        document.body.classList.remove("edit-mode");
+        loadProfileState();
+        updateBannerEmptyText();
+      }, 1200);
     }
   </script>
 
