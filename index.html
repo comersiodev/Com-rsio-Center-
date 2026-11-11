@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Comersio Center</title>
+<title>Judea by Comersio</title>
 <link rel="stylesheet" href="style.css">
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#000000">
 <script>
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('sw.js')
-    .then(() => console.log("Comersio Center siap offline!"))
+    .then(() => console.log("Judea by Comersio siap offline!"))
     .catch(err => console.log("Gagal daftar sw:", err));
 }
 </script>
@@ -254,7 +254,7 @@ body{ position: relative; width: 100%; height: 100vh; background: #0a0a0a; }
 <div class="bg-dim"></div>
 <div class="mbanking-topbar">
 <div class="mbanking-brand-container">
-<div class="mbanking-brand">Comersio <span>Center</span></div>
+<div class="mbanking-brand">Judea <span>by Comersio</span></div>
 <div class="mbanking-greeting-top" id="display-greeting">Selamat Datang</div>
 </div>
 <div style="display:flex; align-items:center; gap:8px;">
@@ -1028,7 +1028,7 @@ function setDynamicGreeting() {
   let todayStr = new Date().toDateString();
   if(lastGreetDate !== todayStr) {
     localStorage.setItem("ilya_greet_date", todayStr);
-    setTimeout(() => { showCustomAlert(`Halo ${username}! Senang melihatmu kembali di Comersio Center hari ini. Semoga aktivitas pembukuan dan bisnismu lancar ya!`, "Ilya Assistant"); }, 600);
+    setTimeout(() => { showCustomAlert(`Halo ${username}! Senang melihatmu kembali di Judea by Comersio hari ini. Semoga aktivitas pembukuan dan bisnismu lancar ya!`, "Ilya Assistant"); }, 600);
   }
 }
 setDynamicGreeting();
